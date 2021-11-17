@@ -12,7 +12,7 @@ module.exports.run = async(client, message, args) => {
         .setDescription(`Please provide a valid time!`)
         .setFooter(message.author.username, message.author.displayAvatarURL({ dynamic: true, size: 1024 }))
 
-    if ([null, Infinity].includes(parse(args[0]))) return message.channel.send(embed3);
+    if ([null, Infinity].includes(parse(args[0]))) return message.channel.send({ embeds: [embed3] });
 
     const end = Date.now() + parse(args[0]);
 
@@ -21,7 +21,7 @@ module.exports.run = async(client, message, args) => {
         .setDescription(`⏰ **Time**: ${ms(end - Date.now(), {round: true})}`)
         .setFooter(message.author.username, message.author.displayAvatarURL({ dynamic: true, size: 1024 }))
 
-    const msg = await message.channel.send(embed);
+    const msg = await message.channel.send({ embeds: [embed] });
 
     const timer = setInterval(() => {
         const embed2 = new client.embed()
@@ -34,6 +34,6 @@ module.exports.run = async(client, message, args) => {
                 .setDescription(`Timer has ended!`)
             clearInterval(timer)
             return msg.edit(done)
-        } else msg.edit(embed2)
+        } else msg.edit({ embeds: [embed2] })
     }, 5000);
 }

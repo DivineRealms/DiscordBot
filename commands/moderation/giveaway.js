@@ -13,10 +13,10 @@ module.exports.run = async(client, message, args) => {
     const channel = message.mentions.channels.first();
     const [, time, wins, ...prize] = args
 
-    if (!channel || args[0] !== channel.toString()) return message.channel.send(`Sorry you need to do ${message.px}giveaway <#channel> <time> <total winners> <prize>\nExample: ${message.px}giveaway #giveaways 1d 5 prize`);
-    if (!time || isNaN(ms(time))) return message.channel.send('Pleae provide a valid duration');
-    if (isNaN(wins) || wins <= 0 || wins >= 50) return message.channel.send('Please provide a valid number of winners from 1-50!');
-    if (!prize[0]) return message.channel.send('You need to enter what you\'re giving away!');
+    if (!channel || args[0] !== channel.toString()) return message.channel.send(`> Sorry you need to do ${message.px}giveaway <#channel> <time> <total winners> <prize>\nExample: ${message.px}giveaway #giveaways 1d 5 prize`);
+    if (!time || isNaN(ms(time))) return message.channel.send('> Please provide a valid duration');
+    if (isNaN(wins) || wins <= 0 || wins >= 50) return message.channel.send('> Please provide a valid number of winners from 1-50!');
+    if (!prize[0]) return message.channel.send('> You need to enter what you\'re giving away!');
 
     client.giveaways.start(channel, {
         time: ms(time),

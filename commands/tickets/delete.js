@@ -52,7 +52,7 @@ module.exports.run = async(client, message, args) => {
         messageContainer.append(nameElement);
 
         if (msg.content.startsWith("```")) {
-            let m = msg.content.replace(/```/g, "");
+            let m = 
             let codeNode = document.createElement("code");
             let textNode = document.createTextNode(m);
             codeNode.appendChild(textNode);

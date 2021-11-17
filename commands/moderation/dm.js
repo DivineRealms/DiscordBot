@@ -10,13 +10,11 @@ module.exports.run = async(client, message, args) => {
 
     const user = message.mentions.users.first() || message.guild.member(args[0]);
 
-    if (!user) return
-    message.channel.send(new client.embed().setDescription(`Please mention someone by mentioning them or using their ID.`))
+    if (!user) return message.channel.send({ embeds: [client.embedBuilder(client, message, "Error", "You have provided invalid user.", "RED")] });
 
     const text = args.slice(1).join(' ');
 
-    if (!text)
-        return message.channel.send(new client.embed().setDescription(`Please provide some text to send!`))
+    if (!text) return message.channel.send({ embeds: [client.embedBuilder(client, message, "Error", "You need to provide text to send.", "RED")] });
 
     user.send(text).catch(() => {
         return message.channel.send(new client.embed().setDescription(`Sorry this user has their dms locked!`))

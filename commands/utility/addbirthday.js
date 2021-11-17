@@ -9,21 +9,20 @@ module.exports = {
 module.exports.run = async(client, message, args) => {
     const embed = new client.embed()
         .setFooter(message.author.username, message.author.displayAvatarURL({ dynamic: true, size: 1024 }))
+        
+    let birthday = db.fetch(`birthday_${message.guild.id}_${message.author.id}`);
 
-    if (client.members.get(message.guild.id, message.author.id).birthday) return message.channel.send(new client.embed().setDescription(`Sorry but you can only set your birthday once!\nContact a staff member and they will change your bithday using \`${message.px}setbirthday\``))
+    if (birthday) return message.channel.send({ embeds: [client.embedBuilder(client, message, "Error", "You have already set your birthday, contact staff if you want it changed.", "RED")] });
     const birthd = args.join(' ').toLowerCase().charAt(0).toUpperCase() + args.join(' ').slice(1).toLowerCase()
     const date = parse(birthd, 'MMM D YYYY')
-    if (!date.getDay()) return message.channel.send(embed.setDescription(`You need to enter the date of your birthday!\nExample: \`${message.px}addbirthday Sep 4 2004\``))
+    if(!date.getDay()) return message.channel.send({ embeds: [client.embedBuilder(client, message, "Error", "You need to enter Date of Birthday. Example: Jan 21 2004.", "RED")] });
 
     const age = getAge(args.join(' '))
-    if (age <= 12) return message.channel.send(embed.setDescription(`You can\'t enter a year greater than ${new Date().getFullYear() - 12}!`))
+    if(age <= 12) return message.channel.send({ embeds: [client.embedBuilder(client, message, "Error", `You can't enter a year greater than ${new Date().getFullYear() - 12}.`, "RED")] });
 
-    message.channel.send(embed
-        .setTitle(':partying_face: Successfully set your birthday! :partying_face:')
-        .setDescription(`I have set your birthday to ${args.join(' ')}!\n\nYou will be ${age + 1}`)
-        .setTimestamp())
-
-    client.members.set(message.guild.id, args.join(' '), `${message.author.id}.birthday`)
+    message.channel.send({ embeds: [client.embedBuilder(client, message, "Birthday", "Successfully set your birthday.", "YELLOW")] });
+    
+    db.set(`birthday_${message.guild.id}_${message.author.id}`, args.join(" "));
 }
 
 const getAge = b => {

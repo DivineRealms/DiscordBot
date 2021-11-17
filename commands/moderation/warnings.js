@@ -8,10 +8,10 @@ module.exports.run = async(client, message, args) => {
     if (!message.member.hasPermission('MUTE_MEMBERS')) return message.channel.send(new client.embed().setDescription(`Sorry you are missing the permission \`MUTE_MEMBERS\`!`).setFooter(message.author.username, message.author.displayAvatarURL({ dynamic: true, size: 1024 })))
     const member = message.mentions.users.first() || await client.users.fetch(args[0]).catch(() => {});
 
-    if (!member) return message.channel.send(new client.embed().setDescription(`Please specify a user to view warnings on.`).setFooter(message.author.username, message.author.displayAvatarURL({ dynamic: true, size: 1024 })))
+    if (!member) return message.channel.send({ embeds: [client.embedBuilder(client, message, "Error", "You need to mention user.", "RED")] });
 
-    const warnings = client.members.ensure(message.guild.id, client.memberSettings, member.id).warnings
-    if (!warnings.length) return message.channel.send(new client.embed().setDescription('That member doesnt have any warnings!'))
+    let warnings = db.fetch(`warnings_${message.guild.id}_${member.id}`);
+    if (!warnings.length) return message.channel.send({ embeds: [client.embedBuilder(client, message, "Error", "That Member doesn't have warnings.", "RED")] });
 
     message.channel.send({ embed: warnings[0] }).then(async emb => {
         if (!warnings[1]) return;

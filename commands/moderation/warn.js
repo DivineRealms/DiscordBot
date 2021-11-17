@@ -11,9 +11,9 @@ module.exports.run = async(client, message, args) => {
 
     if (!message.member.hasPermission('MUTE_MEMBERS')) return message.channel.send(new client.embed().setDescription(`Sorry you are missing the permission \`MUTE_MEMBERS\`!`).setFooter(message.author.username, message.author.displayAvatarURL({ dynamic: true, size: 1024 })))
     if (!message.member.hasPermission('MANAGE_MESSAGES')) return message.channel.send(new client.embed().setDescription(`Sorry, you are missing permissions to execute this command!`).setFooter(message.author.username, message.author.displayAvatarURL({ dynamic: true, size: 1024 })))
-    if (!member) return message.channel.send(new client.embed().setDescription(`Please mention a user!`).setFooter(message.author.username, message.author.displayAvatarURL({ dynamic: true, size: 1024 })))
-    if (member.id === message.author.id) return message.channel.send(new client.embed().setDescription('You can\'t warn yourself, please dont be a idiot!').setFooter(message.author.username, message.author.displayAvatarURL({ dynamic: true, size: 1024 })))
-    if (member.user.bot) return message.channel.send(new client.embed().setDescription('You can\'t warn a bot').setFooter(message.author.username, message.author.displayAvatarURL({ dynamic: true, size: 1024 })))
+    if (!member) return message.channel.send({ embeds: [client.embedBuilder(client, message, "Error", "You need to mention user.", "RED")] });
+    if (member.id === message.author.id) return message.channel.send({ embeds: [client.embedBuilder(client, message, "Error", "You can't warn yourself.", "RED")] });
+    if (member.user.bot) return message.channel.send({ embeds: [client.embedBuilder(client, message, "Error", "You can't warn bot.", "RED")] });
     const casenum = client.settings.get(message.guild.id, 'cases').length + 1
     const warnings = client.members.ensure(message.guild.id, client.memberSettings, member.id).warns
     const embed = new client.embed()

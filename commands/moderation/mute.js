@@ -15,7 +15,7 @@ module.exports.run = async(client, message, args) => {
     const mutereason = args.slice(time ? 2 : 1).join(' ') || 'No Reason Provided'
     const log = client.channels.cache.get(client.conf.logging.Mute_Channel_Logs)
 
-    if (!member) return message.channel.send(new client.embed().setDescription('Please put a valid member or a user ID for me to mute').setFooter(message.author.username, message.author.displayAvatarURL({ dynamic: true, size: 1024 })))
+    if (!member) return message.channel.send({ embeds: [client.embedBuilder(client, message, "Error", "You need to enter valid user.", "RED")] });
     if (!muterole) return message.channel.send(new client.embed().setDescription('I cant find the mute role on the server!').setFooter(message.author.username, message.author.displayAvatarURL({ dynamic: true, size: 1024 })))
     if (member.id === message.author.id) return message.channel.send(new client.embed().setDescription('Stop being a dumbass... You can\'t mute yourself.').setFooter(message.author.username, message.author.displayAvatarURL({ dynamic: true, size: 1024 })))
     if (member.user.bot) return message.channel.send(new client.embed().setDescription('You can\'t mute a bot!').setFooter(message.author.username, message.author.displayAvatarURL({ dynamic: true, size: 1024 })))

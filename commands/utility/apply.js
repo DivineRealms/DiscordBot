@@ -10,8 +10,8 @@ module.exports.run = async(client, message, args) => {
     const applications = client.conf.applicationSystem.applications.filter(s => !s.Application_Channel || s.Application_Channel === message.channel.id)
     const app = applications.find(a => a.Application_Name.toLowerCase() === args.join(' ').toLowerCase())
 
-    if (!applications.length) return message.channel.send(new client.embed().setDescription('I couldnt find any applications available in this channel!'))
-    if (!app) return message.channel.send(new client.embed().setDescription(`I couldnt find an application with that name!\nRun \`${message.px}applications\` to view this channels available applications.`))
+    if (!applications.length) return message.channel.send({ embeds: [client.embedBuilder(client, message, "Error", "There are no applications available in this channel.", "RED")] });
+    if (!app) return message.channel.send({ embeds: [client.embedBuilder(client, message, "Error", "I can't find Application with that name.", "RED")] });
 
     const chan = client.channels.cache.get(app.Application_Log)
     if (!chan) return message.author.send('Sorry but I couldnt find this applications log channel.').catch(() => {})

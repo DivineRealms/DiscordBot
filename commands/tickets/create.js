@@ -29,8 +29,7 @@ module.exports.run = async(client, message, args) => {
 
     if (log) log.send(new client.embed()
         .setTitle('Ticket Created')
-        .setDescription(`**Creator:** ${message.author}`)
-    )
-
-    client.settings.set(message.guild.id, { user: message.author.id }, `tickets.${channel.id}`)
+        .setDescription(`**Creator:** ${message.author}`));
+    
+    db.set(`tickets_${message.guild.id}_${message.author.id}`, message.author.id);
 }

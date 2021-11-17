@@ -12,7 +12,7 @@ module.exports.run = async(client, message, args) => {
         message.guild.channels.cache.get(args[0]);
 
     if (!channel) {
-        return message.channel.send(new client.embed().setDescription(`Please provide a valid channel by mention or ID!`).setFooter(message.author.username, message.author.displayAvatarURL({ dynamic: true, size: 1024 })));
+        return message.channel.send({ embeds: [client.embedBuilder(client, message, "Error", "You must provide Valid Channel.", "RED")] });
     }
 
     channel

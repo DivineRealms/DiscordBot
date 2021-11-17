@@ -11,7 +11,6 @@ module.exports.run = async(client, message, args) => {
     let question = options.shift(),
         emoji = ['🇦', '🇧', '🇨', '🇩', '🇪', '🇫', '🇬', '🇭', '🇮', '🇯']
 
-
     if (!options[1]) return message.channel.send(`To create a poll, do \`${message.px}advancedpoll Question | op1 | op2 | etc\`\nMinimum of 2 options are required`)
 
     await message.delete

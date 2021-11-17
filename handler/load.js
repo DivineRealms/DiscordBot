@@ -16,8 +16,7 @@ module.exports = async client => {
     const settings = { fetchAll: true, autoFetch: true, cloneLevel: 'deep' }
     client.defaultSettings = require('../settings/config').guildSettings
     client.memberSettings = require('../settings/config').memberSettings
-    client.shop = require('../settings/config').shop
-    client.player = new Player(client, { highWaterMark: 1 << 25 })
+    client.shop = require('../settings/config').shop;
     client.giveaways = new Giveaway(client, {})
     client.settings = new Enmap({
         name: 'settings',

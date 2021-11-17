@@ -10,8 +10,8 @@ module.exports.run = async(client, message, args) => {
     const channel = message.mentions.channels.first() || message.guild.channels.cache.get(args[0])
     const description = args.slice(1).join(" ")
 
-    if (!channel) return message.channel.send(new client.embed().setDescription(`You failed to provide me where im sending this poll!`).setFooter(message.author.username, message.author.displayAvatarURL({ dynamic: true, size: 1024 })))
-    if (!args[2]) return message.channel.send(new client.embed().setDescription("You didnt specify ur question!").setFooter(message.author.username, message.author.displayAvatarURL({ dynamic: true, size: 1024 })))
+    if (!channel) return message.channel.send({ embeds: [client.embedBuilder(client, message, "Error", "You have entered invalid channel.", "RED")] });
+    if (!args[2]) return message.channel.send({ embeds: [client.embedBuilder(client, message, "Error", "You didn't specified question.", "RED")] });
 
     const embed = new client.embed({ description })
         .setAuthor(`Poll Created By ${message.author.tag}`, 'https://cdn.discordapp.com/attachments/745089083008745553/758900685919223858/poll.png')
