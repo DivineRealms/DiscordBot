@@ -1,18 +1,19 @@
-const parse = require('parse-duration')
+const parse = require('ms')
 
 module.exports = {
     description: 'Sets the channel slowmode to the requested time.',
+    permissions: [],
     aliases: [`smode`],
     usage: 'slowmode <Time>'
 }
 
 module.exports.run = async(client, message, args) => {
 
-    if (!message.member.hasPermission('MANAGE_CHANNELS')) return message.channel.send(new client.embed().setDescription('You are missing the permission `Manage Channels`'))
-    if ([null, Infinity].includes(parse(args[0]))) return message.channel.send(new client.embed().setDescription(`You failed to provide me the time!`))
-    const amt = parse(args[0]) / 1000
-    if (amt > 21600) return message.channel.send(new client.embed().setDescription(`The time cannot exceed more than 6 hours!`))
-    if (amt < 5) return message.channel.send(new client.embed().setDescription(`The time needs to be atleast 5 seconds!`))
+    if (!message.member.permissions.has('MANAGE_CHANNELS')) return message.channel.send({ embeds: [new client.embed().setDescription('You are missing the permission `Manage Channels`')]})
+    if ([null, Infinity].includes(parse(args[0]))) return message.channel.send({ embeds: [new client.embed().setDescription(`You failed to provide me the time!`)]})
+    const amt = ms(args[0]) / 1000
+    if (amt > 21600) return message.channel.send({ embeds: [new client.embed().setDescription(`The time cannot exceed more than 6 hours!`)]})
+    if (amt < 5) return message.channel.send({ embeds: [new client.embed().setDescription(`The time needs to be atleast 5 seconds!`)]})
 
     message.channel.setRateLimitPerUser(amt)
     const embed = new client.embed()
@@ -21,6 +22,6 @@ module.exports.run = async(client, message, args) => {
         .setFooter(message.author.username, message.author.displayAvatarURL({ dynamic: true, size: 1024 }))
         .setThumbnail(message.author.displayAvatarURL())
         .setTimestamp()
-    message.channel.send(embed)
+    message.channel.send({ embeds: [embed] })
 
 }

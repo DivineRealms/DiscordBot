@@ -1,5 +1,6 @@
 module.exports = {
     description: 'Check to see who someone is married to.',
+    permissions: [],
     aliases: [],
     usage: 'marriage'
 }
@@ -12,7 +13,5 @@ module.exports.run = (client, message, args) => {
 
     const arr = member.married.split('-|-')
 
-    message.channel.send(new client.embed()
-            .setDescription(`\`${user.username}\` is currently married to \`${arr[1]}\` (\`${arr[0]}\`).\nThey've been engaged since ${arr[2]}!`))
-        .setFooter(message.author.username, message.author.displayAvatarURL({ dynamic: true, size: 1024 }))
+    message.channel.send({ embeds: [new client.embed().setDescription(`\`${user.username}\` is currently married to \`${arr[1]}\` (\`${arr[0]}\`).\nThey've been engaged since ${arr[2]}!`).setFooter(message.author.username, message.author.displayAvatarURL({ dynamic: true, size: 1024 }))]})
 }

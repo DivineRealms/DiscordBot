@@ -1,5 +1,6 @@
 module.exports = {
     description: 'Pulls the servers icon.',
+    permissions: [],
     aliases: ['guildicon'],
     usage: 'servericon'
 }
@@ -9,6 +10,6 @@ module.exports.run = async(client, message) => {
         .setTitle(`${message.guild.name}\'s Icon`)
         .setImage(message.guild.iconURL({ dynamic: true, size: 512 }))
         .setFooter(message.author.username, message.author.displayAvatarURL({ dynamic: true, size: 1024 }))
-    message.channel.send(embed);
+    message.channel.send({ embeds: [embed] });
 
 }

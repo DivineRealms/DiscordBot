@@ -2,6 +2,7 @@ const { chunk } = require('lodash')
 
 module.exports = {
     description: 'Views all the birthdays coming up in the week.',
+    permissions: [],
     aliases: [`bdaylist`],
     usage: 'birthdydayscoming'
 }
@@ -9,20 +10,21 @@ module.exports = {
 module.exports.run = async(client, message, args) => {
     const dates = ['January', 'Februrary', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
     const isToday = d => d ? new Date().getMonth() === new Date(d).getMonth() && new Date().getDate() <= new Date(d).getDate() : false
-    const birthdays = chunk(Object.entries(client.members.get(message.guild.id)).filter((a) => isToday(a[1].birthday)).map(s => `<@${s[0]}>`), 20)
+    let birthdays = db.all().filter(i => i.ID.startsWith(`level_${message.guild.id}_`)).sort((a, b) => b.data - a.data);
+    birthdays = birthdays.filter((b) => isToday(b.data)).map(s => `${s}`)
     const embed = new client.embed()
         .setTitle(`Birthdays Coming Up for ${dates[new Date().getMonth()]}!`)
         .setDescription(birthdays.join(' '))
         .setFooter(`Pages 1/${birthdays.length}`)
 
-    if (!birthdays.length) return message.channel.send(new client.embed().setDescription('Looks like nobodys birthday is coming up soon! try again next time!'))
+    if (!birthdays.length) return message.channel.send({ embeds: [new client.embed().setDescription('Looks like nobodys birthday is coming up soon! try again next time!')]})
 
-    message.channel.send(embed).then(async emb => {
+    message.channel.send({ embeds: [embed] }).then(async emb => {
         if (!birthdays[1]) return;
         ['⏮️', '◀️', '▶️', '⏭️', '⏹️'].forEach(async m => await emb.react(m))
 
         const filter = (_, u) => u.id === message.author.id
-        const collector = emb.createReactionCollector(filter, { time: 300000 })
+        const collector = emb.createReactionCollector({ filter, time: 300000 })
         let page = 1
         collector.on('collect', async(r, user) => {
             let current = page;

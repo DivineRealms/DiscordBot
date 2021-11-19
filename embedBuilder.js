@@ -1,7 +1,7 @@
 const Discord = require('discord.js');
 
 module.exports = (client, user, title, description, color) => {
-  let embed = new Discord.MessageEmbed().setFooter(client.embeds.footer, client.user.displayAvatarURL({ size: 1024, dynamic: true })).setTimestamp();
+  let embed = new Discord.MessageEmbed().setFooter("Divine Realms", client.user.displayAvatarURL({ size: 1024, dynamic: true })).setTimestamp();
   if (title.length > 0) {
     embed.setTitle(title)
   }

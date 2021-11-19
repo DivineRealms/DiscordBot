@@ -1,5 +1,6 @@
 module.exports = {
     description: 'Feeling stressed? Go ahead pop some bubblewrap.',
+    permissions: [],
     aliases: ['bubbles', 'bw'],
     usage: 'bubblewrap'
 }

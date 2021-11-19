@@ -1,12 +1,11 @@
 module.exports = {
     description: 'Lets you create a Yes or no poll.',
+    permissions: [],
     aliases: ['bpoll', 'simplepoll.'],
     usage: 'basicpoll <question>'
 }
 
 module.exports.run = async(client, message, args) => {
-    if (!message.member.hasPermission('ADMINISTRATOR')) return message.channel.send(new client.embed().setDescription('You are missing the permission `ADMINISTRATOR`'))
-
     const channel = message.mentions.channels.first() || message.guild.channels.cache.get(args[0])
     const description = args.slice(1).join(" ")
 
@@ -18,7 +17,7 @@ module.exports.run = async(client, message, args) => {
         .setFooter(message.author.username, message.author.displayAvatarURL({ dynamic: true, size: 1024 }))
         .setTimestamp()
 
-    const msg = await client.channels.cache.get(channel.id).send(embed)
+    const msg = await client.channels.cache.get(channel.id)
     msg.react('✅').then(msg.react('❌'))
     message.delete();
 }

@@ -1,5 +1,6 @@
 module.exports = {
     description: 'Lets you ban the requested member from the guild.',
+    permissions: [],
     aliases: ['yeet', 'forceban'],
     usage: 'ban <@user | ID> <Reason>'
 }
@@ -7,8 +8,8 @@ module.exports = {
 module.exports.run = async(client, message, args) => {
     const channel = message.guild.channels.cache.get(client.conf.logging.Ban_Channel_Logs)
 
-    if (!message.member.hasPermission("BAN_MEMBERS")) return message.channel.send(new client.embed().setDescription('You can\'t use that!').setFooter(message.author.username, message.author.displayAvatarURL({ dynamic: true, size: 1024 })))
-    if (!message.guild.me.hasPermission("BAN_MEMBERS")) return message.channel.send(new client.embed().setDescription(`Sorry, I am missing my required permissions perhaps try moving my role up!`).setFooter(message.author.username, message.author.displayAvatarURL({ dynamic: true, size: 1024 })))
+    if (!message.member.permissions.has("BAN_MEMBERS")) return message.channel.send({ embeds: [new client.embed().setDescription('You can\'t use that!').setFooter(message.author.username, message.author.displayAvatarURL({ dynamic: true, size: 1024 }))]})
+    if (!message.guild.me.permissions.has("BAN_MEMBERS")) return message.channel.send({ embeds: [new client.embed().setDescription(`Sorry, I am missing my required permissions perhaps try moving my role up!`).setFooter(message.author.username, message.author.displayAvatarURL({ dynamic: true, size: 1024 }))]})
 
     const member = message.mentions.users.first() || await client.users.fetch(args[0]).catch(() => {})
 
@@ -28,11 +29,11 @@ module.exports.run = async(client, message, args) => {
         .setColor(`RED`)
 
     message.guild.members.ban(member, { reason })
-    await message.channel.send(embed)
-    if (channel) channel.send(embed)
+    await message.channel.send({ embeds: [embed] })
+    if (channel) channel.send({ embeds: [embed] })
 
     const dm = await member.send(embed.setTitle('You have been banned!')).catch(() => {})
-    if (!dm) message.channel.send(new client.embed().setDescription(`Failed to send a dm to ${member}, their dms are locked.`).setFooter(message.author.username, message.author.displayAvatarURL({ dynamic: true, size: 1024 })))
+    if (!dm) message.channel.send({ embeds: [new client.embed().setDescription(`Failed to send a dm to ${member}, their dms are locked.`).setFooter(message.author.username, message.author.displayAvatarURL({ dynamic: true, size: 1024 }))]})
 
     db.add(`cases_${message.guild.id}`, 1);
     db.push(`punishments_${message.guild.id}_${member.id}`, embed);

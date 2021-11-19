@@ -2,6 +2,7 @@ const { chunk } = require('lodash')
 
 module.exports = {
     description: 'Run this command to apply for an application on the server.',
+    permissions: [],
     aliases: [],
     usage: 'apply'
 }
@@ -31,14 +32,14 @@ module.exports.run = async(client, message, args) => {
     client.processes.set(message.author.id, true)
 
     for (var i in questions) {
-        await msg.channel.send(new client.embed().setTitle(`Question ${(Number(i) + 1)}`).setDescription(questions[i]))
+        await msg.channel.send({ embeds: [new client.embed().setTitle(`Question ${(Number(i) + 1)}`).setDescription(questions[i])]})
         const resp = await msg.channel.awaitMessages((_, u) => !u.bot, { max: 1, time: 60000 })
-        if (!resp.first()) return msg.channel.send(new client.embed().setDescription('Time limit exceeded, application cancelled.'))
-        if (resp.first().content === 'cancel') return message.channel.send(new client.embed().setDescription('The application has been cancelled.'))
+        if (!resp.first()) return msg.channel.send({ embeds: [new client.embed().setDescription('Time limit exceeded, application cancelled.')]})
+        if (resp.first().content === 'cancel') return message.channel.send({ embeds: [new client.embed().setDescription('The application has been cancelled.')]})
         answers.push(resp.first().content)
     }
 
-    const msg2 = await msg.channel.send(new client.embed().setDescription('The application has been completed! Are you sure you wish to apply?'))
+    const msg2 = await msg.channel.send({ embeds: [new client.embed().setDescription('The application has been completed! Are you sure you wish to apply?')]})
     await msg2.react('✅')
     await msg2.react('❎')
 
@@ -52,12 +53,12 @@ module.exports.run = async(client, message, args) => {
         .setDescription(description.splice(0, 1))
     if (!description.length) embed2.setFooter(message.author.username, message.author.displayAvatarURL({ dynamic: true, size: 1024 }))
 
-    msg.channel.send(new client.embed().setTitle('Application Complete').setDescription('✅ Your application has been successfully submitted.'))
+    msg.channel.send({ embeds: [new client.embed().setTitle('Application Complete').setDescription('✅ Your application has been successfully submitted.')]})
     client.processes.delete(message.author.id)
 
     await chan.send(embed2)
-    for (let s of description) await chan.send(new client.embed().setDescription(s))
+    for (let s of description) await chan.send({ embeds: [new client.embed().setDescription(s)]})
 
 
-    if (description.length) chan.send(new client.embed().setDescription('This application was split due to discord character limit.').setFooter(message.author.username, message.author.displayAvatarURL({ dynamic: true, size: 1024 })))
+    if (description.length) chan.send({ embeds: [new client.embed().setDescription('This application was split due to discord character limit.').setFooter(message.author.username, message.author.displayAvatarURL({ dynamic: true, size: 1024 }))]})
 }

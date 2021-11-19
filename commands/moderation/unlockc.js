@@ -1,18 +1,19 @@
 module.exports = {
     description: 'Lets you unlock a channel in the guild.',
+    permissions: [],
     aliases: ['unlockchannel', 'unlock'],
     usage: 'unlockc <#Channel>'
 }
 module.exports.run = async(client, message, args) => {
-    if (!message.member.hasPermission("ADMINISTRATOR"))
-        return message.channel.send(new client.embed().setDescription(`Sorry! You are missing the permission \`ADMINISTRATOR\``).setFooter(message.author.username, message.author.displayAvatarURL({ dynamic: true, size: 1024 })));
+    if (!message.member.permissions.has("ADMINISTRATOR"))
+        return message.channel.send({ embeds: [new client.embed().setDescription(`Sorry! You are missing the permission \`ADMINISTRATOR\``).setFooter(message.author.username, message.author.displayAvatarURL({ dynamic: true, size: 1024 }))]});
 
     const channel =
         message.mentions.channels.first() ||
         message.guild.channels.cache.get(args[0]);
 
     if (!channel) {
-        return message.channel.send(new client.embed().setDescription(`Please provide a valid channel by mention or ID!`).setFooter(message.author.username, message.author.displayAvatarURL({ dynamic: true, size: 1024 })));
+        return message.channel.send({ embeds: [new client.embed().setDescription(`Please provide a valid channel by mention or ID!`).setFooter(message.author.username, message.author.displayAvatarURL({ dynamic: true, size: 1024 }))]});
     }
 
     channel
@@ -21,7 +22,7 @@ module.exports.run = async(client, message, args) => {
             ADD_REACTIONS: true,
         })
         .catch((error) => {
-            return message.channel.send(new client.embed().setDescription(`Sorry! You are missing the permission \`ADMINISTRATOR\``).setFooter(message.author.username, message.author.displayAvatarURL({ dynamic: true, size: 1024 })))
+            return message.channel.send({ embeds: [new client.embed().setDescription(`Sorry! You are missing the permission \`ADMINISTRATOR\``).setFooter(message.author.username, message.author.displayAvatarURL({ dynamic: true, size: 1024 }))]})
         });
 
     message.guild.roles.cache.each((role) => {
@@ -31,7 +32,7 @@ module.exports.run = async(client, message, args) => {
                 ADD_REACTIONS: true,
             })
             .catch((error) => {
-                return message.channel.send(new client.embed().setDescription(`Sorry! You are missing the permission \`ADMINISTRATOR\``).setFooter(message.author.username, message.author.displayAvatarURL({ dynamic: true, size: 1024 })));
+                return message.channel.send({ embeds: [new client.embed().setDescription(`Sorry! You are missing the permission \`ADMINISTRATOR\``).setFooter(message.author.username, message.author.displayAvatarURL({ dynamic: true, size: 1024 }))]});
             });
     });
 
@@ -42,7 +43,7 @@ module.exports.run = async(client, message, args) => {
         .setThumbnail(message.author.displayAvatarURL())
         .setTimestamp()
         .setColor(`GREEN`)
-    channel.send(embed);
+    channel.send({ embeds: [embed] });
 
-    message.author.send(new client.embed().setColor(`GREEN`).setDescription(`Success! You have unlocked ${channel.name}.`).setFooter(message.author.username, message.author.displayAvatarURL({ dynamic: true, size: 1024 })))
+    message.author.send({ embeds: [new client.embed().setColor(`GREEN`).setDescription(`Success! You have unlocked ${channel.name}.`).setFooter(message.author.username, message.author.displayAvatarURL({ dynamic: true, size: 1024 }))]})
 }

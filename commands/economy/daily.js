@@ -1,7 +1,8 @@
-const db = require("quick.db");
+const db = require('quick.db')
 
 module.exports = {
     description: 'Claim that daily reward of yours.',
+    permissions: [],
     aliases: [],
     usage: 'balance [@User]'
 }

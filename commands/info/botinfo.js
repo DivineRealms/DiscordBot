@@ -1,5 +1,6 @@
 module.exports = {
     description: 'Allows you to view information on the bot.',
+    permissions: [],
     aliases: ['binfo', 'infobot', 'bottinfo'],
     usage: 'channelinfo <#chanel>'
 }

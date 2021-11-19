@@ -1,27 +1,36 @@
 const { MessageAttachment } = require('discord.js')
+const db = require('quick.db')
 const canvacord = require('canvacord')
 
 module.exports = {
     description: 'View your total xp earned on the server.',
+    permissions: [],
     aliases: ['xp'],
     usage: 'rank [@user]'
 }
 
 module.exports.run = async(client, message, args) => {
-    const data = client.members.get(message.guild.id, `${message.author.id}.xp`)
-    if (!data.level) return message.channel.send(new client.embed().setDescription('You need to be at least level 1 to view your rank!'))
+    let user = message.mentions.users.first() || client.users.cache.get(args[0]) || message.author;
+    let level = db.fetch(`level_${message.guild.id}_${user.id}`);
+    let xp = db.fetch(`xp_${message.guild.id}_${user.id}`);
 
-    const rank = Object.entries(client.members.get(message.guild.id)).filter(s => s[1].xp).sort((a, b) => b[1].xp.xp - a[1].xp.xp).map(s => s[0]).indexOf(message.author.id) + 1
+    let every = db.all().filter(i => i.ID.startsWith(`level_${message.guild.id}_`)).sort((a, b) => b.data - a.data);
+    let rank = every.map(x => x.ID).indexOf(`level_${message.guild.id}_${user.id}`) + 1 || 0;
+    
+    let presence = member.presence;
+    if(presence == null) presence == "offline";
+    else presence = presence.status;
+
     let image = await canvacord.rank({
-        username: message.author.username,
-        discrim: message.author.discriminator,
-        status: message.author.presence.status,
-        currentXP: data.xp,
-        neededXP: data.level * 500,
+        username: user.username,
+        discrim: user.discriminator,
+        status: presence,
+        currentXP: xp,
+        neededXP: level * 500,
         rank,
-        level: data.level,
+        level: level,
         background: client.conf.leveling.rankCardImage,
-        avatarURL: message.author.displayAvatarURL({ format: "png" }),
+        avatarURL: user.displayAvatarURL({ format: "png" }),
         color: client.conf.leveling.rankCardColor
     })
 

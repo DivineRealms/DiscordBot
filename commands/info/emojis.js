@@ -1,5 +1,6 @@
 module.exports = {
     description: 'Lets you view all the emojis in the guild.',
+    permissions: [],
     aliases: ['emoji', 'whatstheemojis'],
     usage: 'emojis'
 }
@@ -32,5 +33,5 @@ module.exports.run = async(client, message, args) => {
         .addField(`Emojis Displaying`, `${AnimeOnesLolDisplaying} ${TEHEMOJIS}`, false)
         .addField(`Total Count Of Emojis`, `${totalemojislol}`, false)
         .setFooter(message.author.username, message.author.displayAvatarURL({ dynamic: true, size: 1024 }));
-    message.channel.send(emojiss)
+    message.channel.send({ embeds: [emojiss] })
 }

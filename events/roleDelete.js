@@ -7,5 +7,5 @@ module.exports = (client, role) => {
         .setDescription(`**Role name:** ${role.name}\n**Role ID:** \`${role.id}\``)
         .setFooter(`${role.guild.name} | Made By Fuel#2649`, role.guild.iconURL({ dynamic: true }))
 
-    log.send(embed)
+    log.send({ embeds: [embed] })
 }

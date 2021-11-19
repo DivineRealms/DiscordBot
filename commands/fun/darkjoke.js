@@ -1,5 +1,6 @@
 module.exports = {
     description: 'A very dark joke for some laughs.',
+    permissions: [],
     aliases: ['drkjoke'],
     usage: 'darkjoke'
 }
@@ -37,5 +38,5 @@ module.exports.run = async(client, message) => {
         .setTitle(`Dark Joke`)
         .setDescription(`${response}`)
         .setFooter(message.author.username, message.author.displayAvatarURL({ dynamic: true, size: 1024 }))
-    message.channel.send(Embed);
+    message.channel.send({ embeds: [embed] });
 }

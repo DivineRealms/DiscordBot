@@ -2,6 +2,7 @@ const weather = require('weather-js');
 
 module.exports = {
     description: 'Want to check the weather?',
+    permissions: [],
     aliases: ['weath', 'temp'],
     usage: 'Weather <PLACE>'
 }
@@ -9,7 +10,7 @@ module.exports = {
 module.exports.run = async(client, message, args) => {
 
     weather.find({ search: args.join(" "), degreeType: 'F' }, function(error, result) {
-        if (error) return message.channel.send(error);
+        if (error) return message.channel.send({ embeds: [error]});
         if (!args[0]) return message.channel.send({ embeds: [client.embedBuilder(client, message, "Error", "You need to enter location.", "RED")] });
 
         if (result === undefined || result.length === 0) return message.channel.send({ embeds: [client.embedBuilder(client, message, "Error", "You have entered Invalid Location.", "RED")] });
@@ -26,6 +27,6 @@ module.exports.run = async(client, message, args) => {
             .addField('Humidity', `${current.humidity}%`, false)
 
 
-        message.channel.send(embedinfo)
+        message.channel.send({ embeds: [embedinfo]})
     })
 }

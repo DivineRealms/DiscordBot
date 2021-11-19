@@ -3,6 +3,7 @@ const moment = require("moment");
 
 module.exports = {
     description: 'Allows you to view information on a user!',
+    permissions: [],
     aliases: ['whois', 'uinfo'],
     usage: 'userinfo <@User>'
 }
@@ -40,9 +41,8 @@ module.exports.run = async(client, message, args) => {
                             activities.status = `${ activity.emoji ? `${activity.emoji} | ` : ""}${activity.state}`; break;case "PLAYING":activities.other.push(`${activity.type} ${activity.name}`);break;case "LISTENING":if (activity.name === "Spotify" && activity.assets) {
                   activities.other.push(`${activity.details} by ${activity.state}`);}break;default:activities.other.push(activity.type);}return activities;},{ status: "*None*",other: [],});
 
-  const roles = member.roles.cache.array().length
-    ? member.roles.cache
-        .array()
+  const roles = [...member.roles.values()].length
+    ? [...member.roles.values()]
         .filter((role) => role.name !== "@everyone")
         .join(", ")
     : "*None*";
@@ -113,5 +113,5 @@ module.exports.run = async(client, message, args) => {
     );
 
 
-  message.channel.send(embed);
+  message.channel.send({ embeds: [embed] });
 }

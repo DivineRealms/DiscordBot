@@ -2,6 +2,7 @@ const { parse } = require('date-and-time')
 
 module.exports = {
     description: 'Add your birthday to the system.',
+    permissions: [],
     aliases: [`addbday`],
     usage: 'addbirthday'
 }

@@ -2,6 +2,7 @@ const fetch = require('node-fetch');
 
 module.exports = {
     description: 'Tweet as trump.',
+    permissions: [],
     aliases: ['trumptwt'],
     usage: 'trumptweet <Message>'
 }
@@ -19,6 +20,6 @@ module.exports.run = async(client, message, args) => {
             .setImage(img)
             .setFooter(message.author.username, message.author.displayAvatarURL({ dynamic: true, size: 1024 }))
             .setTimestamp()
-        message.channel.send(embed)
+        message.channel.send({ embeds: [embed] })
     } finally {}
 }

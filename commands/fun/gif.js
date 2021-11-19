@@ -3,28 +3,29 @@ const fetch = require('node-fetch');
 
 module.exports = {
     description: 'Search online for a random gif.',
+    permissions: [],
     aliases: [],
     usage: 'gif <search>'
 }
 
 module.exports.run = async(client, message, args) => {
-    if (!args[0]) return message.channel.send(new client.embed().setDescription('You need to enter something to search for!'))
+    if (!args[0]) return message.channel.send({ embeds: [new client.embed().setDescription('You need to enter something to search for!')]})
 
     const body = await fetch(`https://tenor.com/search/${args.join('-')}-gifs`).then(r => r.text())
     const data = load(body)('div.Gif > img')
     const urls = new Array(data.length).fill(0).map((s, i) => data.eq(i).attr('src'))
-    if (!urls[0]) return message.channel.send(new client.embed().setDescription('No search results found, did you check your spelling?'))
+    if (!urls[0]) return message.channel.send({ embeds: [new client.embed().setDescription('No search results found, did you check your spelling?')]})
 
     const embed = new client.embed()
         .setDescription(`Image not loading? click [here](${urls[0]})`)
         .setImage(urls[0])
         .setFooter(`Pages 1/${urls.length}`)
 
-    message.channel.send(embed).then(async emb => {
+    message.channel.send({ embeds: [embed] }).then(async emb => {
         ['⏮️', '◀️', '▶️', '⏭️', '⏹️', '🔢'].forEach(async m => await emb.react(m))
 
         const filter = (_, u) => u.id === message.author.id
-        const collector = emb.createReactionCollector(filter, { time: 300000 })
+        const collector = emb.createReactionCollector({ filter, time: 300000 })
         let page = 1
         collector.on('collect', async(r, user) => {
             let current = page;

@@ -1,5 +1,8 @@
+const db = require('quick.db')
+
 module.exports = {
     description: 'Get your money on hand into your bank.',
+    permissions: [],
     aliases: ['wd', 'withd'],
     usage: 'wd <amount | all>'
 }

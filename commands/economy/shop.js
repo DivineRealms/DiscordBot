@@ -1,7 +1,9 @@
 const { chunk } = require('lodash')
+const db = require('quick.db')
 
 module.exports = {
     description: 'View the shop on the server and buy items.',
+    permissions: [],
     aliases: [`sh0p`],
     usage: 'shop'
 }
@@ -16,12 +18,12 @@ module.exports.run = async(client, message, args) => {
         .setDescription(`To purchase an item use \`${message.px}buy <item id>\`\n\n${items[0].join('\n')}`)
         .setFooter(`Pages 1/${items.length}`)
 
-    message.channel.send(embed).then(async emb => {
+    message.channel.send({ embeds: [embed] }).then(async emb => {
         if (!items[1]) return;
         ['⏮️', '◀️', '▶️', '⏭️', '⏹️'].forEach(async m => await emb.react(m))
 
         const filter = (_, u) => u.id === message.author.id
-        const collector = emb.createReactionCollector(filter, { time: 300000 })
+        const collector = emb.createReactionCollector({ filter, time: 300000 })
         let page = 1
         collector.on('collect', async(r, user) => {
             let current = page;

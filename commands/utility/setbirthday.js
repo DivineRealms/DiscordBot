@@ -2,6 +2,7 @@ const { parse } = require('date-and-time')
 
 module.exports = {
     description: 'Set a users birthday.',
+    permissions: [],
     aliases: [`setbday`],
     usage: 'setbirthday'
 }
@@ -9,7 +10,6 @@ module.exports = {
 module.exports.run = async(client, message, args) => {
     const embed = new client.embed()
         .setFooter(message.author.username, message.author.displayAvatarURL({ dynamic: true, size: 1024 }))
-
 
     const user = message.mentions.users.first()
     const birthd = args.slice(1).join(' ').toLowerCase().charAt(0).toUpperCase() + args.slice(1).join(' ').slice(1).toLowerCase()
@@ -20,13 +20,12 @@ module.exports.run = async(client, message, args) => {
     const age = getAge(args.slice(1).join(' '))
     if (age <= 12) return message.channel.send(embed.setDescription(`You can\'t enter a year greater than ${new Date().getFullYear() - 12}!`))
 
-    message.channel.send(embed
+    message.channel.send({ embeds: [embed
         .setTitle(`🥳 Successfully set their birthday! 🥳`)
         .setDescription(`I have set ${user}'s birthday to ${args.slice(1).join(' ')}!\n\nThey will be ${age + 1}`)
-        .setTimestamp())
+        .setTimestamp()] })
 
-    client.members.ensure(message.guild.id, client.memberSettings, `${user.id}.birthday`)
-    client.members.set(message.guild.id, args.slice(1).join(' '), `${user.id}.birthday`)
+    db.set(`birthday_${message.guild.id}_${user.id}`, args.slice(1).join(" "));
 }
 
 const getAge = b => {

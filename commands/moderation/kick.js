@@ -1,5 +1,6 @@
 module.exports = {
     description: 'Kicks the requested member from the server.',
+    permissions: [],
     aliases: [`forcekick`],
     usage: 'N?A'
 }
@@ -7,8 +8,7 @@ module.exports = {
 module.exports.run = async(client, message, args) => {
     let channel = message.guild.channels.cache.get(client.conf.logging.Kick_Channel_Logs)
 
-    if (!message.member.hasPermission("KICK_MEMBERS")) return message.channel.send(new client.embed().setDescription('You can\'t use that you dumb fuck!'));
-    if (!message.guild.me.hasPermission("KICK_MEMBERS")) return message.channel.send(new client.embed().setDescription(`Sorry, I am missing my required permissions perhaps try moving my role up!`));
+    if (!message.guild.me.permissions.has("KICK_MEMBERS")) return message.channel.send({ embeds: [new client.embed().setDescription(`Sorry, I am missing my required permissions perhaps try moving my role up!`)]});
 
     const member = message.mentions.members.first() || await message.guild.members.fetch(args[0]).catch(() => {});
 
@@ -27,13 +27,13 @@ module.exports.run = async(client, message, args) => {
         .setColor(`#FF8C00	`)
         .setFooter(`Case ${casenum} | Made By Fuel#2649`, message.guild.iconURL({ dynamic: true }))
 
-    await message.channel.send(embed)
-    if (channel) channel.send(embed)
+    await message.channel.send({ embeds: [embed] })
+    if (channel) channel.send({ embeds: [embed] })
     
     db.push(`punishments_${message.guild.id}_${member.id}`, embed);
     db.add(`cases_${message.guild.id}`, 1);
     
     const dm = await member.send(embed.setTitle('You have been kicked!')).catch(() => {})
-    if (!dm) message.channel.send(new client.embed().setDescription(`Failed to send a dm to ${member}, their dms are locked. FUCK.. I WANTED TO PISS THEM OFF!`).setFooter(message.author.username, message.author.displayAvatarURL({ dynamic: true, size: 1024 })))
+    if (!dm) message.channel.send({ embeds: [new client.embed().setDescription(`Failed to send a dm to ${member}, their dms are locked. FUCK.. I WANTED TO PISS THEM OFF!`).setFooter(message.author.username, message.author.displayAvatarURL({ dynamic: true, size: 1024 }))]})
     member.kick().catch(() => {})
 }

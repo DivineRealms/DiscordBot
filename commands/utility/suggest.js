@@ -1,5 +1,6 @@
 module.exports = {
     description: 'Lets you submit a suggestion.',
+    permissions: [],
     aliases: [`sug`],
     usage: 'suggest <Suggestion>'
 }
@@ -7,8 +8,8 @@ module.exports = {
 module.exports.run = async(client, message, args) => {
     let channel = client.channels.cache.get(client.conf.logging.Suggestion_Channel_Logs)
 
-    if (!channel) return message.channel.send(new client.embed().setDescription('A suggestions channel hasnt been setup for this server!').setFooter(message.author.username, message.author.displayAvatarURL({ dynamic: true, size: 1024 })))
-    if (!args[0]) return message.channel.send(new client.embed().setDescription(`Please provide me a suggestion!`).setFooter(message.author.username, message.author.displayAvatarURL({ dynamic: true, size: 1024 })));
+    if (!channel) return message.channel.send({ embeds: [new client.embed().setDescription('A suggestions channel hasnt been setup for this server!').setFooter(message.author.username, message.author.displayAvatarURL({ dynamic: true, size: 1024 }))]})
+    if (!args[0]) return message.channel.send({ embeds: [new client.embed().setDescription(`Please provide me a suggestion!`).setFooter(message.author.username, message.author.displayAvatarURL({ dynamic: true, size: 1024 }))]});
 
     const suggestionembed = new client.embed()
         .setTitle(`Suggestion`)

@@ -1,14 +1,15 @@
-const ms = require('parse-duration');
+const ms = require('ms');
 
 module.exports = {
     description: 'Creates a giveaway.',
+    permissions: [],
     aliases: ['gway'],
     usage: 'giveaway'
 }
 
 
 module.exports.run = async(client, message, args) => {
-    if (!message.member.hasPermission("MANAGE_MESSAGES")) return message.channel.send('You are not allowed to start giveaways');
+    if (!message.member.permissions.has("MANAGE_MESSAGES")) return message.channel.send('You are not allowed to start giveaways');
 
     const channel = message.mentions.channels.first();
     const [, time, wins, ...prize] = args

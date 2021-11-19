@@ -1,5 +1,8 @@
+const db = require('quick.db')
+
 module.exports = {
     description: 'Give money to a user on the server.',
+    permissions: [],
     aliases: ['gv'],
     usage: 'give [@User] <amount>'
 }

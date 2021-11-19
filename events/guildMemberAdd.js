@@ -7,7 +7,7 @@ module.exports = async(client, member) => {
     client.members.ensure(member.guild.id, {})
     let guild = client.settings.ensure(member.guild.id, client.defaultSettings)
     if (guild.locked) {
-        await member.send(new client.embed().setDescription(`${member.guild.name} is currently under a **SERVER-WIDE LOCKDOWN!** Please try joining back a little later!`).setFooter(`${member.guild.name} | Made By Fuel#2649`, member.guild.iconURL({ dynamic: true }))).catch(() => {})
+        await member.send({ embeds: [new client.embed().setDescription(`${member.guild.name} is currently under a **SERVER-WIDE LOCKDOWN!** Please try joining back a little later!`).setFooter(`${member.guild.name} | Made By Fuel#2649`, member.guild.iconURL({ dynamic: true }))]}).catch(() => {})
         member.kick().catch(() => {})
     }
 
@@ -43,7 +43,7 @@ module.exports = async(client, member) => {
             .setDescription(settings.welcomeEmbed.description.replace('{member}', member).replace('{joinPosition}', ord(member.guild.memberCount)))
             .setColor(settings.welcomeEmbed.color)
 
-        log.send(embed)
+        log.send({ embeds: [embed] })
     } else if (settings.welcomeType === 'message') log.send(settings.welcomeMessage.replace('{member}', member).replace('{joinPosition}', ord(member.guild.memberCount)))
     else if (settings.welcomeType === 'dm') member.user.send(settings.welcomeDM.replace('{member}', member).replace('{joinPosition}', ord(member.guild.memberCount))).catch(() => {})
 }

@@ -1,11 +1,7 @@
 const { Message } = require("discord.js")
 
 module.exports = async client => {
-        console.log(`\x1b[34m` + "[INFO] All Commands and Events Loaded!")
-        console.log(`\x1b[35m` + "[INFO] Guilds Prefix: " + client.conf.settings.prefix)
-        console.log(`\x1b[34m` + "[Thank You] We thank you for purchasing the new bot, we hope you enjoy it!")
-        console.log(`\x1b[35m` + "[Creator] Made By Fuel Development")
-        console.log(`\x1b[34m` + "[Support] If you require support you can go to fueldevelopment.net/discord or use discord.gg/VstQPFP\x1b[0m")
+        console.log("[BOT] DivineRealms bot started!")
 
         if (!client.conf.settings.changingActivity.enabled) client.user.setPresence(client.conf.settings.botActivity)
         else {
@@ -15,7 +11,7 @@ module.exports = async client => {
                 if (!settings.enabled) return clearInterval(interval)
                 if (!settings.activities[++i]) i = -1
                 client.user.setActivity(settings.activities[++i], { type: settings.types[i] })
-            }, 10000);
+            }, 180000);
         }
 
         const guild = client.guilds.cache.get(client.conf.settings.GuildID)
@@ -48,7 +44,7 @@ module.exports = async client => {
                 .setDescription(`${settings.birthdayMessage}\n${birthdays.map(s => `<@${s[0]}>`).join(' ')}`)
 
             if (!channel) return 
-            channel.send(embed)
+            channel.send({ embeds: [embed] })
             client.settings.set(guild.id, today, 'birthday') 
         }
 

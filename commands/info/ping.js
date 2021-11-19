@@ -1,5 +1,6 @@
 module.exports = {
     description: 'Allows you to view the bots ping.',
+    permissions: [],
     aliases: ['pings', 'bping'],
     usage: 'ping'
 }

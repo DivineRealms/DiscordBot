@@ -2,6 +2,7 @@ const { chunk } = require('lodash')
 
 module.exports = {
     description: 'A list of all the commands.',
+    permissions: [],
     aliases: [],
     usage: 'commands'
 }
@@ -23,12 +24,12 @@ module.exports.run = async(client, message, args) => {
             .setDescription(commands[0][1].join('\n'))
             .setFooter(`Pages 1/${commands.length}`)
 
-        return message.channel.send(embed).then(async emb => {
+        return message.channel.send({ embeds: [embed] }).then(async emb => {
             if (!commands[1]) return;
             ['⏮️', '◀️', '▶️', '⏭️', '⏹️'].forEach(async m => await emb.react(m))
 
             const filter = (_, u) => u.id === message.author.id
-            const collector = emb.createReactionCollector(filter, { time: 300000 })
+            const collector = emb.createReactionCollector({ filter, time: 300000 })
             let page = 1
             collector.on('collect', async(r, user) => {
                 let current = page;
@@ -54,12 +55,12 @@ module.exports.run = async(client, message, args) => {
             .setDescription(commands[0].join('\n'))
             .setFooter(`Pages 1/${commands.length}`)
 
-        return message.channel.send(embed).then(async emb => {
+        return message.channel.send({ embeds: [embed] }).then(async emb => {
             if (!commands[1]) return;
             ['⏮️', '◀️', '▶️', '⏭️', '⏹️'].forEach(async m => await emb.react(m))
 
             const filter = (_, u) => u.id === message.author.id
-            const collector = emb.createReactionCollector(filter, { time: 300000 })
+            const collector = emb.createReactionCollector({ filter, time: 300000 })
             let page = 1
             collector.on('collect', async(r, user) => {
                 let current = page;
@@ -77,7 +78,7 @@ module.exports.run = async(client, message, args) => {
     }
 
     const command = client.commands.find((c, n) => n === args[0].toLowerCase() || (c.aliases && c.aliases.includes(args[0].toLowerCase())))
-    if (!command) return message.channel.send(new client.embed().setDescription(`I couldnt find a command named \`${args[0]}\``))
+    if (!command) return message.channel.send({ embeds: [new client.embed().setDescription(`I couldnt find a command named \`${args[0]}\``)]})
 
     const embed = new client.embed()
         .setTitle(`${args[0].toLowerCase()} Help`)
@@ -85,5 +86,5 @@ module.exports.run = async(client, message, args) => {
         .addField('Aliases', command.aliases.map(s => `\`${s}\``).join(', ') || 'none')
         .addField('Usage', `\`${message.px}${command.usage}\``)
 
-    message.channel.send(embed)
+    message.channel.send({ embeds: [embed] })
 }

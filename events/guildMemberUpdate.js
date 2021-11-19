@@ -13,7 +13,7 @@ module.exports = (client, oldMember, newMember) => {
             .setDescription(`Added Roles - ${roles.filter(r => !oldMember.roles.cache.has(r.id)).map(s => s.toString()).join(' ') || 'None'}\nRemoved Roles - ${roles.filter(r => !newMember.roles.cache.has(r.id)).map(s => s.toString()).join(' ') || 'None'}`)
             .setFooter(`${newMember.guild.name} | Made By Fuel#2649`, newMember.guild.iconURL({ dynamic: true }))
 
-        log.send(embed)
+        log.send({ embeds: [embed] })
     }
 
     if (newMember.guild.premiumSubscriptionCount !== oldMember.guild.premiumSubscriptionCount && newMember.premiumSince && newMember.premiumSince !== oldMember.premiumSince) {
@@ -24,6 +24,6 @@ module.exports = (client, oldMember, newMember) => {
             .setDescription(settings.Booster_Message.replace(/{member}/g, newMember.user.username).replace('{boosters}', boosters))
             .setThumbnail(settings.Booster_Thumbnail === '{member}' ? newMember.user.displayAvatarURL({ dynamic: true, format: 'png' }) : settings.Booster_Thumbnail || null)
 
-        if (channel) channel.send(embed).catch(() => {})
+        if (channel) channel.send({ embeds: [embed] }).catch(() => {})
     }
 }

@@ -3,6 +3,7 @@ const { load } = require('cheerio')
 
 module.exports = {
     description: 'Get asked a random truth question!',
+    permissions: [],
     aliases: [],
     usage: 'truth'
 }

@@ -3,6 +3,7 @@ const fetch = require('node-fetch')
 
 module.exports = {
     description: 'View a random meme.',
+    permissions: [],
     aliases: ['pic'],
     usage: 'meme'
 }
@@ -18,6 +19,6 @@ module.exports.run = async(client, message, args) => {
         .setImage(item.data.url)
         .setFooter(`Requested By ${message.author.tag}  |  Made By Fuel#2649`, message.guild.iconURL({ dynamic: true }))
 
-    message.channel.send(embed);
+    message.channel.send({ embeds: [embed] });
 
 }

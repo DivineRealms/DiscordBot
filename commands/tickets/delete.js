@@ -6,6 +6,7 @@ const dom = new JSDOM();
 const document = dom.window.document;
 module.exports = {
     description: 'Deletes the ticket.',
+    permissions: [],
     aliases: [`close`]
 }
 
@@ -19,7 +20,7 @@ module.exports.run = async(client, message, args) => {
     let messageCollection = new Collection();
     messageCollection = messageCollection.concat(channelMessages);
 
-    let msgs = messageCollection.array().reverse();
+    let msgs = [...messageCollection.values()].reverse();
 
     let data = await fs.readFile("./data/template.html", "utf8")
 
@@ -52,7 +53,7 @@ module.exports.run = async(client, message, args) => {
         messageContainer.append(nameElement);
 
         if (msg.content.startsWith("```")) {
-            let m = 
+            let m; // code block ovde
             let codeNode = document.createElement("code");
             let textNode = document.createTextNode(m);
             codeNode.appendChild(textNode);
@@ -78,9 +79,9 @@ module.exports.run = async(client, message, args) => {
         .setThumbnail(client.user.displayAvatarURL());
     if (log) log.send(loggingembed)
 
-    if (!message.member.hasPermission('MANAGE_CHANNELS')) return message.channel.send(new client.embed().setDescription('You are missing the permission `Manage Channels`').setFooter(message.author.username, message.author.displayAvatarURL({ dynamic: true, size: 1024 })))
-    if (!ticket) return message.channel.send(new client.embed().setDescription('This command can only be used inside of tickets.').setFooter(message.author.username, message.author.displayAvatarURL({ dynamic: true, size: 1024 })))
-    message.channel.send(new client.embed().setDescription('This channel will be deleted in 10 seconds.').setFooter(message.author.username, message.author.displayAvatarURL({ dynamic: true, size: 1024 })))
+    if (!message.member.permissions.has('MANAGE_CHANNELS')) return message.channel.send({ embeds: [new client.embed().setDescription('You are missing the permission `Manage Channels`').setFooter(message.author.username, message.author.displayAvatarURL({ dynamic: true, size: 1024 }))]})
+    if (!ticket) return message.channel.send({ embeds: [new client.embed().setDescription('This command can only be used inside of tickets.').setFooter(message.author.username, message.author.displayAvatarURL({ dynamic: true, size: 1024 }))]})
+    message.channel.send({ embeds: [new client.embed().setDescription('This channel will be deleted in 10 seconds.').setFooter(message.author.username, message.author.displayAvatarURL({ dynamic: true, size: 1024 }))]})
 
     await new Promise(r => setTimeout(r, 10000))
     message.channel.delete()

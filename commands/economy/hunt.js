@@ -1,7 +1,8 @@
-const { sample, random } = require('lodash')
+const db = require('quick.db')
 
 module.exports = {
     description: 'Go hunting and get some food.',
+    permissions: [],
     aliases: [],
     usage: 'hunt'
 }

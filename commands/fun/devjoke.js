@@ -1,5 +1,6 @@
 module.exports = {
     description: 'A programmer joke only some will get...',
+    permissions: [],
     aliases: ['dvjoke'],
     usage: 'devjoke '
 }
@@ -41,5 +42,5 @@ module.exports.run = async(client, message) => {
         .setThumbnail(`https://cdn.discordapp.com/attachments/735248366291648523/742124928165347428/hi.png`)
         .setDescription(responses[~~(Math.random() * responses.length)])
         .setFooter(message.author.username, message.author.displayAvatarURL({ dynamic: true, size: 1024 }))
-    message.channel.send(Embed);
+    message.channel.send({ embeds: [embed] });
 }

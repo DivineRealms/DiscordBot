@@ -2,6 +2,7 @@ const { chunk } = require('lodash')
 
 module.exports = {
     description: 'Check your inventory on the server.',
+    permissions: [],
     aliases: ['inv'],
     usage: 'inventory'
 }
@@ -18,12 +19,12 @@ module.exports.run = async(client, message, args) => {
         .addField('**Current items:**', items[0] || 'none')
         .setFooter(`Pages 1/${items.length || 1}`)
 
-    message.channel.send(embed).then(async emb => {
+    message.channel.send({ embeds: [embed] }).then(async emb => {
         if (!items[1]) return;
         ['⏮️', '◀️', '▶️', '⏭️', '⏹️'].forEach(async m => await emb.react(m))
 
         const filter = (_, u) => u.id === message.author.id
-        const collector = emb.createReactionCollector(filter, { time: 300000 })
+        const collector = emb.createReactionCollector({ filter, time: 300000 })
         let page = 1
         collector.on('collect', async(r, user) => {
             let current = page;

@@ -1,14 +1,13 @@
-const ms = require('parse-duration')
+const ms = require("ms");
 
 module.exports = {
     description: 'Lets you mute the requested user.',
+    permissions: [],
     aliases: ['stopspeaking'],
     usage: 'mute <@User> [time | reason] [reason]'
 }
 
 module.exports.run = async(client, message, args) => {
-    if (!message.member.hasPermission("MUTE_MEMBERS"))
-        return message.channel.send(new client.embed().setDescription(`You are missing permission \`MUTE_MEMBERS\``).setFooter(message.author.username, message.author.displayAvatarURL({ dynamic: true, size: 1024 })));
     const member = message.mentions.members.first() || message.guild.member(args[0])
     const muterole = message.guild.roles.cache.get(client.conf.moderation.Mute_Role)
     const time = ms(args[1])
@@ -16,12 +15,12 @@ module.exports.run = async(client, message, args) => {
     const log = client.channels.cache.get(client.conf.logging.Mute_Channel_Logs)
 
     if (!member) return message.channel.send({ embeds: [client.embedBuilder(client, message, "Error", "You need to enter valid user.", "RED")] });
-    if (!muterole) return message.channel.send(new client.embed().setDescription('I cant find the mute role on the server!').setFooter(message.author.username, message.author.displayAvatarURL({ dynamic: true, size: 1024 })))
-    if (member.id === message.author.id) return message.channel.send(new client.embed().setDescription('Stop being a dumbass... You can\'t mute yourself.').setFooter(message.author.username, message.author.displayAvatarURL({ dynamic: true, size: 1024 })))
-    if (member.user.bot) return message.channel.send(new client.embed().setDescription('You can\'t mute a bot!').setFooter(message.author.username, message.author.displayAvatarURL({ dynamic: true, size: 1024 })))
-    if (member.roles.highest.rawPosition >= message.member.roles.highest.rawPosition) return message.channel.send(new client.embed().setDescription('You can only mute members that have a lower role than you.').setFooter(message.author.username, message.author.displayAvatarURL({ dynamic: true, size: 1024 })))
-    if (member.hasPermission('ADMINISTRATOR') || member.roles.highest.rawPosition >= message.guild.me.roles.highest.rawPosition) return message.channel.send(new client.embed().setDescription('I cant mute that member').setFooter(message.author.username, message.author.displayAvatarURL({ dynamic: true, size: 1024 })))
-    if (member.roles.cache.has(muterole.id)) return message.channel.send(new client.embed().setDescription('That member is already muted!').setFooter(message.author.username, message.author.displayAvatarURL({ dynamic: true, size: 1024 })))
+    if (!muterole) return message.channel.send({ embeds: [new client.embed().setDescription('I cant find the mute role on the server!').setFooter(message.author.username, message.author.displayAvatarURL({ dynamic: true, size: 1024 }))]})
+    if (member.id === message.author.id) return message.channel.send({ embeds: [new client.embed().setDescription('Stop being a dumbass... You can\'t mute yourself.').setFooter(message.author.username, message.author.displayAvatarURL({ dynamic: true, size: 1024 }))]})
+    if (member.user.bot) return message.channel.send({ embeds: [new client.embed().setDescription('You can\'t mute a bot!').setFooter(message.author.username, message.author.displayAvatarURL({ dynamic: true, size: 1024 }))]})
+    if (member.roles.highest.position >= message.member.roles.highest.position) return message.channel.send({ embeds: [new client.embed().setDescription('You can only mute members that have a lower role than you.').setFooter(message.author.username, message.author.displayAvatarURL({ dynamic: true, size: 1024 }))]})
+    if (member.permissions.has('ADMINISTRATOR') || member.roles.highest.position >= message.guild.me.roles.highest.position) return message.channel.send({ embeds: [new client.embed().setDescription('I cant mute that member').setFooter(message.author.username, message.author.displayAvatarURL({ dynamic: true, size: 1024 }))]})
+    if (member.roles.cache.has(muterole.id)) return message.channel.send({ embeds: [new client.embed().setDescription('That member is already muted!').setFooter(message.author.username, message.author.displayAvatarURL({ dynamic: true, size: 1024 }))]})
 
     client.members.ensure(message.guild.id, client.memberSettings, member.id)
 
@@ -40,12 +39,12 @@ module.exports.run = async(client, message, args) => {
         .setThumbnail(member.user.displayAvatarURL())
         .setColor(`YELLOW`)
 
-    if (log) log.send(embed)
-    await message.channel.send(embed)
+    if (log) log.send({ embeds: [embed] })
+    await message.channel.send({ embeds: [embed] })
 
     client.members.push(message.guild.id, embed, `${member.id}.punishments`)
     client.settings.push(message.guild.id, embed, 'cases')
 
     let dm = await member.send(embed.setTitle('You have been muted!')).catch(() => {})
-    if (!dm) message.channel.send(new client.embed().setDescription(`Damn no getting them mad.. their dms are locked.`))
+    if (!dm) message.channel.send({ embeds: [new client.embed().setDescription(`Damn no getting them mad.. their dms are locked.`)]})
 }

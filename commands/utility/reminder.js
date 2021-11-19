@@ -1,7 +1,8 @@
-const parse = require('parse-duration');
+const parse = require('ms');
 
 module.exports = {
     description: 'Lets you set a reminder.',
+    permissions: [],
     aliases: [`rem`],
     usage: 'reminder <TIME> <Reason>'
 }
@@ -12,8 +13,8 @@ module.exports.run = async(client, message, args) => {
         .setFooter(message.author.username, message.author.displayAvatarURL({ dynamic: true, size: 1024 }))
     let [end, ...reason] = args
 
-    if ([null, Infinity].includes(parse(end))) return message.channel.send(embed3);
-    if (!reason[0]) return message.channel.send(new client.embed().setDescription('You need to enter what to remind you about!').setFooter(message.author.username, message.author.displayAvatarURL({ dynamic: true, size: 1024 })))
+    if ([null, Infinity].includes(parse(end))) return message.channel.send({ embeds: [embed3] });
+    if (!reason[0]) return message.channel.send({ embeds: [new client.embed().setDescription('You need to enter what to remind you about!').setFooter(message.author.username, message.author.displayAvatarURL({ dynamic: true, size: 1024 }))]})
 
     const embed = new client.embed()
         .setAuthor('Reminder!')
@@ -21,6 +22,6 @@ module.exports.run = async(client, message, args) => {
         .setFooter(message.author.username, message.author.displayAvatarURL({ dynamic: true, size: 1024 }))
 
     setTimeout(() => {
-        message.author.send(embed).catch(() => {})
+        message.author.send({ embeds: [embed] }).catch(() => {})
     }, parse(end))
 }

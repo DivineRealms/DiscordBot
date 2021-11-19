@@ -7,5 +7,5 @@ module.exports = (client, channel) => {
         .setDescription(`**Channel name:** ${channel.name}\n**Channel ID:** \`${channel.id}\``)
         .setFooter(`${channel.guild.name} | Made By Fuel#2649`, channel.guild.iconURL({ dynamic: true }))
 
-    log.send(embed)
+    log.send({ embeds: [embed] })
 }

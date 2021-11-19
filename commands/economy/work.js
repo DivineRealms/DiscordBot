@@ -1,7 +1,8 @@
-const { sample, random } = require('lodash')
+const db = require('quick.db')
 
 module.exports = {
     description: 'Check your balance on the server.',
+    permissions: [],
     aliases: ['bal'],
     usage: 'balance [@User]'
 }

@@ -1,5 +1,6 @@
 module.exports = {
     description: 'Feel Lonely? Give someone a hug.',
+    permissions: [],
     aliases: ['hugs', 'cuddles'],
     usage: 'hug <@User>'
 }
@@ -10,7 +11,7 @@ module.exports.run = async(client, message, args) => {
     const gifs = client.users.fetch(args[0]).catch(() => {});
 
     if (!gifs) {
-        return message.channel.send(new client.embed().setDescription(`You need to mention who you would like to hug!`).setFooter(message.author.username, message.author.displayAvatarURL({ dynamic: true, size: 1024 })))
+        return message.channel.send({ embeds: [new client.embed().setDescription(`You need to mention who you would like to hug!`).setFooter(message.author.username, message.author.displayAvatarURL({ dynamic: true, size: 1024 }))]})
     } else {
         let gifs = [
             "https://media.giphy.com/media/bbxTrFmeoM7aU/giphy.gif",
@@ -43,6 +44,6 @@ module.exports.run = async(client, message, args) => {
             .setImage(randomGif)
             .setFooter(`${message.author.tag} Needed A Hug!  |  Made By Fuel#2649`, message.author.displayAvatarURL({ dynamic: true }))
             .setTimestamp()
-        message.channel.send(embed)
+        message.channel.send({ embeds: [embed] })
     }
 }

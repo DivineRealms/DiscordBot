@@ -1,12 +1,13 @@
 module.exports = {
     description: 'Creates an advanced poll.',
+    permissions: [],
     aliases: ['advpoll'],
     usage: 'advancedpoll Question | op1 | op2 | etc\`\nMinimum of 2 options are required'
 }
 
 module.exports.run = async(client, message, args) => {
-    if (!message.member.hasPermission("MANAGE_CHANNELS"))
-        return message.channel.send(new client.embed().setDescription(`You are missing permission \`MANAGE_CHANNELS\``).setFooter(message.author.username, message.author.displayAvatarURL({ dynamic: true, size: 1024 })));
+    if (!message.member.permissions.has("MANAGE_CHANNELS"))
+        return message.channel.send({ embeds: [new client.embed().setDescription(`You are missing permission \`MANAGE_CHANNELS\``).setFooter(message.author.username, message.author.displayAvatarURL({ dynamic: true, size: 1024 }))]});
     let options = args.join(' ').split('|').map(s => s.trim().replace(/\s\s+/g, ' '))
     let question = options.shift(),
         emoji = ['🇦', '🇧', '🇨', '🇩', '🇪', '🇫', '🇬', '🇭', '🇮', '🇯']
@@ -22,7 +23,7 @@ module.exports.run = async(client, message, args) => {
 
     for (let i = 1; i < options.length && i < 10; i++) embed.addField('\u200b', `${emoji[i]} ${options[i]}`)
 
-    let msg = await message.channel.send(embed)
+    let msg = await message.channel.send({ embeds: [embed] })
 
     for (let i in options) await msg.react(emoji[i])
 };

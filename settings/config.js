@@ -9,8 +9,8 @@
 
 module.exports.config = {
     settings: {
-        token: 'DISCORD-DEV-TOKEN',
-        prefix: '.',
+        token: 'ODcwMzgwNzEwMzM3MzE0OTE3.YQL7NA.SLo9w_XgaaVLJQAYMBcMzGSnPBI',
+        prefix: '+',
         mentionPrefix: true, //Whether the bot has a mention prefix
         botActivity: {
             status: 'online',
@@ -25,8 +25,8 @@ module.exports.config = {
             types: ['PLAYING', 'WATCHING', 'LISTENING']
         },
         embedColor: 'BLUE',
-        GuildID: 'GUILDID',
-        BotOwnerDiscordID: 'USERID',
+        GuildID: '823820599528390657',
+        BotOwnerDiscordID: '823228305167351808',
     },
     automod: {
         // - - - BANNED STUFF - - -
@@ -257,8 +257,7 @@ module.exports.config = {
         birthdayMessage: 'Happy birthday to the following member(s)! Make sure to wish them a happy birthday in general!'
     },
     economy: {
-        enabled: false,
-        dailyWaitTime: '10s', //how long until someone can claim their daily reward
+        enabled: true,
         currencySymbol: '🪙', //the emoji for the type of currency (🪙 is a coin emoji)
         shopItemsFront: true, //whether to add the custom shop items to the front of the shop
         shopItems: [{
@@ -326,11 +325,6 @@ module.exports.memberSettings = {
         cheques: 0,
         meat: 0,
         items: []
-    },
-    xp: {
-        xp: 0,
-        level: 0,
-        totalXP: 0
     },
     muted: {
         muted: false,

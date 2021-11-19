@@ -3,6 +3,7 @@ const { load } = require('cheerio')
 
 module.exports = {
     description: 'Get asked a random would you rather question.',
+    permissions: [],
     aliases: [],
     usage: 'wyr'
 }
@@ -16,7 +17,7 @@ module.exports.run = (client, message, args) => {
             .setTitle('Would you rather...')
             .setDescription(`:regional_indicator_a: **${blue[2]}**\n\n:b: **${red[2]}**`)
             .setFooter(message.author.username, message.author.displayAvatarURL({ dynamic: true, size: 1024 }))
-        let m = await message.channel.send(embed)
+        let m = await message.channel.send({ embeds: [embed] })
         m.react('🇦').then(m.react('🅱️'))
 
         await new Promise(resolve => setTimeout(resolve, 8000))

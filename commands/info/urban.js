@@ -3,6 +3,7 @@ const urban = require(`relevant-urban`)
 
 module.exports = {
     description: 'Lets you search whatever you want on urban dictionary.',
+    permissions: [],
     aliases: ['ud'],
     usage: 'urban <search>'
 }
@@ -20,6 +21,6 @@ module.exports.run = async(client, message, args) => {
         .addField(`Definition In An Example`, `${def.example || 'none'}`.slice(0, 1000), false)
         .addField(`Author`, def.author, false)
         .setFooter(message.author.username, message.author.displayAvatarURL({ dynamic: true, size: 1024 }))
-    message.channel.send(embed)
+    message.channel.send({ embeds: [embed] })
 
 }

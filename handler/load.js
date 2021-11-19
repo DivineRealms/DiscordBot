@@ -1,7 +1,6 @@
 const { GiveawaysManager: Giveaway } = require(`discord-giveaways`)
 const { MessageEmbed } = require('discord.js')
 const { readdirSync } = require('fs')
-const Player = require('distube')
 const Enmap = require('enmap')
 
 module.exports = async client => {
@@ -28,7 +27,8 @@ module.exports = async client => {
         ...settings
     })
     
-    client.embeds = require("embedBuilder.js");
+    client.embedBuilder = require("../embedBuilder.js");
+    client.utils = require("../utils.js");
 
     process.on('unhandledRejection', console.log)
     process.on('uncaughtException', console.log)

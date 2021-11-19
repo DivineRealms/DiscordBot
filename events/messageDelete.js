@@ -14,5 +14,5 @@ module.exports = async(client, message) => {
             .setDescription(`**Channel:** ${message.channel}\n**User:** ${message.author.tag}${audit ? `\n**Deleted By**: ${audit.executor}` : ''}\n**Message Deleted:** ${message.content}\n**Message ID:**  ${message.id}`)
         .setFooter(message.author.username, message.author.displayAvatarURL({ dynamic: true, size: 1024 }))
 
-    log.send(embed)
+    log.send({ embeds: [embed] })
 }

@@ -33,7 +33,7 @@ module.exports = async(client, member) => {
             .setDescription(settings.goodbyeEmbed.description.replace('{member}', member))
             .setColor(settings.goodbyeEmbed.color)
 
-        log.send(embed)
+        log.send({ embeds: [embed] })
     } else if (settings.goodbyeType === 'message') log.send(settings.goodbyeMessage.replace('{member}', member))
 
 }

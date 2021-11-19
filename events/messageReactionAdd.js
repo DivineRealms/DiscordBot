@@ -15,8 +15,8 @@ module.exports = async(client, reaction, user) => {
             .setColor(reaction.emoji.name === '✅' ? 'GREEN' : 'RED')
             .setThumbnail(user2.displayAvatarURL({ dynamic: true }))
 
-        user2.send(embed).catch(console.error)
-        reaction.message.channel.send(embed)
+        user2.send({ embeds: [embed] }).catch(console.error)
+        reaction.message.channel.send({ embeds: [embed] })
         client.settings.delete(reaction.message.guild.id, `suggestions.${reaction.message.id}`)
     }
 
@@ -46,7 +46,7 @@ module.exports = async(client, reaction, user) => {
 
                 if (reaction.message.content) embed.addField('Content', reaction.message.content)
                 if (['png', 'jpg', 'jpeg', 'gif', 'webp'].some(e => (reaction.message.attachments.first() || { url: '' }).url.endsWith(e))) embed.setImage(reaction.message.attachments.first().url)
-                let msg = await schannel.send(embed)
+                let msg = await schannel.send({ embeds: [embed] })
                 client.settings.set(reaction.message.guild.id, { board: msg.id }, `stars.${reaction.message.id}`)
             }
         }
@@ -71,10 +71,10 @@ module.exports = async(client, reaction, user) => {
         }, { id: user.id, allow: 'VIEW_CHANNEL' }, ...permissions]
     })
 
-    channel.send(new client.embed()
+    channel.send({ embeds: [new client.embed()
         .setTitle(settings.Ticket_Title)
         .setDescription(client.resolveMember(settings.Ticket_Message, user))
-    )
+    ]})
 
     client.settings.set(reaction.message.guild.id, { user: user.id }, `tickets.${channel.id}`)
 }

@@ -5,6 +5,7 @@ const { chunk } = require('lodash')
 
 module.exports = {
     description: 'Play a game of tic-tac-toe with a friend.',
+    permissions: [],
     aliases: ['ttt'],
     usage: 'tictactoe <user>'
 }
@@ -40,9 +41,9 @@ module.exports.run = async(client, message, args, cmd) => {
 
     let currentPlayer = message.author.id
 
-    message.channel.send(embed).then(emb => {
+    message.channel.send({ embeds: [embed] }).then(emb => {
         let filter = m => m.author.id == currentPlayer && !isNaN(m.content) && m.content > 0 && m.content < 10
-        let collector = message.channel.createMessageCollector(filter, { time: 30000 })
+        let collector = message.channel.createMessageCollector({ filter, time: 30000 })
 
         collector.on('collect', m => {
             if (!games.get(message.guild.id + message.author.id) || !games.get(message.guild.id + message.mentions.users.first().id)) return

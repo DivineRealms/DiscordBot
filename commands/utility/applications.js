@@ -2,6 +2,7 @@ const { chunk } = require('lodash')
 
 module.exports = {
     description: 'View the available applications in the channel.',
+    permissions: [],
     aliases: [],
     usage: 'applications'
 }
@@ -14,14 +15,14 @@ module.exports.run = async(client, message, args) => {
         .setDescription(`Please select what application you would like to apply for.\n\nUse the reactions to flip through the applications on the server.\n\n${apps[0].join('\n')}\n\u200b`)
         .setFooter(`Pages 1/${apps.length} - This only contains applications allowed in this channel.`)
 
-    if (!applications.length) return message.channel.send(new client.embed().setDescription('I couldnt find any applications available in this channel!'))
+    if (!applications.length) return message.channel.send({ embeds: [new client.embed().setDescription('I couldnt find any applications available in this channel!')]})
 
-    message.channel.send(embed).then(async emb => {
+    message.channel.send({ embeds: [embed] }).then(async emb => {
         if (!apps[1]) return;
         ['⏮️', '◀️', '▶️', '⏭️', '⏹️'].forEach(async m => await emb.react(m))
 
         const filter = (_, u) => u.id === message.author.id
-        const collector = emb.createReactionCollector(filter, { time: 300000 })
+        const collector = emb.createReactionCollector({ filter, time: 300000 })
         let page = 1
         collector.on('collect', async(r, user) => {
             let current = page;
