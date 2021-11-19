@@ -11,13 +11,13 @@ module.exports.run = async(client, message, args) => {
     const reason = args.slice(1).join(' ') || 'No Reason Specified'
     if (!message.member.hasPermission("MUTE_MEMBERS"))
         return message.channel.send(new client.embed().setDescription(`You are missing permission \`MUTE_MEMBERS\``).setFooter(message.author.username, message.author.displayAvatarURL({ dynamic: true, size: 1024 })));
-    if (!member) return message.channel.send(new client.embed().setDescription('Please put a valid member or a user ID for me to unmute').setFooter(message.author.username, message.author.displayAvatarURL({ dynamic: true, size: 1024 })))
-    if (!muterole) return message.channel.send(new client.embed().setDescription('I cant find the mute role on the server!').setFooter(message.author.username, message.author.displayAvatarURL({ dynamic: true, size: 1024 })))
-    if (member.id === message.author.id) return message.channel.send(new client.embed().setDescription('Stop being a dumbass... You can\'t unmute yourself.').setFooter(message.author.username, message.author.displayAvatarURL({ dynamic: true, size: 1024 })))
-    if (member.user.bot) return message.channel.send(new client.embed().setDescription('You can\'t unmute a bot!').setFooter(message.author.username, message.author.displayAvatarURL({ dynamic: true, size: 1024 })))
-    if (member.roles.highest.rawPosition >= message.member.roles.highest.rawPosition) return message.channel.send(new client.embed().setDescription('You can only unmute members that have a lower role than you.').setFooter(message.author.username, message.author.displayAvatarURL({ dynamic: true, size: 1024 })))
-    if (member.hasPermission('ADMINISTRATOR') || member.roles.highest.rawPosition >= message.guild.me.roles.highest.rawPosition) return message.channel.send(new client.embed().setDescription('I cant unmute that member').setFooter(message.author.username, message.author.displayAvatarURL({ dynamic: true, size: 1024 })))
-    if (!member.roles.cache.has(muterole.id)) return message.channel.send(new client.embed().setDescription('That member is already unmuted!').setFooter(message.author.username, message.author.displayAvatarURL({ dynamic: true, size: 1024 })))
+    if (!member) return message.channel.send({ embeds: [client.embedBuilder(client, message, "Error", "You need to enter valid user.", "RED")] });
+    if (!muterole) return message.channel.send({ embeds: [client.embedBuilder(client, message, "Error", "I cannot find mute role.", "RED")] });
+    if (member.id === message.author.id) return message.channel.send({ embeds: [client.embedBuilder(client, message, "Error", "You cannot unmute yourself.", "RED")] });
+    if (member.user.bot) return message.channel.send({ embeds: [client.embedBuilder(client, message, "Error", "You cannot unmute bot.", "RED")] });
+    if (member.roles.highest.rawPosition >= message.member.roles.highest.rawPosition) return message.channel.send({ embeds: [client.embedBuilder(client, message, "Error", "That Member has higher roles than you.", "RED")] });
+    if (member.hasPermission('ADMINISTRATOR') || member.roles.highest.rawPosition >= message.guild.me.roles.highest.rawPosition) return message.channel.send({ embeds: [client.embedBuilder(client, message, "Error", "I can't unmute that member.", "RED")] });
+    if (!member.roles.cache.has(muterole.id)) return message.channel.send({ embeds: [client.embedBuilder(client, message, "Error", "That Member is already muted.", "RED")] });
 
     client.members.ensure(message.guild.id, client.memberSettings, member.id)
 

@@ -43,7 +43,6 @@ module.exports = async client => {
     for (const evt of readdirSync('./events'))
         client.on(evt.split('.')[0], require(`../events/${evt}`).bind(null, client))
 
-    require('./music')(client, client.player)
     client.login(client.conf.settings.token).catch(() =>
         console.log('[Error] Invalid token provided in config')
     )

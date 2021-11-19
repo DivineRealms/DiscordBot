@@ -10,9 +10,9 @@ module.exports.run = async(client, message, args) => {
 
     weather.find({ search: args.join(" "), degreeType: 'F' }, function(error, result) {
         if (error) return message.channel.send(error);
-        if (!args[0]) return message.channel.send(new client.embed().setDescription(`Please specify a location`).setFooter(` ${message.guild.name}  |  Made By Fuel#2649`, message.author.displayAvatarURL({ dynamic: true })));
+        if (!args[0]) return message.channel.send({ embeds: [client.embedBuilder(client, message, "Error", "You need to enter location.", "RED")] });
 
-        if (result === undefined || result.length === 0) return message.channel.send(new client.embed().setDescription(`Sorry! Invalid location provided!`).setFooter(` ${message.guild.name}  |  Made By Fuel#2649`, message.author.displayAvatarURL({ dynamic: true })));
+        if (result === undefined || result.length === 0) return message.channel.send({ embeds: [client.embedBuilder(client, message, "Error", "You have entered Invalid Location.", "RED")] });
 
         var current = result[0].current;
 

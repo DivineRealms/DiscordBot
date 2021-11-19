@@ -8,10 +8,10 @@ module.exports = {
 }
 
 module.exports.run = async(client, message, args) => {
-    if (!args[0]) return message.channel.send(new client.embed().setDescription(`Please tell me what im looking up.`).setFooter(message.author.username, message.author.displayAvatarURL({ dynamic: true, size: 1024 })))
+    if (!args[0]) return message.channel.send({ embeds: [client.embedBuilder(client, message, "Error", "You need to enter term to search for.", "RED")] });
 
     let def = await urban(args[0]).catch(() => {}) //NUT NUT
-    if (!def) return message.channel.send(new client.embed().setDescription(`Sorry! I couldnt find any results for **${args[0]}**`).setFooter(message.author.username, message.author.displayAvatarURL({ dynamic: true, size: 1024 })))
+    if (!def) return message.channel.send({ embeds: [client.embedBuilder(client, message, "Error", `No Results found for ${args[0]}.`, "RED")] });
 
     const embed = new client.embed()
         .setTitle(`Click Me To View The Word Online!`)
