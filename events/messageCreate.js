@@ -1,13 +1,21 @@
 const escapeRegex = str => str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 const utils = require('../handler/utilities')
 const leveling = require("../utils/leveling.js");
+const db = require('quick.db')
 
 const cooldownList = [];
 
 module.exports = async(client, message) => {
     if(message.channel.type == "DM") return;
     if (!message.guild || message.author.bot) return
-    utils.automod(client, message)
+    utils.automod(client, message);
+
+    let level = db.fetch(`level_${message.guild.id}_${message.author.id}`);
+    let xp = db.fetch(`xp_${message.guild.id}_${message.author.id}`);
+    if(level == null || xp == null) {
+      db.add(`level_${message.guild.id}_${message.author.id}`, 1);
+      db.add(`xp_${message.guild.id}_${message.author.id}`, 1);
+    }
 
     if (client.afk.has(message.author.id)) {
         message.channel.send(`Welcome back ${message.author}! I removed your afk.`)
