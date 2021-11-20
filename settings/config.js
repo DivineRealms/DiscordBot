@@ -1,11 +1,10 @@
-//   ______         _  ______               _                                  _   
-//  |  ___|        | | |  _  \             | |                                | |  
-//  | |_ _   _  ___| | | | | |_____   _____| | ___  _ __  _ __ ___   ___ _ __ | |_ 
-//  |  _| | | |/ _ \ | | | | / _ \ \ / / _ \ |/ _ \| '_ \| '_ ` _ \ / _ \ '_ \| __|
-//  | | | |_| |  __/ | | |/ /  __/\ V /  __/ | (_) | |_) | | | | | |  __/ | | | |_ 
-//  \_|  \__,_|\___|_| |___/ \___| \_/ \___|_|\___/| .__/|_| |_| |_|\___|_| |_|\__|
-//                                                 | |                             
-//                                                 |_|                             
+//   ____  _       _            ____            _               
+// |  _ \(_)_   _(_)_ __   ___|  _ \ ___  __ _| |_ __ ___  ___ 
+// | | | | \ \ / / | '_ \ / _ \ |_) / _ \/ _` | | '_ ` _ \/ __|
+// | |_| | |\ V /| | | | |  __/  _ <  __/ (_| | | | | | | \__ \
+// |____/|_| \_/ |_|_| |_|\___|_| \_\___|\__,_|_|_| |_| |_|___/
+//
+
 
 module.exports.config = {
     settings: {
@@ -26,7 +25,7 @@ module.exports.config = {
         },
         embedColor: 'BLUE',
         GuildID: '823820599528390657',
-        BotOwnerDiscordID: '823228305167351808',
+        BotOwnerDiscordID: ['823228305167351808', '237171563760320514'],
         Emojis: {
             Yes: '👍',
             No: '👎'
@@ -82,11 +81,6 @@ module.exports.config = {
         Member_Count_Message: 'Members: {count}',
         Channel_Count_Channel: 'CHANNELID',
         Channel_Count_Message: 'Channels: {count}',
-        VC_Roles: [
-            { roleID: 'ROLEID', channelID: 'ROLEID' },
-            { roleID: '', channelID: '' },
-            { roleID: '', channelID: '' }
-        ],
         Invite_Link: 'https://discord.gg/VstQPFP',
         Booster_Channel: 'CHANNELID',
         Booster_Title: '{member} just boosted the server!',
@@ -94,7 +88,7 @@ module.exports.config = {
         Booster_Thumbnail: '{member}' //Select either a image url, or {member} for the booster avatar
     },
     counting: {
-        Counting_Channel: 'CHANNELID', //leave blank for none
+        Counting_Channel: '911704154077016075', //leave blank for none
         Wrong_Number_Message: 'Wrong number {username}, The current number is {number}!',
         One_At_A_Time: false,
         One_At_A_Time_Message: 'Sorry {username}, but you can only say a number one at a time!',

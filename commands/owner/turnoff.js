@@ -9,7 +9,7 @@ module.exports = {
 }
 
 module.exports.run = async(client, message, args) => {
-    if (message.author.id !== client.conf.settings.BotOwnerDiscordID) return message.channel.send({ embeds: [client.embedBuilder(client, message, "Error", `You're not Owner`, "RED")] });
+    if (!client.conf.settings.BotOwnerDiscordID.includes(message.author.id)) return message.channel.send({ embeds: [client.embedBuilder(client, message, "Error", `You're not Owner`, "RED")] });
 
     message.channel.send({ content: 'Bot have been turned off.' }).then(() => {
         client.destroy()

@@ -2,13 +2,17 @@ const muteChecks = require("../utils/muteChecks.js");
 const db = require('quick.db')
 
 module.exports = async client => {
-        console.log("_________________________________");
-        console.log(" ");
-        console.log("[DivineRealms] Bot has started and is online now!");
-        console.log("_________________________________");
+    console.log(" ")
+    console.log(" ____  _       _            ____            _               ")
+    console.log("|  _ \\(_)_   _(_)_ __   ___|  _ \\ ___  __ _| |_ __ ___  ___ ");
+    console.log("| | | | \\ \\ / / | '_ \\ / _ \\ |_) / _ \\/ _` | | '_ ` _ \\/ __|");
+    console.log("| |_| | |\\ V /| | | | |  __/  _ <  __/ (_| | | | | | | \\__ \\");
+    console.log("|____/|_| \\_/ |_|_| |_|\\___|_| \\_\\___|\\__,_|_|_| |_| |_|___/");
+    console.log(" ")
+    console.log("             Bot has started and is online now");
+    console.log(" ");
 
         if (!client.conf.settings.changingActivity.enabled) {
-            console.log('ovde')
             client.user.setActivity(client.conf.settings.botActivity, { type: settings.types[i] })
         } else {
             const settings = client.conf.settings.changingActivity
@@ -17,7 +21,6 @@ module.exports = async client => {
             let interval = setInterval(() => {
                 if (!settings.enabled) return clearInterval(interval)
                 if (!settings.activities[++i]) i = -1
-                console.log('dole')
                 client.user.setActivity(settings.activities[++i], { type: settings.types[i] })
             }, 180000);
         }

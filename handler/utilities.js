@@ -59,14 +59,14 @@ module.exports.automod = async(client, message) => {
             if (current !== 1 && client.conf.counting.Restart_On_Incorrect_Number) client.settings.set(message.guild.id, 1, 'counting.current')
             return message.channel.send({ embeds: [new client.embed().setDescription(
                 client.conf.counting.Wrong_Number_Message.replace('{username}', message.author.username).replace('{number}', current) + '\n' + (current !== 1 && client.conf.counting.Restart_On_Incorrect_Number ? client.conf.counting.Restart_Message : '')
-            )]}).then(msg => msg.delete({ timeout: 7000 }))
+            )]}).then(msg => setTimeout(() => msg.delete(), 7000))
         }
 
         if (client.conf.counting.One_At_A_Time && last === message.author.id && current !== 1) {
             message.delete()
             if (current !== 1 && client.conf.counting.Restart_On_Incorrect_Number) client.settings.set(message.guild.id, 1, 'counting.current')
             return message.channel.send({ embeds: [new client.embed().setDescription(client.conf.counting.One_At_A_Time_Message.replace('{username}', message.author.username) + '\n' +
-                (client.conf.counting.Restart_On_Incorrect_Number && current !== 1 ? client.conf.counting.Restart_Message : ''))]}).then(msg => msg.delete({ timeout: 7000 }))
+                (client.conf.counting.Restart_On_Incorrect_Number && current !== 1 ? client.conf.counting.Restart_Message : ''))]}).then(msg => setTimeout(() => msg.delete(), 7000))
         }
 
         if (client.conf.counting.React_On_Message) message.react(client.conf.counting.Reaction)
@@ -74,7 +74,7 @@ module.exports.automod = async(client, message) => {
         client.settings.set(message.guild.id, message.author.id, 'counting.last')
     }
 
-    if (msgs >= 5 && settings.Enable_Spam) {
+    if (msgs >= 8 && settings.Enable_Spam) {
         if (settings.Bypass_Spam_Channels.includes(message.channel.id)) return
         if (settings.Bypass_Spam_Roles.some(r => message.member.roles.cache.has(r))) return
         message.member.roles.add(client.conf.moderation.Mute_Role).then(() => {
