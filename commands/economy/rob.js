@@ -2,6 +2,7 @@ const db = require('quick.db')
 
 module.exports = {
     name: 'rob',
+    category: 'economy',
     description: 'Try to rob that one dood you want.',
     permissions: [],
     cooldown: 0,
@@ -10,26 +11,22 @@ module.exports = {
 }
 
 module.exports.run = async(client, message, args) => {
-    const member = message.mentions.members.first() || message.guild.member(args[0])
+    const member = message.mentions.members.first() || message.guild.members.cache.get(args[0])
 
-    if (!member) return message.channel.send({ embeds: [new client.embed().setDescription('Please specify a user to rob!').setFooter(message.author.username, message.author.displayAvatarURL({ dynamic: true, size: 1024 }))]});
-    if (member.id === message.author.id) return message.channel.send({ embeds: [new client.embed().setDescription('Why are you trying to rob yourself?').setFooter(message.author.username, message.author.displayAvatarURL({ dynamic: true, size: 1024 }))]})
+    if (!member) return message.channel.send({ embeds: [client.embedBuilder(client, message, "Error", `You need to provide user.`, "RED")] });
+    if (member.id === message.author.id) return message.channel.send({ embeds: [client.embedBuilder(client, message, "Error", `You cannot rob yourself.`, "RED")] });
 
-    const authordata = client.members.get(message.guild.id, message.author.id)
-    const memberbal = client.members.ensure(message.guild.id, client.memberSettings, member.id).balance
+    const memberbal = db.fetch(`money_${message.guild.id}_${member.id}`);
     const rob = ~~(Math.random() * 3)
-    const amount = ~~(memberbal.wallet / 10)
+    const amount = ~~(memberbal / 10)
 
-    if (!authordata.inventory.items.some(s => s.name.includes('🔧'))) return message.channel.send({ embeds: [new client.embed().setDescription(`You need to buy a **crowbar** to rob a person!\nBuy one in the shop using \`${message.px}shop\``)]})
-    if (!authordata.balance.wallet < 100) return message.channel.send({ embeds: [new client.embed().setDescription(`You need at least **100** ${message.coin} in your wallet to rob a person!`)]})
-
-    if (!memberbal.wallet) return message.channel.send({ embeds: [new client.embed().setDescription('That user doesnt have any money on them to rob!').setFooter(message.author.username, message.author.displayAvatarURL({ dynamic: true, size: 1024 }))]})
+    if (!memberbal || memberbal < 200) return message.channel.send({ embeds: [client.embedBuilder(client, message, "Error", `That Member doesn't have money.`, "RED")] });
     if (rob) {
-        message.channel.send({ embeds: [new client.embed().setDescription(`You attempted to rob ${member} but got caught! the fine is **${amount}** ${message.coin}!`).setFooter(message.author.username, message.author.displayAvatarURL({ dynamic: true, size: 1024 }))]})
-        client.members.math(message.guild.id, '-', amount, `${message.author.id}.balance.wallet`)
+        message.channel.send({ embeds: [client.embedBuilder(client, message, "Rob", `You attempted to rob ${member} but got caught! The fine is **${amount}**.`, "RED")] });
+        db.subtract(`money_${message.guild.id}_${message.author.id}`, amount);
     } else {
-        message.channel.send({ embeds: [new client.embed().setDescription(`You successfully robbed ${member} gaining yourself **${amount}** ${message.coin}!`).setFooter(message.author.username, message.author.displayAvatarURL({ dynamic: true, size: 1024 }))]})
-        client.members.math(message.guild.id, '+', amount, `${message.author.id}.balance.wallet`)
-        client.members.math(message.guild.id, '-', amount, `${member.id}.balance.wallet`)
+        message.channel.send({ embeds: [client.embedBuilder(client, message, "Rob", `You successfully robbed ${member} gaining yourself **${amount}**.`, "RED")] });
+        db.subtract(`money_${message.guild.id}_${message.author.id}`, amount);
+        db.add(`money_${message.guild.id}_${message.author.id}`, amount);
     }
 }

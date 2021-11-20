@@ -2,6 +2,7 @@ const ms = require('ms');
 
 module.exports = {
     name: 'giveaway',
+    category: 'moderation',
     description: 'Creates a giveaway.',
     permissions: ["MANAGE_GUILD"],
     cooldown: 0,

@@ -2,6 +2,7 @@ const moment = require("moment");
 
 module.exports = {
     name: 'userinfo',
+    category: 'info',
     description: 'Allows you to view information on a user!',
     permissions: [],
     cooldown: 0,

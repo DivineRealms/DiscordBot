@@ -1,5 +1,6 @@
 module.exports = {
     name: 'lockchannel',
+    category: 'moderation',
     description: 'Lets you lock a channel in the guild.',
     permissions: ["ADMINISTRATOR"],
     cooldown: 0,

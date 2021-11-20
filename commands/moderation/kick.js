@@ -1,5 +1,6 @@
 module.exports = {
     name: 'kick',
+    category: 'moderation',
     description: 'Kicks the requested member from the server.',
     permissions: ["KICK_MEMBERS"],
     cooldown: 0,
@@ -19,7 +20,7 @@ module.exports.run = async(client, message, args) => {
     let casenum = db.fetch(`cases_${message.guild.id}`) + 1;
     let embed = client.embedBuilder(client, message, "User Kicked", `${member.user} have been banned by ${message.author} for ${reason}`, "YELLOW");
 
-    client.utils.logs(this.client, message.guild, "User Kicked", [{
+    client.utils.logs(client, message.guild, "User Kicked", [{
         name: "Case ID",
         desc: `${casenum}`
       },{

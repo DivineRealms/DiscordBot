@@ -1,5 +1,6 @@
 module.exports = {
     name: 'darkjoke',
+    category: 'fun',
     description: 'A very dark joke for some laughs.',
     permissions: [],
     cooldown: 0,

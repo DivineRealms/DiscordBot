@@ -2,6 +2,7 @@ const { chunk } = require('lodash')
 
 module.exports = {
     name: 'applications',
+    category: 'utility',
     description: 'View the available applications in the channel.',
     permissions: [],
     cooldown: 0,
@@ -36,7 +37,7 @@ module.exports.run = async(client, message, args) => {
             else if (r.emoji.name === '⏹️') return collector.stop()
 
             embed.setDescription(`Please select which application you would like to apply to.\nUse the reactions to flip pages\n\n${apps[page - 1].join('\n')}\n\u200b`)
-            if (current !== page) emb.edit(embed.setFooter(`Pages ${page}/${apps.length} - This only contains applications allowed in this channel.`))
+            if (current !== page) emb.edit({ embeds: [embed.setFooter(`Pages ${page}/${apps.length} - This only contains applications allowed in this channel.`)]})
         })
     })
 }

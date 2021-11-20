@@ -2,6 +2,7 @@ const db = require('quick.db')
 
 module.exports = {
     name: 'buy',
+    category: 'economy',
     description: 'Buy something from the shop.',
     permissions: [],
     cooldown: 0,

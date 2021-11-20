@@ -3,8 +3,8 @@ const ms = require("parse-ms");
 const Timeout = require("smart-timeout");
 
 const checkMute = async (client, guild) => {
-  let roleSet = client.config.roles.mute;
-  if(!roleSet || !client.utils.findRole(guild, roleSet)) return;
+  let roleSet = client.conf.moderation.Mute_Role;
+  if(!roleSet || !guild.roles.cache.get(roleSet)) return;
   let mute = await db
     .all()
     .filter(data => data.ID.startsWith(`muteInfo_${guild.id}`));
@@ -20,8 +20,8 @@ const checkMute = async (client, guild) => {
         Timeout.set(`mute_${guild.id}_${userid}`,
           async () => {
             try {
-              let muteRole = client.config.roles.mute;
-              let muted = client.utils.findRole(guild, muteRole);
+              let muteRole = client.conf.moderation.Mute_Role;
+              let muted = guild.roles.cache.get(muteRole);
               if (!muted) return;
               member.roles.remove(muted).then(async () => {
                 let user = client.users.cache.get(userid);
@@ -43,7 +43,7 @@ const checkMute = async (client, guild) => {
                   name: "Reason",
                   desc: data.reason
                 },{
-                  name: client.language.titles.logs.fields.duration,
+                  name: "Duration",
                   desc: client.utils.formatTime(data.duration)
                 }], user);
               });
@@ -54,11 +54,10 @@ const checkMute = async (client, guild) => {
           time
         );
       } else {
-        let muteRole = db.fetch(`server_${guild.id}_mutedRole`);
+        let muteRole = client.conf.moderation.Mute_Role;
         let muted = guild.roles.cache.get(muteRole);
-        if (!muted) return; // ovde role
-        member.roles.remove(muted)
-          .then(() => db.delete(`muteInfo_${guild.id}_${userid}`));
+        if (!muted) return;
+        member.roles.remove(muted).then(() => db.delete(`muteInfo_${guild.id}_${userid}`));
       }
     }
   }
@@ -66,8 +65,8 @@ const checkMute = async (client, guild) => {
 
 const checkMuteOnJoin = async (client, member, guild) => {
   let mute = db.fetch(`muteInfo_${member.guild.id}_${member.id}`);
-  let muteRole = client.config.roles.mute;
-  let muted = client.utils.findRole(guild, muteRole);
+  let muteRole = client.conf.moderation.Mute_Role;
+  let muted = guild.roles.cache.get(muteRole)
   if(!muted) return;
   if (mute != null) {
     let time = ms(mute.time - (Date.now() - mute.date));

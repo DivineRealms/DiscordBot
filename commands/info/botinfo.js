@@ -1,5 +1,6 @@
 module.exports = {
     name: 'botinfo',
+    category: 'info',
     description: 'Allows you to view information on the bot.',
     permissions: [],
     cooldown: 0,

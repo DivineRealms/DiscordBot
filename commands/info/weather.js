@@ -2,6 +2,7 @@ const weather = require('weather-js');
 
 module.exports = {
     name: 'weather',
+    category: 'info',
     description: 'Want to check the weather?',
     permissions: [],
     cooldown: 0,

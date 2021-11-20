@@ -1,5 +1,6 @@
 module.exports = {
     name: 'warnings',
+    category: 'moderation',
     description: 'View the warnings on the requested user.',
     permissions: ["MUTE_MEMBERS"],
     cooldown: 0,

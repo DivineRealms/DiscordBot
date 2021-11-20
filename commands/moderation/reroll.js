@@ -1,5 +1,6 @@
 module.exports = {
     name: 'reroll',
+    category: 'moderation',
     description: 'Rerolls a giveaway.',
     permissions: ["MANAGE_MESSAGES"],
     cooldown: 0,

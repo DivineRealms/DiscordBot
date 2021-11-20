@@ -1,5 +1,6 @@
 module.exports = {
     name: 'bubblewrap',
+    category: 'fun',
     description: 'Feeling stressed? Go ahead pop some bubblewrap.',
     permissions: [],
     cooldown: 0,

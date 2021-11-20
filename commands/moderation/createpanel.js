@@ -1,5 +1,6 @@
 module.exports = {
     name: 'createpanel',
+    category: 'moderation',
     description: 'Creates the ticket panel message!',
     permissions: ["MANAGE_GUILD"],
     cooldown: 0,

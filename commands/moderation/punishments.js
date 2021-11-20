@@ -1,5 +1,6 @@
 module.exports = {
     name: 'punishments',
+    category: 'moderation',
     description: 'View the punishments on the requested user.',
     permissions: ["MANAGE_GUILD"],
     cooldown: 0,

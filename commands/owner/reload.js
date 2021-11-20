@@ -1,5 +1,6 @@
 module.exports = {
     name: 'reload',
+    category: 'owner',
     description: 'Lets you reload a command.',
     permissions: [],
     cooldown: 0,

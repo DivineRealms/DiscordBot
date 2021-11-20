@@ -1,5 +1,6 @@
 module.exports = {
     name: '8ball',
+    category: 'fun',
     description: 'Lets you ask the magic 8 ball.',
     permissions: [],
     cooldown: 0,

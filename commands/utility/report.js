@@ -1,5 +1,6 @@
 module.exports = {
     name: 'report',
+    category: 'utility',
     description: 'Lets you submit a report.',
     permissions: [],
     cooldown: 0,

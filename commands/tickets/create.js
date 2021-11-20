@@ -3,6 +3,7 @@ const { MessageActionRow, MessageButton } = require('discord.js')
 
 module.exports = {
     name: 'create',
+    category: 'tickets',
     description: 'Creates a ticket.',
     permissions: ["MANAGE_CHANNELS"],
     cooldown: 0,

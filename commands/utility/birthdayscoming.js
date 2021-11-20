@@ -2,6 +2,7 @@ const db = require("quick.db")
 
 module.exports = {
     name: 'birthdayscoming',
+    category: 'utility',
     description: 'Views all the birthdays coming up in the week.',
     permissions: [],
     cooldown: 0,
@@ -17,6 +18,7 @@ module.exports.run = async(client, message, args) => {
         let bUser = client.users.cache.get(s.ID.split("_")[2]) || "N/A";
         return `> **${s.data.slice(1,-1).trim()}** - ${bUser}\n`;
     })
+    console.log(birthdays)
     const embed = new client.embed()
         .setTitle(`Birthdays Coming Up for ${dates[new Date().getMonth()]}!`)
         .setDescription(birthdays.join(' '))
@@ -41,7 +43,7 @@ module.exports.run = async(client, message, args) => {
             else if (r.emoji.name === '⏹️') return collector.stop()
 
             embed.setDescription(birthdays.join(' '))
-            if (current !== page) emb.edit(embed.setFooter(`Pages ${page}/${birthdays.length} - This only contains applications allowed in this channel.`))
+            if (current !== page) emb.edit({ embeds: [embed.setFooter(`Pages ${page}/${birthdays.length} - This only contains applications allowed in this channel.`)]})
         })
     })
 }

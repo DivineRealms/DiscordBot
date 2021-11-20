@@ -1,7 +1,6 @@
-const parse = require('ms')
-
 module.exports = {
     name: 'slowmode',
+    category: 'moderation',
     description: 'Sets the channel slowmode to the requested time.',
     permissions: ["MANAGE_CHANNELS"],
     cooldown: 0,
@@ -10,18 +9,8 @@ module.exports = {
 }
 
 module.exports.run = async(client, message, args) => {
-    if ([null, Infinity].includes(parse(args[0]))) return message.channel.send({ embeds: [new client.embed().setDescription(`You failed to provide me the time!`)]})
-    const amt = ms(args[0]) / 1000
-    if (amt > 21600) return message.channel.send({ embeds: [new client.embed().setDescription(`The time cannot exceed more than 6 hours!`)]})
-    if (amt < 5) return message.channel.send({ embeds: [new client.embed().setDescription(`The time needs to be atleast 5 seconds!`)]})
+    if (isNaN(args[0])) return message.channel.send({ embeds: [new client.embed().setDescription(`You have entered invalid number of seconds`)]})
 
-    message.channel.setRateLimitPerUser(amt)
-    const embed = new client.embed()
-        .setAuthor(`${message.author.tag} - (${message.author.id})`, message.author.displayAvatarURL({ dynamic: true }))
-        .setDescription(`**Action:** Slowmode\n**Time:**  ${parse(args[0]) / 1000}`)
-        .setFooter(message.author.username, message.author.displayAvatarURL({ dynamic: true, size: 1024 }))
-        .setThumbnail(message.author.displayAvatarURL())
-        .setTimestamp()
-    message.channel.send({ embeds: [embed] })
-
+    message.channel.setRateLimitPerUser(args[0]);
+    message.channel.send({ embeds: [client.embedBuilder(client, message, "Slowmode", `Slowmode for ${message.channel} have been changed to ${args[0]}s`, "YELLOW")] });
 }

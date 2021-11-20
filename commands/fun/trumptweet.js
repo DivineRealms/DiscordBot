@@ -2,6 +2,7 @@ const fetch = require('node-fetch');
 
 module.exports = {
     name: 'trumptweet',
+    category: 'fun',
     description: 'Tweet as trump.',
     permissions: [],
     cooldown: 0,

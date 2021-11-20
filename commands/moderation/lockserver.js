@@ -1,5 +1,6 @@
 module.exports = {
     name: 'lockserver',
+    category: 'moderation',
     description: 'Lock the server, kicking anyone who joins.',
     permissions: ["ADMINISTRATOR"],
     cooldown: 0,

@@ -3,6 +3,7 @@ const urban = require(`relevant-urban`)
 
 module.exports = {
     name: 'urban',
+    category: 'info',
     description: 'Lets you search whatever you want on urban dictionary.',
     permissions: [],
     cooldown: 0,

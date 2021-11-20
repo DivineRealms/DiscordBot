@@ -3,6 +3,7 @@ const { utc } = require('moment')
 
 module.exports = {
     name: 'roleinfo',
+    category: 'info',
     description: 'Allows you to view information on a role.',
     permissions: [],
     cooldown: 0,

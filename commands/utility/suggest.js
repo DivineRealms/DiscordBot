@@ -2,6 +2,7 @@ const db = require('quick.db');
 
 module.exports = {
     name: 'suggest',
+    category: 'utility',
     description: 'Lets you submit a suggestion.',
     permissions: [],
     cooldown: 0,

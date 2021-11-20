@@ -2,6 +2,7 @@ const ms = require('ms')
 
 module.exports = {
     name: 'timedpoll',
+    category: 'moderation',
     description: 'Creates a timed poll.',
     permissions: ["MANAGE_CHANNELS"],
     cooldown: 0,
@@ -24,7 +25,6 @@ module.exports.run = async(client, message, args, cmd) => {
         .setAuthor(`Poll Created By ${message.author.tag}`, 'https://cdn.discordapp.com/attachments/745089083008745553/758900685919223858/poll.png')
         .setTitle(question)
         .setDescription(`\n\n**__TIME REMAINING__** ${client.utils.formatTime(time, { conjunction: " and ", serialComma: false, round: true })}`)
-        .setFooter(message.author.username, message.author.displayAvatarURL({ dynamic: true, size: 1024 }))
 
     for (let i = 0; i < options.length && i < 10; i++) embed.addField('\u200b', `${emoji[i]} ${options[i]}`)
 
@@ -32,9 +32,9 @@ module.exports.run = async(client, message, args, cmd) => {
     for (let i = 0; i < options.length; i++) await msg.react(emoji[i])
 
     const x = setInterval(() => {
-        msg.edit(embed.setDescription(`\n\n**__TIME REMAINING__** ${client.utils.formatTime(end - Date.now(), { conjunction: " and ", serialComma: false, round: true })}`)).catch(() => {})
+        msg.edit({ embeds: [embed.setDescription(`\n\n**__TIME REMAINING__** ${client.utils.formatTime(end - Date.now(), { conjunction: " and ", serialComma: false, round: true })}`)]}).catch(() => {})
         if (Date.now() > end) {
-            msg.edit(embed.setDescription(`\n\n**__TIME REMAINING__** Times Up!`)).catch(() => {})
+            msg.edit({ embeds: [embed.setDescription(`\n\n**__TIME REMAINING__** Times Up!`)]}).catch(() => {})
             message.channel.send({ embeds: [new client.embed().setDescription(`Poll created by ${message.author.tag} has ended!`)]})
             clearInterval(x)
         }

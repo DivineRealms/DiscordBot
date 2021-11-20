@@ -1,5 +1,6 @@
 module.exports = {
     name: 'hug',
+    category: 'fun',
     description: 'Feel Lonely? Give someone a hug.',
     permissions: [],
     cooldown: 0,

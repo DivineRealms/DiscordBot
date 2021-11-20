@@ -1,5 +1,6 @@
 module.exports = {
     name: 'unban',
+    category: 'moderation',
     description: 'Allows you to unban a member from the guild.',
     permissions: ["BAN_MEMBERS"],
     cooldown: 0,
@@ -18,7 +19,7 @@ module.exports.run = async(client, message, args) => {
     if (!member) return message.channel.send(embed.setDescription('Please enter a valid ID!'))
 
     await message.guild.bans.fetch(args[0]).then(() => {
-        client.utils.logs(this.client, message.guild, "User UnBanned", [{
+        client.utils.logs(client, message.guild, "User UnBanned", [{
             name: "User",
             desc: member.user
           },{

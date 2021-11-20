@@ -1,5 +1,6 @@
 module.exports = {
     name: 'avatar',
+    category: 'fun',
     description: 'Lets you view the requested avatar.',
     permissions: [],
     cooldown: 0,

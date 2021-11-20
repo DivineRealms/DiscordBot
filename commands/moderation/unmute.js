@@ -1,5 +1,6 @@
 module.exports = {
     name: 'unmute',
+    category: 'moderation',
     description: 'Lets you unmute the requested user.',
     permissions: ["MUTE_MEMBERS"],
     cooldown: 0,
@@ -8,7 +9,7 @@ module.exports = {
 }
 
 module.exports.run = async(client, message, args) => {
-    const member = message.mentions.members.first() || message.guild.member(args[0])
+    const member = message.mentions.members.first() || message.guild.members.cache.get(args[0])
     const muterole = message.guild.roles.cache.get(client.conf.moderation.Mute_Role)
     const reason = args.slice(1).join(' ') || 'No Reason Specified'
     if (!member) return message.channel.send({ embeds: [client.embedBuilder(client, message, "Error", "You need to enter valid user.", "RED")] });
@@ -27,7 +28,7 @@ module.exports.run = async(client, message, args) => {
     await member.roles.remove(muterole)
     let embed = client.embedBuilder(client, message, "User UnMuted", `${member.user} have been unmuted by ${message.author}`, "YELLOW");
 
-    client.utils.logs(this.client, message.guild, "User UnMuted", [{
+    client.utils.logs(client, message.guild, "User UnMuted", [{
         name: "User",
         desc: member.user
     },{

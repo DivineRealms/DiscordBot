@@ -5,6 +5,7 @@ const { chunk } = require('lodash')
 
 module.exports = {
     name: 'tictactoe',
+    category: 'fun',
     description: 'Play a game of tic-tac-toe with a friend.',
     permissions: [],
     cooldown: 0,
@@ -55,7 +56,7 @@ module.exports.run = async(client, message, args, cmd) => {
 
             board = ttt.setSquare(board, m.content - 1)
             setBoard(embed, board, m.content - 1, ttt.xIsNext(board) ? 'O' : 'X', message)
-            emb.edit(embed)
+            emb.edit({ embeds: [embeds]})
             m.delete()
             collector.resetTimer({ time: 30000 })
             if (ttt.getWinner(board) || ttt.allSquaresSet(board)) collector.stop()
@@ -65,7 +66,7 @@ module.exports.run = async(client, message, args, cmd) => {
             if (!games.get(message.guild.id + message.author.id) || !games.get(message.guild.id + message.mentions.users.first().id)) return
             if (!ttt.getWinner(board) && ttt.allSquaresSet(board)) embed.setTitle('Looks like nobody won, Its a tie!!')
             else if (!ttt.getWinner(board)) embed.setTitle('Time Up! Looks like nobody won!')
-            emb.edit(embed)
+            emb.edit({ embeds: [embeds]})
             games.delete(message.guild.id + message.author.id)
             games.delete(message.guild.id + message.mentions.users.first().id)
         })

@@ -1,5 +1,6 @@
 module.exports = {
     name: 'ban',
+    category: 'moderation',
     description: 'Lets you ban the requested member from the guild.',
     permissions: ["BAN_MEMBERS"],
     cooldown: 0,
@@ -22,7 +23,7 @@ module.exports.run = async(client, message, args) => {
     let casenum = db.fetch(`cases_${message.guild.id}`) + 1;
     let embed = client.embedBuilder(client, message, "User Banned", `${member.user} have been banned by ${message.author} for ${reason}`, "YELLOW");
 
-    client.utils.logs(this.client, message.guild, "User Warned", [{
+    client.utils.logs(client, message.guild, "User Warned", [{
         name: "Case ID",
         desc: `${casenum}`
       },{

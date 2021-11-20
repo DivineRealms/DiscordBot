@@ -1,5 +1,6 @@
 module.exports = {
     name: 'rps',
+    category: 'fun',
     description: 'Play a game of rps.',
     permissions: [],
     cooldown: 0,

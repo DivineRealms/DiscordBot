@@ -1,5 +1,6 @@
 module.exports = {
     name: 'pickforme',
+    category: 'fun',
     description: 'Cant decide? Ill pick for you.',
     permissions: [],
     cooldown: 0,

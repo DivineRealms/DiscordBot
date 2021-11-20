@@ -1,5 +1,6 @@
 module.exports = {
     name: 'announce',
+    category: 'moderation',
     description: 'Allows you to send an announcement on your behalf.',
     permissions: ["ADMINISTRATOR"],
     cooldown: 0,

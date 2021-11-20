@@ -2,6 +2,7 @@ const { evaluate } = require('mathjs')
 
 module.exports = {
     name: 'calculator',
+    category: 'utility',
     description: 'Does your math homework for you!',
     permissions: [],
     cooldown: 0,

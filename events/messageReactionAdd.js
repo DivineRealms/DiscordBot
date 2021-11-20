@@ -1,8 +1,11 @@
+const db = require('quick.db')
+const Discord = require('discord.js')
+
 module.exports = async(client, reaction, user) => {
     if (reaction.message.partial) await reaction.message.fetch()
     if (user.bot || !reaction.message.guild) return
-    const settings2 = client.conf.starBoard
-    const schannel = client.channels.cache.get(settings2.StarBoard_Channel)
+    const starboard = client.conf.starBoard
+    const schannel = client.channels.cache.get(starboard.StarBoard_Channel)
     const suggestion = client.settings.get(reaction.message.guild.id, `suggestions.${reaction.message.id}`)
 
     if (['✅', '❌'].includes(reaction.emoji.name) && suggestion) {
@@ -17,31 +20,30 @@ module.exports = async(client, reaction, user) => {
         client.settings.delete(reaction.message.guild.id, `suggestions.${reaction.message.id}`)
     }
 
-    if (settings2.Enabled && reaction.message)
-        if (schannel && settings2.Enabled && reaction.emoji.name === settings2.StarBoard_Emoji) {
-            const stars = client.settings.get(reaction.message.guild.id, `stars.${reaction.message.id}`)
+    if (starboard.Enabled && reaction.message) {
+        if (schannel && starboard.Enabled && reaction.emoji.name == starboard.StarBoard_Emoji) {
+            const stars = db.fetch(`stars_${reaction.message.guild.id}_${reaction.message.id}`);
 
             if (stars) {
-                const board = await schannel.messages.fetch(stars.board).catch(() => {})
-                if (!board) return client.settings.delete(reaction.message.guild, `stars.${reaction.message.id}`)
-                const count = board.reactions.cache.get(settings2.Minimum_Reactions)
-                board.embeds[0].footer.text = `${count} ${settings2.StarBoard_Emoji}`
-                board.edit(board.embeds[0])
-            } else if (reaction.count >= settings2.Minimum_Reactions) {
+                const board = await schannel.messages.fetch(stars).catch(() => {})
+                if (!board) return db.delete(`stars_${reaction.message.guild.id}_${reaction.message.id}`);
+                const count = board.reactions.cache.get(starboard.Minimum_Reactions)
+                board.embeds[0].footer.text = `${count} ${starboard.StarBoard_Emoji}`
+                board.edit({ embeds: [board.embeds[0]] })
+            } else if (reaction.count >= starboard.Minimum_Reactions) {
                 const embed = new client.embed()
-                    .setColor('#F1C40F')
-                    .addField('Author', reaction.message.author, true)
-                    .addField('Channel', reaction.message.channel, true)
+                    .setAuthor(reaction.message.author.username, reaction.message.author.displayAvatarURL({ dynamic: true }))
                     .setThumbnail(reaction.message.author.displayAvatarURL({ dynamic: true }))
-                    .setFooter(`${reaction.count} ${settings2.StarBoard_Emoji}`)
+                    .setFooter(`${reaction.count} ${starboard.StarBoard_Emoji}`)
                     .setTimestamp()
 
-                if (reaction.message.content) embed.addField('Content', reaction.message.content)
+                if (reaction.message.content) embed.setDescription(`> ${reaction.message.content}\n\n[Click Here to View Message](${reaction.message.url})`)
                 if (['png', 'jpg', 'jpeg', 'gif', 'webp'].some(e => (reaction.message.attachments.first() || { url: '' }).url.endsWith(e))) embed.setImage(reaction.message.attachments.first().url)
                 let msg = await schannel.send({ embeds: [embed] })
-                client.settings.set(reaction.message.guild.id, { board: msg.id }, `stars.${reaction.message.id}`)
+                db.set(`stars_${reaction.message.guild.id}_${reaction.message.id}`, msg.id);
             }
         }
+    }
 
     client.settings.ensure(reaction.message.guild.id, client.defaultSettings)
     const panel = client.settings.get(reaction.message.guild.id, 'panels').includes(reaction.message.id)

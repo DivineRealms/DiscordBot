@@ -21,7 +21,7 @@ module.exports.config = {
         },
         changingActivity: { //An activity that automatically updates
             enabled: true,
-            activities: ['The Mega Bot', '160+ Commands', 'Buy Me For $55'],
+            activities: ['DivineRealms', 'divinerealms.net', 'Osmak'],
             types: ['PLAYING', 'WATCHING', 'LISTENING']
         },
         embedColor: 'BLUE',
@@ -74,7 +74,7 @@ module.exports.config = {
     moderation: {
         Moderators: [], //roles that can use any moderation command
         serverLock: true, //whether or not to enable the server lock command
-        Mute_Role: 'ROLEID'
+        Mute_Role: '886191981901017118'
     },
     automation: {
         Roles_On_Join: ['ROLEID'],
@@ -145,7 +145,7 @@ module.exports.config = {
         Mute_Channel_Logs: 'CHANNELID',
         Lock_Channel_Logs: 'CHANNELID',
         Ticket_Channel_Logs: 'CHANNELID',
-        Moderation_Channel_Logs: 'CHANNELID',
+        Moderation_Channel_Logs: '853213051788197908',
         Suggestion_Channel_Logs: '853213051788197908',
         Report_Channel_Logs: 'CHANNELID',
         Server_Updates: 'CHANNELID',
@@ -156,7 +156,7 @@ module.exports.config = {
     },
     starBoard: {
         Enabled: true,
-        StarBoard_Channel: 'CHANNELID',
+        StarBoard_Channel: '911648409839075358',
         Minimum_Reactions: '1', //how many star reactions required to send to star board channel
         StarBoard_Emoji: '⭐'
     },
@@ -175,35 +175,35 @@ module.exports.config = {
     applicationSystem: {
         applications: [{
                 enabled: true, //whether to enable or disable this application
-                Application_Log: 'CHANNELID', //Where to send completed apps
+                Application_Log: '887791852554682458', //Where to send completed apps
+                Application_Name: 'Test', //application name (must be unique)
+                Application_Channel: '', //The channel where people can apply in (leave blank for any)
+                questions: ['Question', 'Question', 'Question'] //questions this application will ask
+            },
+            {
+                enabled: true, //whether to enable or disable this application
+                Application_Log: '887791852554682458', //Where to send completed apps
                 Application_Name: 'APPNAME', //application name (must be unique)
                 Application_Channel: '', //The channel where people can apply in (leave blank for any)
                 questions: ['Question', 'Question', 'Question'] //questions this application will ask
             },
             {
                 enabled: true, //whether to enable or disable this application
-                Application_Log: 'CHANNELID', //Where to send completed apps
+                Application_Log: '887791852554682458', //Where to send completed apps
                 Application_Name: 'APPNAME', //application name (must be unique)
                 Application_Channel: '', //The channel where people can apply in (leave blank for any)
                 questions: ['Question', 'Question', 'Question'] //questions this application will ask
             },
             {
                 enabled: true, //whether to enable or disable this application
-                Application_Log: 'CHANNELID', //Where to send completed apps
+                Application_Log: '887791852554682458', //Where to send completed apps
                 Application_Name: 'APPNAME', //application name (must be unique)
                 Application_Channel: '', //The channel where people can apply in (leave blank for any)
                 questions: ['Question', 'Question', 'Question'] //questions this application will ask
             },
             {
                 enabled: true, //whether to enable or disable this application
-                Application_Log: 'CHANNELID', //Where to send completed apps
-                Application_Name: 'APPNAME', //application name (must be unique)
-                Application_Channel: '', //The channel where people can apply in (leave blank for any)
-                questions: ['Question', 'Question', 'Question'] //questions this application will ask
-            },
-            {
-                enabled: true, //whether to enable or disable this application
-                Application_Log: 'CHANNELID', //Where to send completed apps
+                Application_Log: '887791852554682458', //Where to send completed apps
                 Application_Name: 'APPNAME', //application name (must be unique)
                 Application_Channel: '', //The channel where people can apply in (leave blank for any)
                 questions: ['Question', 'Question', 'Question'] //questions this application will ask

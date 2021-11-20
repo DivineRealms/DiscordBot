@@ -3,8 +3,9 @@ const db = require('quick.db')
 
 module.exports = {
     name: 'setbirthday',
+    category: 'utility',
     description: 'Set a users birthday.',
-    permissions: [],
+    permissions: ["MANAGE_ROLES"],
     cooldown: 0,
     aliases: [`setbday`],
     usage: 'setbirthday'

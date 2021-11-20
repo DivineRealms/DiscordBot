@@ -1,5 +1,6 @@
 module.exports = {
     name: 'restart',
+    category: 'owner',
     description: 'Lets you restart the bot via discord.',
     permissions: [],
     cooldown: 0,

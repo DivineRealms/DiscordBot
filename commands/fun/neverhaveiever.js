@@ -3,6 +3,7 @@ const { load } = require('cheerio')
 
 module.exports = {
     name: 'neverhaveiever',
+    category: 'fun',
     description: 'Get asked never have I ever questions.',
     permissions: [],
     cooldown: 0,

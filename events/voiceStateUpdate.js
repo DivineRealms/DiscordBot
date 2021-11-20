@@ -2,19 +2,6 @@ const parse = require('ms')
 const vcs = new Map()
 
 module.exports = (client, oldState, newState) => {
-    if (oldState.member.id === client.user.id && !newState.channel && client.player.isPlaying(newState)) client.player.stop(newState.guild.id)
-    const tempvc = client.settings.get(oldState.guild.id, `vc.${oldState.channelId}`)
-
-    if (tempvc && !oldState.channel.members.size && ![null, Infinity].includes(parse(client.conf.tempvc.Delete_VCS_After))) //should we just make boost run off a role id?
-        vcs.set(oldState.channelId, setTimeout(() =>
-        oldState.channel.delete().catch(() => {}), parse(client.conf.tempvc.Delete_VCS_After)))
-
-    if (newState.channelId && client.settings.get(newState.guild.id, `vc.${newState.channelId}`)) clearTimeout(vcs.get(newState.channelId))
-    const vcroles = client.conf.automation.VC_Roles
-    const vcrole = vcroles.find(r => r.channelId === oldState.channelId || r.channelId === newState.channelId)
-    if (vcrole && newState.channelId === vcrole.channelId) newState.member.roles.add(vcrole.roleID).catch(() => {})
-    else if (vcrole) newState.member.roles.remove(vcrole.roleID).catch(() => {})
-
     const log = client.channels.cache.get(client.conf.logging.Voice_Updates)
     if (!log) return
     const embed = new client.embed().setAuthor('Voice State Update')

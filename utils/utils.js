@@ -1,3 +1,6 @@
+const Discord = require('discord.js')
+const db = require('quick.db')
+
 function formatTime(ms){
   let roundNumber = ms > 0 ? Math.floor : Math.ceil;
   let days = roundNumber(ms / 86400000),
@@ -9,6 +12,19 @@ function formatTime(ms){
   time += (mins > 0) ? `${mins}m ` : "";
   time += (secs > 0) ? `${secs}s` : "0s";
   return time;
+}
+
+function commandsList(client, message, category) {
+  let commands = client.commands.filter(
+    c => c.category == category && c.category != "owner"
+  );
+  let content = "";
+  
+  commands.forEach(
+    c => (content += `\`${message.px}${c.usage}\` · ${c.description}\n`)
+  );
+  
+  return content;
 }
 
 const logs = (client, guild, type, fields, user) => {
@@ -30,4 +46,5 @@ const logs = (client, guild, type, fields, user) => {
 module.exports = {
   formatTime,
   logs,
+  commandsList
 }

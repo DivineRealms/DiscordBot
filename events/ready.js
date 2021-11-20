@@ -7,13 +7,17 @@ module.exports = async client => {
         console.log("[DivineRealms] Bot has started and is online now!");
         console.log("_________________________________");
 
-        if (!client.conf.settings.changingActivity.enabled) client.user.setPresence(client.conf.settings.botActivity)
-        else {
+        if (!client.conf.settings.changingActivity.enabled) {
+            console.log('ovde')
+            client.user.setActivity(client.conf.settings.botActivity, { type: settings.types[i] })
+        } else {
             const settings = client.conf.settings.changingActivity
             let i = -1;
+            client.user.setActivity(settings.activities[++i], { type: settings.types[i] })
             let interval = setInterval(() => {
                 if (!settings.enabled) return clearInterval(interval)
                 if (!settings.activities[++i]) i = -1
+                console.log('dole')
                 client.user.setActivity(settings.activities[++i], { type: settings.types[i] })
             }, 180000);
         }
@@ -22,7 +26,7 @@ module.exports = async client => {
 		client.members.ensure(guild.id, {})
         client.settings.ensure(guild.id, client.defaultSettings)
 
-        //await muteChecks.checkMute(client, guild);
+        await muteChecks.checkMute(client, guild);
 
         function counter() {
             const memberCount = client.channels.cache.get(client.conf.automation.Member_Count_Channel)

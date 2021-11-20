@@ -32,6 +32,7 @@ module.exports = async client => {
 
     client.embedBuilder = require("../utils/embedBuilder.js");
     client.utils = require("../utils/utils.js");
+    client.paginateSelect = require("../utils/paginateSelect.js");
 
     process.on('unhandledRejection', console.log)
     process.on('uncaughtException', console.log)

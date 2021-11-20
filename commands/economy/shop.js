@@ -1,43 +1,26 @@
 const { chunk } = require('lodash')
-const db = require('quick.db')
+const paginateContent = require('../../utils/paginateContent.js')
 
 module.exports = {
     name: 'shop',
+    category: 'economy',
     description: 'View the shop on the server and buy items.',
     permissions: [],
     cooldown: 0,
-    aliases: [`sh0p`],
+    aliases: [],
     usage: 'shop'
 }
 
 module.exports.run = async(client, message, args) => {
     const settings = client.conf.economy
     const shop = [...settings.shopItems]
-    const items = chunk(shop.map((s, i) => `**#${i + 1}** ${s.name} - ${s.price} ${message.coin}\n> ⁃ ${s.description.replace('{role}', '<@&' + s.roleID + '>')}\n`), 5);
 
-    const embed = new client.embed()
-        .setTitle(`${message.guild.name} Shop!`)
-        .setDescription(`To purchase an item use \`${message.px}buy <item id>\`\n\n${items[0].join('\n')}`)
-        .setFooter(`Pages 1/${items.length}`)
+    let format = `**#[ID]** [NAME] - $[PRICE]\n> ⁃ [DESCRIPTION]`
+    let shopArray = [`To purchase item from shop use \`${message.px}buy [id]\`\n`];
+    for(let i = 0; i < shop.length; i++) {
+        let desc = shop[i].description.replace('{role}', '<@&' + shop[i].roleID + '>');
+        shopArray.push(format.replace("[ID]", i + 1).replace("[PRICE]", shop[i].price).replace("[DESCRIPTION]", desc).replace("[NAME]", shop[i].name))
+    }
 
-    message.channel.send({ embeds: [embed] }).then(async emb => {
-        if (!items[1]) return;
-        ['⏮️', '◀️', '▶️', '⏭️', '⏹️'].forEach(async m => await emb.react(m))
-
-        const filter = (_, u) => u.id === message.author.id
-        const collector = emb.createReactionCollector({ filter, time: 300000 })
-        let page = 1
-        collector.on('collect', async(r, user) => {
-            let current = page;
-            emb.reactions.cache.get(r.emoji.name).users.remove(user.id)
-            if (r.emoji.name === '◀️' && page !== 1) page--;
-            else if (r.emoji.name === '▶️' && page !== items.length) page++;
-            else if (r.emoji.name === '⏮️') page = 1
-            else if (r.emoji.name === '⏭️') page = items.length
-            else if (r.emoji.name === '⏹️') return collector.stop()
-
-            embed.setDescription(`To purchase an item use \`${message.px}buy <item id>\`\n\n${items[page-1].join('\n')}`)
-            if (current !== page) emb.edit(embed.setFooter(`Pages ${page}/${items.length}`))
-        })
-    })
+    paginateContent(client, shopArray, 7, 1, message, "Shop", "BLURPLE")
 }

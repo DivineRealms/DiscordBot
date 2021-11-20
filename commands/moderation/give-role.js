@@ -1,5 +1,6 @@
 module.exports = {
     name: 'give-role',
+    category: 'moderation',
     description: 'Lets you give a certain role to a member.',
     permissions: ["MANAGE_ROLES"],
     cooldown: 0,

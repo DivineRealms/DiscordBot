@@ -2,6 +2,7 @@ const datetime = require('date-and-time')
 const db = require("quick.db");
 
 module.exports = {
+    category: 'utility',
     name: 'addbirthday',
     description: 'Add your birthday to the system.',
     permissions: [],

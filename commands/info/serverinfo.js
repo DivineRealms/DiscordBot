@@ -1,5 +1,6 @@
 module.exports = {
     name: 'serverinfo',
+    category: 'info',
     description: 'Allows you to view information on the server.',
     permissions: [],
     cooldown: 0,

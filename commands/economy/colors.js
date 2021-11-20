@@ -3,6 +3,7 @@ const Discord = require("discord.js")
 
 module.exports = {
     name: 'colors',
+    category: 'economy',
     description: 'Choose your name color.',
     permissions: [],
     cooldown: 10,

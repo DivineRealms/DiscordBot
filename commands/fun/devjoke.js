@@ -1,5 +1,6 @@
 module.exports = {
     name: 'devjoke',
+    category: 'fun',
     description: 'A programmer joke only some will get...',
     permissions: [],
     cooldown: 0,

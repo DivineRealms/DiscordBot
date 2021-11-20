@@ -1,5 +1,6 @@
 module.exports = {
     name: 'warn',
+    category: 'moderation',
     description: 'Lets you issue a warning to a member.',
     permissions: ["MUTE_MEMBERS"],
     cooldown: 0,
@@ -9,7 +10,7 @@ module.exports = {
 
 module.exports.run = async(client, message, args) => {
     const reason = args.slice(1).join(' ') || 'No Reason Specified'
-    const member = message.mentions.members.first() || message.guild.member(args[0])
+    const member = message.mentions.members.first() || message.guild.members.cache.get(args[0])
 
     if (!member) return message.channel.send({ embeds: [client.embedBuilder(client, message, "Error", "You need to mention user.", "RED")] });
     if (member.id === message.author.id) return message.channel.send({ embeds: [client.embedBuilder(client, message, "Error", "You can't warn yourself.", "RED")] });
@@ -19,7 +20,7 @@ module.exports.run = async(client, message, args) => {
 
     let embed = client.embedBuilder(client, message, "User Warned", `${member.user} have been warned by ${message.author} for ${reason}`, "YELLOW");
 
-    client.utils.logs(this.client, message.guild, "User Warned", [{
+    client.utils.logs(client, message.guild, "User Warned", [{
         name: "Case ID",
         desc: `${casenum}`
       },{

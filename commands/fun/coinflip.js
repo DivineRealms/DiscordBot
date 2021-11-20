@@ -1,5 +1,6 @@
 module.exports = {
     name: 'coinflip',
+    category: 'fun',
     description: 'Cant decide? Flip a coin.',
     permissions: [],
     cooldown: 0,

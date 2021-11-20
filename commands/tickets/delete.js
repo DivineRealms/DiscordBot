@@ -8,6 +8,7 @@ const db = require('quick.db')
 
 module.exports = {
     name: 'delete',
+    category: 'tickets',
     description: 'Deletes the ticket.',
     permissions: ["MANAGE_CHANNELS"],
     cooldown: 0,

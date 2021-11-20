@@ -1,5 +1,6 @@
 module.exports = {
     name: 'advancedpoll',
+    category: 'moderation',
     description: 'Creates an advanced poll.',
     permissions: ["MANAGE_CHANNELS"],
     cooldown: 0,
@@ -19,7 +20,6 @@ module.exports.run = async(client, message, args) => {
     const embed = new client.embed()
         .setAuthor(`Poll Created By ${message.author.tag}`, 'https://cdn.discordapp.com/attachments/745089083008745553/758900685919223858/poll.png')
         .setDescription(`${question}\n\n${emoji[0]} ${options[0]}`)
-        .setFooter(message.author.username, message.author.displayAvatarURL({ dynamic: true, size: 1024 }))
 
     for (let i = 1; i < options.length && i < 10; i++) embed.addField('\u200b', `${emoji[i]} ${options[i]}`)
 

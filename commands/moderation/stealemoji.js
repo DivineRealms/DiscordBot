@@ -1,5 +1,6 @@
 module.exports = {
     name: 'stealemoji',
+    category: 'moderation',
     description: 'Steal emojis from another server and add them to this one.',
     permissions: ["MANAGE_EMOJIS"],
     cooldown: 0,

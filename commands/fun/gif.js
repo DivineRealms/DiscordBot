@@ -3,6 +3,7 @@ const fetch = require('node-fetch');
 
 module.exports = {
     name: 'gif',
+    category: 'fun',
     description: 'Search online for a random gif.',
     permissions: [],
     cooldown: 0,
@@ -46,7 +47,7 @@ module.exports.run = async(client, message, args) => {
 
             embed.setDescription(`Image not loading? click [here](${urls[page - 1]})`)
             embed.setImage(urls[page - 1])
-            if (current !== page) emb.edit(embed.setFooter(`Pages ${page}/${urls.length}`))
+            if (current !== page) emb.edit({ embeds: [ embed.setFooter(`Pages ${page}/${urls.length}`)]})
         })
     })
 }

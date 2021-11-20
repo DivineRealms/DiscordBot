@@ -4,6 +4,7 @@ const canvacord = require('canvacord')
 
 module.exports = {
     name: 'rank',
+    category: 'info',
     description: 'View your total xp earned on the server.',
     permissions: [],
     cooldown: 0,

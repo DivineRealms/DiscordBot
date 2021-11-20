@@ -1,5 +1,6 @@
 module.exports = {
     name: 'addemoji',
+    category: 'moderation',
     description: 'Adds an emoji to the guild!',
     permissions: ["MANAGE_EMOJIS"],
     cooldown: 0,

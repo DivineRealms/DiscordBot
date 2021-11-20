@@ -5,6 +5,7 @@ const requests = new Map(),
 
 module.exports = {
     name: 'connect4',
+    category: 'fun',
     description: 'Play a game of connect4 with a friend.',
     permissions: [],
     cooldown: 0,
@@ -14,10 +15,10 @@ module.exports = {
 
 module.exports.run = async(client, message, args, cmd) => {
     if (args[0] == 'leave' && games.get(message.guild.id + message.author.id)) return games.delete(message.guild.id + message.author.id)
-    if (games.get(message.guild.id + message.author.id)) return message.channel.send(`You are already playing a game of connect 4\nLeave the game by doing \`${message.px + cmd} leave\``)
-    if (!message.mentions.users.first() || message.mentions.users.first().id == message.author.id || message.mentions.users.first().bot) return message.channel.send('Please mention a valid person you want to play against')
-    if (games.get(message.guild.id + message.mentions.users.first().id)) return message.channel.send('That user is already playing a game of connect 4.')
-    if (requests.get(message.guild.id + message.mentions.users.first().id)) return message.channel.send('That user is already requesting to play with someone else!')
+    if (games.get(message.guild.id + message.author.id)) return message.channel.send({ embeds: [client.embedBuilder(client, message, "Error", `You're already playing against someone, leave game using ${message.px + '' + cmd} leave`, "RED")] });
+    if (!message.mentions.users.first() || message.mentions.users.first().id == message.author.id || message.mentions.users.first().bot) return message.channel.send({ embeds: [client.embedBuilder(client, message, "Error", "You need to mention valid user you want to play against.", "RED")] });
+    if (games.get(message.guild.id + message.mentions.users.first().id)) return message.channel.send({ embeds: [client.embedBuilder(client, message, "Error", "That User is already playing.", "RED")] });
+    if (requests.get(message.guild.id + message.mentions.users.first().id)) return message.channel.send({ embeds: [client.embedBuilder(client, message, "Error", "That User has already sent request to someone else.", "RED")] });
 
     requests.set(message.guild.id + message.author.id, true)
     requests.set(message.guild.id + message.mentions.users.first().id, true)
@@ -31,7 +32,7 @@ module.exports.run = async(client, message, args, cmd) => {
     let filter1 = response => response.content.toLowerCase().includes('yes') && response.author == message.mentions.users.first()
     message.channel.awaitMessages(filter1, { max: 1, time: 8000 })
         .then(collected => {
-            if (!collected.first()) return message.channel.send(`Looks like they didnt say yes in time!`)
+            if (!collected.first()) return message.channel.send({ embeds: [client.embedBuilder(client, message, "Error", "They didn't confirm in time.", "RED")] });
 
             games.set(message.guild.id + message.mentions.users.first().id, true)
             games.set(message.guild.id + message.author.id, true)
@@ -52,7 +53,7 @@ module.exports.run = async(client, message, args, cmd) => {
                     if (currentPlayer == message.author.id) currentPlayer = message.mentions.users.first().id
                     else currentPlayer = message.author.id
                     game.insert(m.content - 1)
-                    emb.edit(embed.setDescription(board(game).join('\n').replace(/,/g, '')))
+                    emb.edit({ embeds: [embed.setDescription(board(game).join('\n').replace(/,/g, ''))]})
                     m.delete()
                     collector.resetTimer({ time: 30000 })
                     if (game.state.winner !== null || game.state.status == '1') collector.stop()
@@ -62,8 +63,8 @@ module.exports.run = async(client, message, args, cmd) => {
                     if (!games.get(message.guild.id + message.author.id) || !games.get(message.guild.id + message.mentions.users.first().id)) return
                     if (game.state.status == '0') embed.setTitle(`The winner is ${game.state.winner.color == game.players['0'].color ? message.author.username : message.mentions.users.first().username}!`)
                     else if (game.state.status == '1') embed.setTitle(`Looks like you tied!`)
-                    else message.channel.send('The games time limit has been reached, and there is no winner!')
-                    emb.edit(embed)
+                    else message.channel.send({ embeds: [client.embedBuilder(client, message, "Error", "Time Limit has reached and there's no winners.", "RED")] });
+                    emb.edit({ embeds: [embed] })
                     games.delete(message.guild.id + message.author.id)
                     games.delete(message.guild.id + message.mentions.users.first().id)
                 })
