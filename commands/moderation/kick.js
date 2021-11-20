@@ -17,13 +17,9 @@ module.exports.run = async(client, message, args) => {
     if (!member.kickable) return message.channel.send({ embeds: [client.embedBuilder(client, message, "Error", "That User cannot be kicked.", "RED")] });
 
     const reason = args.slice(1).join(" ") || 'No Reason'
-    let casenum = db.fetch(`cases_${message.guild.id}`) + 1;
     let embed = client.embedBuilder(client, message, "User Kicked", `${member.user} have been banned by ${message.author} for ${reason}`, "YELLOW");
 
     client.utils.logs(client, message.guild, "User Kicked", [{
-        name: "Case ID",
-        desc: `${casenum}`
-      },{
         name: "User",
         desc: member.user
       },{
@@ -38,7 +34,4 @@ module.exports.run = async(client, message, args) => {
       }], member.user);
 
     await message.channel.send({ embeds: [embed] })
-    
-    db.push(`punishments_${message.guild.id}_${member.id}`, embed);
-    db.add(`cases_${message.guild.id}`, 1);
 }

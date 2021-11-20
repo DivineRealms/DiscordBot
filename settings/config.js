@@ -212,9 +212,9 @@ module.exports.config = {
     },
     welcomeSystem: {
         enabled: true,
-        welcomeChannel: 'CHANNELID',
-        welcomeType: 'card', //select from these 4 options -> message, embed, dm or card!
-        welcomeCardBackGroundURL: 'BACKGROUNDURL',
+        welcomeChannel: '853213051788197908',
+        welcomeType: 'dm', //select from these 4 options -> message, embed, dm or card!
+        welcomeCardBackGroundURL: 'https://minecraft-mp.com/images/banners/banner-295045-1636327342.png',
         welcomeMessage: 'Welcome {member} to the server, You are our {joinPosition} member!',
         welcomeDM: 'Welcome {member} to the server! You are our {joinPosition} member!',
         welcomeEmbed: {

@@ -42,13 +42,9 @@ module.exports.run = async(client, message, args) => {
 
     await member.roles.add(muterole)
 
-    let casenum = db.fetch(`cases_${message.guild.id}`) + 1;
-    let embed = client.embedBuilder(client, message, "User Muted", `${member.user} have been muted by ${message.author} for ${reason}, duration ${client.utils.formatTime(time)}`, "YELLOW");
+   let embed = client.embedBuilder(client, message, "User Muted", `${member.user} have been muted by ${message.author} for ${reason}, duration ${client.utils.formatTime(time)}`, "YELLOW");
 
     client.utils.logs(client, message.guild, "User Muted", [{
-        name: "Case ID",
-        desc: `${casenum}`
-      },{
         name: "User",
         desc: member.user
       },{
@@ -63,7 +59,4 @@ module.exports.run = async(client, message, args) => {
       }], member.user);
 
     await message.channel.send({ embeds: [embed] })
-
-    db.push(`punishments_${message.guild.id}_${member.id}`, embed);
-    db.add(`cases_${message.guild.id}`, 1);
 }

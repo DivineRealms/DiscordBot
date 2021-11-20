@@ -20,13 +20,9 @@ module.exports.run = async(client, message, args) => {
 
     const reason = args.slice(1).join(" ") || 'No Reason'
 
-    let casenum = db.fetch(`cases_${message.guild.id}`) + 1;
     let embed = client.embedBuilder(client, message, "User Banned", `${member.user} have been banned by ${message.author} for ${reason}`, "YELLOW");
 
     client.utils.logs(client, message.guild, "User Warned", [{
-        name: "Case ID",
-        desc: `${casenum}`
-      },{
         name: "User",
         desc: member.user
       },{
@@ -42,10 +38,4 @@ module.exports.run = async(client, message, args) => {
 
     message.guild.members.ban(member, { reason })
     await message.channel.send({ embeds: [embed] })
-
-    const dm = await member.send(embed.setTitle('You have been banned!')).catch(() => {})
-    if (!dm) message.channel.send({ embeds: [new client.embed().setDescription(`Failed to send a dm to ${member}, their dms are locked.`).setFooter(message.author.username, message.author.displayAvatarURL({ dynamic: true, size: 1024 }))]})
-
-    db.add(`cases_${message.guild.id}`, 1);
-    db.push(`punishments_${message.guild.id}_${member.id}`, embed);
 }

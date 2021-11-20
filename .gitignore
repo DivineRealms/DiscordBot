@@ -102,3 +102,7 @@ dist
 
 # TernJS port file
 .tern-port
+json.sqlite
+data/enmap.sqlite-wal
+data/enmap.sqlite-shm
+data/enmap.sqlite

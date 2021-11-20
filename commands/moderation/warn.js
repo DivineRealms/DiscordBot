@@ -15,15 +15,11 @@ module.exports.run = async(client, message, args) => {
     if (!member) return message.channel.send({ embeds: [client.embedBuilder(client, message, "Error", "You need to mention user.", "RED")] });
     if (member.id === message.author.id) return message.channel.send({ embeds: [client.embedBuilder(client, message, "Error", "You can't warn yourself.", "RED")] });
     if (member.user.bot) return message.channel.send({ embeds: [client.embedBuilder(client, message, "Error", "You can't warn bot.", "RED")] });
-    let casenum = db.fetch(`cases_${message.guild.id}`) + 1;
     let warnings = db.fetch(`warnings_${message.guild.id}_${member.id}`)
 
     let embed = client.embedBuilder(client, message, "User Warned", `${member.user} have been warned by ${message.author} for ${reason}`, "YELLOW");
 
     client.utils.logs(client, message.guild, "User Warned", [{
-        name: "Case ID",
-        desc: `${casenum}`
-      },{
         name: "User",
         desc: member.user
       },{
@@ -42,7 +38,5 @@ module.exports.run = async(client, message, args) => {
 
     message.channel.send({ embeds: [embed] })
 
-    client.members.push(message.guild.id, embed, `${member.id}.warnings`)
-    client.members.push(message.guild.id, embed, `${member.id}.punishments`)
-    db.add(`cases_${message.guild.id}`);
+    db.add(`warnings_${message.guild.id}_${member.id}`, 1);
 }

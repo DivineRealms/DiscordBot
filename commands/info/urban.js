@@ -14,7 +14,7 @@ module.exports = {
 module.exports.run = async(client, message, args) => {
     if (!args[0]) return message.channel.send({ embeds: [client.embedBuilder(client, message, "Error", "You need to enter term to search for.", "RED")] });
 
-    let def = await urban(args[0]).catch(() => {}) //NUT NUT
+    let def = await urban(args[0]).catch(() => {})
     if (!def) return message.channel.send({ embeds: [client.embedBuilder(client, message, "Error", `No Results found for ${args[0]}.`, "RED")] });
 
     const embed = new client.embed()

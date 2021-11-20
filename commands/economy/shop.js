@@ -1,4 +1,3 @@
-const { chunk } = require('lodash')
 const paginateContent = require('../../utils/paginateContent.js')
 
 module.exports = {

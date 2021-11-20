@@ -1,6 +1,7 @@
 const { MessageAttachment } = require("discord.js");
 const Canvas = require("discord-canvas")
 const ord = require('ordinal')
+const muteChecks = require('../utils/muteChecks.js')
 
 module.exports = async(client, member) => {
     client.members.ensure(member.guild.id, {})
@@ -11,11 +12,9 @@ module.exports = async(client, member) => {
     }
 
     member.roles.set(client.conf.automation.Roles_On_Join.slice(0, 5)).catch(() => {})
-    const data = client.members.ensure(member.guild.id, client.memberSettings, member.id)
     await muteChecks.checkMuteOnJoin(client, member, member.guild);
     const settings = client.conf.welcomeSystem
     const log = client.channels.cache.get(settings.welcomeChannel)
-    if (!log) return
 
     if (settings.welcomeType === 'card') {
         const img = await new Canvas.Welcome()
@@ -24,24 +23,27 @@ module.exports = async(client, member) => {
             .setMemberCount(member.guild.memberCount)
             .setGuildName(member.guild.name)
             .setAvatar(member.user.displayAvatarURL({ format: 'png', size: 2048 }))
-            .setColor("border", "#FF0000")
+            .setColor("border", "#4CAAFF")
             .setColor("username-box", "RANDOM")
-            .setColor("discriminator-box", "#FF0000")
-            .setColor("message-box", "#FF0000")
-            .setColor("title", "#FF0000")
-            .setColor("avatar", "#FF0000")
-            .setBackground(settings.welcomeCardBackGroundURL)
+            .setColor("discriminator-box", "#4CAAFF")
+            .setColor("message-box", "#4CAAFF")
+            .setColor("title", "#4CAAFF")
+            .setColor("avatar", "#4CAAFF")
+            //.setBackground(settings.welcomeCardBackGroundURL)
             .toAttachment()
 
         const attachment = new MessageAttachment(img.toBuffer(), "welcome-image.png");
-        log.send(attachment);
-    } else if (settings.welcomeType === 'embed') {
+        if(log) log.send({ files: [attachment] });
+    } else if (settings.welcomeType == 'embed') {
         const embed = new client.embed()
             .setTitle(settings.welcomeEmbed.title.replace('{username}', member.user.username))
-            .setDescription(settings.welcomeEmbed.description.replace('{member}', member).replace('{joinPosition}', ord(member.guild.memberCount)))
+            .setDescription(settings.welcomeEmbed.description.replace('{member}', member).replace('{joinPosition}', `${member.guild.memberCount}`))
             .setColor(settings.welcomeEmbed.color)
 
-        log.send({ embeds: [embed] })
-    } else if (settings.welcomeType === 'message') log.send(settings.welcomeMessage.replace('{member}', member).replace('{joinPosition}', ord(member.guild.memberCount)))
-    else if (settings.welcomeType === 'dm') member.user.send(settings.welcomeDM.replace('{member}', member).replace('{joinPosition}', ord(member.guild.memberCount))).catch(() => {})
+        if(log) log.send({ embeds: [embed] })
+    } else if (settings.welcomeType == 'message') {
+        if(log) log.send(settings.welcomeMessage.replace('{member}', member).replace('{joinPosition}', `${member.guild.memberCount}`))
+    } else if (settings.welcomeType == 'dm') {
+        member.user.send(settings.welcomeDM.replace('{member}', member).replace('{joinPosition}', `${member.guild.memberCount}`)).catch(() => {})
+    }
 }

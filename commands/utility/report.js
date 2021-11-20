@@ -15,12 +15,12 @@ module.exports.run = async(client, message, args) => {
     if (!args[0]) return message.channel.send({ embeds: [new client.embed().setDescription(`Please provide me a report!`).setFooter(message.author.username, message.author.displayAvatarURL({ dynamic: true, size: 1024 }))]});
 
     const report = new client.embed()
-        .setTitle(`New __REPORT__`)
-        .addField('Submitter', message.author)
-        .addField('Report', args.join(' '))
-        .addField('Time', require('moment')().format('ddd, MMMM Do YYYY [at] hh:mm A'))
+        .setTitle(`New Report`)
+        .addField('Submitter', `${message.author}`)
+        .addField('Report', `${args.join(' ')}`)
+        .addField('Time', `${require('moment')().format('ddd, MMMM Do YYYY [at] hh:mm A')}`)
 
     message.delete()
     message.channel.send({ embeds: [new client.embed().setDescription(`Your report for \`${args.join(' ')}\` was submitted!`)]})
-    const msg = await channel.send(report)
+    const msg = await channel.send({ embeds: [report] })
 }

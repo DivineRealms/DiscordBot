@@ -1,5 +1,3 @@
-const { chunk } = require('lodash')
-
 module.exports = {
     name: 'apply',
     category: 'utility',
