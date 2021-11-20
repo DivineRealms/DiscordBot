@@ -1,6 +1,5 @@
 const { MessageAttachment } = require("discord.js");
 const Canvas = require("discord-canvas")
-const ord = require('ordinal')
 const muteChecks = require('../utils/muteChecks.js')
 
 module.exports = async(client, member) => {
