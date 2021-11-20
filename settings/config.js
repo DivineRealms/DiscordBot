@@ -8,7 +8,7 @@
 
 module.exports.config = {
     settings: {
-        token: 'ODcwMzgwNzEwMzM3MzE0OTE3.YQL7NA.SLo9w_XgaaVLJQAYMBcMzGSnPBI',
+        token: '',
         prefix: '+',
         mentionPrefix: true, //Whether the bot has a mention prefix
         botActivity: {
