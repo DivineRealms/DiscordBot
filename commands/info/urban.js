@@ -2,8 +2,10 @@ const fetch = require('node-fetch')
 const urban = require(`relevant-urban`)
 
 module.exports = {
+    name: 'urban',
     description: 'Lets you search whatever you want on urban dictionary.',
     permissions: [],
+    cooldown: 0,
     aliases: ['ud'],
     usage: 'urban <search>'
 }

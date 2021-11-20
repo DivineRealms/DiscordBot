@@ -1,8 +1,10 @@
 const db = require('quick.db')
 
 module.exports = {
+    name: 'modifybal',
     description: 'Remove or add money to a user on the server.',
-    permissions: [],
+    permissions: ["ADMINISTRATOR"],
+    cooldown: 0,
     aliases: ['modifyb'],
     usage: 'modifybal [@User] <add | remove> <wallet | bank> <amount>'
 }
@@ -10,13 +12,26 @@ module.exports = {
 module.exports.run = async(client, message, args) => {
     const user = message.mentions.users.first() || client.users.cache.get(args[0])
 
-    if (!message.member.permissions.has('ADMINISTRATOR')) return message.channel.send({ embeds: [new client.embed().setDescription('You are missing the permission `Administrator`!').setFooter(message.author.username, message.author.displayAvatarURL({ dynamic: true, size: 1024 }))]})
-    if (!user) return message.channel.send({ embeds: [new client.embed().setDescription('You need to mention a person to modify their balance!').setFooter(message.author.username, message.author.displayAvatarURL({ dynamic: true, size: 1024 }))]})
-    if (!['add', 'remove'].includes(args[1])) return message.channel.send({ embeds: [new client.embed().setDescription(`You need to specify either if your adding or removing their balance!\nExample: \`${message.px}modifyb @User add wallet 100\``).setFooter(message.author.username, message.author.displayAvatarURL({ dynamic: true, size: 1024 }))]})
-    if (!['wallet', 'bank'].includes(args[2])) return message.channel.send({ embeds: [new client.embed().setDescription('You need to if youre adding/removing money from their bank or wallet!').setFooter(message.author.username, message.author.displayAvatarURL({ dynamic: true, size: 1024 }))]})
-    if (isNaN(args[3]) || args[3] < 1) return message.channel.send({ embeds: [new client.embed().setDescription('You need to enter how much money your giving/taking away from that user!').setFooter(message.author.username, message.author.displayAvatarURL({ dynamic: true, size: 1024 }))]})
+    if (!user) return message.channel.send({ embeds: [client.embedBuilder(client, message, "Error", "You need to mention user.", "RED")] });
+    if (!['add', 'remove'].includes(args[1])) return message.channel.send({ embeds: [client.embedBuilder(client, message, "Error", "You need to specify do you want to `add` or `remove`.", "RED")] });
+    if (!['wallet', 'bank'].includes(args[2])) return message.channel.send({ embeds: [client.embedBuilder(client, message, "Error", "You need to specify do you want `wallet` or `bank`.", "RED")] });
+    if (isNaN(args[3]) || args[3] < 1) return message.channel.send({ embeds: [client.embedBuilder(client, message, "Error", "You need to enter amount.", "RED")] });
 
-    const data = client.members.ensure(message.guild.id, client.memberSettings, user.id).balance
-    client.members.math(message.guild.id, args[1] === 'add' ? '+' : '-', Number(args[3]), `${user.id}.balance.${args[2]}`)
-    message.channel.send({ embeds: [new client.embed().setDescription(`${args[3]} ${message.coin} has been ${args[1] === 'add' ? 'added' : 'removed'} ${args[1] === 'add' ? 'to' : 'from'} ${user}'s ${args[2]}`)]})
+    if(args[1].toLowerCase() == "add") {
+        if(args[2].toLowerCase() == "bank") {
+            db.add(`bank_${message.guild.id}_${user.id}`, Number(args[3]));
+            message.channel.send({ embeds: [client.embedBuilder(client, message, "Modify Balance", `$${args[3]} have been added to ${user}'s bank`, "YELLOW")] });
+        } else if(args[2].toLowerCase() == "wallet") {
+            db.add(`money_${message.guild.id}_${user.id}`, Number(args[3]));
+            message.channel.send({ embeds: [client.embedBuilder(client, message, "Modify Balance", `$${args[3]} have been added to ${user}'s wallet`, "YELLOW")] });
+        }
+    } else if(args[1].toLowerCase() == "remove") {
+        if(args[2].toLowerCase() == "bank") {
+            db.subtract(`bank_${message.guild.id}_${user.id}`, Number(args[3]));
+            message.channel.send({ embeds: [client.embedBuilder(client, message, "Modify Balance", `$${args[3]} have been removed from ${user}'s bank`, "YELLOW")] });
+        } else if(args[2].toLowerCase() == "wallet") {
+            db.subtract(`money_${message.guild.id}_${user.id}`, Number(args[3]));
+            message.channel.send({ embeds: [client.embedBuilder(client, message, "Modify Balance", `$${args[3]} have been removed from ${user}'s wallet`, "YELLOW")] });
+        }
+    }
 }

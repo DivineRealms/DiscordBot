@@ -1,8 +1,10 @@
 const db = require("quick.db")
 
 module.exports = {
+    name: 'birthdayscoming',
     description: 'Views all the birthdays coming up in the week.',
     permissions: [],
+    cooldown: 0,
     aliases: [`bdaylist`],
     usage: 'birthdydayscoming'
 }

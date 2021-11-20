@@ -1,8 +1,10 @@
 const { chunk } = require('lodash')
 
 module.exports = {
+    name: 'applications',
     description: 'View the available applications in the channel.',
     permissions: [],
+    cooldown: 0,
     aliases: [],
     usage: 'applications'
 }

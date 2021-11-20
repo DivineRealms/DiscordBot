@@ -1,8 +1,10 @@
 const { evaluate } = require('mathjs')
 
 module.exports = {
+    name: 'calculator',
     description: 'Does your math homework for you!',
     permissions: [],
+    cooldown: 0,
     aliases: ['solve', 'math'],
     usage: 'calculator <Problem>'
 }

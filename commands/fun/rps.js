@@ -1,6 +1,8 @@
 module.exports = {
+    name: 'rps',
     description: 'Play a game of rps.',
     permissions: [],
+    cooldown: 0,
     aliases: ['rock-paper-scissors'],
     usage: 'rps [rock | paper | scissors]'
 }

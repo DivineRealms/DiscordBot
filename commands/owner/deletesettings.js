@@ -1,6 +1,8 @@
 module.exports = {
+    name: 'deletesettings',
     description: 'Deletes all the settings for the bot (PERMANENT)',
     permissions: [],
+    cooldown: 0,
     aliases: ['deleteset'],
     usage: 'deletesettings'
 }

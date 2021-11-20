@@ -1,6 +1,8 @@
 module.exports = {
+    name: 'afk',
     description: 'Sets your status to afk so people know.',
     permissions: [],
+    cooldown: 0,
     aliases: [`brb`],
     usage: 'afk <Reason>'
 }

@@ -1,8 +1,10 @@
 const fetch = require('node-fetch');
 
 module.exports = {
+    name: 'advice',
     description: 'Lets you turn text into ascii art.',
     permissions: [],
+    cooldown: 0,
     aliases: [`cooltext`],
     usage: 'ascii <text>'
 }

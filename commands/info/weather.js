@@ -1,8 +1,10 @@
 const weather = require('weather-js');
 
 module.exports = {
+    name: 'weather',
     description: 'Want to check the weather?',
     permissions: [],
+    cooldown: 0,
     aliases: ['weath', 'temp'],
     usage: 'Weather <PLACE>'
 }

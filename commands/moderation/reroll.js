@@ -1,6 +1,8 @@
 module.exports = {
+    name: 'reroll',
     description: 'Rerolls a giveaway.',
     permissions: ["MANAGE_MESSAGES"],
+    cooldown: 0,
     aliases: ['greroll', 'giveawayreroll'],
     usage: 'reroll <MessageID>'
 }

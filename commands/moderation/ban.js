@@ -1,12 +1,13 @@
 module.exports = {
+    name: 'ban',
     description: 'Lets you ban the requested member from the guild.',
-    permissions: [],
+    permissions: ["BAN_MEMBERS"],
+    cooldown: 0,
     aliases: ['yeet', 'forceban'],
     usage: 'ban <@user | ID> <Reason>'
 }
 
 module.exports.run = async(client, message, args) => {
-    if (!message.member.permissions.has("BAN_MEMBERS")) return message.channel.send({ embeds: [new client.embed().setDescription('You can\'t use that!').setFooter(message.author.username, message.author.displayAvatarURL({ dynamic: true, size: 1024 }))]})
     if (!message.guild.me.permissions.has("BAN_MEMBERS")) return message.channel.send({ embeds: [new client.embed().setDescription(`Sorry, I am missing my required permissions perhaps try moving my role up!`).setFooter(message.author.username, message.author.displayAvatarURL({ dynamic: true, size: 1024 }))]})
 
     const member = message.mentions.users.first() || await client.users.fetch(args[0]).catch(() => {})

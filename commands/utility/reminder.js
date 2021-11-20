@@ -1,8 +1,10 @@
 const parse = require('ms');
 
 module.exports = {
+    name: 'reminder',
     description: 'Lets you set a reminder.',
     permissions: [],
+    cooldown: 0,
     aliases: [`rem`],
     usage: 'reminder <TIME> <Reason>'
 }

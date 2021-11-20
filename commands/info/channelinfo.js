@@ -1,6 +1,8 @@
 module.exports = {
+    name: 'channelinfo',
     description: 'Allows you to view information on a channel.',
     permissions: [],
+    cooldown: 0,
     aliases: ['cinfo', 'infochannel'],
     usage: 'channelinfo <#chanel>'
 }

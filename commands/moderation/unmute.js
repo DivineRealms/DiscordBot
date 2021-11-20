@@ -1,6 +1,8 @@
 module.exports = {
+    name: 'unmute',
     description: 'Lets you unmute the requested user.',
     permissions: ["MUTE_MEMBERS"],
+    cooldown: 0,
     aliases: ['um'],
     usage: 'unmute <@User> [reason]'
 }

@@ -1,6 +1,8 @@
 module.exports = {
+    name: 'warnings',
     description: 'View the warnings on the requested user.',
     permissions: ["MUTE_MEMBERS"],
+    cooldown: 0,
     aliases: ['warns'],
     usage: 'warnings <@User | ID>'
 }

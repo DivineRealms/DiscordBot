@@ -1,6 +1,8 @@
 module.exports = {
+    name: 'embed',
     description: 'Allows you to put text into an embed.',
     permissions: ["MANAGE_GUILD"],
+    cooldown: 0,
     aliases: [],
     usage: 'embed  <Title> | <Description>'
 }

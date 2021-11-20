@@ -2,8 +2,10 @@ const Discord = require('discord.js')
 const fetch = require('node-fetch')
 
 module.exports = {
+    name: 'eval',
     description: 'Lets you run some javascript via discord. (DANGEROUS | ONLY USE IF YOU KNOW WHAT YOU\'RE DOING!)',
     permissions: [],
+    cooldown: 0,
     aliases: [],
     usage: 'eval <code>'
 }

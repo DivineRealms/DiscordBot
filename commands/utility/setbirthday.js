@@ -2,8 +2,10 @@ const datetime = require('date-and-time')
 const db = require('quick.db')
 
 module.exports = {
+    name: 'setbirthday',
     description: 'Set a users birthday.',
     permissions: [],
+    cooldown: 0,
     aliases: [`setbday`],
     usage: 'setbirthday'
 }

@@ -3,10 +3,7 @@ module.exports = async(client, reaction, user) => {
     if (user.bot || !reaction.message.guild) return
     const settings2 = client.conf.starBoard
     const schannel = client.channels.cache.get(settings2.StarBoard_Channel)
-    const vSettings = client.conf.verification
     const suggestion = client.settings.get(reaction.message.guild.id, `suggestions.${reaction.message.id}`)
-    let orderID = Math.floor(Math.random() * 1e+15)
-    let log = client.channels.cache.get(client.conf.purchaseSystem.Purchase_Logs)
 
     if (['✅', '❌'].includes(reaction.emoji.name) && suggestion) {
         const user2 = await client.users.fetch(suggestion.user)
@@ -20,11 +17,6 @@ module.exports = async(client, reaction, user) => {
         client.settings.delete(reaction.message.guild.id, `suggestions.${reaction.message.id}`)
     }
 
-    if (vSettings.enabled && vSettings.verificationType === 'reaction' && reaction.message.id === vSettings.Reaction_Message_ID && reaction.emoji.name === vSettings.Reaction_Emoji) {
-        const member = reaction.message.guild.member(user)
-        member.roles.add(vSettings.verifyRole)
-        member.roles.remove(vSettings.roleToRemove)
-    }
     if (settings2.Enabled && reaction.message)
         if (schannel && settings2.Enabled && reaction.emoji.name === settings2.StarBoard_Emoji) {
             const stars = client.settings.get(reaction.message.guild.id, `stars.${reaction.message.id}`)
@@ -56,8 +48,8 @@ module.exports = async(client, reaction, user) => {
     const settings = client.conf.ticketSystem
     if (!panel || reaction.emoji.name !== client.conf.ticketSystem.Panel_Emoji) return
 
-    const tickets = client.settings.get(reaction.message.guild.id, 'tickets')
-    if (Object.entries(tickets).find(s => s[1].user === user.id)) return
+    const tickets = db.all().filter(i => i.ID.startsWith(`tickets_${message.guild.id}_`)) || [];;
+    if (tickets.find((u) => u.data.includes(user.id))) return;
 
     const num = Object.entries(tickets).length || 1
     const ticketNumber = '0'.repeat(4 - num.toString().length) + num
@@ -76,5 +68,5 @@ module.exports = async(client, reaction, user) => {
         .setDescription(client.resolveMember(settings.Ticket_Message, user))
     ]})
 
-    client.settings.set(reaction.message.guild.id, { user: user.id }, `tickets.${channel.id}`)
+    db.set(`tickets_${reaction.message.guild.id}_${channel.id}`, user.id);
 }

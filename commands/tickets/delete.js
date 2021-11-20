@@ -4,10 +4,13 @@ const jsdom = require("jsdom");
 const { JSDOM } = jsdom;
 const dom = new JSDOM();
 const document = dom.window.document;
+const db = require('quick.db')
 
 module.exports = {
+    name: 'delete',
     description: 'Deletes the ticket.',
     permissions: ["MANAGE_CHANNELS"],
+    cooldown: 0,
     aliases: [`close`]
 }
 

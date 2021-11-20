@@ -1,13 +1,13 @@
 module.exports = {
+    name: 'advancedpoll',
     description: 'Creates an advanced poll.',
-    permissions: [],
+    permissions: ["MANAGE_CHANNELS"],
+    cooldown: 0,
     aliases: ['advpoll'],
     usage: 'advancedpoll Question | op1 | op2 | etc\`\nMinimum of 2 options are required'
 }
 
 module.exports.run = async(client, message, args) => {
-    if (!message.member.permissions.has("MANAGE_CHANNELS"))
-        return message.channel.send({ embeds: [new client.embed().setDescription(`You are missing permission \`MANAGE_CHANNELS\``).setFooter(message.author.username, message.author.displayAvatarURL({ dynamic: true, size: 1024 }))]});
     let options = args.join(' ').split('|').map(s => s.trim().replace(/\s\s+/g, ' '))
     let question = options.shift(),
         emoji = ['🇦', '🇧', '🇨', '🇩', '🇪', '🇫', '🇬', '🇭', '🇮', '🇯']

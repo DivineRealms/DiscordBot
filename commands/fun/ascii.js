@@ -1,8 +1,10 @@
 const figlet = require('figlet')
 
 module.exports = {
+    name: 'ascii',
     description: 'Lets you turn text into ascii art.',
     permissions: [],
+    cooldown: 0,
     aliases: [`cooltext`],
     usage: 'ascii <text>'
 }

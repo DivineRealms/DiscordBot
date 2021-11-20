@@ -1,6 +1,10 @@
+const db = require('quick.db');
+
 module.exports = {
+    name: 'suggest',
     description: 'Lets you submit a suggestion.',
     permissions: [],
+    cooldown: 0,
     aliases: [`sug`],
     usage: 'suggest <Suggestion>'
 }
@@ -11,16 +15,19 @@ module.exports.run = async(client, message, args) => {
     if (!channel) return message.channel.send({ embeds: [new client.embed().setDescription('A suggestions channel hasnt been setup for this server!').setFooter(message.author.username, message.author.displayAvatarURL({ dynamic: true, size: 1024 }))]})
     if (!args[0]) return message.channel.send({ embeds: [new client.embed().setDescription(`Please provide me a suggestion!`).setFooter(message.author.username, message.author.displayAvatarURL({ dynamic: true, size: 1024 }))]});
 
-    const suggestionembed = new client.embed()
-        .setTitle(`Suggestion`)
-        .addField('Submitter', message.author)
-        .addField('Suggestion', args.join(' '))
-        .addField('Suggestion ID', message.id)
-        .addField('Time', require('moment')().format('ddd, MMMM Do YYYY [at] hh:mm A'))
+    const embed = new client.embed()
+        .setTitle("Suggestion")
+        .setDescription(`${args.join(' ')}`)
+        .setTimestamp()
+        .setFooter(message.author.username, message.author.displayAvatarURL({ dynamic: true }))
 
     message.delete()
     message.channel.send({ embeds: [client.embedBuilder(client, message, "Suggestion", "Your suggestion have been submitted successfully.", "YELLOW")] });
-    const msg = await channel.send({ embeds: [suggestionembed] })
-    await msg.react('✅')
-    await msg.react('❌')
+    const msg = await channel.send({ embeds: [embed] })
+    await msg.react(client.conf.settings.Emojis.Yes)
+    await msg.react(client.conf.settings.Emojis.No)
+    db.set(`suggestion_${msg.id}`, {
+        user: message.author,
+        suggestion: args.join(' ')
+    });
 }

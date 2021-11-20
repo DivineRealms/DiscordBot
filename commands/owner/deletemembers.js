@@ -1,4 +1,5 @@
 module.exports = {
+    name: 'deletemembers',
     description: 'Deletes all the member data for the bot (PERMANENT)'
 }
 

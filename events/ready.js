@@ -1,4 +1,5 @@
 const muteChecks = require("../utils/muteChecks.js");
+const db = require('quick.db')
 
 module.exports = async client => {
         console.log("_________________________________");
@@ -21,7 +22,7 @@ module.exports = async client => {
 		client.members.ensure(guild.id, {})
         client.settings.ensure(guild.id, client.defaultSettings)
 
-        await muteChecks.checkMute(client, guild);
+        //await muteChecks.checkMute(client, guild);
 
         function counter() {
             const memberCount = client.channels.cache.get(client.conf.automation.Member_Count_Channel)
@@ -38,7 +39,6 @@ module.exports = async client => {
             const today = new Date().getMonth() + ' ' + new Date().getDate()
             if (!settings.enabled || client.settings.get(guild.id, 'birthday') === today) return
 
-            const birthdays = Object.entries(client.members.get(guild.id)).filter((a) => isToday(a[1].birthday))
             let birthdays = db.all().filter(i => i.ID.startsWith(`birthday_${guild.id}_`)).sort((a, b) => b.data - a.data);
 
             let birthEmbed = birthdays.filter((b) => isToday(b.data)).map(s => {

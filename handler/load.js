@@ -16,7 +16,6 @@ module.exports = async client => {
     const settings = { fetchAll: true, autoFetch: true, cloneLevel: 'deep' }
     client.defaultSettings = require('../settings/config').guildSettings
     client.memberSettings = require('../settings/config').memberSettings
-    client.shop = require('../settings/config').shop;
     client.giveaways = new Giveaway(client, {})
     client.settings = new Enmap({
         name: 'settings',
@@ -28,6 +27,9 @@ module.exports = async client => {
         ...settings
     })
     
+    const temporaryVC = require("../utils/temporaryVC.js");
+    temporaryVC(client);
+
     client.embedBuilder = require("../utils/embedBuilder.js");
     client.utils = require("../utils/utils.js");
 

@@ -2,8 +2,10 @@ const { MessageEmbed } = require('discord.js');
 const { utc } = require('moment')
 
 module.exports = {
+    name: 'roleinfo',
     description: 'Allows you to view information on a role.',
     permissions: [],
+    cooldown: 0,
     aliases: ['roleinformation', 'ri'],
     usage: 'roleinfo <@Role>'
 }

@@ -1,6 +1,8 @@
 module.exports = {
+    name: 'uptime',
     description: 'Check how long the bot has been up.',
     permissions: [],
+    cooldown: 0,
     aliases: ['utime', 'binfo'],
     usage: 'uptime'
 }

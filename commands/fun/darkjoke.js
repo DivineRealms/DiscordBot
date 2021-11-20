@@ -1,6 +1,8 @@
 module.exports = {
+    name: 'darkjoke',
     description: 'A very dark joke for some laughs.',
     permissions: [],
+    cooldown: 0,
     aliases: ['drkjoke'],
     usage: 'darkjoke'
 }

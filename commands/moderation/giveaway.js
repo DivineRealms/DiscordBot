@@ -1,16 +1,16 @@
 const ms = require('ms');
 
 module.exports = {
+    name: 'giveaway',
     description: 'Creates a giveaway.',
-    permissions: [],
+    permissions: ["MANAGE_GUILD"],
+    cooldown: 0,
     aliases: ['gway'],
     usage: 'giveaway'
 }
 
 
 module.exports.run = async(client, message, args) => {
-    if (!message.member.permissions.has("MANAGE_MESSAGES")) return message.channel.send('You are not allowed to start giveaways');
-
     const channel = message.mentions.channels.first();
     const [, time, wins, ...prize] = args
 

@@ -1,6 +1,8 @@
 module.exports = {
+    name: 'dm',
     description: 'I will dm someone for you.',
     permissions: [],
+    cooldown: 0,
     aliases: [`direct-message`],
     usage: 'dm <Text>'
 }

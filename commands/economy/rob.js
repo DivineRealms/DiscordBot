@@ -1,8 +1,10 @@
 const db = require('quick.db')
 
 module.exports = {
+    name: 'rob',
     description: 'Try to rob that one dood you want.',
     permissions: [],
+    cooldown: 0,
     aliases: ['r0b'],
     usage: 'rob <@User>'
 }

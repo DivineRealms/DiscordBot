@@ -1,6 +1,8 @@
 module.exports = {
+    name: 'snipe',
     description: 'Lets you see the last deleted message.',
     permissions: [],
+    cooldown: 0,
     aliases: ['snip3'],
     usage: 'snipe'
 }

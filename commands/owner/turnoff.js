@@ -1,6 +1,8 @@
 module.exports = {
+    name: 'turnoff',
     description: 'Lets you turnoff the bot via discord.',
     permissions: [],
+    cooldown: 0,
     aliases: ['selfdestruct', 'shutdown'],
     usage: 'turnoff'
 }

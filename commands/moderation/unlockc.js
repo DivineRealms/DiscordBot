@@ -1,6 +1,8 @@
 module.exports = {
+    name: 'unlockc',
     description: 'Lets you unlock a channel in the guild.',
     permissions: ["MANAGE_GUILD"],
+    cooldown: 0,
     aliases: ['unlockchannel', 'unlock'],
     usage: 'unlockc <#Channel>'
 }

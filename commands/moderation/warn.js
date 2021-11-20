@@ -1,6 +1,8 @@
 module.exports = {
+    name: 'warn',
     description: 'Lets you issue a warning to a member.',
     permissions: ["MUTE_MEMBERS"],
+    cooldown: 0,
     aliases: [],
     usage: 'warn <@User> <Reason>'
 }
@@ -9,8 +11,6 @@ module.exports.run = async(client, message, args) => {
     const reason = args.slice(1).join(' ') || 'No Reason Specified'
     const member = message.mentions.members.first() || message.guild.member(args[0])
 
-    if (!message.member.permissions.has('MUTE_MEMBERS')) return message.channel.send({ embeds: [new client.embed().setDescription(`Sorry you are missing the permission \`MUTE_MEMBERS\`!`).setFooter(message.author.username, message.author.displayAvatarURL({ dynamic: true, size: 1024 }))]})
-    if (!message.member.permissions.has('MANAGE_MESSAGES')) return message.channel.send({ embeds: [new client.embed().setDescription(`Sorry, you are missing permissions to execute this command!`).setFooter(message.author.username, message.author.displayAvatarURL({ dynamic: true, size: 1024 }))]})
     if (!member) return message.channel.send({ embeds: [client.embedBuilder(client, message, "Error", "You need to mention user.", "RED")] });
     if (member.id === message.author.id) return message.channel.send({ embeds: [client.embedBuilder(client, message, "Error", "You can't warn yourself.", "RED")] });
     if (member.user.bot) return message.channel.send({ embeds: [client.embedBuilder(client, message, "Error", "You can't warn bot.", "RED")] });

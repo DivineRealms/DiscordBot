@@ -1,8 +1,10 @@
 const fetch = require('node-fetch');
 
 module.exports = {
+    name: 'trumptweet',
     description: 'Tweet as trump.',
     permissions: [],
+    cooldown: 0,
     aliases: ['trumptwt'],
     usage: 'trumptweet <Message>'
 }

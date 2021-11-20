@@ -1,6 +1,8 @@
 module.exports = {
+    name: 'restart',
     description: 'Lets you restart the bot via discord.',
     permissions: [],
+    cooldown: 0,
     aliases: ['bootup'],
     usage: 'restart'
 }

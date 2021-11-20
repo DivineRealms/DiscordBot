@@ -1,8 +1,10 @@
 const db = require('quick.db')
 
 module.exports = {
+    name: 'hunt',
     description: 'Go hunting and get some food.',
     permissions: [],
+    cooldown: 0,
     aliases: [],
     usage: 'hunt'
 }

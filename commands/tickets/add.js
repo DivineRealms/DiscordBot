@@ -1,8 +1,10 @@
 const db = require('quick.db');
 
 module.exports = {
+    name: 'add',
     description: 'Add users to the current ticket.',
     permissions: ["MANAGE_CHANNELS"],
+    cooldown: 0,
     aliases: []
 }
 

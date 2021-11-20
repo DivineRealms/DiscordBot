@@ -1,6 +1,8 @@
 module.exports = {
+    name: 'emojis',
     description: 'Lets you view all the emojis in the guild.',
     permissions: [],
+    cooldown: 0,
     aliases: ['emoji', 'whatstheemojis'],
     usage: 'emojis'
 }

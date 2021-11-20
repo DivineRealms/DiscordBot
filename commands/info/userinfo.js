@@ -1,8 +1,10 @@
 const moment = require("moment");
 
 module.exports = {
+    name: 'userinfo',
     description: 'Allows you to view information on a user!',
     permissions: [],
+    cooldown: 0,
     aliases: ['whois', 'uinfo'],
     usage: 'userinfo <@User>'
 }

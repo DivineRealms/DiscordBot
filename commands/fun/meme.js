@@ -2,8 +2,10 @@ const { sample } = require('lodash')
 const fetch = require('node-fetch')
 
 module.exports = {
+    name: 'meme',
     description: 'View a random meme.',
     permissions: [],
+    cooldown: 0,
     aliases: ['pic'],
     usage: 'meme'
 }

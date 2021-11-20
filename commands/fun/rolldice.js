@@ -1,6 +1,8 @@
 module.exports = {
+    name: 'rolldice',
     description: 'Lets you roll a dice.',
     permissions: [],
+    cooldown: 0,
     aliases: ['diceroll', 'droll'],
     usage: 'rolldice [lower-upper]'
 }

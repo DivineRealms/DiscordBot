@@ -1,6 +1,8 @@
 module.exports = {
+    name: 'help',
     description: 'Get this bots help menu.',
     permissions: [],
+    cooldown: 0,
     aliases: [],
     usage: 'help'
 }

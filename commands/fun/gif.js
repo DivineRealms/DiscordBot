@@ -2,8 +2,10 @@ const { load } = require('cheerio');
 const fetch = require('node-fetch');
 
 module.exports = {
+    name: 'gif',
     description: 'Search online for a random gif.',
     permissions: [],
+    cooldown: 0,
     aliases: [],
     usage: 'gif <search>'
 }

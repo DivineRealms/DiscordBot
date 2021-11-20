@@ -1,8 +1,10 @@
 const { chunk } = require('lodash')
 
 module.exports = {
+    name: 'apply',
     description: 'Run this command to apply for an application on the server.',
     permissions: [],
+    cooldown: 0,
     aliases: [],
     usage: 'apply'
 }

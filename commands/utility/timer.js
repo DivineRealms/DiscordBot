@@ -1,8 +1,10 @@
 const parse = require('ms');
 
 module.exports = {
+    name: 'timer',
     description: 'Lets you set a timer.',
     permissions: [],
+    cooldown: 0,
     aliases: [`time`],
     usage: 'timer <Time>'
 }

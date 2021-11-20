@@ -27,6 +27,10 @@ module.exports.config = {
         embedColor: 'BLUE',
         GuildID: '823820599528390657',
         BotOwnerDiscordID: '823228305167351808',
+        Emojis: {
+            Yes: '👍',
+            No: '👎'
+        }
     },
     automod: {
         // - - - BANNED STUFF - - -
@@ -48,6 +52,7 @@ module.exports.config = {
         Bypass_Spam_Channels: ['CHANNELID'],
         Allowed_Domains: ['google', 'tenor'],
         Bypass_Spam_Roles: ['ROLEID'],
+        Bypass_Cooldown: ['872415244394315826'],
 
         // - - - SPAM PREVENTION - - - 
         Enable_Spam: true,
@@ -98,50 +103,38 @@ module.exports.config = {
         React_On_Message: true,
         Reaction: '✅'
     },
-    verification: {
-        enabled: true,
-        verificationType: 'captcha', //select from these 2 options -> command or captcha!
-        verifyChannel: 'CHANNELID', //leave blank for use in any channel
-        verifyRole: 'ROLEID',
-        roleToRemove: 'ROLEID',
-        Max_Attempts: 3, //how many times theyre allowed to verify for captcha
-        kick_On_Max_Attempts: false, //Kick them if they entered to many wrong attempts
-    },
-    user_dms: {
-        enabled: false,
-        DMCategory: 'CATEGORYID',
-        Dm_Channel_Name: 'new-dm-{username}',
-        View_DmChannel_roles: ['ROLEID', 'ROLEID']
-    },
     leveling: {
         enabled: true,
         remove_XP_on_Leave: false,
         level_Up_Message: '{user} has just reached level {level}!',
         level_Up_Title: 'Level Up!',
+        ignore_Xp_Channels: [], // ovde
         level_Up_Channel: '', //channel id, or write current for the current channel their in, leave blank for none
         level_Up_Roles: [ //roles to award when members reach a certain level
-            { level: 1, role: '' },
-            { level: 10, role: '' },
-            { level: 15, role: '' },
-            { level: 30, role: '' }
+            { id: 0, level: 2, role: '887410180545970237' },
+            { id: 1, level: 3, role: '886191981901017118' },
+            { id: 2, level: 5, role: '' },
+            { id: 3, level: 7, role: '' },
+            { id: 4, level: 8, role: '' }
         ],
         rankCardImage: 'https://cdn.trendhunterstatic.com/thumbs/cool-backgrounds.jpeg',
         rankCardColor: 'cyan'
     },
-    music: {
-        Enable_DJ: true, //set to false to allow everyone to use all music commands
-        DJrole: 'ROLEID', //By default djs can use all music commands
-        user_DJs: [], //Users that can use dj commands (USER IDS ONLY)
-        Disabled_DJ_Commands: ['volume'], //Commands DJS cant use
-        Allowed_User_Commands: ['play', 'queue', 'nowplaying', 'join', 'leave'] //Commands anyone is allowed use
+    colors: {
+        list: [
+            { name: 'white', role: '872415244394315826' },
+            { name: 'red', role: '2' },
+            { name: 'green', role: '3' },
+            { name: 'black', role: '4' },
+            { name: 'yellow', role: '5' },
+            { name: 'blue', role: '6' },
+        ]
     },
     tempvc: {
         enabled: true,
-        Temp_VC_Category: 'CATEGORYID', //where temp VCs are added to
-        Create_VCS_Under: '', //THe channel to create temp vcs under
-        Allow_All_Roles: false, //if all roles can create temp vcs
-        Allowed_Roles: ['ROLEID'], //roles that can create temp vc's
-        Delete_VCS_After: '5s' //how long until empty temp vcs get automatically deleted. Leave blank to disable
+        Join_Channel: '823820599918067723', //Channel in which is join to create
+        Create_VCS_Under: '823820599918067722', //THe channel to create temp vcs under
+        Channel_Prefix: '🔒︲'
     },
     logging: {
         Report_Channel: 'CHANNELID',
@@ -153,7 +146,7 @@ module.exports.config = {
         Lock_Channel_Logs: 'CHANNELID',
         Ticket_Channel_Logs: 'CHANNELID',
         Moderation_Channel_Logs: 'CHANNELID',
-        Suggestion_Channel_Logs: 'CHANNELID',
+        Suggestion_Channel_Logs: '853213051788197908',
         Report_Channel_Logs: 'CHANNELID',
         Server_Updates: 'CHANNELID',
         Voice_Updates: 'CHANNELID',
@@ -167,33 +160,12 @@ module.exports.config = {
         Minimum_Reactions: '1', //how many star reactions required to send to star board channel
         StarBoard_Emoji: '⭐'
     },
-    FiveM: {
-        Time_Sheets_Channel: 'CHANNELID',
-    },
-    business: {
-        Review_Products: [{
-                name: 'ProductName',
-                channel: 'CHANNELID'
-            },
-            {
-                name: 'ProductName',
-                channel: 'CHANNELID'
-            },
-            {
-                name: 'ProductName',
-                channel: 'CHANNELID'
-            },
-        ]
-    },
-    purchaseSystem: {
-        Paypal_Email: 'PaypalEmail'
-    },
     ticketSystem: {
-        Ticket_Category: 'CHANNELCATEGORY',
+        Ticket_Category: '823820599528390662',
         Ticket_Name: 'ticket-{number}-{username}',
         Ticket_Title: 'Ticket Creation',
         Ticket_Message: 'Thank you for creating a ticket {username}, a staff member will be with you shortly.',
-        Support_Team_Roles: ['ROLEID'],
+        Support_Team_Roles: ['872415244394315826'],
         Panel_Emoji: '✉️',
         Panel_Title: 'Create a Ticket',
         Panel_Message: 'Please react with the emoji to create a ticket\nA staff member will be with you shortly.',
@@ -259,12 +231,31 @@ module.exports.config = {
     economy: {
         enabled: true,
         currencySymbol: '🪙', //the emoji for the type of currency (🪙 is a coin emoji)
-        shopItemsFront: true, //whether to add the custom shop items to the front of the shop
         shopItems: [{
             type: 'role',
             roleID: 'ROLEID',
             name: 'ROLENAME',
             description: 'Get the {role} role that hoists you above members!',
+            price: '100'
+        },{
+            type: 'color',
+            name: 'white',
+            description: 'Get white name color',
+            price: '100'
+        },{
+            type: 'color',
+            name: 'black',
+            description: 'Get black name color',
+            price: '100'
+        },{
+            type: 'color',
+            name: 'blue',
+            description: 'Get blue name color',
+            price: '100'
+        },{
+            type: 'color',
+            name: 'yellow',
+            description: 'Get yellow name color',
             price: '100'
         }]
     },
@@ -338,40 +329,6 @@ module.exports.memberSettings = {
     department: null,
     birthday: null
 }
-
-module.exports.shop = [{
-    name: '🎣 Fishing Rod',
-    price: 200,
-    description: 'A fishing rod that allows you to use the `fish` command!'
-}, {
-    name: ' 📱 Iphone 11',
-    price: 400,
-    description: 'This phone allows you to make a call to apply for jobs!'
-}, {
-    name: '🔧 Wrench',
-    price: 100,
-    description: 'Break into houses and rob others money!'
-}, {
-    name: '💍 Ring',
-    price: 700,
-    description: 'Using this ring you can get married!'
-}, {
-    name: '💳 Bank Card',
-    price: 500,
-    description: 'Use this to deposit money to prevent robbers!'
-}, {
-    name: '💻 Computer',
-    price: 200,
-    description: 'Use this to use the internet!'
-}, {
-    name: '🏹 Hunting Bow',
-    price: 250,
-    description: 'Use this to go hunting for food!'
-}, {
-    name: '🔫 Gun',
-    price: 300,
-    description: 'Use a gun to rob a bank!'
-}]
 
 /** ! Do Not Touch ! 
  *  This area is NOT to be edited,

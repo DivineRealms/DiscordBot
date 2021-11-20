@@ -1,6 +1,8 @@
 module.exports = {
+    name: 'hug',
     description: 'Feel Lonely? Give someone a hug.',
     permissions: [],
+    cooldown: 0,
     aliases: ['hugs', 'cuddles'],
     usage: 'hug <@User>'
 }

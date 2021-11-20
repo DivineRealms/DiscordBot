@@ -1,6 +1,8 @@
 module.exports = {
+    name: 'say',
     description: 'Lets you speak as the bot and be a cool kid.',
     permissions: ["ADMINISTRATOR"],
+    cooldown: 0,
     aliases: [`speak`],
     usage: 'say <Message>'
 }

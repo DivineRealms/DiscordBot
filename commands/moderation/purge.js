@@ -1,6 +1,8 @@
 module.exports = {
+    name: 'purge',
     description: 'Clears the requested ammount of messages.',
     permissions: ["MANAGE_MESSAGES"],
+    cooldown: 0,
     aliases: ['clear'],
     usage: 'purge <count>'
 }

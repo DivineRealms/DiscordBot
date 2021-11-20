@@ -1,6 +1,8 @@
 module.exports = {
+    name: 'kick',
     description: 'Kicks the requested member from the server.',
     permissions: ["KICK_MEMBERS"],
+    cooldown: 0,
     aliases: [`forcekick`],
     usage: 'N?A'
 }

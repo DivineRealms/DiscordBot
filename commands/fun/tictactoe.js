@@ -4,8 +4,10 @@ const requests = new Map(),
 const { chunk } = require('lodash')
 
 module.exports = {
+    name: 'tictactoe',
     description: 'Play a game of tic-tac-toe with a friend.',
     permissions: [],
+    cooldown: 0,
     aliases: ['ttt'],
     usage: 'tictactoe <user>'
 }

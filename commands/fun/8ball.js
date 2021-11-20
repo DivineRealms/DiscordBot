@@ -1,6 +1,8 @@
 module.exports = {
+    name: '8ball',
     description: 'Lets you ask the magic 8 ball.',
     permissions: [],
+    cooldown: 0,
     aliases: ['question', 'ball8'],
     usage: '8ball <Question>'
 }

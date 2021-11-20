@@ -1,6 +1,8 @@
 module.exports = {
+    name: 'basicpoll',
     description: 'Lets you create a Yes or no poll.',
     permissions: [],
+    cooldown: 0,
     aliases: ['bpoll', 'simplepoll.'],
     usage: 'basicpoll <question>'
 }

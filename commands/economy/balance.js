@@ -1,8 +1,10 @@
 const db = require('quick.db')
 
 module.exports = {
+    name: 'balance',
     description: 'Check your balance on the server.',
     permissions: [],
+    cooldown: 0,
     aliases: ['bal'],
     usage: 'balance [@User]'
 }

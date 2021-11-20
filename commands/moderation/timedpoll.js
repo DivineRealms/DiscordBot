@@ -1,8 +1,10 @@
 const ms = require('ms')
 
 module.exports = {
+    name: 'timedpoll',
     description: 'Creates a timed poll.',
     permissions: ["MANAGE_CHANNELS"],
+    cooldown: 0,
     aliases: ['tp'],
     usage: 'timedpoll <time> <question> | op1 | op2 | etc'
 }

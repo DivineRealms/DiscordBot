@@ -1,6 +1,8 @@
 module.exports = {
+    name: 'give-role',
     description: 'Lets you give a certain role to a member.',
     permissions: ["MANAGE_ROLES"],
+    cooldown: 0,
     aliases: ['giver', 'giverole'],
     usage: 'give-role <@User | ID> <@Role | ID | Name>'
 }

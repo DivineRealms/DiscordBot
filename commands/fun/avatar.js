@@ -1,6 +1,8 @@
 module.exports = {
+    name: 'avatar',
     description: 'Lets you view the requested avatar.',
     permissions: [],
+    cooldown: 0,
     aliases: ['pfp', 'av'],
     usage: 'avatar <@User>'
 }

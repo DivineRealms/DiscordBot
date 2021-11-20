@@ -1,8 +1,10 @@
 const ms = require("ms");
 
 module.exports = {
+    name: 'mute',
     description: 'Lets you mute the requested user.',
     permissions: ["MUTE_MEMBERS"],
+    cooldown: 0,
     aliases: ['stopspeaking'],
     usage: 'mute <@User> [time | reason] [reason]'
 }

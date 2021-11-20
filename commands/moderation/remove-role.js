@@ -1,6 +1,8 @@
 module.exports = {
+    name: 'remove-role',
     description: 'Lets you revoke a certain role from a member.',
     permissions: ["MANAGE_ROLES"],
+    cooldown: 0,
     aliases: ['remover', 'removerole'],
     usage: 'remove-role <@User | ID> <@Role | ID | Name>'
 }

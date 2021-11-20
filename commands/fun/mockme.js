@@ -1,6 +1,8 @@
 module.exports = {
+    name: 'mockme',
     description: 'Mocks whatever you enter.',
     permissions: [],
+    cooldown: 0,
     aliases: ['mock'],
     usage: 'mockme <words>'
 }

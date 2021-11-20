@@ -4,8 +4,10 @@ const requests = new Map(),
 
 
 module.exports = {
+    name: 'connect4',
     description: 'Play a game of connect4 with a friend.',
     permissions: [],
+    cooldown: 0,
     aliases: ['c4'],
     usage: 'connect4 <user | leave>'
 }

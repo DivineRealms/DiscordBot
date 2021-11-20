@@ -1,8 +1,10 @@
 const parse = require('ms')
 
 module.exports = {
+    name: 'slowmode',
     description: 'Sets the channel slowmode to the requested time.',
     permissions: ["MANAGE_CHANNELS"],
+    cooldown: 0,
     aliases: [`smode`],
     usage: 'slowmode <Time>'
 }

@@ -1,8 +1,10 @@
 const db = require('quick.db')
 
 module.exports = {
+    name: 'withdraw',
     description: 'Get your money on hand into your bank.',
     permissions: [],
+    cooldown: 0,
     aliases: ['wd', 'withd'],
     usage: 'wd <amount | all>'
 }

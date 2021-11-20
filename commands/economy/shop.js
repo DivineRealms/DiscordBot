@@ -2,15 +2,17 @@ const { chunk } = require('lodash')
 const db = require('quick.db')
 
 module.exports = {
+    name: 'shop',
     description: 'View the shop on the server and buy items.',
     permissions: [],
+    cooldown: 0,
     aliases: [`sh0p`],
     usage: 'shop'
 }
 
 module.exports.run = async(client, message, args) => {
     const settings = client.conf.economy
-    const shop = settings.shopItemsFront ? [...settings.shopItems, ...client.shop] : [...client.shop, ...settings.shopItems]
+    const shop = [...settings.shopItems]
     const items = chunk(shop.map((s, i) => `**#${i + 1}** ${s.name} - ${s.price} ${message.coin}\n> ⁃ ${s.description.replace('{role}', '<@&' + s.roleID + '>')}\n`), 5);
 
     const embed = new client.embed()

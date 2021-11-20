@@ -6,7 +6,6 @@ module.exports.automod = async(client, message) => {
     client.members.ensure(message.guild.id, {})
     client.members.ensure(message.guild.id, client.memberSettings, message.author.id)
 
-    message.dj = message.member.roles.cache.has(client.conf.music.DJrole) || client.conf.music.user_DJs.includes(message.author.id)
     message.px = client.settings.ensure(message.guild.id, client.defaultSettings).prefix
     message.coin = client.conf.economy.currencySymbol
 

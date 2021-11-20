@@ -1,6 +1,8 @@
 module.exports = {
+    name: 'punishments',
     description: 'View the punishments on the requested user.',
     permissions: ["MANAGE_GUILD"],
+    cooldown: 0,
     aliases: [`staffinfo`],
     usage: 'punishments <@USER | ID>'
 }
