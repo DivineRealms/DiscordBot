@@ -23,9 +23,8 @@ module.exports.automod = async(client, message) => {
         const user = message.mentions.users.first()
 
         const embed5 = new client.embed()
-            .setTitle(`${user.username} is currently afk`)
+            .setAuthor(`${user.username} is currently afk`, user.displayAvatarURL({ dynamic: true }))
             .setDescription(`**Reason:** ${client.afk.get(user.id).message}, went AFK ${ms(Date.now() - client.afk.get(user.id).time, { long: true })} ago`)
-            .setFooter(`${message.channel.guild.name} | Made By Fuel#2649`, message.channel.guild.iconURL({ dynamic: true }))
 
         message.channel.send({ embeds: [embed5] })
     }

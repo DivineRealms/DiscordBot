@@ -18,7 +18,7 @@ module.exports = async(client, message) => {
     }
 
     if (client.afk.has(message.author.id)) {
-        message.channel.send(`Welcome back ${message.author}! I removed your afk.`)
+        message.channel.send(`> Hey ${message.author}, I removed your AFK Status`).then((m) => setTimeout(() => m.delete(), 5000))
         client.afk.delete(message.author.id)
         return message.member.setNickname(message.member.displayName.replace(/(\[AFK\])/g, '')).catch(() => {})
     }
