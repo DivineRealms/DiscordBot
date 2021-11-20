@@ -7,7 +7,7 @@ module.exports = {
     permissions: [],
     cooldown: 0,
     aliases: ['gv'],
-    usage: 'give [@User] <amount>'
+    usage: 'pay [@User] <amount>'
 }
 
 module.exports.run = async(client, message, args) => {

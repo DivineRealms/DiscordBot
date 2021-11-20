@@ -6,8 +6,8 @@ module.exports = {
     description: 'Get your money on hand into your bank.',
     permissions: [],
     cooldown: 0,
-    aliases: ['wd', 'withd'],
-    usage: 'wd <amount | all>'
+    aliases: ['wd', 'w'],
+    usage: 'w <amount | all>'
 }
 
 module.exports.run = async(client, message, args) => {

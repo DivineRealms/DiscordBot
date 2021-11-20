@@ -20,7 +20,7 @@ module.exports.run = async(client, message, args) => {
         if (!punishments[1]) return;
         ['⏮️', '◀️', '▶️', '⏭️', '⏹️'].forEach(async m => await emb.react(m))
 
-        const filter = (_, u) => u.id === message.author.id
+        const filter = (u) => u.id == message.author.id
         const collector = emb.createReactionCollector({ filter, time: 300000 })
         let page = 1
         collector.on('collect', async(r, user) => {

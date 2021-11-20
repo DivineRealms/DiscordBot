@@ -36,14 +36,5 @@ module.exports.run = async(client, message, args) => {
             });
     });
 
-    const embed = new client.embed()
-        .setAuthor(`${message.author.tag} - (${message.author.id})`, message.author.displayAvatarURL({ dynamic: true }))
-        .setDescription(`**Action:** Lock Channel\n**Channel:** ${channel.name}\n**Time:** ${require('moment')().format('ddd, MMMM Do YYYY [at] hh:mm A')}`)
-        .setFooter(message.author.username, message.author.displayAvatarURL({ dynamic: true, size: 1024 }))
-        .setThumbnail(message.author.displayAvatarURL())
-        .setTimestamp()
-        .setColor(`RED`)
-    channel.send({ embeds: [embed] });
-
-    message.author.send({ embeds: [new client.embed().setColor(`GREEN`).setDescription(`Success! You have locked ${channel.name}.`).setFooter(message.author.username, message.author.displayAvatarURL({ dynamic: true, size: 1024 }))]})
+    channel.send({ embeds: [client.embedBuilder(client, message, "Channel Locked", "This Channel have been successfully locked.", "YELLOW")] });
 }

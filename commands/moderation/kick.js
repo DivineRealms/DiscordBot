@@ -41,8 +41,4 @@ module.exports.run = async(client, message, args) => {
     
     db.push(`punishments_${message.guild.id}_${member.id}`, embed);
     db.add(`cases_${message.guild.id}`, 1);
-    
-    const dm = await member.send(embed.setTitle('You have been kicked!')).catch(() => {})
-    if (!dm) message.channel.send({ embeds: [new client.embed().setDescription(`Failed to send a dm to ${member}, their dms are locked. FUCK.. I WANTED TO PISS THEM OFF!`).setFooter(message.author.username, message.author.displayAvatarURL({ dynamic: true, size: 1024 }))]})
-    member.kick().catch(() => {})
 }
