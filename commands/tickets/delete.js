@@ -74,7 +74,7 @@ module.exports.run = async(client, message, args) => {
     });
 
     const attachment = new MessageAttachment(Buffer.from(data), 'ticket.html');
-    message.channel.send(attachment)
+    message.channel.send({ files: [attachment] })
     const loggingembed = new client.embed()
         .setAuthor(`Ticket Logging System`)
         .setColor(`BLUE`)
@@ -82,7 +82,7 @@ module.exports.run = async(client, message, args) => {
         .addField(`Channel`, message.channel)
         .attachFiles(attachment)
         .setThumbnail(client.user.displayAvatarURL());
-    if (log) log.send(loggingembed)
+    if (log) log.send({ embeds: [loggingembed] })
 
     if (!ticket) return message.channel.send({ embeds: [new client.embed().setDescription('This command can only be used inside of tickets.').setFooter(message.author.username, message.author.displayAvatarURL({ dynamic: true, size: 1024 }))]})
     message.channel.send({ embeds: [new client.embed().setDescription('This channel will be deleted in 10 seconds.').setFooter(message.author.username, message.author.displayAvatarURL({ dynamic: true, size: 1024 }))]})

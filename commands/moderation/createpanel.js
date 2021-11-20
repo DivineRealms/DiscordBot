@@ -14,7 +14,7 @@ module.exports.run = async(client, message, args) => {
         .setFooter(message.author.username, message.author.displayAvatarURL({ dynamic: true, size: 1024 }))
 
     const ticketEmbed = new client.embed({ footer: 'React down below to open a ticket!' })
-    const msg = await message.channel.send(ticketEmbed.setTitle(settings.Panel_Title).setDescription(settings.Panel_Message));
+    const msg = await message.channel.send({ embeds: [ticketEmbed.setTitle(settings.Panel_Title).setDescription(settings.Panel_Message)]});
     await msg.react(settings.Panel_Emoji).catch(() => msg.react('✉️'))
     client.settings.push(message.guild.id, msg.id, 'panels')
 }

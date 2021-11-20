@@ -16,7 +16,7 @@ module.exports.run = async(client, message, args) => {
     const reason = args.slice(1).join(' ') || 'No Reason Specified'
     const member = await client.users.fetch(args[0]).catch(() => {})
 
-    if (!member) return message.channel.send(embed.setDescription('Please enter a valid ID!'))
+    if (!member) return message.channel.send({ embeds: [embed.setDescription('Please enter a valid ID!')]})
 
     await message.guild.bans.fetch(args[0]).then(() => {
         client.utils.logs(client, message.guild, "User UnBanned", [{

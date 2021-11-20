@@ -27,10 +27,6 @@ module.exports.run = async(client, message, args) => {
             `${message.author.username} just hugged ${mentionedMember.user.username}!`
         ]
 
-        let botMessgaes = [
-            `**${message.author.username} ... How many times have I told you.. stop being a idiot, you can\'t hug yourself!**`
-        ]
-
         const randomNumber = Math.floor(Math.random() * gifs.length)
         const randomGif = gifs[randomNumber]
 
@@ -38,9 +34,8 @@ module.exports.run = async(client, message, args) => {
         const randomResponse = reponses[randomNumber2]
 
         const randomNumber3 = Math.floor(Math.random() * botMessgaes.length)
-        const randomBotMsg = botMessgaes[randomNumber3]
 
-        if (mentionedMember.user.id === message.author.id) return message.channel.send(randomBotMsg)
+        if (mentionedMember.user.id === message.author.id) return message.channel.send({ embeds: [client.embedBuilder(client, message, "Error", "You cannot hug yourself.", "RED")] });
 
         var embed = new client.embed()
             .setAuthor(randomResponse, message.author.displayAvatarURL())
