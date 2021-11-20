@@ -81,7 +81,7 @@ module.exports.config = {
         Member_Count_Message: 'Members: {count}',
         Channel_Count_Channel: 'CHANNELID',
         Channel_Count_Message: 'Channels: {count}',
-        Invite_Link: 'https://discord.gg/VstQPFP',
+        Invite_Link: 'https://discord.gg/invite',
         Booster_Channel: 'CHANNELID',
         Booster_Title: '{member} just boosted the server!',
         Booster_Message: 'Thank you {member} for boosting the server! We now have {boosters} booster(s)!',
