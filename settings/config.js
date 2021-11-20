@@ -256,7 +256,7 @@ module.exports.config = {
     goodbyeSystem: {
         enabled: true,
         goodbyeChannel: 'CHANNELID',
-        goodbyeType: 'card', //select from these 4 options -> message, embed, card!
+        goodbyeType: 'dm', //select from these 4 options -> message, embed, card!
         goodbyeCardBackGroundURL: 'BACKGROUNDURL',
         goodbyeMessage: '{member} just left the server, hope you enjoyed your stay!',
         goodbyeDM: '{member} were sad to see you go! We hope to see you soon.',
@@ -276,52 +276,14 @@ module.exports.config = {
 module.exports.guildSettings = {
     prefix: this.config.settings.prefix,
     panels: [],
-    tickets: {},
-    sticky: {},
-    stars: {},
     counting: { current: 1, last: null },
     dms: {},
     vc: {},
     commands: {},
     suggestions: {},
-    products: {},
-    replies: {},
-    reacts: {},
-    birthday: null,
     lockdown: false,
-    cases: [],
-    orders: {},
     processing: {},
     completed: []
-}
-
-module.exports.memberSettings = {
-    warns: 0,
-    warnings: [],
-    punishments: [],
-    bans: 0,
-    kicks: 0,
-    balance: {
-        wallet: 0,
-        bank: 0
-    },
-    inventory: {
-        fish: 0,
-        cheques: 0,
-        meat: 0,
-        items: []
-    },
-    muted: {
-        muted: false,
-        mutedAt: null
-    },
-    married: null,
-    clockinTime: 0,
-    alreadymarried: null,
-    clockedIn: null,
-    clockedOut: null,
-    department: null,
-    birthday: null
 }
 
 /** ! Do Not Touch ! 

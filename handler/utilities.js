@@ -4,7 +4,6 @@ const ms = require('ms')
 
 module.exports.automod = async(client, message) => {
     client.members.ensure(message.guild.id, {})
-    client.members.ensure(message.guild.id, client.memberSettings, message.author.id)
 
     message.px = client.settings.ensure(message.guild.id, client.defaultSettings).prefix
     message.coin = client.conf.economy.currencySymbol
@@ -15,8 +14,6 @@ module.exports.automod = async(client, message) => {
     const attch = settings.Banned_Attachments.find(a => (message.attachments.first() || { url: '' }).url.endsWith(a))
     const msgs = spam.ensure(message.author.id, 1)
     const totalPings = message.mentions.users.size + message.mentions.roles.size + message.mentions.channels.size
-    const replies = client.settings.get(message.guild.id, 'replies')
-    const reacts = client.settings.get(message.guild.id, 'reacts')
     spam.inc(message.author.id)
 
     if (message.mentions.users.first() && client.afk.has(message.mentions.users.first().id)) {
@@ -42,13 +39,6 @@ module.exports.automod = async(client, message) => {
         await message.delete()
         return message.channel.send({ embeds: [new client.embed().setDescription(`Sorry but you cant ping more than ${settings.Max_Total_Pings} times in 1 message!`)]})
     }
-
-    const trigger = Object.keys(replies).find(r => message.content.toLowerCase().includes(r))
-    if (trigger && !message.content.startsWith(message.px)) message.channel.send(replies[trigger].response)
-
-    const trigger2 = Object.keys(reacts).find(r => message.content.toLowerCase().includes(r))
-    if (trigger2 && !message.content.startsWith(message.px))
-        for (var i of reacts[trigger2].emojis) await message.react(i)
 
     if (message.channel.id === client.conf.counting.Counting_Channel) {
         const { current, last } = client.settings.get(message.guild.id, 'counting')
