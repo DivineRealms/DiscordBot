@@ -32,17 +32,17 @@ module.exports.run = async(client, message, args) => {
             method: "POST",
             body: evaled
           }).then((res) => res.json());
-            embed.addField("Output", `\`\`\`Output is uploaded to https://www.toptal.com/developers/hastebin/raw/${key}\`\`\``)
+            embed.addField("Output", `\`\`\`xl\nhttps://www.toptal.com/developers/hastebin/raw/${key}\`\`\``)
         } else {
-            embed.addField("Output", `\`\`\`${evaled}\`\`\``)
+            embed.addField("Output", `\`\`\`xl\n${evaled}\`\`\``)
         }
 
         message.channel.send({ embeds: [embed] })
       } catch (err) {
         let embed = new Discord.MessageEmbed()
             .setAuthor("Error")
-            .addField("Input", `\`\`\`${code}\`\`\``)
-            .addField("Output", `\`\`\`${err}\`\`\``)
+            .addField("Input", `\`\`\`xl\n${code}\`\`\``)
+            .addField("Output", `\`\`\`xl\n${err}\`\`\``)
             .setColor("RED");
 
         message.channel.send({ embeds: [embed] })

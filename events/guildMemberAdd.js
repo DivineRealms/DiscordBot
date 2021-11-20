@@ -29,7 +29,7 @@ module.exports = async(client, member) => {
             .setColor("message-box", "#4CAAFF")
             .setColor("title", "#4CAAFF")
             .setColor("avatar", "#4CAAFF")
-            //.setBackground(settings.welcomeCardBackGroundURL)
+            .setBackground(settings.welcomeCardBackGroundURL)
             .toAttachment()
 
         const attachment = new MessageAttachment(img.toBuffer(), "welcome-image.png");
