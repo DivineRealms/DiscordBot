@@ -28,9 +28,9 @@ module.exports.run = async(client, message, args) => {
     } else if(item.type == "color") {
         let colors = db.fetch(`colors_${message.guild.id}_${message.author.id}`) || [];
         if(!balance || balance < item.price) return message.channel.send({ embeds: [client.embedBuilder(client, message, "Error", `You don't have enough money.`, "RED")] });
-        if(colors.includes(item.name)) return message.channel.send({ embeds: [client.embedBuilder(client, message, "Error", `You already have that name color.`, "RED")] });
+        if(colors.includes(item.name.toLowerCase())) return message.channel.send({ embeds: [client.embedBuilder(client, message, "Error", `You already have that name color.`, "RED")] });
 
-        db.push(`colors_${message.guild.id}_${message.author.id}`, item.name);
+        db.push(`colors_${message.guild.id}_${message.author.id}`, item.name.toLowerCase());
         message.channel.send({ embeds: [client.embedBuilder(client, message, "Color Purchased", `You have successfully purchased name color **${item.name}** for $${item.price}.`, "YELLOW")] });
     }
 }
