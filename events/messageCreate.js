@@ -1,17 +1,21 @@
 const escapeRegex = str => str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 const utils = require('../handler/utilities')
+const leveling = require("../utils/leveling.js");
 
-module.exports = (client, message) => {
-        //if (!message.guild && !message.author.bot) utils.dms(client, message)
-        if(message.channel.type == "DM") return;
-        if (!message.guild || message.author.bot) return
-        utils.automod(client, message)
+module.exports = async(client, message) => {
+    if(message.channel.type == "DM") return;
+    if (!message.guild || message.author.bot) return
+    utils.automod(client, message)
 
-        if (client.afk.has(message.author.id)) {
-            message.channel.send(`Welcome back ${message.author}! I removed your afk.`)
-            client.afk.delete(message.author.id)
-            return message.member.setNickname(message.member.displayName.replace(/(\[AFK\])/g, '')).catch(() => {})
-        }
+    if (client.afk.has(message.author.id)) {
+        message.channel.send(`Welcome back ${message.author}! I removed your afk.`)
+        client.afk.delete(message.author.id)
+        return message.member.setNickname(message.member.displayName.replace(/(\[AFK\])/g, '')).catch(() => {})
+    }
+
+    if(client.conf.leveling.enabled) {
+      await leveling.manageLeveling(client, message);
+    }
 
     const prefixRegex = new RegExp(`^(${client.conf.settings.mentionPrefix ? `<@!?${client.user.id}>|` : ''}${escapeRegex(message.px)})\\s*`)
     if (!prefixRegex.test(message.content)) return;

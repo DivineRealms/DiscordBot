@@ -1,25 +1,23 @@
 const { MessageAttachment } = require("discord.js");
 const Canvas = require("discord-canvas")
-const image = require('is-image-url')
 const ord = require('ordinal')
 
 module.exports = async(client, member) => {
     client.members.ensure(member.guild.id, {})
     let guild = client.settings.ensure(member.guild.id, client.defaultSettings)
     if (guild.locked) {
-        await member.send({ embeds: [new client.embed().setDescription(`${member.guild.name} is currently under a **SERVER-WIDE LOCKDOWN!** Please try joining back a little later!`).setFooter(`${member.guild.name} | Made By Fuel#2649`, member.guild.iconURL({ dynamic: true }))]}).catch(() => {})
+        await member.send({ embeds: [new client.embed().setDescription(`${member.guild.name} is currently under a **SERVER-WIDE LOCKDOWN!** Please try joining back a little later!`).setFooter(`Divine Realms`, client.user.displayAvatarURL({ size: 1024 }))]}).catch(() => {})
         member.kick().catch(() => {})
     }
 
     member.roles.set(client.conf.automation.Roles_On_Join.slice(0, 5)).catch(() => {})
     const data = client.members.ensure(member.guild.id, client.memberSettings, member.id)
-    if (data.muted.muted) member.roles.add(client.conf.moderation.Mute_Role).catch(() => {})
+    await muteChecks.checkMuteOnJoin(client, member, member.guild);
     const settings = client.conf.welcomeSystem
     const log = client.channels.cache.get(settings.welcomeChannel)
     if (!log) return
 
     if (settings.welcomeType === 'card') {
-        if (!image(settings.welcomeCardBackGroundURL)) return console.log('[ERROR] Invalid image url in welcomeSystem > welcomeCardBackGroundURL')
         const img = await new Canvas.Welcome()
             .setUsername(member.user.username)
             .setDiscriminator(member.user.discriminator)

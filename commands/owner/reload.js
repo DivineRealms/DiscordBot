@@ -6,16 +6,16 @@ module.exports = {
 }
 
 module.exports.run = async(client, message, args) => {
-    if (message.author.id !== client.conf.settings.BotOwnerDiscordID) return message.channel.send({ embeds: [new client.embed().setDescription(`You my friend are not the bot owner!`).setFooter(message.author.username, message.author.displayAvatarURL({ dynamic: true, size: 1024 }))]})
+    if (message.author.id !== client.conf.settings.BotOwnerDiscordID) return message.channel.send({ embeds: [client.embedBuilder(client, message, "Error", `You're not Owner`, "RED")] });
 
     const command = client.commands.get((args[0] || '').toLowerCase())
-    if (!command) return message.channel.send({ embeds: [new client.embed().setDescription(`Please provide me a command to reload.`).setFooter(message.author.username, message.author.displayAvatarURL({ dynamic: true, size: 1024 }))]})
+    if (!command) return message.channel.send({ embeds: [client.embedBuilder(client, message, "Error", `You need to provide Command to Reload`, "RED")] });
 
     try {
         delete require.cache[require.resolve(`../${command.category}/${args[0].toLowerCase()}.js`)]
         client.commands.set(args[0].toLowerCase(), {...require(`../${command.category}/${args[0].toLowerCase()}.js`), category: command.category })
     } catch (e) {
-        message.channel.send('An error has occured! You shouldnt be seeing this, file the error [here](https://discord.gg/VstQPFP)')
+        message.channel.send({ content: 'An error ocurred' })
         console.log(e)
     }
 }

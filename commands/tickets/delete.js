@@ -4,14 +4,15 @@ const jsdom = require("jsdom");
 const { JSDOM } = jsdom;
 const dom = new JSDOM();
 const document = dom.window.document;
+
 module.exports = {
     description: 'Deletes the ticket.',
-    permissions: [],
+    permissions: ["MANAGE_CHANNELS"],
     aliases: [`close`]
 }
 
 module.exports.run = async(client, message, args) => {
-    const ticket = client.settings.get(message.guild.id, `tickets.${message.channel.id}`)
+    const ticket = db.fetch(`tickets_${message.guild.id}_${message.channel.id}`);
     const log = client.channels.cache.get(client.conf.logging.Ticket_Channel_Logs)
     const channelMessages = await message.channel.messages
         .fetch({ limit: 100, before: message.id })
@@ -79,11 +80,10 @@ module.exports.run = async(client, message, args) => {
         .setThumbnail(client.user.displayAvatarURL());
     if (log) log.send(loggingembed)
 
-    if (!message.member.permissions.has('MANAGE_CHANNELS')) return message.channel.send({ embeds: [new client.embed().setDescription('You are missing the permission `Manage Channels`').setFooter(message.author.username, message.author.displayAvatarURL({ dynamic: true, size: 1024 }))]})
     if (!ticket) return message.channel.send({ embeds: [new client.embed().setDescription('This command can only be used inside of tickets.').setFooter(message.author.username, message.author.displayAvatarURL({ dynamic: true, size: 1024 }))]})
     message.channel.send({ embeds: [new client.embed().setDescription('This channel will be deleted in 10 seconds.').setFooter(message.author.username, message.author.displayAvatarURL({ dynamic: true, size: 1024 }))]})
 
     await new Promise(r => setTimeout(r, 10000))
     message.channel.delete()
-    client.settings.delete(message.guild.id, `tickets.${message.channel.id}`)
+    db.delete(`tickets_${message.guild.id}_${message.channel.id}`);
 }

@@ -2,36 +2,6 @@ const db = require("quick.db")
 const spam = new(require('enmap'))()
 const ms = require('ms')
 
-module.exports.dms = async(client, message) => {
-    if (client.conf.user_dms.enabled && !client.processes.get(message.author.id)) {
-        const guild = client.guilds.cache.get(client.conf.settings.GuildID)
-        client.settings.ensure(guild.id, client.defaultSettings)
-
-        const data = client.settings.get(guild.id, `dms.${message.author.id}`) || {}
-        const dmChannel = client.channels.cache.get(data.channel)
-        const embed = new client.embed()
-            .setAuthor(message.author.tag, message.author.displayAvatarURL({ dyanmic: true }))
-            .setDescription(`**Dm from:**\n${message.author.tag} (${message.author.id})\n\n**Message:**\n${message.content}`)
-            .setThumbnail(message.author.displayAvatarURL({ dyanmic: true }))
-            .setFooter(`${guild.name} | Made By Fuel#2649`, guild.iconURL({ dynamic: true }))
-
-        if (!dmChannel) {
-            const channel = await guild.channels.create(client.conf.user_dms.Dm_Channel_Name.replace('{username}', message.author.username), {
-                parent: client.conf.user_dms.DMCategory,
-                permissionOverwrites: [
-                    { id: guild.id, deny: 'VIEW_CHANNEL' },
-                    ...client.conf.user_dms.View_DmChannel_roles.map(s => ({ id: s, allow: 'VIEW_CHANNEL' }))
-                ]
-            })
-            await channel.send({ embeds: [embed] })
-            channel.send({ embeds: [new client.embed().setDescription(`Any messages sent here will be delivered to ${message.author}`)]})
-            client.settings.set(guild.id, { channel: channel.id, user: message.author.id }, `dms.${message.author.id}`)
-        } else {
-            dmchannel.send({ embeds: [embed] })
-        }
-    }
-}
-
 module.exports.automod = async(client, message) => {
     client.members.ensure(message.guild.id, {})
     client.members.ensure(message.guild.id, client.memberSettings, message.author.id)
@@ -55,7 +25,7 @@ module.exports.automod = async(client, message) => {
 
         const embed5 = new client.embed()
             .setTitle(`${user.username} is currently afk`)
-            .setDescription(`**Reason:** ${client.afk.get(user.id).message}\n**Time they went afk:** ${ms(Date.now() - client.afk.get(user.id).time, { long: true })} ago`)
+            .setDescription(`**Reason:** ${client.afk.get(user.id).message}, went AFK ${ms(Date.now() - client.afk.get(user.id).time, { long: true })} ago`)
             .setFooter(`${message.channel.guild.name} | Made By Fuel#2649`, message.channel.guild.iconURL({ dynamic: true }))
 
         message.channel.send({ embeds: [embed5] })
@@ -81,57 +51,6 @@ module.exports.automod = async(client, message) => {
     const trigger2 = Object.keys(reacts).find(r => message.content.toLowerCase().includes(r))
     if (trigger2 && !message.content.startsWith(message.px))
         for (var i of reacts[trigger2].emojis) await message.react(i)
-
-    if (message.content !== `${message.px}closedm`) {
-        const dmChannel = Object.entries(client.settings.get(message.guild.id, 'dms')).find(([, obj]) => obj.channel === message.channel.id)
-
-        if (dmChannel) {
-            const user = await client.users.fetch(dmChannel[1].user).catch(() => {})
-            if (user) {
-                await message.react('✅')
-                const react = await message.channel.send({ embeds: [new client.embed().setDescription('React with \`✅\` to send the message.')]})
-                const choice = await message.awaitReactions((_, u) => u.id === message.author.id, { max: 1, time: 10000 })
-                if (!choice.first() || choice.first().emoji.name !== '✅') return react.delete()
-                react.delete()
-                user.send({ embeds: [new client.embed().setThumbnail(message.author.displayAvatarURL({ dynamic: true })).setAuthor(message.guild.name, message.guild.iconURL({ dynamic: true })).setDescription(`**Message from staff member:**\n${message.author.tag}\n\n**Message:**\n${message.content}`)]}).then(() =>
-                    message.channel.send({ embeds: [new client.embed().setThumbnail(message.author.displayAvatarURL({ dynamic: true })).setTitle('Successfully sent your message!').addField('Message:', message.content).addField('Sent to', `${user.tag}!`).setFooter(`Staff Member: ${message.author.username} | Made By Fuel#2649`)]})
-                ).catch(() =>
-                    message.channel.send({ embeds: [new client.embed().setDescription(`Failed to send this user a dm! This user has their dms off or the user isnt in this server.\n\nYou can close the channel with \`${message.px}closedm\``)]})
-                )
-            } else client.settings.delete(message.guild.id, `dms.${dmChannel[0]}`)
-        }
-    }
-
-    if (client.conf.leveling.enabled) {
-        const levelSettings = client.conf.leveling
-        const gen = [10, 15],
-            max = 15;
-
-        if (message.attachments.first()) gen[1] += 10
-        gen[1] += ~~(message.content.length / 100)
-
-        let level = db.fetch(`level_${message.guild.id}_${message.author.id}`);
-        let xp = db.fetch(`level_${message.guild.id}_${message.author.id}`);
-        const amount = ~~(Math.random() * (gen[1] - gen[0])) + gen[0]
-
-        db.add(`xp_${message.guild.id}_${message.author.id}`, amount);
-
-        if ((level || 1) * 500 < xp) {
-            db.set(`xp_${message.guild.id}_${message.author.id}`, 0);
-            db.add(`level_${message.guild.id}_${message.author.id}`, 1);
-            const xpChannel = levelSettings.level_Up_Channel === 'current' ? message.channel : message.guild.channels.cache.get(levelSettings.level_Up_Channel)
-            const reward = levelSettings.level_Up_Roles.find(({ level: l }) => l == level + 1)
-            if (reward) message.member.roles.add(reward.role).catch(() => {})
-
-            const embed = new client.embed()
-                .setAuthor(levelSettings.level_Up_Title)
-                .setDescription(levelSettings.level_Up_Message.replace('{user}', message.author.toString()).replace('{level}', level + 1))
-                .setFooter(message.author.username, message.author.displayAvatarURL({ dynamic: true, size: 1024 }))
-                .setTimestamp()
-
-            if (xpChannel) xpchannel.send({ embeds: [embed] })
-        }
-    }
 
     if (message.channel.id === client.conf.counting.Counting_Channel) {
         const { current, last } = client.settings.get(message.guild.id, 'counting')

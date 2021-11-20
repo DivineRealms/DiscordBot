@@ -1,4 +1,3 @@
-const randomPuppy = require('random-puppy');
 module.exports = {
     description: 'Lets you see the last deleted message.',
     permissions: [],

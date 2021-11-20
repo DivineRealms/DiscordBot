@@ -1,28 +1,16 @@
 module.exports = {
     description: 'Allows you to set the bots status.',
-    permissions: [],
+    permissions: ["ADMINISTRATOR"],
     aliases: [],
     usage: 'setstatus <TEXT>'
 }
 module.exports.run = async(client, message, args) => {
-    let embed3 = new client.embed()
-        .setDescription(`Sorry, but this command requires \`ADMINISTRATOR\`!`)
-        .setFooter(message.author.username, message.author.displayAvatarURL({ dynamic: true, size: 1024 }))
-
-    let embed4 = new client.embed()
-        .setDescription(`I mean if you wanna be dumb.. as usual dont tell me what to set my status to smh.`)
-        .setFooter(message.author.username, message.author.displayAvatarURL({ dynamic: true, size: 1024 }))
-
-    if (!message.member.permissions.has('ADMINISTRATOR'))
-        return message.channel.send({ embeds: [embed3] });
-
     const status = args.join(' ');
-    if (!status)
-        return message.channel.send({ embeds: [embed4] })
+    if (!status) return message.channel.send({ embeds: [client.embedBuilder(client, message, "Error", `You need to provide Custom Status.`, "RED")] });
 
     const embed = new client.embed()
-        .setDescription(`I have set my status to \`${status}\``)
-        .setFooter(`Status Changed By ${message.author.tag}  |  Made By Fuel#2649`, message.author.displayAvatarURL({ dynamic: true }))
+        .setDescription(`Bot Custom Status have been changed to \`${status}\``)
+        .setFooter(`Divine Realms`, client.user.displayAvatarURL({ size: 1024 }))
 
     message.channel.send({ embeds: [embed] });
 

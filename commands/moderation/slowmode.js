@@ -2,14 +2,12 @@ const parse = require('ms')
 
 module.exports = {
     description: 'Sets the channel slowmode to the requested time.',
-    permissions: [],
+    permissions: ["MANAGE_CHANNELS"],
     aliases: [`smode`],
     usage: 'slowmode <Time>'
 }
 
 module.exports.run = async(client, message, args) => {
-
-    if (!message.member.permissions.has('MANAGE_CHANNELS')) return message.channel.send({ embeds: [new client.embed().setDescription('You are missing the permission `Manage Channels`')]})
     if ([null, Infinity].includes(parse(args[0]))) return message.channel.send({ embeds: [new client.embed().setDescription(`You failed to provide me the time!`)]})
     const amt = ms(args[0]) / 1000
     if (amt > 21600) return message.channel.send({ embeds: [new client.embed().setDescription(`The time cannot exceed more than 6 hours!`)]})

@@ -1,4 +1,5 @@
-const { parse } = require('date-and-time')
+const datetime = require('date-and-time')
+const db = require("quick.db");
 
 module.exports = {
     description: 'Add your birthday to the system.',
@@ -15,7 +16,7 @@ module.exports.run = async(client, message, args) => {
 
     if (birthday) return message.channel.send({ embeds: [client.embedBuilder(client, message, "Error", "You have already set your birthday, contact staff if you want it changed.", "RED")] });
     const birthd = args.join(' ').toLowerCase().charAt(0).toUpperCase() + args.join(' ').slice(1).toLowerCase()
-    const date = parse(birthd, 'MMM D YYYY')
+    const date = datetime.parse(birthd, 'MMM D YYYY')
     if(!date.getDay()) return message.channel.send({ embeds: [client.embedBuilder(client, message, "Error", "You need to enter Date of Birthday. Example: Jan 21 2004.", "RED")] });
 
     const age = getAge(args.join(' '))

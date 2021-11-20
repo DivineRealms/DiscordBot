@@ -3,9 +3,9 @@ module.exports = (client, role) => {
     if (!log) return
 
     const embed = new client.embed()
-        .setAuthor('A role was created!')
+        .setAuthor('Role was created!')
         .setDescription(`**Role name:** ${role.name}\n**Role ID:** \`${role.id}\``)
-        .setFooter(`${role.guild.name} | Made By Fuel#2649`, role.guild.iconURL({ dynamic: true }))
+        .setFooter(`Divine Realms`, client.user.displayAvatarURL({ size: 1024 }))
 
     log.send({ embeds: [embed] })
 }

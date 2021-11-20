@@ -42,8 +42,6 @@ module.exports.run = async(client, message, args) => {
         var embed = new client.embed()
             .setAuthor(randomResponse, message.author.displayAvatarURL())
             .setImage(randomGif)
-            .setFooter(`${message.author.tag} Needed A Hug!  |  Made By Fuel#2649`, message.author.displayAvatarURL({ dynamic: true }))
-            .setTimestamp()
         message.channel.send({ embeds: [embed] })
     }
 }

@@ -2,7 +2,7 @@ const ms = require("ms");
 
 module.exports = {
     description: 'Lets you mute the requested user.',
-    permissions: [],
+    permissions: ["MUTE_MEMBERS"],
     aliases: ['stopspeaking'],
     usage: 'mute <@User> [time | reason] [reason]'
 }
@@ -11,8 +11,7 @@ module.exports.run = async(client, message, args) => {
     const member = message.mentions.members.first() || message.guild.member(args[0])
     const muterole = message.guild.roles.cache.get(client.conf.moderation.Mute_Role)
     const time = ms(args[1])
-    const mutereason = args.slice(time ? 2 : 1).join(' ') || 'No Reason Provided'
-    const log = client.channels.cache.get(client.conf.logging.Mute_Channel_Logs)
+    const reason = args.slice(time ? 2 : 1).join(' ') || 'No Reason Provided'
 
     if (!member) return message.channel.send({ embeds: [client.embedBuilder(client, message, "Error", "You need to enter valid user.", "RED")] });
     if (!muterole) return message.channel.send({ embeds: [new client.embed().setDescription('I cant find the mute role on the server!').setFooter(message.author.username, message.author.displayAvatarURL({ dynamic: true, size: 1024 }))]})
@@ -22,29 +21,43 @@ module.exports.run = async(client, message, args) => {
     if (member.permissions.has('ADMINISTRATOR') || member.roles.highest.position >= message.guild.me.roles.highest.position) return message.channel.send({ embeds: [new client.embed().setDescription('I cant mute that member').setFooter(message.author.username, message.author.displayAvatarURL({ dynamic: true, size: 1024 }))]})
     if (member.roles.cache.has(muterole.id)) return message.channel.send({ embeds: [new client.embed().setDescription('That member is already muted!').setFooter(message.author.username, message.author.displayAvatarURL({ dynamic: true, size: 1024 }))]})
 
-    client.members.ensure(message.guild.id, client.memberSettings, member.id)
+    db.set(`muteInfo_${message.guild.id}_${member.id}`, {
+        time: time,
+        date: Date.now(),
+        reason: reason,
+        staff: message.author.tag,
+        duration: time,
+      });
+      Timeout.set(`mute_${message.guild.id}_${member.id}`, () => {
+        member.roles.remove(muterole).then(() => {
+            db.delete(`muteInfo_${message.guild.id}_${member.id}`);
+        })
+      }, time);
 
     await member.roles.add(muterole)
-    client.members.set(message.guild.id, { muted: true, mutedAt: time ? Date.now() + time : null }, `${member.id}.muted`)
 
-    if (time) setTimeout(() => {
-        client.members.set(message.guild.id, { muted: false, mutedAt: null }, `${member.id}.muted`)
-        member.roles.remove(muterole).catch(() => {})
-    }, time)
-    const casenum = client.settings.get(message.guild.id, 'cases').length + 1
-    const embed = new client.embed()
-        .setAuthor(`${message.author.tag} - (${message.author.id})`, message.author.displayAvatarURL({ dynamic: true }))
-        .setDescription(`**Member:** ${member}\n**Action:** Mute\n**Reason:** ${mutereason}`)
-        .setFooter(`Case ${casenum} | Made By Fuel#2649`, message.guild.iconURL({ dynamic: true }))
-        .setThumbnail(member.user.displayAvatarURL())
-        .setColor(`YELLOW`)
+    let casenum = db.fetch(`cases_${message.guild.id}`) + 1;
+    let embed = client.embedBuilder(client, message, "User Muted", `${member.user} have been muted by ${message.author} for ${reason}, duration ${client.utils.formatTime(time)}`, "YELLOW");
 
-    if (log) log.send({ embeds: [embed] })
+    client.utils.logs(this.client, message.guild, "User Muted", [{
+        name: "Case ID",
+        desc: `${casenum}`
+      },{
+        name: "User",
+        desc: member.user
+      },{
+        name: "Staff",
+        desc: message.author
+      },{
+        name: "Reason",
+        desc: reason
+      },{
+        name: "Duration",
+        desc: `${client.utils.formatTime(time)}`
+      }], member.user);
+
     await message.channel.send({ embeds: [embed] })
 
-    client.members.push(message.guild.id, embed, `${member.id}.punishments`)
-    client.settings.push(message.guild.id, embed, 'cases')
-
-    let dm = await member.send(embed.setTitle('You have been muted!')).catch(() => {})
-    if (!dm) message.channel.send({ embeds: [new client.embed().setDescription(`Damn no getting them mad.. their dms are locked.`)]})
+    db.push(`punishments_${message.guild.id}_${member.id}`, embed);
+    db.add(`cases_${message.guild.id}`, 1);
 }

@@ -1,13 +1,10 @@
 module.exports = {
     description: 'Lets you lock a channel in the guild.',
-    permissions: [],
+    permissions: ["ADMINISTRATOR"],
     aliases: ['lockc', 'lock'],
     usage: 'lockchannel <#Channel>'
 }
 module.exports.run = async(client, message, args) => {
-    if (!message.member.permissions.has("ADMINISTRATOR"))
-        return message.channel.send({ embeds: [new client.embed().setDescription(`Sorry! You are missing the permission \`ADMINISTRATOR\``).setFooter(message.author.username, message.author.displayAvatarURL({ dynamic: true, size: 1024 }))]});
-
     const channel =
         message.mentions.channels.first() ||
         message.guild.channels.cache.get(args[0]);
@@ -22,7 +19,7 @@ module.exports.run = async(client, message, args) => {
             ADD_REACTIONS: false,
         })
         .catch((error) => {
-            return message.channel.send({ embeds: [new client.embed().setDescription(`Sorry! You are missing the permission \`ADMINISTRATOR\``).setFooter(message.author.username, message.author.displayAvatarURL({ dynamic: true, size: 1024 }))]})
+            return message.channel.send({ embeds: [client.embedBuilder(client, message, "Error", "You don't have required permission.", "RED")] })
         });
 
     message.guild.roles.cache.each((role) => {

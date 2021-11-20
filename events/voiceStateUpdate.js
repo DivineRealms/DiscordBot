@@ -17,9 +17,7 @@ module.exports = (client, oldState, newState) => {
 
     const log = client.channels.cache.get(client.conf.logging.Voice_Updates)
     if (!log) return
-    const embed = new client.embed()
-        .setAuthor('Voice Status Update!')
-        .setFooter(`Fuel Development | Made By Fuel#2649`, newState.guild.iconURL({ dynamic: true }))
+    const embed = new client.embed().setAuthor('Voice State Update')
 
     if (oldState.serverDeaf !== newState.serverDeaf && newState.serverDeaf) log.send(embed.setDescription(`**${newState.member.user.tag}** Was Server Deafened!`))
     else if (oldState.serverDeaf !== newState.serverDeaf && !newState.serverDeaf) log.send(embed.setDescription(`**${newState.member.user.tag}** Was Undeafened!`))

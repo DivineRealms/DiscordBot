@@ -20,7 +20,7 @@ module.exports.run = async(client, message, args) => {
 
     message.delete()
     message.channel.send({ embeds: [client.embedBuilder(client, message, "Suggestion", "Your suggestion have been submitted successfully.", "YELLOW")] });
-    const msg = await channel.send(suggestionembed)
+    const msg = await channel.send({ embeds: [suggestionembed] })
     await msg.react('✅')
     await msg.react('❌')
 }

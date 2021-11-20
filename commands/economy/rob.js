@@ -12,7 +12,6 @@ module.exports.run = async(client, message, args) => {
 
     if (!member) return message.channel.send({ embeds: [new client.embed().setDescription('Please specify a user to rob!').setFooter(message.author.username, message.author.displayAvatarURL({ dynamic: true, size: 1024 }))]});
     if (member.id === message.author.id) return message.channel.send({ embeds: [new client.embed().setDescription('Why are you trying to rob yourself?').setFooter(message.author.username, message.author.displayAvatarURL({ dynamic: true, size: 1024 }))]})
-    if (member.user.tag === 'Fuel#2649') return message.channel.send({ embeds: [new client.embed().setDescription('Why are you trying to rob my creator.. You\'re dumb lmao..').setFooter(message.author.username, message.author.displayAvatarURL({ dynamic: true, size: 1024 }))]})
 
     const authordata = client.members.get(message.guild.id, message.author.id)
     const memberbal = client.members.ensure(message.guild.id, client.memberSettings, member.id).balance

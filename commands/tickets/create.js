@@ -1,14 +1,11 @@
 module.exports = {
     description: 'Creates a ticket.',
-    permissions: [],
+    permissions: ["MANAGE_CHANNELS"],
     aliases: [`new`, `ticket`],
     usage: 'create <@users>'
 }
 
-module.exports.run = async(client, message, args) => {
-    if (!message.member.permissions.has('MANAGE_CHANNELS')) return message.channel.senD({ embeds: [new client.embed().setDescription('You are missing the permission `Manage Channels`').setFooter(message.author.username, message.author.displayAvatarURL({ dynamic: true, size: 1024 }))]})
-
-    const settings = client.conf.ticketSystem
+module.exports.run = async(client, message, args) => {   const settings = client.conf.ticketSystem
     const tickets = client.settings.get(message.guild.id, 'tickets')
     const log = client.channels.cache.get(client.conf.logging.Ticket_Channel_Logs)
     const num = Object.entries(tickets).length || 1
@@ -32,5 +29,5 @@ module.exports.run = async(client, message, args) => {
         .setTitle('Ticket Created')
         .setDescription(`**Creator:** ${message.author}`)]});
     
-    db.set(`tickets_${message.guild.id}_${message.author.id}`, message.author.id);
+    db.set(`tickets_${message.guild.id}_${message.channel.id}`, message.author.id);
 }

@@ -14,10 +14,9 @@ module.exports.run = async(client, message, args) => {
     const item = sample(list.data.children.filter(s => ['gif', 'png', 'jpg', 'jpeg'].some(e => s.data.url.endsWith(e))))
 
     const embed = new client.embed()
-        .setTitle(`The MEMEINATOR 90000`)
+        .setTitle(`Random Reddit Meme`)
         .setURL(`http://reddit.com/${item.permalink}`)
         .setImage(item.data.url)
-        .setFooter(`Requested By ${message.author.tag}  |  Made By Fuel#2649`, message.guild.iconURL({ dynamic: true }))
 
     message.channel.send({ embeds: [embed] });
 

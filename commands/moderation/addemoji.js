@@ -12,6 +12,6 @@ module.exports.run = async(client, message, args) => {
     if (!args[1]) return message.channel.send({ embeds: [client.embedBuilder(client, message, "Error", "Please enter Emoji URL.", "RED")] });
 
     message.guild.emojis.create(args[1], args[0]).then(e =>
-        message.channel.send({ embeds: [new client.embed().setDescription(`I have created the emoji ${e}`).setFooter(message.author.username, message.author.displayAvatarURL({ dynamic: true, size: 1024 }))]})
+        message.channel.send({ embeds: [client.embedBuilder(client, message, "Emoji Added",`Emoji ${e} have been added`, "YELLOW")] })
     ).catch(() => message.channel.send({ embeds: [client.embedBuilder(client, message, "Error", "You need to enter valid image/gif URL.", "RED")] }))
 }

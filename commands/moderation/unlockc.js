@@ -1,13 +1,10 @@
 module.exports = {
     description: 'Lets you unlock a channel in the guild.',
-    permissions: [],
+    permissions: ["MANAGE_GUILD"],
     aliases: ['unlockchannel', 'unlock'],
     usage: 'unlockc <#Channel>'
 }
 module.exports.run = async(client, message, args) => {
-    if (!message.member.permissions.has("ADMINISTRATOR"))
-        return message.channel.send({ embeds: [new client.embed().setDescription(`Sorry! You are missing the permission \`ADMINISTRATOR\``).setFooter(message.author.username, message.author.displayAvatarURL({ dynamic: true, size: 1024 }))]});
-
     const channel =
         message.mentions.channels.first() ||
         message.guild.channels.cache.get(args[0]);

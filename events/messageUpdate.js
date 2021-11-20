@@ -4,8 +4,8 @@ module.exports = async(client, oldMessage, newMessage) => {
     if (newMessage.partial) await newMessage.fetch()
 
     const embed = new client.embed()
-        .setAuthor('A message has been updated!')
-        .setFooter(`${newMessage.guild.name} | Made By Fuel#2649`, newMessage.guild.iconURL({ dynamic: true }))
+        .setAuthor('Message has been updated!')
+        .setFooter(`Divine Realms`, client.user.displayAvatarURL({ size: 1024 }))
 
     if (oldMessage.content && oldMessage.content !== newMessage.content) log.send(embed.setDescription(`**Author:** ${newMessage.author}\n**Old Content:** ${oldMessage.content}\n**New Content:** ${newMessage.content}`))
     else if (oldMessage.pinned && oldMessage.pinned !== newMessage.pinned) log.send(embed.setDescription(`[This message](${newMessage.url}) has been **${newMessage.pinned ? 'Pinned' : 'Unpinned'}**.`))

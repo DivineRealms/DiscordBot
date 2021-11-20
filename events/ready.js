@@ -1,7 +1,10 @@
-const { Message } = require("discord.js")
+const muteChecks = require("../utils/muteChecks.js");
 
 module.exports = async client => {
-        console.log("[BOT] DivineRealms bot started!")
+        console.log("_________________________________");
+        console.log(" ");
+        console.log("[DivineRealms] Bot has started and is online now!");
+        console.log("_________________________________");
 
         if (!client.conf.settings.changingActivity.enabled) client.user.setPresence(client.conf.settings.botActivity)
         else {
@@ -16,10 +19,9 @@ module.exports = async client => {
 
         const guild = client.guilds.cache.get(client.conf.settings.GuildID)
 		client.members.ensure(guild.id, {})
-        const members = Object.entries(client.members.get(guild.id))
         client.settings.ensure(guild.id, client.defaultSettings)
-        for (var [a, b] of members)
-            if (b.muted.muted && b.muted.mutedAt) timeout(client, guild, a, b)
+
+        await muteChecks.checkMute(client, guild);
 
         function counter() {
             const memberCount = client.channels.cache.get(client.conf.automation.Member_Count_Channel)
@@ -37,15 +39,21 @@ module.exports = async client => {
             if (!settings.enabled || client.settings.get(guild.id, 'birthday') === today) return
 
             const birthdays = Object.entries(client.members.get(guild.id)).filter((a) => isToday(a[1].birthday))
+            let birthdays = db.all().filter(i => i.ID.startsWith(`birthday_${guild.id}_`)).sort((a, b) => b.data - a.data);
+
+            let birthEmbed = birthdays.filter((b) => isToday(b.data)).map(s => {
+                let bUser = client.users.cache.get(s.ID.split("_")[2]) || "N/A";
+                return `> ${bUser}\n`;
+            })
+
             if (!birthdays.length || client.settings.get(guild.id, 'birthday')) return
 
             const embed = new client.embed()
                 .setTitle('Todays Birthdays!')
-                .setDescription(`${settings.birthdayMessage}\n${birthdays.map(s => `<@${s[0]}>`).join(' ')}`)
+                .setDescription(`${settings.birthdayMessage}\n${birthEmbed}`)
 
             if (!channel) return 
             channel.send({ embeds: [embed] })
-            client.settings.set(guild.id, today, 'birthday') 
         }
 
         while (guild) {

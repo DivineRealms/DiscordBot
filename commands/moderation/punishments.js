@@ -1,8 +1,8 @@
 module.exports = {
     description: 'View the punishments on the requested user.',
-    permissions: [],
+    permissions: ["MANAGE_GUILD"],
     aliases: [`staffinfo`],
-    usage: 'punishments <@USER | ID'
+    usage: 'punishments <@USER | ID>'
 }
 
 module.exports.run = async(client, message, args) => {

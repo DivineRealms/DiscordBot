@@ -9,5 +9,5 @@ module.exports = {
 
 module.exports.run = async(client, message, args) => {
     const res = await fetch('http://api.adviceslip.com/advice').then(r => r.json())
-    message.channel.send({ embeds: [new client.embed().setDescription(res.slip.advice).setFooter(`${message.guild.name} | Advice Given By Fuel#2649`, message.guild.iconURL({ dynamic: true }))]})
+    message.channel.send({ embeds: [client.embedBuilder(client, message, "Advice", res.slip.advice, "YELLOW")] });
 }

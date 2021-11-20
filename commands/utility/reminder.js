@@ -8,13 +8,10 @@ module.exports = {
 }
 
 module.exports.run = async(client, message, args) => {
-    let embed3 = new client.embed()
-        .setDescription(`Please provide a valid time!`)
-        .setFooter(message.author.username, message.author.displayAvatarURL({ dynamic: true, size: 1024 }))
     let [end, ...reason] = args
 
-    if ([null, Infinity].includes(parse(end))) return message.channel.send({ embeds: [embed3] });
-    if (!reason[0]) return message.channel.send({ embeds: [new client.embed().setDescription('You need to enter what to remind you about!').setFooter(message.author.username, message.author.displayAvatarURL({ dynamic: true, size: 1024 }))]})
+    if ([null, Infinity].includes(parse(end))) return message.channel.send({ embeds: [client.embedBuilder(client, message, "Error", "You need to provide time.", "RED")] });
+    if (!reason[0]) return message.channel.send({ embeds: [client.embedBuilder(client, message, "Error", "You need to enter reminder reason.", "RED")] });
 
     const embed = new client.embed()
         .setAuthor('Reminder!')

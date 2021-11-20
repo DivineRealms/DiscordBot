@@ -6,8 +6,6 @@ module.exports = {
 }
 
 module.exports.run = async(client, message, args) => {
-    const channel = message.guild.channels.cache.get(client.conf.logging.Ban_Channel_Logs)
-
     if (!message.member.permissions.has("BAN_MEMBERS")) return message.channel.send({ embeds: [new client.embed().setDescription('You can\'t use that!').setFooter(message.author.username, message.author.displayAvatarURL({ dynamic: true, size: 1024 }))]})
     if (!message.guild.me.permissions.has("BAN_MEMBERS")) return message.channel.send({ embeds: [new client.embed().setDescription(`Sorry, I am missing my required permissions perhaps try moving my role up!`).setFooter(message.author.username, message.author.displayAvatarURL({ dynamic: true, size: 1024 }))]})
 
@@ -20,17 +18,28 @@ module.exports.run = async(client, message, args) => {
 
     const reason = args.slice(1).join(" ") || 'No Reason'
 
-    const embed = new client.embed()
-        .setAuthor(`${message.author.tag} - (${message.author.id})`, message.author.displayAvatarURL({ dynamic: true }))
-        .setDescription(`**Member:** ${member.tag} - (${member.id})\n**Action:** Ban\n**Reason:** ${reason}\n**Ban Count:** ${(bans + 1)}`)
-        .setThumbnail(member.displayAvatarURL())
-        .setFooter(`Case ${casenum} | Made By Fuel#2649`, message.guild.iconURL({ dynamic: true }))
-        .setTimestamp()
-        .setColor(`RED`)
+    let casenum = db.fetch(`cases_${message.guild.id}`) + 1;
+    let embed = client.embedBuilder(client, message, "User Banned", `${member.user} have been banned by ${message.author} for ${reason}`, "YELLOW");
+
+    client.utils.logs(this.client, message.guild, "User Warned", [{
+        name: "Case ID",
+        desc: `${casenum}`
+      },{
+        name: "User",
+        desc: member.user
+      },{
+        name: "Staff",
+        desc: message.author
+      },{
+        name: "Reason",
+        desc: reason
+      },{
+        name: "Duration",
+        desc: "Permanent"
+      }], member.user);
 
     message.guild.members.ban(member, { reason })
     await message.channel.send({ embeds: [embed] })
-    if (channel) channel.send({ embeds: [embed] })
 
     const dm = await member.send(embed.setTitle('You have been banned!')).catch(() => {})
     if (!dm) message.channel.send({ embeds: [new client.embed().setDescription(`Failed to send a dm to ${member}, their dms are locked.`).setFooter(message.author.username, message.author.displayAvatarURL({ dynamic: true, size: 1024 }))]})

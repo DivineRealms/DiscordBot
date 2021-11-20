@@ -1,12 +1,11 @@
 module.exports = {
     description: 'Steal emojis from another server and add them to this one.',
-    permissions: [],
+    permissions: ["MANAGE_EMOJIS"],
     aliases: ['stealem'],
     usage: 'stealemoji <custom emojis>'
 }
 
 module.exports.run = async(client, message, args) => {
-    if (!message.member.permissions.has('MANAGE_EMOJIS')) return message.channel.send({ embeds: [new client.embed().setDescription(`You are missing permissions \`MANAGE_EMOJIS\``).setFooter(message.author.username, message.author.displayAvatarURL({ dynamic: true, size: 1024 }))]})
     if (!args.join(' ').match(/<a?:(\w{1,32}):(\d{17,19})>/g)) return message.channel.send({ embeds: [new client.embed().setDescription(`Please write some custom emojis for me to steal!`).setFooter(message.author.username, message.author.displayAvatarURL({ dynamic: true, size: 1024 }))]})
 
     const emojis = [...args.join(' ').matchAll(/<a?:(\w{1,32}):(\d{17,19})>/g)].map(s => [s[1], s[2]])

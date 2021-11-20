@@ -9,9 +9,6 @@ module.exports = {
 }
 
 module.exports.run = async(client, message, args) => {
-    const fetch = require('node-fetch')
-    const { load } = require('cheerio')
-
     const page = await fetch('https://randomwordgenerator.com/never-have-i-ever-question.php').then(r => r.text())
     const nhie = load(page)('.support-sentence').text()
 

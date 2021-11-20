@@ -1,12 +1,11 @@
 module.exports = {
     description: 'View the warnings on the requested user.',
-    permissions: [],
+    permissions: ["MUTE_MEMBERS"],
     aliases: ['warns'],
     usage: 'warnings <@User | ID>'
 }
 
 module.exports.run = async(client, message, args) => {
-    if (!message.member.permissions.has('MUTE_MEMBERS')) return message.channel.send({ embeds: [new client.embed().setDescription(`Sorry you are missing the permission \`MUTE_MEMBERS\`!`).setFooter(message.author.username, message.author.displayAvatarURL({ dynamic: true, size: 1024 }))]})
     const member = message.mentions.users.first() || await client.users.fetch(args[0]).catch(() => {});
 
     if (!member) return message.channel.send({ embeds: [client.embedBuilder(client, message, "Error", "You need to mention user.", "RED")] });

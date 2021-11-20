@@ -1,6 +1,5 @@
 const { MessageAttachment } = require("discord.js");
 const Canvas = require("discord-canvas")
-const im = require('is-image-url')
 
 module.exports = async(client, member) => {
     if (client.conf.leveling.remove_XP_on_Leave) client.members.set(member.guild.id, { level: 0, xp: 0, totalXP: 0 }, `${member.id}.xp`)
@@ -9,7 +8,6 @@ module.exports = async(client, member) => {
     if (!log) return
 
     if (settings.goodbyeType === 'card') {
-        if (!im(settings.goodbyeCardBackGroundURL)) return console.log('[ERROR] Invalid image url in welcomeSystem > goodbyeCardBackGroundURL')
         const image = await new Canvas.Goodbye()
             .setUsername(member.user.username)
             .setDiscriminator(member.user.discriminator)

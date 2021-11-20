@@ -5,7 +5,7 @@ module.exports = (client, channel) => {
     const embed = new client.embed()
         .setAuthor('A channel was deleted!')
         .setDescription(`**Channel name:** ${channel.name}\n**Channel ID:** \`${channel.id}\``)
-        .setFooter(`${channel.guild.name} | Made By Fuel#2649`, channel.guild.iconURL({ dynamic: true }))
+        .setFooter(`Divine Realms`, client.user.displayAvatarURL({ size: 1024 }))
 
     log.send({ embeds: [embed] })
 }

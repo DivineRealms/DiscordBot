@@ -3,15 +3,15 @@ module.exports = (client, oldMember, newMember) => {
     const settings = client.conf.automation
     const channel = client.channels.cache.get(settings.Booster_Channel)
     const embed = new client.embed()
-        .setAuthor('Guild member update!')
-        .setFooter(`${oldMember.guild.name} | Made By Fuel#2649`, oldMember.guild.iconURL({ dynamic: true }))
+        .setAuthor('Guild member Update')
+        .setFooter(`Divine Realms`, client.user.displayAvatarURL({ size: 1024 }))
 
     if (log && oldMember.nickname !== newMember.nickname) log.send(embed.setDescription(`**Old Nickname**: ${oldMember.displayName || 'none'}\n**New Name**: ${newMember.displayName}`));
     else if (log && newMember.roles.cache.keyArray().join('') !== oldMember.roles.cache.keyArray().join('')) {
         let roles = oldMember.roles.cache.difference(newMember.roles.cache)
         embed.setAuthor(`${newMember.user.tag}'s roles were modified!`)
             .setDescription(`Added Roles - ${roles.filter(r => !oldMember.roles.cache.has(r.id)).map(s => s.toString()).join(' ') || 'None'}\nRemoved Roles - ${roles.filter(r => !newMember.roles.cache.has(r.id)).map(s => s.toString()).join(' ') || 'None'}`)
-            .setFooter(`${newMember.guild.name} | Made By Fuel#2649`, newMember.guild.iconURL({ dynamic: true }))
+            .setFooter(`Divine Realms`, client.user.displayAvatarURL({ size: 1024 }))
 
         log.send({ embeds: [embed] })
     }

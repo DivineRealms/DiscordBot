@@ -1,4 +1,5 @@
-const { parse } = require('date-and-time')
+const datetime = require('date-and-time')
+const db = require('quick.db')
 
 module.exports = {
     description: 'Set a users birthday.',
@@ -13,12 +14,12 @@ module.exports.run = async(client, message, args) => {
 
     const user = message.mentions.users.first()
     const birthd = args.slice(1).join(' ').toLowerCase().charAt(0).toUpperCase() + args.slice(1).join(' ').slice(1).toLowerCase()
-    const date = parse(birthd, 'MMM D YYYY')
+    const date = datetime.parse(birthd, 'MMM D YYYY')
 
-    if (!user || !date.getDay()) return message.channel.send(embed.setDescription(`You need to mention a user and enter the date of that users birthday!\nExample: \`${message.px}setbirthday @user Sep 4 2004\``))
+    if (!user || !date.getDay()) return message.channel.send({ embeds: [embed.setDescription(`You need to mention a user and enter the date of that users birthday!\nExample: \`${message.px}setbirthday @user Sep 4 2004\``)]})
 
     const age = getAge(args.slice(1).join(' '))
-    if (age <= 12) return message.channel.send(embed.setDescription(`You can\'t enter a year greater than ${new Date().getFullYear() - 12}!`))
+    if (age <= 12) return message.channel.send({ embeds: [embed.setDescription(`You can\'t enter a year greater than ${new Date().getFullYear() - 12}!`)]})
 
     message.channel.send({ embeds: [embed
         .setTitle(`🥳 Successfully set their birthday! 🥳`)

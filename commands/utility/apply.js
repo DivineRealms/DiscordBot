@@ -15,7 +15,7 @@ module.exports.run = async(client, message, args) => {
     if (!app) return message.channel.send({ embeds: [client.embedBuilder(client, message, "Error", "I can't find Application with that name.", "RED")] });
 
     const chan = client.channels.cache.get(app.Application_Log)
-    if (!chan) return message.author.send('Sorry but I couldnt find this applications log channel.').catch(() => {})
+    if (!chan) return message.channel.send({ embeds: [client.embedBuilder(client, message, "Error", "Cannot find application log channel.", "RED")] });
     const msg = await message.author.send(
         new client.embed()
         .setTitle('Application Process')
@@ -58,7 +58,6 @@ module.exports.run = async(client, message, args) => {
 
     await chan.send(embed2)
     for (let s of description) await chan.send({ embeds: [new client.embed().setDescription(s)]})
-
 
     if (description.length) chan.send({ embeds: [new client.embed().setDescription('This application was split due to discord character limit.').setFooter(message.author.username, message.author.displayAvatarURL({ dynamic: true, size: 1024 }))]})
 }

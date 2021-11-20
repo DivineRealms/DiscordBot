@@ -2,14 +2,12 @@ const ms = require('ms')
 
 module.exports = {
     description: 'Creates a timed poll.',
-    permissions: [],
+    permissions: ["MANAGE_CHANNELS"],
     aliases: ['tp'],
     usage: 'timedpoll <time> <question> | op1 | op2 | etc'
 }
 
 module.exports.run = async(client, message, args, cmd) => {
-    if (!message.member.permissions.has("MANAGE_CHANNELS"))
-        return message.channel.send({ embeds: [new client.embed().setDescription(`You are missing permission \`MANAGE_CHANNELS\``).setFooter(message.author.username, message.author.displayAvatarURL({ dynamic: true, size: 1024 }))]});
     const options = args.slice(1).join(' ').split('|').map(s => s.trim().replace(/\s\s+/g, ' ')),
         question = options.shift(),
         emoji = ['🇦', '🇧', '🇨', '🇩', '🇪', '🇫', '🇬', '🇭', '🇮', '🇯'],

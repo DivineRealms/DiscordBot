@@ -32,9 +32,8 @@ module.exports.run = async(client, message) => {
 
 
     ];
-    let response =
-        responses[Math.floor(Math.random() * responses.length)];
-    let Embed = new client.embed()
+    let response = responses[Math.floor(Math.random() * responses.length)];
+    let embed = new client.embed()
         .setTitle(`Dark Joke`)
         .setDescription(`${response}`)
         .setFooter(message.author.username, message.author.displayAvatarURL({ dynamic: true, size: 1024 }))

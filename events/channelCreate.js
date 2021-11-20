@@ -3,9 +3,9 @@ module.exports = (client, channel) => {
     if (!log || !channel.guild) return
 
     const embed = new client.embed()
-        .setAuthor('A channel was created!')
+        .setAuthor('Channel was created')
         .setDescription(`**Channel name:** ${channel.name}\n**Channel ID:** \`${channel.id}\``)
-        .setFooter(`${channel.guild.name} | Made By Fuel#2649`, channel.guild.iconURL({ dynamic: true }))
+        .setFooter(`Divine Realms`, client.user.displayAvatarURL({ size: 1024 }))
 
     log.send({ embeds: [embed] })
 }

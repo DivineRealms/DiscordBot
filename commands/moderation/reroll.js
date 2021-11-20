@@ -1,13 +1,11 @@
 module.exports = {
     description: 'Rerolls a giveaway.',
-    permissions: [],
+    permissions: ["MANAGE_MESSAGES"],
     aliases: ['greroll', 'giveawayreroll'],
     usage: 'reroll <MessageID>'
 }
 
 module.exports.run = async(client, message, args) => {
-    if (!message.member.permissions.has("MANAGE_MESSAGES")) return message.channel.send({ embeds: [new client.embed().setDescription(`Sorry! You are missing the permission \`MANAGE_MESSAGES\``).setFooter(message.author.username, message.author.displayAvatarURL({ dynamic: true, size: 1024 }))]});
-
     if (!args[0]) return message.channel.send({ embeds: [new client.embed().setDescription(`You need to provide me the message id!`).setFooter(message.author.username, message.author.displayAvatarURL({ dynamic: true, size: 1024 }))]});
 
     let giveaway = client.giveaways.giveaways.find((g) => g.prize === args.join(" ")) || client.giveaways.giveaways.find((g) => g.messageID === args[0]);

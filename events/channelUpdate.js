@@ -4,7 +4,7 @@ module.exports = (client, oldChannel, newChannel) => {
 
     const embed = new client.embed()
         .setAuthor(`The Channel ${newChannel.name} was Updated!`)
-        .setFooter(`${oldChannel.guild.name} | Made By Fuel#2649`, oldChannel.guild.iconURL({ dynamic: true }))
+        .setFooter(`Divine Realms`, client.user.displayAvatarURL({ size: 1024 }))
 
     const overwrites = oldChannel.permissionOverwrites.difference(newChannel.permissionOverwrites)
 

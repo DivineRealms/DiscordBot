@@ -6,6 +6,7 @@ const Enmap = require('enmap')
 module.exports = async client => {
     Object.defineProperty(client, 'conf', { get: () => { delete require.cache[require.resolve('../settings/config')]; return require('../settings/config').config } })
     client.resolveMember = (str, user, title) => str.replace(/\{(.+)\}/, (...e) => e[1] === 'mention' && title ? user.toString() : user[e[1]])
+    client.talkedRecently = new Set();
     client.categories = new Enmap()
     client.processes = new Enmap()
     client.commands = new Enmap()
@@ -27,8 +28,8 @@ module.exports = async client => {
         ...settings
     })
     
-    client.embedBuilder = require("../embedBuilder.js");
-    client.utils = require("../utils.js");
+    client.embedBuilder = require("../utils/embedBuilder.js");
+    client.utils = require("../utils/utils.js");
 
     process.on('unhandledRejection', console.log)
     process.on('uncaughtException', console.log)

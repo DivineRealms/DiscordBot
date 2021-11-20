@@ -6,8 +6,6 @@ module.exports = {
 }
 
 module.exports.run = async(client, message) => {
-
-
     let responses = [
         "Q: How many programmers does it take to screw in a light bulb?\nA: None. It's a hardware problem.",
         "A programmer puts two glasses on his bedside table before going to sleep.\nA full one, in case he gets thirsty, and an empty one, in case he doesn’t.",
@@ -37,7 +35,7 @@ module.exports.run = async(client, message) => {
         "Im old fashioned when it comes to coffee. If someone offers me a hot cup of java, I say no thanks.\nI'd much prefer a cup of C++.",
     ];
 
-    let Embed = new client.embed()
+    let embed = new client.embed()
         .setTitle(`Developer Joke`)
         .setThumbnail(`https://cdn.discordapp.com/attachments/735248366291648523/742124928165347428/hi.png`)
         .setDescription(responses[~~(Math.random() * responses.length)])
