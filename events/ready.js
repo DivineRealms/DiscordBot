@@ -26,7 +26,7 @@ module.exports = async client => {
         }
 
         const guild = client.guilds.cache.get(client.conf.settings.GuildID)
-		client.members.ensure(guild.id, {})
+		    client.members.ensure(guild.id, {})
         client.settings.ensure(guild.id, client.defaultSettings)
 
         await muteChecks.checkMute(client, guild);
@@ -69,5 +69,3 @@ module.exports = async client => {
             await new Promise(r => setTimeout(r, 310000))
         }
 }
-
-const timeout = (client, guild, a, b) => setTimeout(() => guild.members.fetch(a).then(m => m.roles.remove(client.conf.moderation.Mute_Role).catch(console.log)).catch(console.log), b.muted.mutedAt < Date.now() ? 1 : b.muted.mutedAt - Date.now());

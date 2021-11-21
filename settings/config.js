@@ -224,7 +224,6 @@ module.exports.config = {
     },
     economy: {
         enabled: true,
-        currencySymbol: '🪙', //the emoji for the type of currency (🪙 is a coin emoji)
         shopItems: [{
             type: 'role',
             roleID: 'ROLEID',

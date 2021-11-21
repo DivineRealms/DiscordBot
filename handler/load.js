@@ -1,4 +1,3 @@
-const { GiveawaysManager: Giveaway } = require(`discord-giveaways`)
 const { MessageEmbed } = require('discord.js')
 const { readdirSync } = require('fs')
 const Enmap = require('enmap')
@@ -15,7 +14,6 @@ module.exports = async client => {
     client.embed = class Embed extends MessageEmbed { color = client.conf.settings.embedColor }
     const settings = { fetchAll: true, autoFetch: true, cloneLevel: 'deep' }
     client.defaultSettings = require('../settings/config').guildSettings
-    client.giveaways = new Giveaway(client, {})
     client.settings = new Enmap({
         name: 'settings',
         ...settings
