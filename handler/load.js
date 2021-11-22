@@ -26,6 +26,8 @@ module.exports = async client => {
     
     const temporaryVC = require("../utils/temporaryVC.js");
     temporaryVC(client);
+    
+    client.db = require("quick.db")
 
     client.embedBuilder = require("../utils/embedBuilder.js");
     client.utils = require("../utils/utils.js");

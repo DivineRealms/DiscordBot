@@ -6,15 +6,21 @@ module.exports = (client, oldMember, newMember) => {
         .setAuthor('Guild member Update')
         .setFooter(`Divine Realms`, client.user.displayAvatarURL({ size: 1024 }))
 
-    /*if (log && oldMember.nickname !== newMember.nickname) log.send({ embeds: [embed.setDescription(`**Old Nickname**: ${oldMember.displayName || 'none'}\n**New Name**: ${newMember.displayName}`)]});
-    else if (log && newMember.roles.cache.keyArray().join('') !== oldMember.roles.cache.keyArray().join('')) {
+    if (log && oldMember.nickname !== newMember.nickname) log.send({ embeds: [embed.setDescription(`**Old Nickname**: ${oldMember.displayName || 'none'}\n**New Name**: ${newMember.displayName}`)]});
+    else if (log && [...newMember.roles.cache.keys()].join('') !== [...oldMember.roles.cache.keys()] .join('')) {
         let roles = oldMember.roles.cache.difference(newMember.roles.cache)
+        
+        const addedRoles = newMember.roles.cache.filter(r => !oldMember.roles.cache.has(r.id));
+        const removedRoles = oldMember.roles.cache.filter(r => !newMember.roles.cache.has(r.id));
+        const added = addedRoles.map(r => r).join(", ");
+        const removed = removedRoles.map(r => r).join(", ");
+        
         embed.setAuthor(`${newMember.user.tag}'s roles were modified!`)
-            .setDescription(`Added Roles - ${roles.filter(r => !oldMember.roles.cache.has(r.id)).map(s => s.toString()).join(' ') || 'None'}\nRemoved Roles - ${roles.filter(r => !newMember.roles.cache.has(r.id)).map(s => s.toString()).join(' ') || 'None'}`)
+            .setDescription(`Added Roles - ${added || 'None'}\nRemoved Roles - ${removed || 'None'}`)
             .setFooter(`Divine Realms`, client.user.displayAvatarURL({ size: 1024 }))
 
         log.send({ embeds: [embed] })
-    }*/
+    }
 
     if (newMember.guild.premiumSubscriptionCount !== oldMember.guild.premiumSubscriptionCount && newMember.premiumSince && newMember.premiumSince !== oldMember.premiumSince) {
         const boosters = newMember.guild.premiumSubscriptionCount

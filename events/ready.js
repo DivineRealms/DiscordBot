@@ -54,14 +54,11 @@ module.exports = async client => {
                 return `> ${bUser}\n`;
             })
 
-            if (!birthdays.length || client.settings.get(guild.id, 'birthday')) return
-
             const embed = new client.embed()
                 .setTitle('Todays Birthdays!')
                 .setDescription(`${settings.birthdayMessage}\n${birthEmbed}`)
 
-            if (!channel) return 
-            channel.send({ embeds: [embed] })
+            if (channel && birthEmbed.length > 0) channel.send({ embeds: [embed] })
         }
 
         while (guild) {

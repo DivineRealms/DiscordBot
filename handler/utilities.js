@@ -5,7 +5,7 @@ const ms = require('ms')
 module.exports.automod = async(client, message) => {
     client.members.ensure(message.guild.id, {})
 
-    message.px = client.settings.ensure(message.guild.id, client.defaultSettings).prefix
+    message.px = client.conf.settings.prefix
 
     const settings = client.conf.automod
     const upper = message.content.match(/[A-Z]/g) || []
