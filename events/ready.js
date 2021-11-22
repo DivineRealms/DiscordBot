@@ -1,4 +1,5 @@
 const muteChecks = require("../utils/muteChecks.js");
+const cron = require('cron');
 const db = require('quick.db')
 
 module.exports = async client => {
@@ -61,8 +62,15 @@ module.exports = async client => {
             if (channel && birthEmbed.length > 0) channel.send({ embeds: [embed] })
         }
 
+      let bdayCron = new cron.CronJob('59 59 23 * * *', () => {
+          birthday();
+        }, {
+      	  timezone: "Europe/Belgrade"
+      });
+    
+      bdayCron.start();
+
         while (guild) {
-            birthday()
             counter()
             await new Promise(r => setTimeout(r, 310000))
         }
