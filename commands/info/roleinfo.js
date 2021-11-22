@@ -18,10 +18,10 @@ module.exports.run = async(client, message, args) => {
     let embed = new client.embed()
         .setTitle(`${role.name} Role Information`)
         .addField("Role Creation:", `${utc(role.createdAt).format('dddd, MMMM Do YYYY')}`, false)
-        .addField("Role ID:", role.id, false)
-        .addField("Position:", role.position, false)
-        .addField("Color:", role.hexColor, false)
-        .addField('Hoisted:', role.hoist, false)
+        .addField("Role ID:", `${role.id}`, false)
+        .addField("Position:", `${role.position}`, false)
+        .addField("Color:", `${role.hexColor}`, false)
+        .addField('Hoisted:', `${role.hoist}`, false)
         .setFooter(`Divine Realms`, client.user.displayAvatarURL({ size: 1024 }))
 
     message.channel.send({ embeds: [embed] });

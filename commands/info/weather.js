@@ -7,7 +7,7 @@ module.exports = {
     permissions: [],
     cooldown: 0,
     aliases: ['weath', 'temp'],
-    usage: 'Weather <PLACE>'
+    usage: 'weather <place>'
 }
 
 module.exports.run = async(client, message, args) => {
