@@ -23,7 +23,7 @@ module.exports = async(client, message) => {
         return message.member.setNickname(message.member.displayName.replace(/(\[AFK\])/g, '')).catch(() => {})
     }
 
-    if(client.conf.leveling.enabled == true) {
+    if(client.conf.leveling.enabled == true && !client.conf.leveling.ignore_Xp_Channels.includes(message.channel.id)) {
       await leveling.manageLeveling(client, message);
     }
 

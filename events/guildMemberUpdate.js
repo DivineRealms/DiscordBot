@@ -6,7 +6,7 @@ module.exports = (client, oldMember, newMember) => {
         .setAuthor('Guild member Update')
         .setFooter(`Divine Realms`, client.user.displayAvatarURL({ size: 1024 }))
 
-    if (log && oldMember.nickname !== newMember.nickname) log.send({ embeds: [embed.setDescription(`**Old Nickname**: ${oldMember.displayName || 'none'}\n**New Name**: ${newMember.displayName}`)]});
+    /*if (log && oldMember.nickname !== newMember.nickname) log.send({ embeds: [embed.setDescription(`**Old Nickname**: ${oldMember.displayName || 'none'}\n**New Name**: ${newMember.displayName}`)]});
     else if (log && newMember.roles.cache.keyArray().join('') !== oldMember.roles.cache.keyArray().join('')) {
         let roles = oldMember.roles.cache.difference(newMember.roles.cache)
         embed.setAuthor(`${newMember.user.tag}'s roles were modified!`)
@@ -14,7 +14,7 @@ module.exports = (client, oldMember, newMember) => {
             .setFooter(`Divine Realms`, client.user.displayAvatarURL({ size: 1024 }))
 
         log.send({ embeds: [embed] })
-    }
+    }*/
 
     if (newMember.guild.premiumSubscriptionCount !== oldMember.guild.premiumSubscriptionCount && newMember.premiumSince && newMember.premiumSince !== oldMember.premiumSince) {
         const boosters = newMember.guild.premiumSubscriptionCount

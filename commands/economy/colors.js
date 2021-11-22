@@ -6,7 +6,7 @@ module.exports = {
     category: 'economy',
     description: 'Choose your name color.',
     permissions: [],
-    cooldown: 10,
+    cooldown: 0,
     aliases: [],
     usage: 'color [list/use/reset] [color]'
 }
