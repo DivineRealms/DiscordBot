@@ -21,15 +21,14 @@ module.exports.run = async(client, message, args) => {
 
   const avatar =
       member.user.displayAvatarURL({
-          format: "png",
           dynamic: true,
           size: 4096,
       }) || "*No Avatar!*";
 
   const bot = member.user.bot ? "Yes" : "No";
 
-  const roles = [...member.roles.values()].length
-    ? [...member.roles.values()]
+  const roles = [...member.roles.cache.values()].length
+    ? [...member.roles.cache.values()]
         .filter((role) => role.name !== "@everyone")
         .join(", ")
     : "*None*";

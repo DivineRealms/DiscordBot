@@ -13,7 +13,8 @@ module.exports = async client => {
     console.log(" ");
 
         if (!client.conf.settings.changingActivity.enabled) {
-            client.user.setActivity(client.conf.settings.botActivity, { type: settings.types[i] })
+          const settings = client.conf.settings.botActivity
+            client.user.setActivity(settings.activity.name, { type: settings.activity.type })
         } else {
             const settings = client.conf.settings.changingActivity
             let i = -1;
