@@ -42,7 +42,7 @@ module.exports.run = async(client, message, args) => {
 
     await member.roles.add(muterole)
 
-   let embed = client.embedBuilder(client, message, "User Muted", `${member.user} have been muted by ${message.author} for ${reason}, duration ${client.utils.formatTime(time)}`, "YELLOW");
+   let embed = client.embedBuilder(client, message, "User Muted", `${member.user} have been muted by ${message.author} for \`${reason}\`, duration ${client.utils.formatTime(time)}`, "YELLOW");
 
     client.utils.logs(client, message.guild, "User Muted", [{
         name: "User",

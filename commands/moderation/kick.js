@@ -17,7 +17,7 @@ module.exports.run = async(client, message, args) => {
     if (!member.kickable) return message.channel.send({ embeds: [client.embedBuilder(client, message, "Error", "That User cannot be kicked.", "RED")] });
 
     const reason = args.slice(1).join(" ") || 'No Reason'
-    let embed = client.embedBuilder(client, message, "User Kicked", `${member.user} have been kicked by ${message.author} for ${reason}`, "YELLOW");
+    let embed = client.embedBuilder(client, message, "User Kicked", `${member.user} have been kicked by ${message.author} for \`${reason}\``, "YELLOW");
 
     await member.kick(reason);
 

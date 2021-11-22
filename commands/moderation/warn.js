@@ -17,7 +17,7 @@ module.exports.run = async(client, message, args) => {
     if (member.user.bot) return message.channel.send({ embeds: [client.embedBuilder(client, message, "Error", "You can't warn bot.", "RED")] });
     let warnings = db.fetch(`warnings_${message.guild.id}_${member.id}`)
 
-    let embed = client.embedBuilder(client, message, "User Warned", `${member.user} have been warned by ${message.author} for ${reason}`, "YELLOW");
+    let embed = client.embedBuilder(client, message, "User Warned", `${member.user} have been warned by ${message.author} for \`${reason}\``, "YELLOW");
 
     client.utils.logs(client, message.guild, "User Warned", [{
         name: "User",
