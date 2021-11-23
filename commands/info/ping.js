@@ -12,7 +12,6 @@ module.exports = {
 
 module.exports.run = async(client, message, args) => {
     let embed = new Discord.MessageEmbed()
-        .setColor(client.conf.settings.embedColor)
         .setDescription("Ping...");
 
     let m = await message.channel.send({ embeds: [embed] });
