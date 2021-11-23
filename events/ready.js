@@ -55,7 +55,9 @@ module.exports = async client => {
       return `> ${bUser}\n`;
     })
 
-    const embed = new client.embedBuilder(client, message, "Todays Birthdays!", `${settings.birthdayMessage}\n${birthEmbed}`)
+    const embed = new client.embed()
+      .setTitle("Todays Birthdays!")
+      .setDescription(`${settings.birthdayMessage}\n${birthEmbed}`)
 
     if (channel && birthEmbed.length > 0) channel.send({ embeds: [embed] })
   }

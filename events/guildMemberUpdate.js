@@ -2,7 +2,7 @@ module.exports = (client, oldMember, newMember) => {
   const log = client.channels.cache.get(client.conf.logging.Role_Updates);
   const settings = client.conf.automation
   const channel = client.channels.cache.get(settings.Booster_Channel)
-  const embed = new client.embedBuilder(client, message, "Guild member Update", "")
+  const embed = client.embedBuilder(client, "", "Guild member Update", "")
 
   if (log && oldMember.nickname !== newMember.nickname) log.send({ embeds: [embed.setDescription(`**Old Nickname**: ${oldMember.displayName || 'none'}\n**New Name**: ${newMember.displayName}`)]});
   else if (log && [...newMember.roles.cache.keys()].join('') !== [...oldMember.roles.cache.keys()] .join('')) {
@@ -23,7 +23,7 @@ module.exports = (client, oldMember, newMember) => {
   if (newMember.guild.premiumSubscriptionCount !== oldMember.guild.premiumSubscriptionCount && newMember.premiumSince && newMember.premiumSince !== oldMember.premiumSince) {
     const boosters = newMember.guild.premiumSubscriptionCount
 
-    const embed = new client.embedBuilder(client, message, 
+    const embed = client.embedBuilder(client, "", 
       settings.Booster_Title.replace(/{member}/, newMember.user.username),
       settings.Booster_Message.replace(/{member}/g, newMember.user.username).replace('{boosters}', boosters))
         .setThumbnail(settings.Booster_Thumbnail === '{member}' ? newMember.user.displayAvatarURL({ dynamic: true, format: 'png' }) : settings.Booster_Thumbnail || null)

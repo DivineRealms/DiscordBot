@@ -2,7 +2,7 @@ module.exports = (client, role) => {
   const log = client.channels.cache.get(client.conf.logging.Role_Updates);
   if (!log) return
 
-  const embed = new client.embedBuilder(client, message, "Role was created!", `**Role name:** ${role.name}\n**Role ID:** \`${role.id}\``)
+  const embed = client.embedBuilder(client, "", "Role was created!", `**Role name:** ${role.name}\n**Role ID:** \`${role.id}\``)
 
   log.send({ embeds: [embed] })
 }

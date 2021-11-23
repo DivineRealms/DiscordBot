@@ -7,7 +7,8 @@ module.exports = (client, channel) => {
     const log = client.channels.cache.get(client.conf.logging.Channel_Updates);
     if (!log) return
 
-    const embed = new client.embedBuilder(client, message, "A channel was deleted!",
+    const embed = client.embedBuilder(client, "", 
+      "A channel was deleted!",
       `**Channel name:** ${channel.name}\n**Channel ID:** \`${channel.id}\``)
 
     log.send({ embeds: [embed] })

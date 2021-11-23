@@ -25,7 +25,7 @@ module.exports = async(client, member) => {
     const attachment = new MessageAttachment(image.toBuffer(), "goodbye-image.png");
     if(log) log.send({ files: [attachment] });
   } else if (settings.goodbyeType === 'embed') {
-    const embed = new client.embedBuilder(client, message, 
+    const embed = client.embedBuilder(client, "", 
       settings.goodbyeEmbed.title.replace('{username}', member.user.username),
       settings.goodbyeEmbed.description.replace('{member}', member))
 

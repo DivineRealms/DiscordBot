@@ -4,7 +4,7 @@ const vcs = new Map()
 module.exports = (client, oldState, newState) => {
   const log = client.channels.cache.get(client.conf.logging.Voice_Updates)
   if (!log) return
-  const embed = new client.embedBuilder(client, message, "Voice State Update", "")
+  const embed = client.embedBuilder(client, "", "Voice State Update", "")
 
   if (oldState.serverDeaf !== newState.serverDeaf && newState.serverDeaf) log.send({ embeds: [embed.setDescription(`**${newState.member.user.tag}** Was Server Deafened!`) ]})
   else if (oldState.serverDeaf !== newState.serverDeaf && !newState.serverDeaf) log.send({ embeds: [embed.setDescription(`**${newState.member.user.tag}** Was Undeafened!`) ]})

@@ -21,8 +21,7 @@ module.exports = async function paginate(client, array, perPage, firstPage, mess
   let maxPage = Math.ceil(array.length / perPage);
   let page = await sliceContent(array, firstPage, perPage);
 
-  let embed = new client.embedBuilder(client, message,
-    title, page)
+  let embed = new client.embedBuilder(client, message, title, page)
 
   const nextBttn = new MessageButton()
     .setEmoji("➡️")
