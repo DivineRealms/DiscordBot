@@ -5,7 +5,7 @@ module.exports = {
     permissions: ["MANAGE_CHANNELS"],
     cooldown: 0,
     aliases: ['advpoll'],
-    usage: 'advancedpoll Question | op1 | op2 | etc\`\nMinimum of 2 options are required'
+    usage: 'advancedpoll Question | op1 | op2 | etc'
 }
 
 module.exports.run = async(client, message, args) => {
