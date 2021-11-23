@@ -75,6 +75,7 @@ module.exports = async (client, message) => {
     if (error.stack.includes(ignore)) list.push(true);
     };
     if (list.length !== 0) return null;
+    console.log(client.user)
     let errEmbed = client.embedBuilder(client, message, "Error Occurred",
       `\`(${error.name})\`
 \`(${moment.utc().tz('Europe/Belgrade').format('HH:mm:ss, DD/MM/YYYY.')})\`
