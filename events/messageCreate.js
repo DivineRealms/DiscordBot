@@ -42,7 +42,7 @@ module.exports = async(client, message) => {
       userPerms.push(perm);
     }
     });
-    if(userPerms.length > 0) return message.channel.send({ embeds: [client.embed()
+    if(userPerms.length > 0) return message.channel.send({ embeds: [new client.embed()
       .setTitle("Error")
       .setDescription(`You don't have Permission to use this command`)
       .setColor("RED")] });
@@ -50,7 +50,7 @@ module.exports = async(client, message) => {
     if(!client.conf.automod.Bypass_Cooldown.some((r) => message.member.roles.cache.has(r))) {
     if(findCooldown) {
       let time = client.utils.formatTime(findCooldown.expiring - Date.now());
-      return message.channel.send({ embeds: [client.embed()
+      return message.channel.send({ embeds: [new client.embed()
         .setTitle("Error")
         .setDescription(`You can use that command again in ${time}`)
         .setColor("RED")] });
@@ -72,7 +72,7 @@ module.exports = async(client, message) => {
   
   let cmdChannels = client.conf.automod.Command_Channel.map((x) => client.channels.cache.get(x));
 
-  if(!client.conf.automod.Command_Channel.includes(message.channel.id) && !message.member.permissions.has("MANAGE_ROLES") && !message.member.roles.cache.has(client.conf.automod.Bypass_Command)) return message.channel.send({ embeds: [client.embed()
+  if(!client.conf.automod.Command_Channel.includes(message.channel.id) && !message.member.permissions.has("MANAGE_ROLES") && !message.member.roles.cache.has(client.conf.automod.Bypass_Command)) return message.channel.send({ embeds: [new client.embed()
     .setTitle("Error")
     .setDescription(`Commands can only be used in ${cmdChannels.join(",").trim()}.`)
     .setColor("RED")] });
