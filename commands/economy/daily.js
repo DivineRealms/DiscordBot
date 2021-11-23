@@ -1,13 +1,13 @@
 const db = require('quick.db')
 
 module.exports = {
-    name: 'daily',
-    category: 'economy',
-    description: 'Claim that daily reward of yours.',
-    permissions: [],
-    cooldown: 0,
-    aliases: [],
-    usage: 'balance [@User]'
+  name: 'daily',
+  category: 'economy',
+  description: 'Claim that daily reward of yours.',
+  permissions: [],
+  cooldown: 0,
+  aliases: [],
+  usage: 'balance [@User]'
 }
 
 module.exports.run = async(client, message, args) => {

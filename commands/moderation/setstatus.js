@@ -1,21 +1,19 @@
 module.exports = {
-    name: 'setstatus',
-    category: 'moderation',
-    description: 'Allows you to set the bots status.',
-    permissions: ["ADMINISTRATOR"],
-    cooldown: 0,
-    aliases: [],
-    usage: 'setstatus <TEXT>'
+  name: 'setstatus',
+  category: 'moderation',
+  description: 'Allows you to set the bots status.',
+  permissions: ["ADMINISTRATOR"],
+  cooldown: 0,
+  aliases: [],
+  usage: 'setstatus <TEXT>'
 }
 module.exports.run = async(client, message, args) => {
-    const status = args.join(' ');
-    if (!status) return message.channel.send({ embeds: [client.embedBuilder(client, message, "Error", `You need to provide Custom Status.`, "RED")] });
+  const status = args.join(' ');
+  if (!status) return message.channel.send({ embeds: [client.embedBuilder(client, message, "Error", `You need to provide Custom Status.`, "RED")] });
 
-    const embed = new client.embed()
-        .setDescription(`Bot Custom Status have been changed to \`${status}\``)
-        .setFooter(`Divine Realms`, client.user.displayAvatarURL({ size: 1024 }))
+  const embed = new client.embedBuilder(client, message, "Bot Status", `Status has been changed to \`${status}\``)
 
-    message.channel.send({ embeds: [embed] });
+  message.channel.send({ embeds: [embed] });
 
-    client.user.setActivity(status);
+  client.user.setActivity(status);
 }

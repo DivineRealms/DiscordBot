@@ -1,42 +1,35 @@
 const parse = require('ms');
 
 module.exports = {
-    name: 'timer',
-    category: 'utility',
-    description: 'Lets you set a timer.',
-    permissions: [],
-    cooldown: 0,
-    aliases: [`time`],
-    usage: 'timer <Time>'
+  name: 'timer',
+  category: 'utility',
+  description: 'Lets you set a timer.',
+  permissions: [],
+  cooldown: 0,
+  aliases: [`time`],
+  usage: 'timer <Time>'
 }
 
 module.exports.run = async(client, message, args) => {
-    let embed3 = new client.embed()
-        .setDescription(`Please provide a valid time!`)
-        .setFooter(message.author.username, message.author.displayAvatarURL({ dynamic: true, size: 1024 }))
+  let embed3 = new client.embedBuilder(client, message, "Timer", "Please provide a valid time!", "RED")
 
-    if (isNaN(parse(args[0]))) return message.channel.send({ embeds: [embed3] });
+  if (isNaN(parse(args[0]))) return message.channel.send({ embeds: [embed3] });
 
-    const end = Date.now() + parse(args[0]);
+  const end = Date.now() + parse(args[0]);
 
-    const embed = new client.embed()
-        .setAuthor(`ACTIVE TIMER`)
-        .setDescription(`⏰ **Time**: ${client.utils.formatTime(end - Date.now(), {round: true})}`)
-        .setFooter(message.author.username, message.author.displayAvatarURL({ dynamic: true, size: 1024 }))
+  const embed = new client.embedBuilder(client, message, "Active Timer", 
+    `⏰ **Time**: ${client.utils.formatTime(end - Date.now(), {round: true})}`)
 
-    const msg = await message.channel.send({ embeds: [embed] });
+  const msg = await message.channel.send({ embeds: [embed] });
 
-    const timer = setInterval(() => {
-        const embed2 = new client.embed()
-            .setAuthor(`ACTIVE TIMER`)
-            .setDescription(`⏰ **Time**: ${client.utils.formatTime(end - Date.now(), { round: true })}`)
-            .setFooter(message.author.username, message.author.displayAvatarURL({ dynamic: true, size: 1024 }))
+  const timer = setInterval(() => {
+    const embed2 = new client.embedBuilder(client, message, "Active Timer", 
+      `⏰ **Time**: ${client.utils.formatTime(end - Date.now(), { round: true })}`)
 
-        if (Date.now() > end) {
-            const done = new client.embed()
-                .setDescription(`Timer has ended!`)
-            clearInterval(timer)
-            return msg.edit({ embeds: [done] })
-        } else msg.edit({ embeds: [embed2] })
-    }, 5000);
+    if (Date.now() > end) {
+      const done = new client.embedBuilder(client, message, "Timer", "Timer has ended!")
+      clearInterval(timer)
+      return msg.edit({ embeds: [done] })
+    } else msg.edit({ embeds: [embed2] })
+  }, 5000);
 }

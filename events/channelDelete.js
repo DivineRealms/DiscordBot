@@ -7,10 +7,8 @@ module.exports = (client, channel) => {
     const log = client.channels.cache.get(client.conf.logging.Channel_Updates);
     if (!log) return
 
-    const embed = new client.embed()
-        .setAuthor('A channel was deleted!')
-        .setDescription(`**Channel name:** ${channel.name}\n**Channel ID:** \`${channel.id}\``)
-        .setFooter(`Divine Realms`, client.user.displayAvatarURL({ size: 1024 }))
+    const embed = new client.embedBuilder(client, message, "A channel was deleted!",
+      `**Channel name:** ${channel.name}\n**Channel ID:** \`${channel.id}\``)
 
     log.send({ embeds: [embed] })
 }

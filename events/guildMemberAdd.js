@@ -6,7 +6,7 @@ module.exports = async(client, member) => {
     client.members.ensure(member.guild.id, {})
     let guild = client.settings.ensure(member.guild.id, client.defaultSettings)
     if (guild.locked) {
-        await member.send({ embeds: [new client.embed().setDescription(`${member.guild.name} is currently under a **SERVER-WIDE LOCKDOWN!** Please try joining back a little later!`).setFooter(`Divine Realms`, client.user.displayAvatarURL({ size: 1024 }))]}).catch(() => {})
+        await member.send({ embeds: [new client.embedBuilder(client, message, "Lockdown", `${member.guild.name} is currently under a **SERVER-WIDE LOCKDOWN!** Please try joining back a little later!`, "RED")]}).catch(() => {})
         member.kick().catch(() => {})
     }
 
@@ -34,10 +34,7 @@ module.exports = async(client, member) => {
         const attachment = new MessageAttachment(img.toBuffer(), "welcome-image.png");
         if(log) log.send({ files: [attachment] });
     } else if (settings.welcomeType == 'embed') {
-        const embed = new client.embed()
-            .setTitle(settings.welcomeEmbed.title.replace('{username}', member.user.username))
-            .setDescription(settings.welcomeEmbed.description.replace('{member}', member).replace('{joinPosition}', `${member.guild.memberCount}`))
-            .setColor(settings.welcomeEmbed.color)
+        const embed = new client.embedBuilder(client, message, settings.welcomeEmbed.title.replace('{username}', member.user.username), settings.welcomeEmbed.description.replace('{member}', member).replace('{joinPosition}', `${member.guild.memberCount}`))
 
         if(log) log.send({ embeds: [embed] })
     } else if (settings.welcomeType == 'message') {

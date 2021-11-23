@@ -1,15 +1,16 @@
 module.exports = {
-    name: 'help',
-    category: 'info',
-    description: 'Get this bots help menu.',
-    permissions: [],
-    cooldown: 0,
-    aliases: [],
-    usage: 'help'
+  name: 'help',
+  category: 'info',
+  description: 'Get this bots help menu.',
+  permissions: [],
+  cooldown: 0,
+  aliases: [],
+  usage: 'help'
 }
 
 module.exports.run = async(client, message, args) => {
   let cmd = args[0];
+
   if(!cmd) {
     const mainMenu = client.embedBuilder(client, message, "Help Menu", `To view Commands use Drop Down to Select Command Category.\n> Total Commands: ${[...client.commands.values()].length}`)
     const economy = client.utils.commandsList(client, message, "economy");
@@ -29,6 +30,7 @@ module.exports.run = async(client, message, args) => {
     let labelArr = ["Main Menu", "Economy", "Info", "Fun", "Moderation", "Tickets", "Utility"];
     let emojiArr = ["🏠", "💵", "✨", "☁️", "🎫", "📦", "📏"];
     let data = [];
+
     for(let i = 0; i < embeds.length; i++) {
       data.push({
         label: labelArr[i], 
@@ -45,10 +47,9 @@ module.exports.run = async(client, message, args) => {
     });
   } else {
     const command = client.commands.find((c, n) => n === args[0].toLowerCase() || (c.aliases && c.aliases.includes(args[0].toLowerCase())))
-    if (!command) return message.channel.send({ embeds: [new client.embed().setDescription(`I couldnt find a command named \`${args[0]}\``)]})
+    if (!command) return message.channel.send({ embeds: [new client.embedBuilder(client, message, "Error", `I couldnt find a command named \`${args[0]}\``)]})
 
-    const embed = new client.embed()
-        .setTitle(`Command Help`)
+    const embed = new client.embedBuilder(client, message, "Command Help")
         .addField('Command Name', args[0].toLowerCase())
         .addField('Aliases', command.aliases.map(s => `\`${s}\``).join(', ') || 'none')
         .addField('Usage', `\`${message.px}${command.usage}\``)

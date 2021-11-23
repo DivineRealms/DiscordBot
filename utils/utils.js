@@ -30,11 +30,7 @@ function commandsList(client, message, category) {
 const logs = (client, guild, type, fields, user) => {
   const aChannel = client.channels.cache.get(client.conf.logging.Moderation_Channel_Logs)
   
-  let embed = new Discord.MessageEmbed()
-    .setAuthor(user.username, user.displayAvatarURL({ dynamic: true }))
-    .setDescription(`Logging Type - \`${type}\``)
-    .setColor("#FFFFFD")
-    .setTimestamp();
+  let embed = new client.embedBuilder(client, message, user.username, `Logging Type - \`${type}\``)
     
   for(var i = 0; i < fields.length; i++) {
     embed.addField(fields[i].name + "", fields[i].desc + "");

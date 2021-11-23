@@ -29,6 +29,6 @@ module.exports.run = async(client, message, args) => {
       desc: reason
     }], message.author);
   }).catch(() => {
-      return message.channel.send({ embeds: [client.embedBuilder(client, message, "Error", `That User isn't banned from server.`, "RED")] });
+      return message.channel.send({ embeds: [client.embedBuilder(client, message, "Error", `That User isn't banned.`, "RED")] });
   })
 }

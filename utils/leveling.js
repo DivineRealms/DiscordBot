@@ -17,11 +17,9 @@ const manageLeveling = async (client, message) => {
     const xpChannel = client.channels.cache.get(client.conf.leveling.level_Up_Channel)
 
     if (xp + xpGive >= xpNeeded) {
-      const embed = new client.embed()
-        .setAuthor(levelSettings.level_Up_Title)
-        .setDescription(levelSettings.level_Up_Message.replace('{user}', message.author.toString()).replace('{level}', level + 1))
-        .setFooter(message.author.username, message.author.displayAvatarURL({ dynamic: true, size: 1024 }))
-        .setTimestamp()
+      const embed = new client.embedBuilder(client, message, 
+        levelSettings.level_Up_Title,
+        levelSettings.level_Up_Message.replace('{user}', message.author.toString()).replace('{level}', level + 1))
 
       if (xpChannel) xpchannel.send({ embeds: [embed] })
 

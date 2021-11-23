@@ -2,13 +2,13 @@ const db = require('quick.db')
 const Discord = require("discord.js")
 
 module.exports = {
-    name: 'colors',
-    category: 'economy',
-    description: 'Choose your name color.',
-    permissions: [],
-    cooldown: 0,
-    aliases: [],
-    usage: 'color [list/use/reset] [color]'
+  name: 'colors',
+  category: 'economy',
+  description: 'Choose your name color.',
+  permissions: [],
+  cooldown: 0,
+  aliases: [],
+  usage: 'color [list/use/reset] [color]'
 }
 
 module.exports.run = async(client, message, args) => {
@@ -16,12 +16,10 @@ module.exports.run = async(client, message, args) => {
   let colors = db.fetch(`colors_${message.guild.id}_${message.author.id}`) || [];
   if(!option) return message.channel.send({ embeds: [client.embedBuilder(client, message, "Error", `You have entered invalid option, options: \`use, list, reset\`.`, "RED")] });
   if(option.toLowerCase() == "list") {
-    if(colors.length == 0) return message.channel.send({ embeds: [client.embedBuilder(client, message, "Error", `You don't have any color.`, "RED")] });
-    let embed = new Discord.MessageEmbed()
-      .setTitle("List of Colors")
-      .setDescription(`You have total of ${colors.length} colors available\n\n> ${colors.join(" ")}`)
+  if(colors.length == 0) return message.channel.send({ embeds: [client.embedBuilder(client, message, "Error", `You don't have any color.`, "RED")] });
+  let embed = new client.embedBuilder(client, message, "List of Colors", `You have total of ${colors.length} colors available\n\n> ${colors.join(" ")}`)
 
-    message.channel.send({ embeds: [embed] });
+  message.channel.send({ embeds: [embed] });
   } else if(option.toLowerCase() == "use") {
     let select = args[1];
     if(!colors.includes(select.toLowerCase())) return message.channel.send({ embeds: [client.embedBuilder(client, message, "Error", `You don't have that color in your inventory`, "RED")] });

@@ -41,6 +41,7 @@ module.exports = function (client) {
       }
     }
   });
+  
   async function createTemporaryVC(user) {
     let createCategory = client.conf.tempvc.Create_VCS_Under;
     if(!user.guild.channels.cache.get(createCategory) || !createCategory) return;

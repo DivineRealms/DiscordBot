@@ -1,13 +1,13 @@
 const db = require('quick.db')
 
 module.exports = {
-    name: 'deposit',
-    category: 'economy',
-    description: 'Deposit your money on hand into your bank.',
-    permissions: [],
-    cooldown: 0,
-    aliases: ['d'],
-    usage: 'd <amount | all>'
+  name: 'deposit',
+  category: 'economy',
+  description: 'Deposit your money on hand into your bank.',
+  permissions: [],
+  cooldown: 0,
+  aliases: ['d'],
+  usage: 'd <amount | all>'
 }
 
 module.exports.run = async(client, message, args) => {
@@ -15,12 +15,14 @@ module.exports.run = async(client, message, args) => {
 
   if (!args[0] || (isNaN(args[0]) && args[0] !== 'all')) return message.channel.send({ embeds: [client.embedBuilder(client, message, "Error", "You need to enter how much to deposit.", "RED")] });
   if (!bal || bal == 0) return message.channel.send({ embeds: [client.embedBuilder(client, message, "Error", "You don't have money to deposit.", "RED")] });
+
   if (args[0] === 'all') {
-      message.channel.send({ embeds: [client.embedBuilder(client, message, "Deposit", `You have deposited $${balance} to bank.`) ]})
+    message.channel.send({ embeds: [client.embedBuilder(client, message, "Deposit", `You have deposited $${balance} to bank.`) ]})
     db.subtract(`money_${message.guild.id}_${message.author.id}`, Number(args[0]));
     db.add(`bank_${message.guild.id}_${message.author.id}`, Number(args[0])); 
     return;
   }
+
   if (args[0] > bal) return message.channel.send({ embeds: [client.embedBuilder(client, message, "Error", "You don't have that much money.", "RED")] });
   if (args[0] < 1) return message.channel.send({ embeds: [client.embedBuilder(client, message, "Error", "You cannot deposit less than $1.", "RED")] });
 

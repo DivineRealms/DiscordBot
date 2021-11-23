@@ -2,9 +2,7 @@ module.exports = (client, oldChannel, newChannel) => {
     const log = client.channels.cache.get(client.conf.logging.Channel_Updates);
     if (!log) return
 
-    const embed = new client.embed()
-        .setAuthor(`The Channel ${newChannel.name} was Updated!`)
-        .setFooter(`Divine Realms`, client.user.displayAvatarURL({ size: 1024 }))
+    const embed = new client.embedBuilder(client, message, `The Channel ${newChannel.name} was Updated!`, "")
 
     if (newChannel.name !== oldChannel.name) log.send({ embeds: [embed.setDescription(`**Old Name**: ${oldChannel.name}\n**New Name**: ${newChannel.name}`)]});
     else if (newChannel.nsfw !== oldChannel.nsfw) log.send({ embeds: [embed.setDescription(`${newChannel.name} is ${newChannel.nsfw ? 'now' : 'no longer'} set as **nsfw**`)]});

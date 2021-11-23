@@ -1,11 +1,8 @@
 module.exports = (client, role) => {
-    const log = client.channels.cache.get(client.conf.logging.Role_Updates);
-    if (!log) return
+  const log = client.channels.cache.get(client.conf.logging.Role_Updates);
+  if (!log) return
 
-    const embed = new client.embed()
-        .setAuthor('A role was deleted!')
-        .setDescription(`**Role name:** ${role.name}\n**Role ID:** \`${role.id}\``)
-        .setFooter(`Divine Realms`, client.user.displayAvatarURL({ size: 1024 }))
+  const embed = new client.embedBuilder(client, message, "A role was deleted!", `**Role name:** ${role.name}\n**Role ID:** \`${role.id}\``)
 
-    log.send({ embeds: [embed] })
+  log.send({ embeds: [embed] })
 }
