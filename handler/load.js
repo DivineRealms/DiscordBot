@@ -33,8 +33,6 @@ module.exports = async client => {
     client.embedBuilder = require("../utils/embedBuilder.js");
     client.utils = require("../utils/utils.js");
     client.paginateSelect = require("../utils/paginateSelect.js");
-
-    var date = new Date();
     
     process.on('unhandledRejection', error => {
       let ignoreErrors = [
@@ -53,7 +51,7 @@ module.exports = async client => {
       let errEmbed = new MessageEmbed()
         .setAuthor(client.user.username, client.user.displayAvatarURL())
         .setDescription(`Error Occurred \`(${error.name})\`
-\`(${moment.utc(date).tz('Europe/Belgrade').format('HH:mm:ss, DD/MM/YYYY.')})\`
+\`(${moment.utc().tz('Europe/Belgrade').format('HH:mm:ss, DD/MM/YYYY.')})\`
   
 \`\`\`xl\n${error.stack}\n\`\`\``)
         .setColor("RED");
@@ -80,7 +78,7 @@ module.exports = async client => {
       let errEmbed = new MessageEmbed()
         .setAuthor(client.user.username, client.user.displayAvatarURL())
         .setDescription(`Error Occurred \`(${error.name})\`
-\`(${moment.utc(date).tz('Europe/Belgrade').format('HH:mm:ss, DD/MM/YYYY.')})\`
+\`(${moment.utc().tz('Europe/Belgrade').format('HH:mm:ss, DD/MM/YYYY.')})\`
   
 \`\`\`xl\n${error.stack}\n\`\`\``)
         .setColor("RED");
