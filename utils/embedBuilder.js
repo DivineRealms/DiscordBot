@@ -7,6 +7,8 @@ module.exports = (client, user, title, description, color) => {
   }
   if (color.length > 0) {
     embed.setColor(color);
+  } else {
+    embed.setColor(client.conf.settings.embedColor)
   }
   if (description.length > 0) {
     embed.setDescription(description);
