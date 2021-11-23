@@ -13,7 +13,7 @@ module.exports.run = async(client, message, args) => {
     message.guild.channels.cache.get(args[0]);
 
   if (!channel) {
-    return message.channel.send({ embeds: [new client.embedBuilder(client, message, "Error", `Please provide a valid channel by mention or ID!`, "RED")]});
+    return message.channel.send({ embeds: [client.embedBuilder(client, message, "Error", `Please provide a valid channel by mention or ID!`, "RED")]});
   }
 
   channel.permissionOverwrites.edit(message.guild.roles.everyone.id, {

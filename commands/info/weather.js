@@ -19,7 +19,7 @@ module.exports.run = async(client, message, args) => {
     var current = result[0].current;
     var location = result[0].location;
 
-    let embed = new client.embedBuilder(client, message, 
+    let embed = client.embedBuilder(client, message, 
       "Weather", `Weather for Location \`${current.observationpoint}\`.`)
         .addField("🛰・Degree Type", `${location.degreetype}°`, false)
         .addField("🌡・Temperature", `${current.temperature}°`, false)

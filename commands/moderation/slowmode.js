@@ -9,7 +9,7 @@ module.exports = {
 }
 
 module.exports.run = async(client, message, args) => {
-  if (isNaN(args[0])) return message.channel.send({ embeds: [new client.embed().setDescription(`You have entered invalid number of seconds`)]})
+  if (isNaN(args[0])) return message.channel.send({ embeds: [client.embedBuilder(client, message, "", `You have entered an invalid number of seconds`)]})
 
   message.channel.setRateLimitPerUser(args[0]);
   message.channel.send({ embeds: [client.embedBuilder(client, message, "Slowmode", `Slowmode for ${message.channel} have been changed to ${args[0]}s`)] });

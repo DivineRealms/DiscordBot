@@ -10,7 +10,7 @@ module.exports = {
 
 module.exports.run = async(client, message, args) => {
   message.channel.send({ embeds: [
-    new client.embedBuilder(client, message, `${message.channel.name} - (${message.channel.id})`)
+    client.embedBuilder(client, message, `${message.channel.name} - (${message.channel.id})`)
     .addField(':shield: Information',
     `>>> **Channel Name**:  ${message.channel.name} 
 **Channel ID:**  ${message.channel.id} 

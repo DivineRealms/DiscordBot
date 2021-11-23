@@ -12,7 +12,7 @@ module.exports = {
 
 module.exports.run = async(client, message, args) => {
   try {
-    message.channel.send({ embeds: [new client.embedBuilder(client, message, "Math", "")
+    message.channel.send({ embeds: [client.embedBuilder(client, message, "Math", "")
       .addField('Problem', '```\n' + args.join(' ') + '```')
       .addField('Solution', '```\n' + evaluate(args.join(' ')) + '```')]})
   } catch (e) {

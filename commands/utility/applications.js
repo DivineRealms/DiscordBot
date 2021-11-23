@@ -13,10 +13,10 @@ module.exports = {
 module.exports.run = async(client, message, args) => {
   const applications = client.conf.applicationSystem.applications.filter(s => !s.Application_Channel || s.Application_Channel === message.channel.id)
   const apps = chunk(applications.map((app, i) => `**Application ${i + 1}:** ${app.Application_Name}`), 5)
-  const embed = new client.embedBuilder(client, message, "Application Menu", 
+  const embed = client.embedBuilder(client, message, "Application Menu", 
     `Please select what application you would like to apply for.\n\nUse the reactions to flip through the applications on the server.\n\n${apps[0].join('\n')}\n\u200b`)
 
-  if (!applications.length) return message.channel.send({ embeds: [new client.embedBuilder(client, message, "Error", "I couldn't find any applications available in this channel!")]})
+  if (!applications.length) return message.channel.send({ embeds: [client.embedBuilder(client, message, "Error", "I couldn't find any applications available in this channel!")]})
 
   message.channel.send({ embeds: [embed] }).then(async emb => {
     if (!apps[1]) return;

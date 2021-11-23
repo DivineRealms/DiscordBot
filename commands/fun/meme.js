@@ -16,7 +16,7 @@ module.exports.run = async(client, message, args) => {
   const list = await fetch(`https://www.reddit.com/r/${sample(subReddits)}/new/.json`).then(r => r.json())
   const item = sample(list.data.children.filter(s => ['gif', 'png', 'jpg', 'jpeg'].some(e => s.data.url.endsWith(e))))
 
-  const embed = new client.embedBuilder(client, message, "Random Reddit Meme")
+  const embed = client.embedBuilder(client, message, "Random Reddit Meme")
     .setURL(`http://reddit.com/${item.permalink}`)
     .setImage(item.data.url)
 

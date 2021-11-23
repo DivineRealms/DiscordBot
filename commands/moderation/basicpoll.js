@@ -15,7 +15,7 @@ module.exports.run = async(client, message, args) => {
   if (!channel) return message.channel.send({ embeds: [client.embedBuilder(client, message, "Error", "You have entered invalid channel.", "RED")] });
   if (!args[1]) return message.channel.send({ embeds: [client.embedBuilder(client, message, "Error", "You didn't specified question.", "RED")] });
 
-  const embed = new client.embedBuilder(client, message, `Poll Created By ${message.author.tag}`, description)
+  const embed = client.embedBuilder(client, message, `Poll Created By ${message.author.tag}`, description)
 
   const msg = await client.channels.cache.get(channel.id).send({ embeds: [embed] })
   msg.react('✅').then(msg.react('❌'))

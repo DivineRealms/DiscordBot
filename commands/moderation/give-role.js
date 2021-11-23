@@ -1,5 +1,4 @@
-module.exports = {
-  name: 'give-role',
+module.exports = {name: 'give-role',
   category: 'moderation',
   description: 'Lets you give a certain role to a member.',
   permissions: ["MANAGE_ROLES"],

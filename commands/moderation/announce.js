@@ -11,5 +11,5 @@ module.exports = {
 module.exports.run = async(client, message, args) => {
   let description = args.join(' ')
   if (!description) return message.channel.send({ embeds: [client.embedBuilder(client, message, "Error", "You need to provide description.", "RED")] });
-  let msg = await message.channel.send({ embeds: [new client.embedBuilder(client, message, "Announcement", description)]})
+  let msg = await message.channel.send({ embeds: [client.embedBuilder(client, message, "Announcement", description)]})
 }

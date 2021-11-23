@@ -21,7 +21,7 @@ module.exports.run = async(client, message, args, cmd) => {
   if ([null, Infinity].includes(time)) return message.channel.send('To create a poll, enter a valid time. For example: `1d`')
 
   await message.delete()
-  const embed = new client.embedBuilder(client, message, question, `Poll Created By ${message.author.tag}`)
+  const embed = client.embedBuilder(client, message, question, `Poll Created By ${message.author.tag}`)
     .setDescription(`${question}\n\n**__TIME REMAINING__** ${client.utils.formatTime(time, { conjunction: " and ", serialComma: false, round: true })}`)
 
   for (let i = 0; i < options.length && i < 10; i++) embed.addField('\u200b', `${emoji[i]} ${options[i]}`)
@@ -33,7 +33,7 @@ module.exports.run = async(client, message, args, cmd) => {
     msg.edit({ embeds: [embed.setDescription(`${question}\n\n**__TIME REMAINING__** ${client.utils.formatTime(end - Date.now(), { conjunction: " and ", serialComma: false, round: true })}`)]}).catch(() => {})
     if (Date.now() > end) {
       msg.edit({ embeds: [embed.setDescription(`${question}\n\n**__TIME REMAINING__** Times Up!`)]}).catch(() => {})
-      message.channel.send({ embeds: [new client.embedBuilder(client, message, "Times Up!", `Poll created by ${message.author.tag} has ended!`)]})
+      message.channel.send({ embeds: [client.embedBuilder(client, message, "Times Up!", `Poll created by ${message.author.tag} has ended!`)]})
       clearInterval(x)
     }
   }, 5000)

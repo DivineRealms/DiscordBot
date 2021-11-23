@@ -76,14 +76,14 @@ module.exports.run = async(client, message, args) => {
 
   const attachment = new MessageAttachment(Buffer.from(data), 'ticket.html');
   message.channel.send({ files: [attachment] })
-  const loggingembed = new client.embedBuilder(client, message, "Ticket Logging System", "")
+  const loggingembed = client.embedBuilder(client, message, "Ticket Logging System", "")
     .addField(`Ticket Name`, `${message.channel.name}`)
     .addField(`Channel`, `${message.channel}`)
     .setThumbnail(client.user.displayAvatarURL());
   if (log) log.send({ files: [attachment], embeds: [loggingembed] })
 
-  if (!ticket) return message.channel.send({ embeds: [new client.embedBuilder(client, message, "Deleting..", "This command can only be used inside of tickets.")]})
-  message.channel.send({ embeds: [new client.embedBuilder(client, message, "Deleting.."), "This channel will be deleted in 10 seconds.")]})
+  if (!ticket) return message.channel.send({ embeds: [client.embedBuilder(client, message, "Deleting..", "This command can only be used inside of tickets.")]})
+  message.channel.send({ embeds: [client.embedBuilder(client, message, "Deleting.."), "This channel will be deleted in 10 seconds.")]})
 
   await new Promise(r => setTimeout(r, 10000))
   message.channel.delete()

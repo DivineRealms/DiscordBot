@@ -17,7 +17,7 @@ module.exports.run = async(client, message, args) => {
   if(!option) return message.channel.send({ embeds: [client.embedBuilder(client, message, "Error", `You have entered invalid option, options: \`use, list, reset\`.`, "RED")] });
   if(option.toLowerCase() == "list") {
   if(colors.length == 0) return message.channel.send({ embeds: [client.embedBuilder(client, message, "Error", `You don't have any color.`, "RED")] });
-  let embed = new client.embedBuilder(client, message, "List of Colors", `You have total of ${colors.length} colors available\n\n> ${colors.join(" ")}`)
+  let embed = client.embedBuilder(client, message, "List of Colors", `You have total of ${colors.length} colors available\n\n> ${colors.join(" ")}`)
 
   message.channel.send({ embeds: [embed] });
   } else if(option.toLowerCase() == "use") {

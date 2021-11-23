@@ -22,7 +22,7 @@ module.exports.run = async(client, message, args) => {
     if (typeof evaled !== "string")
       evaled = require("util").inspect(evaled);
 
-    let embed = new client.embedBuilder(client, message, "Eval", "", "GREEN")
+    let embed = client.embedBuilder(client, message, "Eval", "", "GREEN")
       .addField("Input", `\`\`\`${code}\`\`\``)
 
     if(evaled.length >= 1024) {
@@ -37,7 +37,7 @@ module.exports.run = async(client, message, args) => {
 
     message.channel.send({ embeds: [embed] })
     } catch (err) {
-    let embed = new client.embedBuilder(client, message, "Error", "", "RED")
+    let embed = client.embedBuilder(client, message, "Error", "", "RED")
       .addField("Input", `\`\`\`xl\n${code}\`\`\``)
       .addField("Output", `\`\`\`xl\n${err}\`\`\``)
 

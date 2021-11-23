@@ -38,7 +38,7 @@ module.exports.run = async(client, message, args, cmd) => {
       games.set(message.guild.id + message.author.id, true)
 
       const game = new Connect4([new Player(':orange_circle:'), new Player(':red_circle:')])
-      const embed = new client.embedBuilder(client, message,
+      const embed = client.embedBuilder(client, message,
         `${message.author.username} vs. ${message.mentions.users.first().username}`)
         .setDescription(board(game).join('\n').replace(/,/g, ''))
 

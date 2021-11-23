@@ -34,7 +34,7 @@ module.exports.run = async(client, message, args) => {
   const highestRole = member.roles.highest || "*None*";
   const hoistRole = member.roles.hoist || "*None*";
 
-  let embed = new client.embedBuilder(client, message, member.user.tag)
+  let embed = client.embedBuilder(client, message, member.user.tag)
     .addField("Nickname", nickname, true)
     .addField("Account Creation", `${accountCreated}`, true)
     .addField("Join Date", `${JoinedDate}`, true)

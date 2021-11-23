@@ -37,10 +37,10 @@ module.exports.run = async(client, message, args) => {   const settings = client
 
   message.channel.send({ embeds: [client.embedBuilder(client, message, "Ticket Created", `Ticket have been successfully created in channel ${channel}.`)], components: [jumpRow] });
 
-  channel.send({ embeds: [new client.embedBuilder(client, message, settings.Ticket_Title, client.resolveMember(settings.Ticket_Message, message.author))
+  channel.send({ embeds: [client.embedBuilder(client, message, settings.Ticket_Title, client.resolveMember(settings.Ticket_Message, message.author))
   ]})
 
-  if (log) log.send({ embeds: [new client.embedBuilder(client, message, 'Ticket Created', `**Creator:** ${message.author}`)]});
+  if (log) log.send({ embeds: [client.embedBuilder(client, message, 'Ticket Created', `**Creator:** ${message.author}`)]});
   
   db.set(`tickets_${message.guild.id}_${message.channel.id}`, message.author.id);
 }

@@ -17,7 +17,7 @@ module.exports.run = async(client, message, args) => {
 
   const chan = client.channels.cache.get(app.Application_Log)
   if (!chan) return message.channel.send({ embeds: [client.embedBuilder(client, message, "Error", "Cannot find application log channel.", "RED")] });
-  const msg = await message.author.send({ embeds: [new client.embedBuilder(client, message, "Application Process", 
+  const msg = await message.author.send({ embeds: [client.embedBuilder(client, message, "Application Process", 
     `Please confirm that you would like to start the application by reacting below.\nYou can send \`cancel\` at any time to cancel the application.`)]}).catch(() => {
       message.channel.send({ content: '> Your DMs are closed' })
     })
@@ -34,14 +34,14 @@ module.exports.run = async(client, message, args) => {
   client.processes.set(message.author.id, true)
 
   for (var i in questions) {
-    await msg.channel.send({ embeds: [new client.embedBuilder(client, message, `Question ${(Number(i) + 1)}`, questions[i])]})
+    await msg.channel.send({ embeds: [client.embedBuilder(client, message, `Question ${(Number(i) + 1)}`, questions[i])]})
     const resp = await msg.channel.awaitMessages({ filter, max: 1, time: 60000 })
-    if (!resp.first()) return msg.channel.send({ embeds: [new client.embedBuilder(client, message, "Error", "Time limit exceeded, application cancelled.", "RED")]})
-    if (resp.first().content === 'cancel') return message.channel.send({ embeds: [new client.embedBuilder(client, message, "Application", "The application has been cancelled.")]})
+    if (!resp.first()) return msg.channel.send({ embeds: [client.embedBuilder(client, message, "Error", "Time limit exceeded, application cancelled.", "RED")]})
+    if (resp.first().content === 'cancel') return message.channel.send({ embeds: [client.embedBuilder(client, message, "Application", "The application has been cancelled.")]})
     answers.push(resp.first().content)
   }
 
-  const msg2 = await msg.channel.send({ embeds: [new client.embedBuilder(client, message, "Application", "The application has been completed! Are you sure you wish to apply?")]})
+  const msg2 = await msg.channel.send({ embeds: [client.embedBuilder(client, message, "Application", "The application has been completed! Are you sure you wish to apply?")]})
   await msg2.react('✅')
   await msg2.react('❎')
 
@@ -49,13 +49,13 @@ module.exports.run = async(client, message, args) => {
   if (!resp2.first()) return msg.channel.send('Time limit exceeded, application cancelled.')
   else if (resp2.first().emoji.name !== '✅') return msg.channel.send('Application cancelled.')
 
-  const embed2 = new client.embedBuilder(client, message, `New application from ${message.author.tag}`, "")
+  const embed2 = client.embedBuilder(client, message, `New application from ${message.author.tag}`, "")
 
   for(let i = 0; i < questions.length; i++) {
     embed2.addField(`${questions[i]}`, `${answers[i]}`)
   }
 
-  msg.channel.send({ embeds: [new client.embedBuilder(client, message, "Application Complete", "✅ Your application has been successfully submitted.")]})
+  msg.channel.send({ embeds: [client.embedBuilder(client, message, "Application Complete", "✅ Your application has been successfully submitted.")]})
   client.processes.delete(message.author.id)
 
   await chan.send({ embeds: [embed2] })

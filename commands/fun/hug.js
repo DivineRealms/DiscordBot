@@ -38,7 +38,7 @@ module.exports.run = async(client, message, args) => {
 
     if (mentionedMember.user.id === message.author.id) return message.channel.send({ embeds: [client.embedBuilder(client, message, "Error", "You cannot hug yourself.", "RED")] });
 
-    var embed = new client.embedBuilder(client, message, "Hug!", randomResponse).setImage(randomGif)
+    var embed = client.embedBuilder(client, message, "Hug!", randomResponse).setImage(randomGif)
     message.channel.send({ embeds: [embed] })
   }
 }

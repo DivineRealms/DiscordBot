@@ -30,7 +30,7 @@ module.exports.run = async(client, message, args) => {
     }
   });
 
-  let emojiss = new client.embedBuilder(client, message, `Emojis in ${message.guild.name}`)
+  let emojiss = client.embedBuilder(client, message, `Emojis in ${message.guild.name}`)
     .addField(`Regular Emojis`, `${RegularEmojis}`, false)
     .addField(`Animated Emojis`, `${AnimeOnesLol}`, false)
     .addField(`Emojis Displaying`, `${AnimeOnesLolDisplaying} ${TEHEMOJIS}`, false)

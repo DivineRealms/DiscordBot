@@ -9,12 +9,12 @@ module.exports = {
 }
 
 module.exports.run = async(client, message, args) => {
-  let embed3 = new client.embedBuilder(client, message, "Error", "Theres nothing to snipe :/", "RED")
+  let embed3 = client.embedBuilder(client, message, "Error", "Theres nothing to snipe :/", "RED")
 
   let snipe = client.snipes.get(message.channel.id)
   if (!snipe || !snipe.content) return message.channel.send({ embeds: [embed3] })
   let user = await client.users.fetch(snipe.user)
-  const embed = new client.embedBuilder(client, message, 
+  const embed = client.embedBuilder(client, message, 
     `I have sniped ${user.tag}\'s message!`,
     `The last deleted message said: \`\`\`${snipe.content}\`\`\`
   `)

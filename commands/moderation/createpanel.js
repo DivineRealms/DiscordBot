@@ -10,7 +10,7 @@ module.exports = {
 
 module.exports.run = async(client, message, args) => {
   const settings = client.conf.ticketSystem
-  const embed = new client.embedBuilder(client, message, "", "")
+  const embed = client.embedBuilder(client, message, "", "")
 
   const msg = await message.channel.send({ embeds: [embed.setTitle(settings.Panel_Title).setDescription(settings.Panel_Message)]});
   await msg.react(settings.Panel_Emoji).catch(() => msg.react('✉️'))

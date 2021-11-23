@@ -20,7 +20,7 @@ module.exports.run = async(client, message, args) => {
   if (args[0] === 'all') {
     let money = parseInt(bal);
     if (chance > 70) {
-      let winembed = new client.embedBuilder(client, message, "Betting", "")
+      let winembed = client.embedBuilder(client, message, "Betting", "")
         .addField("Bet", `$${money}`)
         .addField("Result", `You have won in game!`)
         .setColor("GREEN");
@@ -28,7 +28,7 @@ module.exports.run = async(client, message, args) => {
       message.channel.send({ embeds: [winembed] });
       db.add(`money_${message.guild.id}_${message.author.id}`, money);
     } else if(chance < 70) {
-      let failembed = new client.embedBuilder(client, message, "Betting", "")
+      let failembed = client.embedBuilder(client, message, "Betting", "")
         .addField("Bet", `$${money}`)
         .addField("Result", `You have lost in game!`)
         .setColor("RED");
@@ -45,7 +45,7 @@ module.exports.run = async(client, message, args) => {
   let money = parseInt(args[0]);
 
   if (chance > 70) {
-    let winembed = new client.embedBuilder(client, message, "Betting", "")
+    let winembed = client.embedBuilder(client, message, "Betting", "")
       .addField("Bet", `$${args[0]}`)
       .addField("Result", `You have won in game!`)
       .setColor("GREEN");
@@ -53,7 +53,7 @@ module.exports.run = async(client, message, args) => {
     message.channel.send({ embeds: [winembed] });
     db.add(`money_${message.guild.id}_${message.author.id}`, money);
   } else if(chance < 70) {
-    let failembed = new client.embedBuilder(client, message, "Betting", "")
+    let failembed = client.embedBuilder(client, message, "Betting", "")
       .addField("Bet", `$${args[0]}`)
       .addField("Result", `You have lost in game!`)
       .setColor("RED");

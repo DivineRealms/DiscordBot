@@ -9,15 +9,15 @@ module.exports = {
 }
 
 module.exports.run = async(client, message, args, cmd) => {
-  let embed1 = new client.embedBuilder(client, message, "Error", "Please include your choice, you can pick from rock,paper or scissors.", "RED")
-  let embed2 = new client.embedBuilder(client, message, "RPS", "I won, I had paper.")
-  let embed3 = new client.embedBuilder(client, message, "RPS", "I won, I had scissors.")
-  let embed4 = new client.embedBuilder(client, message, "RPS", "I won I had rock.")
-  let embed5 = new client.embedBuilder(client, message, "RPS", "You won, I had scissors.")
-  let embed6 = new client.embedBuilder(client, message, "RPS", "You won, I had rock.")
-  let embed7 = new client.embedBuilder(client, message, "RPS", "You won, I had paper.")
-  let embed8 = new client.embedBuilder(client, message, "RPS", "Please include either: Rock, Paper, or Scissors.")
-  let embed9 = new client.embedBuilder(client, message, "RPS", "It was a tie, we both had ${args[0]}")
+  let embed1 = client.embedBuilder(client, message, "Error", "Please include your choice, you can pick from rock,paper or scissors.", "RED")
+  let embed2 = client.embedBuilder(client, message, "RPS", "I won, I had paper.")
+  let embed3 = client.embedBuilder(client, message, "RPS", "I won, I had scissors.")
+  let embed4 = client.embedBuilder(client, message, "RPS", "I won I had rock.")
+  let embed5 = client.embedBuilder(client, message, "RPS", "You won, I had scissors.")
+  let embed6 = client.embedBuilder(client, message, "RPS", "You won, I had rock.")
+  let embed7 = client.embedBuilder(client, message, "RPS", "You won, I had paper.")
+  let embed8 = client.embedBuilder(client, message, "RPS", "Please include either: Rock, Paper, or Scissors.")
+  let embed9 = client.embedBuilder(client, message, "RPS", "It was a tie, we both had ${args[0]}")
 
 
   if (!args[0]) {

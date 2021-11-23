@@ -34,6 +34,6 @@ module.exports.run = async(client, message) => {
   ];
 
   let response = responses[Math.floor(Math.random() * responses.length)];
-  let embed = new client.embedBuilder(client, message, "Dark Joke", `${response}`)
+  let embed = client.embedBuilder(client, message, "Dark Joke", `${response}`)
   message.channel.send({ embeds: [embed] });
 }

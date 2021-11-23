@@ -11,7 +11,7 @@ module.exports = {
 module.exports.run = async(client, message, args) => {
   const user = message.mentions.users.first() || client.users.cache.get(args[0]) || message.author
 
-  message.channel.send({ embeds: [new client.embedBuilder(client, message, `${user.tag}'s Avatar!`)
+  message.channel.send({ embeds: [client.embedBuilder(client, message, `${user.tag}'s Avatar!`)
     .setImage(user.displayAvatarURL({ dynamic: true }))
   ]});
 }

@@ -38,7 +38,7 @@ module.exports.run = async(client, message) => {
     "Im old fashioned when it comes to coffee. If someone offers me a hot cup of java, I say no thanks.\nI'd much prefer a cup of C++.",
   ];
 
-  let embed = new client.embedBuilder(client, message, `Developer Joke`)
+  let embed = client.embedBuilder(client, message, `Developer Joke`)
     .setThumbnail(`https://cdn.discordapp.com/attachments/735248366291648523/742124928165347428/hi.png`)
     .setDescription(responses[~~(Math.random() * responses.length)])
   message.channel.send({ embeds: [embed] });

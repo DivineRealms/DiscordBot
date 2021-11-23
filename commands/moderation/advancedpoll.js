@@ -17,7 +17,7 @@ module.exports.run = async(client, message, args) => {
 
   await message.delete
 
-  const embed = new client.embedBuilder(client, message, 
+  const embed = client.embedBuilder(client, message, 
     `Poll Created By ${message.author.tag}`,
     `${question}\n\n${emoji[0]} ${options[0]}`
   )

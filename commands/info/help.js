@@ -47,9 +47,9 @@ module.exports.run = async(client, message, args) => {
     });
   } else {
     const command = client.commands.find((c, n) => n === args[0].toLowerCase() || (c.aliases && c.aliases.includes(args[0].toLowerCase())))
-    if (!command) return message.channel.send({ embeds: [new client.embedBuilder(client, message, "Error", `I couldnt find a command named \`${args[0]}\``)]})
+    if (!command) return message.channel.send({ embeds: [client.embedBuilder(client, message, "Error", `I couldnt find a command named \`${args[0]}\``)]})
 
-    const embed = new client.embedBuilder(client, message, "Command Help")
+    const embed = client.embedBuilder(client, message, "Command Help")
         .addField('Command Name', args[0].toLowerCase())
         .addField('Aliases', command.aliases.map(s => `\`${s}\``).join(', ') || 'none')
         .addField('Usage', `\`${message.px}${command.usage}\``)

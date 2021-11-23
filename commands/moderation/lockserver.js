@@ -10,7 +10,7 @@ module.exports = {
 
 module.exports.run = (client, message, args) => {
   const locked = client.settings.get(message.guild.id, 'locked')
-  if (!client.conf.moderation.serverLock) return message.channel.send({ embeds: [new client.embedBuilder(client, message, "Error", "This command is disabled, enable it in the configuration.", "RED")]})
+  if (!client.conf.moderation.serverLock) return message.channel.send({ embeds: [client.embedBuilder(client, message, "Error", "This command is disabled, enable it in the configuration.", "RED")]})
 
   message.channel.send({ embeds: [client.embedBuilder(client, message, "Server Locked", "Server have been locked successfully.")] });
   

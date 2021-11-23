@@ -8,4 +8,4 @@ module.exports = {
   usage: 'coinflip'
 }
 
-module.exports.run = async(client, message) => message.channel.send({ embeds: [new client.embedBuilder(client, message, "Coinflip", `Coin flipped by ${message.author.username} and it landed on **${Math.random() > 0.5 ? 'Heads' : 'Tails'}**.`)]})
+module.exports.run = async(client, message) => message.channel.send({ embeds: [client.embedBuilder(client, message, "Coinflip", `Coin flipped by ${message.author.username} and it landed on **${Math.random() > 0.5 ? 'Heads' : 'Tails'}**.`)]})
