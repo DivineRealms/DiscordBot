@@ -42,12 +42,18 @@ module.exports = async(client, message) => {
       userPerms.push(perm);
     }
     });
-    if(userPerms.length > 0) return message.channel.send({ embeds: [client.embedBuilder(client, message, "Error", `You don't have Permission to use this command`, "RED")] });
+    if(userPerms.length > 0) return message.channel.send({ embeds: [client.embed()
+      .setTitle("Error")
+      .setDescription(`You don't have Permission to use this command`)
+      .setColor("RED")] });
     let findCooldown = cooldownList.find((c) => c.name == command && c.id == message.author.id);
     if(!client.conf.automod.Bypass_Cooldown.some((r) => message.member.roles.cache.has(r))) {
     if(findCooldown) {
       let time = client.utils.formatTime(findCooldown.expiring - Date.now());
-      return message.channel.send({ embeds: [client.embedBuilder(client, message, "Error", `You can use that command again in ${time}`, "RED")] });
+      return message.channel.send({ embeds: [client.embed()
+        .setTitle("Error")
+        .setDescription(`You can use that command again in ${time}`)
+        .setColor("RED")] });
     } else if(!findCooldown && command.cooldown > 0) {
       let cooldown = {
       id: message.author.id,
@@ -66,7 +72,10 @@ module.exports = async(client, message) => {
   
   let cmdChannels = client.conf.automod.Command_Channel.map((x) => client.channels.cache.get(x));
 
-  if(!client.conf.automod.Command_Channel.includes(message.channel.id) && !message.member.permissions.has("MANAGE_ROLES") && !message.member.roles.cache.has(client.conf.automod.Bypass_Command)) return message.channel.send({ embeds: [client.embedBuilder(client, message, "Error", `Commands can only be used in ${cmdChannels.join(",").trim()}.`, "RED")] });
+  if(!client.conf.automod.Command_Channel.includes(message.channel.id) && !message.member.permissions.has("MANAGE_ROLES") && !message.member.roles.cache.has(client.conf.automod.Bypass_Command)) return message.channel.send({ embeds: [client.embed()
+    .setTitle("Error")
+    .setDescription(`Commands can only be used in ${cmdChannels.join(",").trim()}.`)
+    .setColor("RED")] });
   if (command && !client.conf.economy.enabled && command.category === 'economy') return message.channel.send({ embeds: [new client.embed().setDescription('The economy hasnt been enabled!')]})
   if (command) command.run(client, message, args)
 }
