@@ -34,7 +34,8 @@ module.exports = async client => {
     client.utils = require("../utils/utils.js");
     client.paginateSelect = require("../utils/paginateSelect.js");
 
-
+    var date = new Date();
+    
     process.on('unhandledRejection', error => {
       let ignoreErrors = [
         `DiscordAPIError: Unknown Message`,
@@ -49,7 +50,6 @@ module.exports = async client => {
         if (error.stack.includes(ignore)) list.push(true);
       };
       if (list.length !== 0) return null;
-      var date = new Date();
       let errEmbed = new MessageEmbed()
         .setAuthor(client.user.username, client.user.displayAvatarURL())
         .setDescription(`Error Occurred \`(${error.name})\`
