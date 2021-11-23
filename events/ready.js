@@ -1,6 +1,7 @@
 const muteChecks = require("../utils/muteChecks.js");
 const cron = require('cron');
 const db = require('quick.db')
+const bumpReminder = require("../utils/bumpRemind.js")
 
 module.exports = async client => {
   console.log(" ")
@@ -69,6 +70,8 @@ module.exports = async client => {
   });
   
   bdayCron.start();
+  
+  bumpReminder.bump(client);
 
   while (guild) {
     counter()

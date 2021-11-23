@@ -7,6 +7,34 @@ const cooldownList = [];
 
 module.exports = async(client, message) => {
   if(message.channel.type == "DM") return;
+  
+  if (message.author.id === "302050872383242240") {
+    if (message.embeds[0].description.includes("Bump done")) {
+      message.channel.messages.fetch().then((messages) => {
+        let dbumper = messages.filter((msg) =>
+          msg.content.toLowerCase().startsWith("!d bump")).map((msg) => msg.author.id);
+            
+          let bumpChannel = client.channels.cache.get(client.conf.logging.Bump_Channel);
+          let bumpUser = client.users.cache.get(dbumper[0]);
+          
+          let timeout = 7200000
+          let time = Date.now() + timeout
+            
+          db.set(`serverBump_${client.conf.settings.guildID}`, time) 
+
+          setTimeout(() => {
+            let bumpAgain = client.embedBuilder(client, message, "Server Bump", "Server can be bumped again, use `!d bump`")
+            bumpChannel.send({ embeds: [bumpAgain] });
+            db.delete(`serverBump_${client.conf.settings.guildID}`);
+          }, timeout); 
+
+          const bump = client.embedBuilder(client, message, "Server Bumped", `Hey ${bumpUser}, thank you for bump.`)
+              
+          message.channel.send({ embeds: [bump] });
+        });
+      }
+    }
+  
   if (!message.guild || message.author.bot) return
   utils.automod(client, message);
 
