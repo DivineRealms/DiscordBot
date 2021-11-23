@@ -79,8 +79,8 @@ module.exports.run = async(client, message, args) => {
     const loggingembed = new client.embed()
         .setAuthor(`Ticket Logging System`)
         .setColor(`BLUE`)
-        .addField(`Ticket Name`, message.channel.name)
-        .addField(`Channel`, message.channel)
+        .addField(`Ticket Name`, `${message.channel.name}`)
+        .addField(`Channel`, `${message.channel}`)
         .attachFiles(attachment)
         .setThumbnail(client.user.displayAvatarURL());
     if (log) log.send({ embeds: [loggingembed] })
