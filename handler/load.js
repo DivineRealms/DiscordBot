@@ -49,7 +49,7 @@ module.exports = async client => {
         if (error.stack.includes(ignore)) list.push(true);
       };
       if (list.length !== 0) return null;
-      let date = new Date();
+      var date = new Date();
       let errEmbed = new MessageEmbed()
         .setAuthor(client.user.username, client.user.displayAvatarURL())
         .setDescription(`Error Occurred \`(${error.name})\`
