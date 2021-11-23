@@ -83,7 +83,7 @@ module.exports.run = async(client, message, args) => {
   if (log) log.send({ files: [attachment], embeds: [loggingembed] })
 
   if (!ticket) return message.channel.send({ embeds: [client.embedBuilder(client, message, "Deleting..", "This command can only be used inside of tickets.")]})
-  message.channel.send({ embeds: [client.embedBuilder(client, message, "Deleting.."), "This channel will be deleted in 10 seconds.")]})
+  message.channel.send({ embeds: [client.embedBuilder(client, message, "Deleting..", "This channel will be deleted in 10 seconds.")]})
 
   await new Promise(r => setTimeout(r, 10000))
   message.channel.delete()

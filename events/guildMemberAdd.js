@@ -6,8 +6,8 @@ module.exports = async(client, member) => {
   client.members.ensure(member.guild.id, {})
   let guild = client.settings.ensure(member.guild.id, client.defaultSettings)
   if (guild.locked) {
-    await member.send({ embeds: [client.embedBuilder(client, "", "Lockdown",
-      `${member.guild.name} is currently under a **SERVER-WIDE LOCKDOWN!** Please try joining back a little later!`)
+    await member.send({ embeds: [client.embedBuilder(client, "", "Lockdown", 
+      `${member.guild.name} is currently under a **SERVER-WIDE LOCKDOWN!** Please try joining back a little later!`)]})
     member.kick().catch(() => {})
   }
 
