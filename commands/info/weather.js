@@ -17,7 +17,7 @@ module.exports.run = async(client, message, args) => {
         if (!args[0]) return message.channel.send({ embeds: [client.embedBuilder(client, message, "Error", "You need to enter location.", "RED")] });
         if (result === undefined || result.length === 0) return message.channel.send({ embeds: [client.embedBuilder(client, message, "Error", "You have entered Invalid Location.", "RED")] });
         var current = result[0].current;
-        var location = result[0].location;
+        //var location = result[0].location;
 
         let embed = new Discord.MessageEmbed()
             .setAuthor("Weather", message.client.user.displayAvatarURL())
