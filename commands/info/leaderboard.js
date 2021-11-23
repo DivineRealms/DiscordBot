@@ -8,7 +8,7 @@ module.exports = {
     permissions: [],
     cooldown: 0,
     aliases: ['baltop', 'lvltop', 'top'],
-    usage: 'ping'
+    usage: 'leaderboard'
 }
 
 module.exports.run = async(client, message, args) => {
