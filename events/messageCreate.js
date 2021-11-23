@@ -73,28 +73,28 @@ module.exports = async(client, message) => {
     if(userPerms.length > 0) return message.channel.send({ embeds: [new client.embed()
       .setTitle("Error")
       .setDescription(`You don't have Permission to use this command`)
-      .setColor("RED")] });
+      .setColor("RED")] }).then(m => setTimeout(() => m.delete(), 7000));
     let findCooldown = cooldownList.find((c) => c.name == command && c.id == message.author.id);
     if(!client.conf.automod.Bypass_Cooldown.some((r) => message.member.roles.cache.has(r))) {
-    if(findCooldown) {
-      let time = client.utils.formatTime(findCooldown.expiring - Date.now());
-      return message.channel.send({ embeds: [new client.embed()
-        .setTitle("Error")
-        .setDescription(`You can use that command again in ${time}`)
-        .setColor("RED")] });
-    } else if(!findCooldown && command.cooldown > 0) {
-      let cooldown = {
-      id: message.author.id,
-      name: command,
-      expiring: Date.now() + (command.cooldown * 1000),
-      };
-  
-      cooldownList.push(cooldown);
-  
-      setTimeout(() => {
-      cooldownList.splice(cooldownList.indexOf(cooldown), 1);
-      }, command.cooldown * 1000);
-    }
+      if(findCooldown) {
+        let time = client.utils.formatTime(findCooldown.expiring - Date.now());
+        return message.channel.send({ embeds: [new client.embed()
+          .setTitle("Error")
+          .setDescription(`You can use that command again in ${time}`)
+          .setColor("RED")] });
+      } else if(!findCooldown && command.cooldown > 0) {
+        let cooldown = {
+        id: message.author.id,
+        name: command,
+        expiring: Date.now() + (command.cooldown * 1000),
+        };
+    
+        cooldownList.push(cooldown);
+    
+        setTimeout(() => {
+        cooldownList.splice(cooldownList.indexOf(cooldown), 1);
+        }, command.cooldown * 1000);
+      }
     }
   }
   
@@ -103,7 +103,7 @@ module.exports = async(client, message) => {
   if(!client.conf.automod.Command_Channel.includes(message.channel.id) && !message.member.permissions.has("MANAGE_ROLES") && !message.member.roles.cache.has(client.conf.automod.Bypass_Command)) return message.channel.send({ embeds: [new client.embed()
     .setTitle("Error")
     .setDescription(`Commands can only be used in ${cmdChannels.join(",").trim()}.`)
-    .setColor("RED")] });
+    .setColor("RED")] }).then(m => setTimeout(() => m.delete, 7000));
   if (command && !client.conf.economy.enabled && command.category === 'economy') return message.channel.send({ embeds: [new client.embed().setDescription('The economy hasnt been enabled!')]})
   if (command) command.run(client, message, args)
 }
