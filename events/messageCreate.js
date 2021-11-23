@@ -64,7 +64,7 @@ module.exports = async(client, message) => {
       }
     }
 
-    if(message.channel.id != client.conf.automod.Command_Channel && !message.member.permissions.has("MANAGE_ROLES") && !message.member.roles.cache.has(client.conf.automod.Bypass_Command)) return message.channel.send({ embeds: [client.embedBuilder(client, message, "Error", `Commands can only be used in <#${client.conf.automod.Command_Channel}>`, "RED")] });
+    if(!client.conf.automod.Command_Channel.includes(message.channel.id) && !message.member.permissions.has("MANAGE_ROLES") && !message.member.roles.cache.has(client.conf.automod.Bypass_Command)) return message.channel.send({ embeds: [client.embedBuilder(client, message, "Error", `Commands can only be used in <#${client.conf.automod.Command_Channel}>`, "RED")] });
     if (command && !client.conf.economy.enabled && command.category === 'economy') return message.channel.send({ embeds: [new client.embed().setDescription('The economy hasnt been enabled!')]})
     if (command) command.run(client, message, args)
 }

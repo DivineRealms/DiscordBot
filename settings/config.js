@@ -54,7 +54,7 @@ module.exports.config = {
         Bypass_Cooldown: ['872415244394315826'],
         
         // - - - COMMAND CHANNEL - - - - 
-        Command_Channel: "CHANNELID",
+        Command_Channel: ["CHANNELID"],
         Bypass_Command: "ROLEID", 
         
         // - - - SPAM PREVENTION - - - 
