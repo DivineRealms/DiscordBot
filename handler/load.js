@@ -1,6 +1,6 @@
 const { MessageEmbed } = require('discord.js')
 const { readdirSync } = require('fs')
-const moment = require('moment')
+const moment = require('moment-timezone')
 const Enmap = require('enmap')
 
 module.exports = async client => {
@@ -33,6 +33,8 @@ module.exports = async client => {
     client.embedBuilder = require("../utils/embedBuilder.js");
     client.utils = require("../utils/utils.js");
     client.paginateSelect = require("../utils/paginateSelect.js");
+    
+    var date = new Date();
     
     process.on('unhandledRejection', error => {
       let ignoreErrors = [
