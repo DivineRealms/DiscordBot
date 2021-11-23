@@ -5,7 +5,7 @@ module.exports = {
     permissions: ["KICK_MEMBERS"],
     cooldown: 0,
     aliases: [`forcekick`],
-    usage: 'N?A'
+    usage: 'kick <@user | ID> <Reason>'
 }
 
 module.exports.run = async(client, message, args) => {
