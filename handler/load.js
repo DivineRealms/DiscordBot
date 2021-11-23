@@ -3,7 +3,7 @@ const { readdirSync } = require('fs')
 const moment = require('moment-timezone')
 const Enmap = require('enmap')
 
-module.exports = async (client, message) => {
+module.exports = async client => {
   Object.defineProperty(client, 'conf', { get: () => { delete require.cache[require.resolve('../settings/config')]; return require('../settings/config').config } })
   client.resolveMember = (str, user, title) => str.replace(/\{(.+)\}/, (...e) => e[1] === 'mention' && title ? user.toString() : user[e[1]])
   client.talkedRecently = new Set();
@@ -50,11 +50,13 @@ module.exports = async (client, message) => {
     if (error.stack.includes(ignore)) list.push(true);
     };
     if (list.length !== 0) return null;
-    let errEmbed = client.embedBuilder(client, message, "Error Occurred",
-      `\`(${error.name})\`
+    let errEmbed = new MessageEmbed()
+      .setTitle("Error Occurred")
+      .setDescription(`\`(${error.name})\`
 \`(${moment.utc().tz('Europe/Belgrade').format('HH:mm:ss, DD/MM/YYYY.')})\`
   
-\`\`\`xl\n${error.stack}\n\`\`\``, "RED")
+\`\`\`xl\n${error.stack}\n\`\`\``)
+      .setColor("RED");
     
     let log = client.channels.cache.get(client.conf.logging.Bot_Errors)
     
@@ -75,12 +77,13 @@ module.exports = async (client, message) => {
     if (error.stack.includes(ignore)) list.push(true);
     };
     if (list.length !== 0) return null;
-    console.log(client.user)
-    let errEmbed = client.embedBuilder(client, message, "Error Occurred",
-      `\`(${error.name})\`
+    let errEmbed = new MessageEmbed()
+      .setTitle("Error Occurred")
+      .setDescription(`\`(${error.name})\`
 \`(${moment.utc().tz('Europe/Belgrade').format('HH:mm:ss, DD/MM/YYYY.')})\`
   
-\`\`\`xl\n${error.stack}\n\`\`\``, "RED")
+\`\`\`xl\n${error.stack}\n\`\`\``)
+      .setColor("RED");
     
     let log = client.channels.cache.get(client.conf.logging.Bot_Errors)
     
