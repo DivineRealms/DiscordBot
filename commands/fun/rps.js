@@ -9,41 +9,15 @@ module.exports = {
 }
 
 module.exports.run = async(client, message, args, cmd) => {
-    let embed1 = new client.embed()
-        .setDescription(`Please include your choice, you can pick from rock,paper or scissors.`)
-        .setFooter(message.author.username, message.author.displayAvatarURL({ dynamic: true, size: 1024 }))
-
-    let embed2 = new client.embed()
-        .setDescription(`I won, I had paper.`)
-        .setFooter(message.author.username, message.author.displayAvatarURL({ dynamic: true, size: 1024 }))
-
-    let embed3 = new client.embed()
-        .setDescription(`I won, I had scissors.`)
-        .setFooter(message.author.username, message.author.displayAvatarURL({ dynamic: true, size: 1024 }))
-
-    let embed4 = new client.embed()
-        .setDescription(`I won I had rock.`)
-        .setFooter(message.author.username, message.author.displayAvatarURL({ dynamic: true, size: 1024 }))
-
-    let embed5 = new client.embed()
-        .setDescription(`You won, I had scissors.`)
-        .setFooter(message.author.username, message.author.displayAvatarURL({ dynamic: true, size: 1024 }))
-
-    let embed6 = new client.embed()
-        .setDescription(`You won, I had rock.`)
-        .setFooter(message.author.username, message.author.displayAvatarURL({ dynamic: true, size: 1024 }))
-
-    let embed7 = new client.embed()
-        .setDescription(`You won, I had paper.`)
-        .setFooter(message.author.username, message.author.displayAvatarURL({ dynamic: true, size: 1024 }))
-
-    let embed8 = new client.embed()
-        .setDescription(`Please include either: Rock, Paper, or Scissors.`)
-        .setFooter(message.author.username, message.author.displayAvatarURL({ dynamic: true, size: 1024 }))
-
-    let embed9 = new client.embed()
-        .setDescription(`It was a tie, we both had ${args[0]}`)
-        .setFooter(message.author.username, message.author.displayAvatarURL({ dynamic: true, size: 1024 }))
+    let embed1 = new client.embedBuilder(client, message, "Error", "Please include your choice, you can pick from rock,paper or scissors.")
+    let embed2 = new client.embedBuilder(client, message, "Error", "I won, I had paper.")
+    let embed3 = new client.embedBuilder(client, message, "Error", "I won, I had scissors.")
+    let embed4 = new client.embedBuilder(client, message, "Error", "I won I had rock.")
+    let embed5 = new client.embedBuilder(client, message, "Error", "You won, I had scissors.")
+    let embed6 = new client.embedBuilder(client, message, "Error", "You won, I had rock.")
+    let embed7 = new client.embedBuilder(client, message, "Error", "You won, I had paper.")
+    let embed8 = new client.embedBuilder(client, message, "Error", "Please include either: Rock, Paper, or Scissors.")
+    let embed9 = new client.embedBuilder(client, message, "Error", "It was a tie, we both had ${args[0]}")
 
 
     if (!args[0]) {

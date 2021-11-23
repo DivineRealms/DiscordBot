@@ -21,8 +21,6 @@ module.exports.run = async(client, message, args) => {
         const img = (await res.json()).message;
         const embed = new client.embed()
             .setImage(img)
-            .setFooter(message.author.username, message.author.displayAvatarURL({ dynamic: true, size: 1024 }))
-            .setTimestamp()
         message.channel.send({ embeds: [embed] })
     } finally {}
 }

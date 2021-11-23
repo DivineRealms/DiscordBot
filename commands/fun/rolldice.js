@@ -8,4 +8,4 @@ module.exports = {
     usage: 'rolldice [lower-upper]'
 }
 
-module.exports.run = async(client, message, args) => message.channel.send({ embeds: [new client.embed().setTitle(`🎲 Dices Rolled! 🎲`).setDescription(`First Dice:  \`${~~(Math.random() * 6)+1}\`\nSecond Dice: \`${~~(Math.random() * 6)+1}\``).setFooter(message.author.username, message.author.displayAvatarURL({ dynamic: true, size: 1024 }))]})
+module.exports.run = async(client, message, args) => message.channel.send({ embeds: [new client.embedBuilder(client, message, "🎲 Dices Rolled! 🎲", `First Dice:  \`${~~(Math.random() * 6)+1}\`\nSecond Dice: \`${~~(Math.random() * 6)+1}\``)]})
