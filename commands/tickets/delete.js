@@ -81,9 +81,8 @@ module.exports.run = async(client, message, args) => {
         .setColor(`BLUE`)
         .addField(`Ticket Name`, `${message.channel.name}`)
         .addField(`Channel`, `${message.channel}`)
-        .attachFiles(attachment)
         .setThumbnail(client.user.displayAvatarURL());
-    if (log) log.send({ embeds: [loggingembed] })
+    if (log) log.send({ files: [attachment], embeds: [loggingembed] })
 
     if (!ticket) return message.channel.send({ embeds: [new client.embed().setDescription('This command can only be used inside of tickets.').setFooter(message.author.username, message.author.displayAvatarURL({ dynamic: true, size: 1024 }))]})
     message.channel.send({ embeds: [new client.embed().setDescription('This channel will be deleted in 10 seconds.').setFooter(message.author.username, message.author.displayAvatarURL({ dynamic: true, size: 1024 }))]})

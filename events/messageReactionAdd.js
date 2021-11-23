@@ -52,6 +52,8 @@ module.exports = async(client, reaction, user) => {
 
     const tickets = db.all().filter(i => i.ID.startsWith(`tickets_${reaction.message.guild.id}_`)) || [];;
     if (tickets.find((u) => u.data.includes(user.id))) return reaction.users.remove(user.id);
+    
+    reaction.users.remove(user.id)
 
     const num = Object.entries(tickets).length || 1
     const ticketNumber = '0'.repeat(4 - num.toString().length) + num
