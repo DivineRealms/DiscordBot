@@ -25,16 +25,16 @@ module.exports.automod = async(client, message) => {
         message.channel.send({ embeds: [embed5] })
     }
 
-    if (settings.Max_User_Pings && message.mentions.users.size > settings.Max_User_Pings) {
+    if (settings.Max_User_Pings && message.mentions.users.size > settings.Max_User_Pings && !message.member.permissions.has("MANAGE_GUILD")) {
         await message.delete()
         return message.channel.send({ embeds: [new client.embed().setDescription(`Sorry but you cant ping more than ${settings.Max_User_Pings} users at once!`)]})
-    } else if (settings.Max_Role_Pings && message.mentions.roles.size > settings.Max_Role_Pings) {
+    } else if (settings.Max_Role_Pings && message.mentions.roles.size > settings.Max_Role_Pings && !message.member.permissions.has("MANAGE_GUILD")) {
         await message.delete()
         return message.channel.send({ embeds: [new client.embed().setDescription(`Sorry but you cant ping more than ${settings.Max_Role_Pings} roles at once!`)]})
-    } else if (settings.Max_Channel_Pings && message.mentions.channels.size > settings.Max_Channel_Pings) {
+    } else if (settings.Max_Channel_Pings && message.mentions.channels.size > settings.Max_Channel_Pings && !message.member.permissions.has("MANAGE_GUILD")) {
         await message.delete()
         return message.channel.send({ embeds: [new client.embed().setDescription(`Sorry but you cant ping more than ${settings.Max_Channel_Pings} channels at once!`)]})
-    } else if (settings.Max_Total_Pings && totalPings > settings.Max_Total_Pings) {
+    } else if (settings.Max_Total_Pings && totalPings > settings.Max_Total_Pings && !message.member.permissions.has("MANAGE_GUILD")) {
         await message.delete()
         return message.channel.send({ embeds: [new client.embed().setDescription(`Sorry but you cant ping more than ${settings.Max_Total_Pings} times in 1 message!`)]})
     }
@@ -69,6 +69,9 @@ module.exports.automod = async(client, message) => {
             message.channel.send({ embeds: [new client.embed().setDescription(client.resolveMember(settings.Spam_Message, message.author))]})
             spam.delete(message.author.id)
         }).catch(() => {})
+        setTimeout(() => {
+          message.member.roles.remove(client.conf.moderation.Mute_Role)
+        }, 300000)
     } else if (msgs === 1) setTimeout(() => spam.delete(message.author.id), 7000);
 
     if (settings.Caps_Limit.match(/\d/g) && percent > settings.Caps_Limit.match(/\d+/g)[0] && message.content.length >= settings.Caps_Minimum_Characters) {
@@ -78,27 +81,27 @@ module.exports.automod = async(client, message) => {
         }).catch(() => {})
     }
 
-    if (attch && !settings.Bypass_Attachments_Roles.some(r => message.member.roles.cache.has(r))) {
+    if (attch && !message.member.permissions.has("MANAGE_GUILD") && !settings.Bypass_Attachments_Roles.some(r => message.member.roles.cache.has(r))) {
         message.delete().then(() => {
             message.channel.send({ embeds: [new client.embed().setDescription(settings.Banned_Attachments_Message.replace('{member}', message.author.toString()).replace('{attachment}', attch))]})
         }).catch(() => {})
     }
 
-    if (settings.Banned_Words.some(a => message.content.toLowerCase().includes(a))) {
+    if (!message.member.permissions.has("MANAGE_GUILD") && settings.Banned_Words.some(a => message.content.toLowerCase().includes(a))) {
         if (settings.Bypass_Words_Roles.some(r => message.member.roles.cache.has(r))) return
         message.delete().then(() => {
             message.channel.send({ embeds: [new client.embed().setDescription(settings.Banned_Words_Message.replace('{member}', message.author.toString()))]})
         }).catch(() => {})
     }
 
-    if (settings.Banned_Emojis.some(a => message.content.toLowerCase().includes(a))) {
+    if (!message.member.permissions.has("MANAGE_GUILD") && settings.Banned_Emojis.some(a => message.content.toLowerCase().includes(a))) {
         if (settings.Bypass_Emojis_Roles.some(r => message.member.roles.cache.has(r))) return
         message.delete().then(() => {
             message.channel.send({ embeds: [new client.embed().setDescription(settings.Banned_Emojis_Message.replace('{member}', message.author.toString()))]})
         }).catch(() => {})
     }
 
-    if (settings.Banned_Links.some((a, i) => message.content.toLowerCase().includes(a) && !message.content.includes(settings.Allowed_Domains[i]))) {
+    if (!message.member.permissions.has("MANAGE_GUILD") && settings.Banned_Links.some((a, i) => message.content.toLowerCase().includes(a) && !message.content.includes(settings.Allowed_Domains[i]))) {
         if (settings.Bypass_Links_Roles.some(r => message.member.roles.cache.has(r))) return
         if (settings.Bypass_Links_Channels.includes(message.channel.id)) return
         message.delete().then(() => {
