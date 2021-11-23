@@ -15,5 +15,5 @@ module.exports.run = async(client, message, args) => {
     const page = await fetch('https://randomwordgenerator.com/never-have-i-ever-question.php').then(r => r.text())
     const nhie = load(page)('.support-sentence').text()
 
-    message.channel.send({ embeds: [new client.embedBuilder(client, message, "Never Have I Ever...", `${nhie.slice(13, nhie.length)}`)]})
+    message.channel.send({ embeds: [new client.embed().setDescription(`${nhie.slice(13, nhie.length)}`).setTitle(`Never Have I Ever...`).setFooter(message.author.username, message.author.displayAvatarURL({ dynamic: true, size: 1024 }))]})
 }

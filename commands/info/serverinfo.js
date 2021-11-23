@@ -9,7 +9,8 @@ module.exports = {
 }
 
 module.exports.run = async(client, message, args) =>
-    message.channel.send({ embeds: [new client.embedBuilder(client, message, `${message.guild.name}\'s information`)
+    message.channel.send({ embeds: [new client.embed()
+        .setTitle(`${message.guild.name}\'s information`)
         .addField("Created", `${require('moment')(message.guild.createdAt).format('ddd, MMMM Do YYYY [at] hh:mm A')} | ${require('moment')(message.guild.createdAt).fromNow()}`, false)
         .addField("Guild ID", `${message.guild.id}`, false)
         .addField("Members", `${message.guild.memberCount}`, false)

@@ -9,7 +9,8 @@ module.exports = {
 }
 
 module.exports.run = async(client, message, args) => {
-    const info = new client.embedBuilder(client, message, `Information on ${client.user.username}`)
+    const info = new client.embed()
+        .setTitle(`Information on ${client.user.username}`)
         .setThumbnail(client.user.displayAvatarURL())
         .addField('ID:', `${client.user.id}`)
         .addField('Name:', `${client.user.username}`)

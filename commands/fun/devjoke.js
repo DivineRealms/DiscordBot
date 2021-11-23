@@ -38,6 +38,10 @@ module.exports.run = async(client, message) => {
         "Im old fashioned when it comes to coffee. If someone offers me a hot cup of java, I say no thanks.\nI'd much prefer a cup of C++.",
     ];
 
-    let embed = new client.embedBuilder(client, message, "Developer Joke", `responses[~~(Math.random() * responses.length)]`)
+    let embed = new client.embed()
+        .setTitle(`Developer Joke`)
+        .setThumbnail(`https://cdn.discordapp.com/attachments/735248366291648523/742124928165347428/hi.png`)
+        .setDescription(responses[~~(Math.random() * responses.length)])
+        .setFooter(message.author.username, message.author.displayAvatarURL({ dynamic: true, size: 1024 }))
     message.channel.send({ embeds: [embed] });
 }

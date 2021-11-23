@@ -38,7 +38,9 @@ module.exports.run = async(client, message, args, cmd) => {
     games.set(message.guild.id + message.author.id, true)
 
     let board = new Array(9).fill(null)
-    const embed = new client.embedBuilder(client, message, `${message.author.tag} vs. ${message.mentions.users.first().tag}`, ":one:┃:two:┃:three:\n─────────\n:four:┃:five:┃:six:\n─────────\n:seven:┃:eight:┃:nine:")
+    const embed = new client.embed()
+        .setTitle(`${message.author.tag} vs. ${message.mentions.users.first().tag}`)
+        .setDescription(':one:┃:two:┃:three:\n─────────\n:four:┃:five:┃:six:\n─────────\n:seven:┃:eight:┃:nine:')
 
     let currentPlayer = message.author.id
 

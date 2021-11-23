@@ -29,10 +29,12 @@ module.exports.run = async(client, message, args) => {
             TEHEMOJIS += Emoji(emoji.id);
         }
     });
-    let emojiss = new client.embedBuilder(client, message, `Emojis in ${message.guild.name}`)
+    let emojiss = new client.embed()
+        .setTitle(`Emojis in ${message.guild.name}`, false)
         .addField(`Regular Emojis`, `${RegularEmojis}`, false)
         .addField(`Animated Emojis`, `${AnimeOnesLol}`, false)
         .addField(`Emojis Displaying`, `${AnimeOnesLolDisplaying} ${TEHEMOJIS}`, false)
         .addField(`Total Count Of Emojis`, `${totalemojislol}`, false)
+        .setFooter(message.author.username, message.author.displayAvatarURL({ dynamic: true, size: 1024 }));
     message.channel.send({ embeds: [emojiss] })
 }
