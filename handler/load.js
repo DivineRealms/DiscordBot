@@ -50,7 +50,7 @@ module.exports = async client => {
     if (error.stack.includes(ignore)) list.push(true);
     };
     if (list.length !== 0) return null;
-    let errEmbed = new client.MessageEmbed()
+    let errEmbed = new MessageEmbed()
       .setTitle(client.user.username)
       .setDescription(`Error Occurred \`(${error.name})\`
 \`(${moment.utc().tz('Europe/Belgrade').format('HH:mm:ss, DD/MM/YYYY.')})\`
@@ -77,7 +77,7 @@ module.exports = async client => {
     if (error.stack.includes(ignore)) list.push(true);
     };
     if (list.length !== 0) return null;
-    let errEmbed = new client.MessageEmbed()
+    let errEmbed = new MessageEmbed()
       .setTitle(client.user.username)
       .setDescription(`Error Occurred \`(${error.name})\`
 \`(${moment.utc().tz('Europe/Belgrade').format('HH:mm:ss, DD/MM/YYYY.')})\`
