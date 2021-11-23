@@ -50,10 +50,13 @@ module.exports = async client => {
     if (error.stack.includes(ignore)) list.push(true);
     };
     if (list.length !== 0) return null;
-    let errEmbed = new client.embedBuilder(client, message, client.user.username, `Error Occurred \`(${error.name})\`
+    let errEmbed = new client.MessageEmbed()
+      .setTitle(client.user.username)
+      .setDescription(`Error Occurred \`(${error.name})\`
 \`(${moment.utc().tz('Europe/Belgrade').format('HH:mm:ss, DD/MM/YYYY.')})\`
   
-\`\`\`xl\n${error.stack}\n\`\`\``, "RED")
+\`\`\`xl\n${error.stack}\n\`\`\``)
+      .setColor("RED");
     
     let log = client.channels.cache.get(client.conf.logging.Bot_Errors)
     
@@ -74,10 +77,13 @@ module.exports = async client => {
     if (error.stack.includes(ignore)) list.push(true);
     };
     if (list.length !== 0) return null;
-    let errEmbed = new client.embedBuilder(client, message, client.user.username, `Error Occurred \`(${error.name})\`
+    let errEmbed = new client.MessageEmbed()
+      .setTitle(client.user.username)
+      .setDescription(`Error Occurred \`(${error.name})\`
 \`(${moment.utc().tz('Europe/Belgrade').format('HH:mm:ss, DD/MM/YYYY.')})\`
   
-\`\`\`xl\n${error.stack}\n\`\`\``, "RED")
+\`\`\`xl\n${error.stack}\n\`\`\``)
+      .setColor("RED");
     
     let log = client.channels.cache.get(client.conf.logging.Bot_Errors)
     
