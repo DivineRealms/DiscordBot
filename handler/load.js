@@ -51,8 +51,8 @@ module.exports = async client => {
       };
       if (list.length !== 0) return null;
       let errEmbed = new MessageEmbed()
-        .setTitle(`An Error Occurred!`)
-        .setDescription(`(${error.name})\`
+        .setAuthor(client.user.username, client.user.displayAvatarURL())
+        .setDescription(`Error Occurred \`(${error.name})\`
 \`(${moment.utc().tz('Europe/Belgrade').format('HH:mm:ss, DD/MM/YYYY.')})\`
   
 \`\`\`xl\n${error.stack}\n\`\`\``)
@@ -78,8 +78,8 @@ module.exports = async client => {
       };
       if (list.length !== 0) return null;
       let errEmbed = new MessageEmbed()
-        .setTitle(`An Error Occurred!`)
-        .setDescription(`(${error.name})\`
+        .setAuthor(client.user.username, client.user.displayAvatarURL())
+        .setDescription(`Error Occurred \`(${error.name})\`
 \`(${moment.utc().tz('Europe/Belgrade').format('HH:mm:ss, DD/MM/YYYY.')})\`
   
 \`\`\`xl\n${error.stack}\n\`\`\``)
