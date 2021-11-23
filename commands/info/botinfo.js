@@ -14,6 +14,7 @@ module.exports.run = async(client, message, args) => {
         .setThumbnail(client.user.displayAvatarURL())
         .addField('ID:', `${client.user.id}`)
         .addField('Name:', `${client.user.username}`)
+        .addField('Developers', `${client.conf.settings.BotOwnerDiscordID.map((x) => client.users.cache.get(x)).join(", ").trim()}`)
         .addField('Prefix:', `${message.px}`)
         .addField('Channels:', `${client.channels.cache.size}`)
     message.channel.send({ embeds: [info] })

@@ -18,12 +18,12 @@ module.exports = async client => {
             client.user.setActivity(settings.activity.name, { type: settings.activity.type })
         } else {
             const settings = client.conf.settings.changingActivity
-            let i = -1;
-            client.user.setActivity(settings.activities[++i], { type: settings.types[i] })
+            let rand = Math.floor(Math.random() * (settings.activities.length - 1) + 1)
+            client.user.setActivity(settings.activities[rand], { type: settings.types[rand] })
             let interval = setInterval(() => {
                 if (!settings.enabled) return clearInterval(interval)
-                if (!settings.activities[++i]) i = -1
-                client.user.setActivity(settings.activities[++i], { type: settings.types[i] })
+                let index = Math.floor(Math.random() * (settings.activities.length - 1) + 1);
+                client.user.setActivity(settings.activities[index], { type: settings.types[index] })
             }, 180000);
         }
 

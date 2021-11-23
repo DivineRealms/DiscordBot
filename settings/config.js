@@ -151,6 +151,7 @@ module.exports.config = {
         Role_Updates: 'CHANNELID',
         Channel_Updates: 'CHANNELID',
         Message_Updates: 'CHANNELID',
+        Bot_Errors: "CHANNELID", 
     },
     starBoard: {
         Enabled: true,

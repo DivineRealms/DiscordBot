@@ -17,13 +17,14 @@ module.exports.run = async(client, message, args) => {
         if (!args[0]) return message.channel.send({ embeds: [client.embedBuilder(client, message, "Error", "You need to enter location.", "RED")] });
         if (result === undefined || result.length === 0) return message.channel.send({ embeds: [client.embedBuilder(client, message, "Error", "You have entered Invalid Location.", "RED")] });
         var current = result[0].current;
+        var location = result[0].location;
 
         let embed = new Discord.MessageEmbed()
             .setAuthor("Weather", message.client.user.displayAvatarURL())
             .setDescription(`Weather for Location \`${current.observationpoint}\`.`)
-            .addField("🛰・Degree Type", `${current.degreetype}°`, true)
+            .addField("🛰・Degree Type", `${location.degreetype}°`, true)
             .addField("🌡・Temperature", `${current.temperature}°`, true)
-            .addField("⌛・Time Zone", `UTC${current.timezone}`, true)
+            .addField("⌛・Time Zone", `UTC${location.timezone}`, true)
             .addField("🌧・Humidity", `${current.humidity}%`, true)
             .addField("🌬・Wind", `${current.winddisplay}`, true)
             .setColor("YELLOW")

@@ -19,7 +19,7 @@ module.exports.run = async(client, message, args) => {
         client.commands.set(args[0].toLowerCase(), {...require(`../${command.category}/${args[0].toLowerCase()}.js`), category: command.category })
         message.channel.send({ embeds: [new client.embed().setDescription("Command have been reloaded successfully.").setColor("YELLOW")] })
     } catch (e) {
-        message.channel.send({ content: 'An error ocurred' })
+        message.channel.send({ content: 'An error occurred' })
         console.log(e)
     }
 }
