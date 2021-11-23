@@ -19,5 +19,5 @@ module.exports.run = async(client, message, args) => {
         if (message.channel.permissionOverwrites.get(message.mentions.users.first().id).allow.has('VIEW_CHANNEL')) return message.channel.send({ embeds: [client.embedBuilder(client, message, "Error", "That User is already added in Ticket.", "RED")] });
 
     message.channel.permissionOverwrites.edit(message.mentions.users.first(), { VIEW_CHANNEL: true })
-    message.channel.send({ embeds: [client.embedBuilder(client, message, "Add", `${message.mentions.users.first()} have been added to ticket.`, "YELLOW")] });
+    message.channel.send({ embeds: [client.embedBuilder(client, message, "Add", `${message.mentions.users.first()} have been added to ticket.`)] });
 }

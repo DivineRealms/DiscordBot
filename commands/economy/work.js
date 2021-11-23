@@ -14,7 +14,7 @@ module.exports.run = async(client, message, args) => {
   let jobs = ["farmer", "programmer", "pilot", "bus driver", "mechanic", "doctor", "tv host"];
   let amount = Math.floor(Math.random() * 2500) + 1;
 
-  message.channel.send({ embeds: [client.embedBuilder(client, message, "Work", `You have worked as ${jobs[Math.floor(Math.random() * jobs.length)]} and earned $${amount}.`, "YELLOW")] })
+  message.channel.send({ embeds: [client.embedBuilder(client, message, "Work", `You have worked as ${jobs[Math.floor(Math.random() * jobs.length)]} and earned $${amount}.`)] })
   
   db.add(`money_${message.guild.id}_${message.author.id}`, amount);
 }

@@ -15,7 +15,7 @@ module.exports.run = async(client, message, args) => {
   if (!member || isNaN(member)) return message.channel.send({ embeds: [client.embedBuilder(client, message, "Error", `You need to enter valid user id.`, "RED")] });
 
   message.guild.members.unban(member).then(() => {
-    let embed = client.embedBuilder(client, message, "User UnBanned", `<@!${member}> have been unbanned by ${message.author}`, "YELLOW");
+    let embed = client.embedBuilder(client, message, "User UnBanned", `<@!${member}> have been unbanned by ${message.author}`);
     message.channel.send({ embeds: [embed] })
     
     client.utils.logs(client, message.guild, "User UnBanned", [{

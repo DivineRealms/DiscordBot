@@ -35,7 +35,7 @@ module.exports.run = async(client, message, args) => {   const settings = client
         .setStyle('LINK')
     );
 
-    message.channel.send({ embeds: [client.embedBuilder(client, message, "Ticket Created", `Ticket have been successfully created in channel ${channel}.`, "YELLOW")], components: [jumpRow] });
+    message.channel.send({ embeds: [client.embedBuilder(client, message, "Ticket Created", `Ticket have been successfully created in channel ${channel}.`)], components: [jumpRow] });
 
     channel.send({ embeds: [new client.embed()
         .setTitle(settings.Ticket_Title)

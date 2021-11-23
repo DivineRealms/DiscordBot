@@ -46,8 +46,8 @@ module.exports.run = async(client, message, args) => {
     return `**#${i + 1}** ${client.users.cache.get(x.name) || "N/A"} - $${Number(balance)}`
   });
   
-  let ecoEmbed = client.embedBuilder(client, message, "Economy Leaderboard", baltop.join("\n"), "YELLOW");
-  let lvlEmbed = client.embedBuilder(client, message, "Level Leaderboard", leveltop.join("\n"), "YELLOW");
+  let ecoEmbed = client.embedBuilder(client, message, "Economy Leaderboard", baltop.join("\n"));
+  let lvlEmbed = client.embedBuilder(client, message, "Level Leaderboard", leveltop.join("\n"));
   
   let embeds = [ecoEmbed, lvlEmbed];
   let labelArr = ["Economy", "Level"];

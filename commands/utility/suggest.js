@@ -23,7 +23,7 @@ module.exports.run = async(client, message, args) => {
         .setFooter(message.author.username, message.author.displayAvatarURL({ dynamic: true }))
 
     message.delete()
-    message.channel.send({ embeds: [client.embedBuilder(client, message, "Suggestion", "Your suggestion have been submitted successfully.", "YELLOW")] });
+    message.channel.send({ embeds: [client.embedBuilder(client, message, "Suggestion", "Your suggestion have been submitted successfully.")] });
     const msg = await channel.send({ embeds: [embed] })
     await msg.react(client.conf.settings.Emojis.Yes)
     await msg.react(client.conf.settings.Emojis.No)

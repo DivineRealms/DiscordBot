@@ -26,7 +26,7 @@ module.exports.run = async(client, message, args) => {
         db.delete(`muteInfo_${message.guild.id}_${member.id}`);
     }
     await member.roles.remove(muterole)
-    let embed = client.embedBuilder(client, message, "User UnMuted", `${member.user} have been unmuted by ${message.author}`, "YELLOW");
+    let embed = client.embedBuilder(client, message, "User UnMuted", `${member.user} have been unmuted by ${message.author}`);
 
     client.utils.logs(client, message.guild, "User UnMuted", [{
         name: "User",

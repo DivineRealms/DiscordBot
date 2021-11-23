@@ -27,7 +27,7 @@ module.exports.run = async(client, message, args) => {
             .addField("⌛・Time Zone", `UTC${location.timezone}`, false)
             .addField("🌧・Humidity", `${current.humidity}%`, false)
             .addField("🌬・Wind", `${current.winddisplay}`, false)
-            .setColor("YELLOW")
+            .setColor(client.conf.settings.embedColor)
             .setThumbnail(current.imageUrl);
         message.channel.send({ embeds: [embed]})
     })

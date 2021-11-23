@@ -19,7 +19,7 @@ module.exports.run = async(client, message, args) => {
     let embed = client.embedBuilder(client, message, "Balance", `User: ${user}
 Bank: $${bank}
 Balance: $${balance}
-Total: $${balance + bank}`, "YELLOW");
+Total: $${balance + bank}`);
 
   message.channel.send({ embeds: [embed] })
 }

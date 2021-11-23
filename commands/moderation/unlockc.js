@@ -28,5 +28,5 @@ module.exports.run = async(client, message, args) => {
             })
     });
 
-    channel.send({ embeds: [client.embedBuilder(client, message, "Channel UnLocked", "This Channel have been successfully unlocked.", "YELLOW")] });
+    channel.send({ embeds: [client.embedBuilder(client, message, "Channel UnLocked", "This Channel have been successfully unlocked.")] });
 }

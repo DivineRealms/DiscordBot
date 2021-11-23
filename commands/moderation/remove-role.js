@@ -18,7 +18,7 @@ module.exports.run = async(client, message, args) => {
     if (member.roles.highest.position >= message.guild.me.roles.highest.position) return message.channel.send({ embeds: [client.embedBuilder(client, message, "Error", "That Member has higher roles than me.", "RED")] });
     if (!member.roles.cache.has(role.id)) return message.channel.send({ embeds: [client.embedBuilder(client, message, "Error", "That Member don't have that role.", "RED")] });
 
-    message.channel.send({ embeds: [client.embedBuilder(client, message, "Remove Role", `Successfully removed role ${role} from ${member}.`, "YELLOW")] });
+    message.channel.send({ embeds: [client.embedBuilder(client, message, "Remove Role", `Successfully removed role ${role} from ${member}.`)] });
 
     return member.roles.remove(role).catch((err) => {
         message.channel.send({ embeds: [client.embedBuilder(client, message, "Error", "Cannot remove role from that user.", "RED")] });

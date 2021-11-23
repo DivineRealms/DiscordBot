@@ -21,18 +21,18 @@ module.exports.run = async(client, message, args) => {
     if(args[1].toLowerCase() == "add") {
         if(args[2].toLowerCase() == "bank") {
             db.add(`bank_${message.guild.id}_${user.id}`, Number(args[3]));
-            message.channel.send({ embeds: [client.embedBuilder(client, message, "Modify Balance", `$${args[3]} have been added to ${user}'s bank`, "YELLOW")] });
+            message.channel.send({ embeds: [client.embedBuilder(client, message, "Modify Balance", `$${args[3]} have been added to ${user}'s bank`)] });
         } else if(args[2].toLowerCase() == "wallet") {
             db.add(`money_${message.guild.id}_${user.id}`, Number(args[3]));
-            message.channel.send({ embeds: [client.embedBuilder(client, message, "Modify Balance", `$${args[3]} have been added to ${user}'s wallet`, "YELLOW")] });
+            message.channel.send({ embeds: [client.embedBuilder(client, message, "Modify Balance", `$${args[3]} have been added to ${user}'s wallet`)] });
         }
     } else if(args[1].toLowerCase() == "remove") {
         if(args[2].toLowerCase() == "bank") {
             db.subtract(`bank_${message.guild.id}_${user.id}`, Number(args[3]));
-            message.channel.send({ embeds: [client.embedBuilder(client, message, "Modify Balance", `$${args[3]} have been removed from ${user}'s bank`, "YELLOW")] });
+            message.channel.send({ embeds: [client.embedBuilder(client, message, "Modify Balance", `$${args[3]} have been removed from ${user}'s bank`)] });
         } else if(args[2].toLowerCase() == "wallet") {
             db.subtract(`money_${message.guild.id}_${user.id}`, Number(args[3]));
-            message.channel.send({ embeds: [client.embedBuilder(client, message, "Modify Balance", `$${args[3]} have been removed from ${user}'s wallet`, "YELLOW")] });
+            message.channel.send({ embeds: [client.embedBuilder(client, message, "Modify Balance", `$${args[3]} have been removed from ${user}'s wallet`)] });
         }
     }
 }

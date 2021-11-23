@@ -25,7 +25,7 @@ module.exports.run = async(client, message, args) => {
     const age = getAge(args.join(' '))
     if(age <= 12) return message.channel.send({ embeds: [client.embedBuilder(client, message, "Error", `You can't enter a year greater than ${new Date().getFullYear() - 12}.`, "RED")] });
 
-    message.channel.send({ embeds: [client.embedBuilder(client, message, "Birthday", "Successfully set your birthday.", "YELLOW")] });
+    message.channel.send({ embeds: [client.embedBuilder(client, message, "Birthday", "Successfully set your birthday.")] });
     
     db.set(`birthday_${message.guild.id}_${message.author.id}`, args.join(" "));
 }

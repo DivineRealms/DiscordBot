@@ -11,5 +11,5 @@ module.exports = {
 module.exports.run = async(client, message, args) => {
     client.afk.set(message.author.id, { time: Date.now(), message: args.join(' ') || 'AFK' })
     message.member.setNickname(`[AFK] ${message.member.displayName.replace(/(\[AFK\])/g, '')}`).catch(() => {})
-    message.channel.send({ embeds: [client.embedBuilder(client, message, "AFK", `I have set your AFK status to ${args[0] ? args.join(' ') : 'AFK'} `, "YELLOW")] });
+    message.channel.send({ embeds: [client.embedBuilder(client, message, "AFK", `I have set your AFK status to ${args[0] ? args.join(' ') : 'AFK'} `)] });
 }

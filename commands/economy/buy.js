@@ -20,7 +20,7 @@ module.exports.run = async(client, message, args) => {
     if (item.type == 'role') {
         if(!balance || balance < item.price) return message.channel.send({ embeds: [client.embedBuilder(client, message, "Error", `You don't have enough money.`, "RED")] });
         message.member.roles.add(item.roleID).then(() => {
-            message.channel.send({ embeds: [client.embedBuilder(client, message, "Role Purchased", `You have successfully purchased role <@&${item.roleID}> for $${item.price}.`, "YELLOW")] });
+            message.channel.send({ embeds: [client.embedBuilder(client, message, "Role Purchased", `You have successfully purchased role <@&${item.roleID}> for $${item.price}.`)] });
             db.subtract(`money_${message.guild.id}_${message.author.id}`, item.price);
         }).catch(() => {
             message.channel.send({ embeds: [client.embedBuilder(client, message, "Error", `Cannot add role to that member`, "RED")] });
@@ -31,6 +31,6 @@ module.exports.run = async(client, message, args) => {
         if(colors.includes(item.name.toLowerCase())) return message.channel.send({ embeds: [client.embedBuilder(client, message, "Error", `You already have that name color.`, "RED")] });
 
         db.push(`colors_${message.guild.id}_${message.author.id}`, item.name.toLowerCase());
-        message.channel.send({ embeds: [client.embedBuilder(client, message, "Color Purchased", `You have successfully purchased name color **${item.name}** for $${item.price}.`, "YELLOW")] });
+        message.channel.send({ embeds: [client.embedBuilder(client, message, "Color Purchased", `You have successfully purchased name color **${item.name}** for $${item.price}.`)] });
     }
 }

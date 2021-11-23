@@ -18,7 +18,7 @@ module.exports.run = async(client, message, args) => {
     if (member.roles.highest.position >= message.guild.me.roles.highest.position) return message.channel.send({ embeds: [client.embedBuilder(client, message, "Error", "That User has higher role than me.", "RED")] });
     if (member.roles.cache.has(role.id)) return message.channel.send({ embeds: [client.embedBuilder(client, message, "Error", "That Member already has that role.", "RED")] });
 
-    message.channel.send({ embeds: [client.embedBuilder(client, message, "Added Role", `Successfully added role ${role} to ${member}.`, "YELLOW")] });
+    message.channel.send({ embeds: [client.embedBuilder(client, message, "Added Role", `Successfully added role ${role} to ${member}.`)] });
 
     return member.roles.remove(role).catch((err) => {
         message.channel.send({ embeds: [client.embedBuilder(client, message, "Error", "Cannot add role to that user.", "RED")] });

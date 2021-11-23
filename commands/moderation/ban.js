@@ -20,7 +20,7 @@ module.exports.run = async(client, message, args) => {
 
     const reason = args.slice(1).join(" ") || 'No Reason'
 
-    let embed = client.embedBuilder(client, message, "User Banned", `${member.user} have been banned by ${message.author} for \`${reason}\``, "YELLOW");
+    let embed = client.embedBuilder(client, message, "User Banned", `${member.user} have been banned by ${message.author} for \`${reason}\``);
 
     client.utils.logs(client, message.guild, "User Warned", [{
         name: "User",
