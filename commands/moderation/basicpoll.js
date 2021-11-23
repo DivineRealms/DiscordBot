@@ -2,7 +2,7 @@ module.exports = {
     name: 'basicpoll',
     category: 'moderation',
     description: 'Lets you create a Yes or no poll.',
-    permissions: [],
+    permissions: ["MANAGE_CHANNELS"],
     cooldown: 0,
     aliases: ['bpoll', 'simplepoll.'],
     usage: 'basicpoll <question>'
