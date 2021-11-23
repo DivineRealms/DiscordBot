@@ -12,11 +12,12 @@ module.exports = {
 
 module.exports.run = async(client, message, args) => {
     let embed = new Discord.MessageEmbed()
-        .setDescription("Ping...");
+        .setDescription("Ping...")
+        .setColor(client.conf.settings.embedColor);
 
     let m = await message.channel.send({ embeds: [embed] });
 
-    m.edit({ embeds: [embed.setDescription(`**Latency:** ${m.createdTimestamp - message.createdTimestamp}ms
+    m.edit({ embeds: [embed.setColor(client.conf.settings.embedColor).setDescription(`**Latency:** ${m.createdTimestamp - message.createdTimestamp}ms
 **API Latency:** ${client.ws.ping}ms
 **Uptime:** ${client.utils.formatTime(client.uptime)}`)] })
 }

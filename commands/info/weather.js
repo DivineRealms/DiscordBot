@@ -20,6 +20,7 @@ module.exports.run = async(client, message, args) => {
         var location = result[0].location;
 
         let embed = new Discord.MessageEmbed()
+            .setColor(client.conf.settings.embedColor)
             .setAuthor("Weather", message.client.user.displayAvatarURL())
             .setDescription(`Weather for Location \`${current.observationpoint}\`.`)
             .addField("🛰・Degree Type", `${location.degreetype}°`, false)
