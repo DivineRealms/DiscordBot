@@ -19,7 +19,6 @@ module.exports.run = async(client, message, args) => {
     if(colors.length == 0) return message.channel.send({ embeds: [client.embedBuilder(client, message, "Error", `You don't have any color.`, "RED")] });
     let embed = new Discord.MessageEmbed()
       .setTitle("List of Colors")
-      .setColor("YELLOW")
       .setDescription(`You have total of ${colors.length} colors available\n\n> ${colors.join(" ")}`)
 
     message.channel.send({ embeds: [embed] });

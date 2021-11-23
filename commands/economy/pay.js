@@ -20,5 +20,5 @@ module.exports.run = async(client, message, args) => {
 
     db.add(`money_${message.guild.id}_${user.id}`, Number(args[1]));
     db.subtract(`money_${message.guild.id}_${message.author.id}`, Number(args[1]));
-    message.channel.send({ embeds: [client.embedBuilder(client, message, "Pay", `You have paid $${args[1]} to ${user}.`, "YELLOW")] });
+    message.channel.send({ embeds: [client.embedBuilder(client, message, "Pay", `You have paid $${args[1]} to ${user}.`)] });
 }
