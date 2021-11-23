@@ -31,7 +31,7 @@ module.exports.run = async(client, message, args) => {
   
   for (var i in money) {
     let user = money[i].ID.split("_")[2];
-    let userr = this.client.users.cache.get(user);
+    let userr = client.users.cache.get(user);
   
     if (userr === undefined || userr === null) continue;
   

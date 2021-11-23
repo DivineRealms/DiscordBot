@@ -42,7 +42,7 @@ module.exports = async(client, message) => {
           userPerms.push(perm);
         }
       });
-      if(userPerms.length > 0) return message.channell.send({ embeds: [client.embedBuilder(client, message, "Error", `You don't have Permission to use this command`, "RED")] });
+      if(userPerms.length > 0) return message.channel.send({ embeds: [client.embedBuilder(client, message, "Error", `You don't have Permission to use this command`, "RED")] });
       let findCooldown = cooldownList.find((c) => c.name == command && c.id == message.author.id);
       if(!client.conf.automod.Bypass_Cooldown.some((r) => message.member.roles.cache.has(r))) {
         if(findCooldown) {
@@ -64,6 +64,7 @@ module.exports = async(client, message) => {
       }
     }
 
+    if(message.channel.id != client.conf.automod.Command_Channel && !message.member.permissions.has("MANAGE_ROLES") && !message.member.roles.cache.has(client.conf.automod.Bypass_Command)) return message.channel.send({ embeds: [client.embedBuilder(client, message, "Error", `Commands can only be used in <#${client.conf.automod.Command_Channel}>`, "RED")] });
     if (command && !client.conf.economy.enabled && command.category === 'economy') return message.channel.send({ embeds: [new client.embed().setDescription('The economy hasnt been enabled!')]})
     if (command) command.run(client, message, args)
 }

@@ -50,8 +50,8 @@ module.exports = async(client, reaction, user) => {
     const settings = client.conf.ticketSystem
     if (!panel || reaction.emoji.name !== client.conf.ticketSystem.Panel_Emoji) return
 
-    const tickets = db.all().filter(i => i.ID.startsWith(`tickets_${message.guild.id}_`)) || [];;
-    if (tickets.find((u) => u.data.includes(user.id))) return;
+    const tickets = db.all().filter(i => i.ID.startsWith(`tickets_${reaction.message.guild.id}_`)) || [];;
+    if (tickets.find((u) => u.data.includes(user.id))) return reaction.users.remove(user.id);
 
     const num = Object.entries(tickets).length || 1
     const ticketNumber = '0'.repeat(4 - num.toString().length) + num

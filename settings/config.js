@@ -52,7 +52,11 @@ module.exports.config = {
         Allowed_Domains: ['google', 'tenor'],
         Bypass_Spam_Roles: ['ROLEID'],
         Bypass_Cooldown: ['872415244394315826'],
-
+        
+        // - - - COMMAND CHANNEL - - - - 
+        Command_Channel: "CHANNELID",
+        Bypass_Command: "ROLEID", 
+        
         // - - - SPAM PREVENTION - - - 
         Enable_Spam: true,
         Spam_Message: '{username}, you have been muted for spamming!',
