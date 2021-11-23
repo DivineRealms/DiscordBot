@@ -50,8 +50,8 @@ module.exports = async (client, message) => {
     if (error.stack.includes(ignore)) list.push(true);
     };
     if (list.length !== 0) return null;
-    let errEmbed = client.embedBuilder(client, message, client.user.username,
-      `Error Occurred \`(${error.name})\`
+    let errEmbed = client.embedBuilder(client, message, "Error Occurred",
+      `\`(${error.name})\`
 \`(${moment.utc().tz('Europe/Belgrade').format('HH:mm:ss, DD/MM/YYYY.')})\`
   
 \`\`\`xl\n${error.stack}\n\`\`\``, "RED")
@@ -75,8 +75,8 @@ module.exports = async (client, message) => {
     if (error.stack.includes(ignore)) list.push(true);
     };
     if (list.length !== 0) return null;
-    let errEmbed = client.embedBuilder(client, message, client.user.username,
-      `Error Occurred \`(${error.name})\`
+    let errEmbed = client.embedBuilder(client, message, "Error Occurred",
+      `\`(${error.name})\`
 \`(${moment.utc().tz('Europe/Belgrade').format('HH:mm:ss, DD/MM/YYYY.')})\`
   
 \`\`\`xl\n${error.stack}\n\`\`\``, "RED")
