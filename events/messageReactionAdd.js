@@ -66,7 +66,8 @@ module.exports = async(client, reaction, user) => {
   })
 
   channel.send({ embeds: [new client.embed()
-    .setTitle(settings.Ticket_Title, client.resolveMember(settings.Ticket_Message, user))]})
+    .setTitle(settings.Ticket_Title)
+    .setDescription(client.resolveMember(settings.Ticket_Message, user))]})
 
   db.set(`tickets_${reaction.message.guild.id}_${channel.id}`, user.id);
 }
