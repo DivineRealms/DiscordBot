@@ -17,20 +17,28 @@ module.exports = async(client, message) => {
           let bumpChannel = client.channels.cache.get(client.conf.logging.Bump_Channel);
           let bumpUser = client.users.cache.get(dbumper[0]);
           
+          let bumpMsg = messages
+            .filter((msg) =>
+              msg.content.toLowerCase().startsWith("!d bump")
+            )
+            .map((msg) => msg);
+          
           let timeout = 7200000
           let time = Date.now() + timeout
             
-          db.set(`serverBump_${client.conf.settings.guildID}`, time) 
+          db.set(`serverBump_${client.conf.settings.guildID}`, time)
+          db.set(`lastBump_${client.conf.settings.guildID}`, dbumper[0])
 
           setTimeout(() => {
             let bumpAgain = client.embedBuilder(client, message, "Server Bump", "Server can be bumped again, use `!d bump`")
-            bumpChannel.send({ content: bumpUser, embeds: [bumpAgain] });
+            bumpChannel.send({ content: `<@!${dbumper[0]}>`, embeds: [bumpAgain] });
             db.delete(`serverBump_${client.conf.settings.guildID}`);
+            db.delete(`lastBump_${client.conf.settings.guildID}`);
           }, timeout); 
 
           const bump = client.embedBuilder(client, message, "Server Bumped", "Thank you for bumping.")
               
-          message.reply({ embeds: [bump] });
+          bumpMsg[0].reply({ embeds: [bump] });
         });
       }
     }
