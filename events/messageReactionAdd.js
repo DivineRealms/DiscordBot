@@ -10,9 +10,7 @@ module.exports = async(client, reaction, user) => {
 
   if (['✅', '❌'].includes(reaction.emoji.name) && suggestion) {
     const user2 = await client.users.fetch(suggestion.user)
-    const embed = new client.embed()
-      .setDescription(`**Suggestion by ${user2}**\n\n Suggestion: \`${suggestion.suggestion}\`\n\n**Status:**\n${reaction.emoji.name === '✅' ? 'Approved':'Denied'} by ${user}`)
-      .setColor(reaction.emoji.name === '✅' ? 'GREEN' : 'RED')
+    const embed = client.embedBuilder(client, message, "Suggestion", `**Suggestion by ${user2}**\n\n Suggestion: \`${suggestion.suggestion}\`\n\n**Status:**\n${reaction.emoji.name === '✅' ? 'Approved':'Denied'} by ${user}`, reaction.emoji.name === '✅' ? 'GREEN' : 'RED')
       .setThumbnail(user2.displayAvatarURL({ dynamic: true }))
 
     user2.send({ embeds: [embed] }).catch(console.error)
@@ -31,8 +29,7 @@ module.exports = async(client, reaction, user) => {
         board.embeds[0].footer.text = `${count} ${starboard.StarBoard_Emoji}`
         board.edit({ embeds: [board.embeds[0]] })
       } else if (reaction.count >= starboard.Minimum_Reactions) {
-        const embed = new client.embed()
-          .setTitle(reaction.message.author.username)
+        const embed = client.embedBuilder(client, message, reaction.message.author.username, "")
           .setThumbnail(reaction.message.author.displayAvatarURL({ dynamic: true }))
 
         if (reaction.message.content) embed.setDescription(`> ${reaction.message.content}\n\n[Click Here to View Message](${reaction.message.url})`)
@@ -65,9 +62,7 @@ module.exports = async(client, reaction, user) => {
     }, { id: user.id, allow: 'VIEW_CHANNEL' }, ...permissions]
   })
 
-  channel.send({ embeds: [new client.embed()
-    .setTitle(settings.Ticket_Title)
-    .setDescription(client.resolveMember(settings.Ticket_Message, user))]})
+  channel.send({ embeds: [client.embedBuilder(client, message, settings.Ticket_Title, client.resolveMember(settings.Ticket_Message, user))]})
 
   db.set(`tickets_${reaction.message.guild.id}_${channel.id}`, user.id);
 }

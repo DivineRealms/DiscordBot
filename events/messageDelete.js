@@ -9,9 +9,7 @@ module.exports = async(client, message) => {
 
   let audit = (await message.guild.fetchAuditLogs({ type: 72 })).entries.filter(s => s.target.id === message.author.id).first()
 
-  const embed = new client.embed() 
-    .setTitle("A message was deleted!")
-    .setDescription(`**Channel:** ${message.channel}\n**User:** ${message.author.tag}${audit ? `\n**Deleted By**: ${audit.executor}` : ''}\n**Message Deleted:** ${message.content}\n**Message ID:**  ${message.id}`)
+  const embed = new client.embedBuilder(client, message, "A message was deleted!", `**Channel:** ${message.channel}\n**User:** ${message.author.tag}${audit ? `\n**Deleted By**: ${audit.executor}` : ''}\n**Message Deleted:** ${message.content}\n**Message ID:**  ${message.id}`)
 
   log.send({ embeds: [embed] })
 }
