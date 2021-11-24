@@ -102,7 +102,7 @@ module.exports = async(client, message) => {
   
   let cmdChannels = client.conf.automod.Command_Channel.map((x) => client.channels.cache.get(x));
 
-  if(!client.conf.automod.Command_Channel.includes(message.channel.id) && !message.member.permissions.has("MANAGE_ROLES") && !message.member.roles.cache.has(client.conf.automod.Bypass_Command)) return message.channel.send({ embeds: [client.embedBuilder(client, message, "Error", `Commands can only be used in ${cmdChannels.join(",").trim()}.`, "RED")] }).then(m => setTimeout(() => m.delete, 7000));
+  if(!client.conf.automod.Command_Channel.includes(message.channel.id) && !message.member.permissions.has("MANAGE_ROLES") && !message.member.roles.cache.has(client.conf.automod.Bypass_Command)) return message.channel.send({ embeds: [client.embedBuilder(client, message, "Error", `Commands can only be used in ${cmdChannels.join(",").trim()}.`, "RED")] }).then(m => setTimeout(() => m.delete(), 7000));
   if (command && !client.conf.economy.enabled && command.category === 'economy') return message.channel.send({ embeds: [client.embedBuilder(client, message, "Error", "The economy hasnt been enabled!", "RED")]})
   if (command) command.run(client, message, args)
 }
