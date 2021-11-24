@@ -5,7 +5,7 @@ module.exports = {
     category: 'economy',
     description: 'Try to rob that one dood you want.',
     permissions: [],
-    cooldown: 0,
+    cooldown: 120,
     aliases: ['r0b'],
     usage: 'rob <@User>'
 }

@@ -5,7 +5,7 @@ module.exports = {
   category: 'economy',
   description: 'Go fishing and get some tasty fish.',
   permissions: [],
-  cooldown: 30,
+  cooldown: 60,
   aliases: [],
   usage: 'fish'
 }

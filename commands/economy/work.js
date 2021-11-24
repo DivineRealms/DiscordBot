@@ -5,7 +5,7 @@ module.exports = {
     category: 'economy',
     description: 'Check your balance on the server.',
     permissions: [],
-    cooldown: 60,
+    cooldown: 120,
     aliases: ['bal'],
     usage: 'balance [@User]'
 }
