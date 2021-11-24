@@ -62,7 +62,7 @@ module.exports = async(client, reaction, user) => {
     }, { id: user.id, allow: 'VIEW_CHANNEL' }, ...permissions]
   })
 
-  channel.send({ embeds: [client.embedBuilder(client, message, settings.Ticket_Title, client.resolveMember(settings.Ticket_Message, user))]})
+  channel.send({ embeds: [client.embedBuilder(client, "", settings.Ticket_Title, client.resolveMember(settings.Ticket_Message, user))]})
 
   db.set(`tickets_${reaction.message.guild.id}_${channel.id}`, user.id);
 }
