@@ -17,6 +17,7 @@ module.exports.run = async(client, message, args) => {
     if (!args[0] || (isNaN(args[0]) && args[0] !== 'all')) return message.channel.send({ embeds: [client.embedBuilder(client, message, "Error", "You must provide amount to deposit.", "RED")] });
 
     if (args[0] === 'all') {
+      if (!bank || bank == 0) return message.channel.send({ embeds: [client.embedBuilder(client, message, "Error", "You don't have money to withdraw.", "RED")] });
       message.channel.send({ embeds: [client.embedBuilder(client, message, "Withdraw", `You have withdrawn $${bank} from bank.`)] });
       db.subtract(`bank_${message.guild.id}_${message.author.id}`, Number(bank));
       db.add(`money_${message.guild.id}_${message.author.id}`, Number(bank));

@@ -17,7 +17,8 @@ module.exports.run = async(client, message, args) => {
   if (!bal || bal == 0) return message.channel.send({ embeds: [client.embedBuilder(client, message, "Error", "You don't have money to deposit.", "RED")] });
 
   if (args[0] === 'all') {
-    message.channel.send({ embeds: [client.embedBuilder(client, message, "Deposit", `You have deposited $${balance} to bank.`) ]})
+    if (!bal || bal == 0) return message.channel.send({ embeds: [client.embedBuilder(client, message, "Error", "You don't have money to deposit.", "RED")] });
+    message.channel.send({ embeds: [client.embedBuilder(client, message, "Deposit", `You have deposited $${bal} to bank.`) ]})
     db.subtract(`money_${message.guild.id}_${message.author.id}`, Number(bal));
     db.add(`bank_${message.guild.id}_${message.author.id}`, Number(bal)); 
     return;
