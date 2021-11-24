@@ -15,7 +15,7 @@ module.exports.run = async(client, message, args) => {
   let role = message.mentions.roles.first()
   if (!role) return message.channel.send({ embeds: [client.embedBuilder(client, message, "Error", "You need to mention role.", "RED")] });
 
-  let embed = client.embedBuilder(client, message, `${role.name} Role Information`)
+  let embed = client.embedBuilder(client, message, `${role.name} Role Information`, "")
     .addField("Role Creation:", `${utc(role.createdAt).format('dddd, MMMM Do YYYY')}`, false)
     .addField("Role ID:", `${role.id}`, false)
     .addField("Position:", `${role.position}`, false)

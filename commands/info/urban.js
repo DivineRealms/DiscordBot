@@ -17,7 +17,7 @@ module.exports.run = async(client, message, args) => {
   let def = await urban(args[0]).catch(() => {})
   if (!def) return message.channel.send({ embeds: [client.embedBuilder(client, message, "Error", `No Results found for ${args[0]}.`, "RED")] });
 
-  const embed = client.embedBuilder(client, message, "Click Me To View The Word Online!")
+  const embed = client.embedBuilder(client, message, "Click Me To View The Word Online!", "")
     .setURL(def.urbanURL)
     .addField(`Definition`, `${def.definition}`.slice(0, 1000), false)
     .addField(`Definition In An Example`, `${def.example || 'none'}`.slice(0, 1000), false)

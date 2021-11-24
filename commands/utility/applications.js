@@ -16,7 +16,7 @@ module.exports.run = async(client, message, args) => {
   const embed = client.embedBuilder(client, message, "Application Menu", 
     `Please select what application you would like to apply for.\n\nUse the reactions to flip through the applications on the server.\n\n${apps[0].join('\n')}\n\u200b`)
 
-  if (!applications.length) return message.channel.send({ embeds: [client.embedBuilder(client, message, "Error", "I couldn't find any applications available in this channel!")]})
+  if (!applications.length) return message.channel.send({ embeds: [client.embedBuilder(client, message, "Error", "I couldn't find any applications available in this channel!", "RED")]})
 
   message.channel.send({ embeds: [embed] }).then(async emb => {
     if (!apps[1]) return;

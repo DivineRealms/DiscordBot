@@ -22,5 +22,5 @@ module.exports.run = async(client, message, args) => {
 
   if (!birthdays.length) return message.channel.send({ embeds: [client.embedBuilder(client, message, "Error", `There's no upcoming birthdays.`, "RED")] });
   
-  paginateContent(client, birthdays, 10, 1, message, `Birthdays Coming Up for ${dates[new Date().getMonth()]}!`, "BLURPLE")
+  paginateContent(client, birthdays, 10, 1, message, `Birthdays Coming Up for ${dates[new Date().getMonth()]}!`)
 }

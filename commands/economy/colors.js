@@ -33,11 +33,11 @@ module.exports.run = async(client, message, args) => {
     let color = client.conf.colors.list.find((n) => n.name.toLowerCase() == select.toLowerCase());
     if(message.member.roles.cache.has(color.role)) return message.channel.send({ embeds: [client.embedBuilder(client, message, "Error", `You already have that color selected.`, "RED")] });
     message.member.roles.add(color.role);
-    message.channel.send({ embeds: [client.embedBuilder(client, message, "Color Selected", `Color Role <@&${color.role}> have been equiped.`)] });
+    message.channel.send({ embeds: [client.embedBuilder(client, message, "Color Selected", `Color Role <@&${color.role}> has been equiped.`)] });
   } else if(option.toLowerCase() == "reset") {
     client.conf.colors.list.forEach((m) => {
       if(message.member.roles.cache.has(m.role)) message.member.roles.remove(m.role);
     });
-    message.channel.send({ embeds: [client.embedBuilder(client, message, "Color Selected", `Your Name Color have been reseted.`)] });
+    message.channel.send({ embeds: [client.embedBuilder(client, message, "Color Selected", `Your Name Color has been reseted.`)] });
   }
 }

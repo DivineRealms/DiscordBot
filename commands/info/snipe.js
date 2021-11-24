@@ -16,10 +16,8 @@ module.exports.run = async(client, message, args) => {
   let user = await client.users.fetch(snipe.user)
   const embed = client.embedBuilder(client, message, 
     `I have sniped ${user.tag}\'s message!`,
-    `The last deleted message said: \`\`\`${snipe.content}\`\`\`
-  `)
+    `The last deleted message said: \`\`\`${snipe.content}\`\`\``)
 
   message.channel.send(`I have sniped this users message!`)
   message.channel.send({ embeds: [embed] });
-
 }

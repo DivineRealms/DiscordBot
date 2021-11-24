@@ -12,7 +12,7 @@ module.exports = {
 }
 
 module.exports.run = async(client, message, args) => {
-  const embed = client.embedBuilder(client, message, "", "")
+  const embed = client.embedBuilder(client, message, "Birthday", "")
   const user = message.mentions.users.first()
   const birthd = args.slice(1).join(' ').toLowerCase().charAt(0).toUpperCase() + args.slice(1).join(' ').slice(1).toLowerCase()
   const date = datetime.parse(birthd, 'MMM D YYYY')

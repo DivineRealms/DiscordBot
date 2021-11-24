@@ -35,10 +35,9 @@ module.exports.run = async(client, message, args) => {   const settings = client
     .setStyle('LINK')
   );
 
-  message.channel.send({ embeds: [client.embedBuilder(client, message, "Ticket Created", `Ticket have been successfully created in channel ${channel}.`)], components: [jumpRow] });
+  message.channel.send({ embeds: [client.embedBuilder(client, message, "Ticket Created", `Ticket has been successfully created in channel ${channel}.`)], components: [jumpRow] });
 
-  channel.send({ embeds: [client.embedBuilder(client, message, settings.Ticket_Title, client.resolveMember(settings.Ticket_Message, message.author))
-  ]})
+  channel.send({ embeds: [client.embedBuilder(client, message, settings.Ticket_Title, client.resolveMember(settings.Ticket_Message, message.author))]})
 
   if (log) log.send({ embeds: [client.embedBuilder(client, message, 'Ticket Created', `**Creator:** ${message.author}`)]});
   

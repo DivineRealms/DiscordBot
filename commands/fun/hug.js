@@ -14,7 +14,7 @@ module.exports.run = async(client, message, args) => {
   const gifs = client.users.fetch(args[0]).catch(() => {});
 
   if (!gifs) {
-    return message.channel.send({ embeds: [new client.embed().setDescription(`You need to mention who you would like to hug!`).setFooter(message.author.username, message.author.displayAvatarURL({ dynamic: true, size: 1024 }))]})
+    return message.channel.send({ embeds: [new client.embedBuilder(client, message, "Error", `You need to mention who you would like to hug!`, "RED")]})
   } else {
     let gifs = [
       "https://media.giphy.com/media/bbxTrFmeoM7aU/giphy.gif",
@@ -38,7 +38,7 @@ module.exports.run = async(client, message, args) => {
 
     if (mentionedMember.user.id === message.author.id) return message.channel.send({ embeds: [client.embedBuilder(client, message, "Error", "You cannot hug yourself.", "RED")] });
 
-    var embed = client.embedBuilder(client, message, "Hug!", randomResponse).setImage(randomGif)
+    var embed = client.embedBuilder(client, message, randomResponse, "").setImage(randomGif)
     message.channel.send({ embeds: [embed] })
   }
 }

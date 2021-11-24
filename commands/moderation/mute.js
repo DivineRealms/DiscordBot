@@ -21,11 +21,11 @@ module.exports.run = async(client, message, args) => {
   if (!member) return message.channel.send({ embeds: [client.embedBuilder(client, message, "Error", "You need to enter valid user.", "RED")] });
   if (!time) return message.channel.send({ embeds: [client.embedBuilder(client, message, "Error", "You need to enter duration.", "RED")] });
   if (!muterole) return  message.channel.send({ embeds: [client.embedBuilder(client, message, "Error", "I can't find Mute Role.", "RED")] });
-  if (member.id === message.author.id) return message.channel.send({ embeds: [new client.embed().setDescription('Stop being a dumbass... You can\'t mute yourself.').setFooter(message.author.username, message.author.displayAvatarURL({ dynamic: true, size: 1024 }))]})
-  if (member.user.bot) return message.channel.send({ embeds: [new client.embed().setDescription('You can\'t mute a bot!').setFooter(message.author.username, message.author.displayAvatarURL({ dynamic: true, size: 1024 }))]})
-  if (member.roles.highest.position >= message.member.roles.highest.position) return message.channel.send({ embeds: [new client.embed().setDescription('You can only mute members that have a lower role than you.').setFooter(message.author.username, message.author.displayAvatarURL({ dynamic: true, size: 1024 }))]})
-  if (member.permissions.has('ADMINISTRATOR') || member.roles.highest.position >= message.guild.me.roles.highest.position) return message.channel.send({ embeds: [new client.embed().setDescription('I cant mute that member').setFooter(message.author.username, message.author.displayAvatarURL({ dynamic: true, size: 1024 }))]})
-  if (member.roles.cache.has(muterole.id)) return message.channel.send({ embeds: [new client.embed().setDescription('That member is already muted!').setFooter(message.author.username, message.author.displayAvatarURL({ dynamic: true, size: 1024 }))]})
+  if (member.id === message.author.id) return message.channel.send({ embeds: [client.embedBuilder(client, message, "Error", "Stop being a dumbass... You can\'t mute yourself.", "RED")]})
+  if (member.user.bot) return message.channel.send({ embeds: [client.embedBuilder(client, message, "Error", "You can\'t mute a bot!", "RED")]})
+  if (member.roles.highest.position >= message.member.roles.highest.position) return message.channel.send({ embeds: [client.embedBuilder(client, message, "Error", "You can only mute members that have a lower role than you.", "RED")]})
+  if (member.permissions.has('ADMINISTRATOR') || member.roles.highest.position >= message.guild.me.roles.highest.position) return message.channel.send({ embeds: [client.embedBuilder(client, message, "Error", "I cant mute that member", "RED")]})
+  if (member.roles.cache.has(muterole.id)) return message.channel.send({ embeds: [client.embedBuilder(client, message, "Error", "That member is already muted!", "RED")]})
 
   db.set(`muteInfo_${message.guild.id}_${member.id}`, {
     time: ms(time),

@@ -21,5 +21,5 @@ module.exports.run = async(client, message, args) => {
     return  message.channel.send({ embeds: [client.embedBuilder(client, message, "Error", "This User has theirs DMs Closed.", "RED")] });
   });
 
-  message.channel.send({ embeds: [client.embedBuilder(client, message, "DM", `DM have been successfully sent to ${user.username}`)] });
+  message.channel.send({ embeds: [client.embedBuilder(client, message, "DM", `DM has successfully been sent to ${user.username}`)] });
 }

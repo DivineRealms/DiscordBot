@@ -21,7 +21,7 @@ module.exports.run = async(client, message, args, cmd) => {
   if ([null, Infinity].includes(time)) return message.channel.send('To create a poll, enter a valid time. For example: `1d`')
 
   await message.delete()
-  const embed = client.embedBuilder(client, message, question, `Poll Created By ${message.author.tag}`)
+  const embed = client.embedBuilder(client, message, question, `Poll Created By ${message.author.tag}`, "")
     .setDescription(`${question}\n\n**__TIME REMAINING__** ${client.utils.formatTime(time, { conjunction: " and ", serialComma: false, round: true })}`)
 
   for (let i = 0; i < options.length && i < 10; i++) embed.addField('\u200b', `${emoji[i]} ${options[i]}`)

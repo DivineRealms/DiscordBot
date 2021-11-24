@@ -14,7 +14,7 @@ module.exports.run = async(client, message, args) => {
   if (args[0] < 1) return message.channel.send({ embeds: [client.embedBuilder(client, message, "Error", "You need to delete at least 1 message.", "RED")] });
 
   message.channel.bulkDelete(args[0], true).then(messages => {
-    message.channel.send({ embeds: [client.embedBuilder(client, message, "Purge", `${message.author} have purged ${args[0]} messages from channel.`)] });
+    message.channel.send({ embeds: [client.embedBuilder(client, message, "Purge", `${message.author} has purged ${args[0]} messages from channel.`)] });
   }).catch(() =>
     message.channel.send({ embeds: [client.embedBuilder(client, message, "Error", "Cannot remove messages older than 14 days.", "RED")] })
   )
