@@ -51,7 +51,7 @@ module.exports.config = {
         Bypass_Spam_Channels: ['529065596449456128', '912855458795094057', '536227607805558785'],
         Allowed_Domains: ['youtube'],
         Bypass_Spam_Roles: ['747258761466609714', '734736802384052264', '536227607805558785'],
-        Bypass_Cooldown: ['747258761466609714', '734736802384052264', '536227607805558785'],
+        Bypass_Cooldown: ['747258761466609714', '734736802384052264'],
 
 	// - - - COMMAND CHANNEL - - - - 
 	Command_Channel: ['697830798002225162', '529065596449456128', '912855458795094057'],
@@ -157,7 +157,7 @@ module.exports.config = {
         Channel_Updates: '512277268597309440',
         Message_Updates: '512277268597309440',
 	Bot_Errors: "512277268597309440",
-	Bump_Channel: "512277268597309440"
+	Bump_Channel: "912855458795094057"
     },
     starBoard: {
         Enabled: false,
@@ -192,11 +192,11 @@ module.exports.config = {
         welcomeChannel: '512274978754920463',
         welcomeType: 'embed', //select from these 4 options -> message, embed, dm or card!
         welcomeCardBackGroundURL: 'https://minecraft-mp.com/images/banners/banner-295045-1636327342.png',
-        welcomeMessage: 'Welcome {member} to the server, You are our {joinPosition} member!',
+        welcomeMessage: 'Welcome {member} to the server.\nTotal members: {joinPosition}.',
         welcomeDM: 'Welcome {member} to the server! You are our {joinPosition} member!',
         welcomeEmbed: {
-            title: '{username} has just joined the server!',
-            description: 'Welcome {member} to the server, You are our {joinPosition} member!',
+            title: '{username} has just joined the server',
+            description: 'Total members: `{joinPosition}`\nServer address: `mc.divinerealms.ga`',
             color: '#7ec0ff'
         }
     },
@@ -265,15 +265,15 @@ module.exports.config = {
 	}]
     },
     goodbyeSystem: {
-        enabled: false,
-        goodbyeChannel: 'CHANNELID',
+        enabled: true,
+        goodbyeChannel: '512277268597309440',
         goodbyeType: 'embed', //select from these 4 options -> message, embed, card!
         goodbyeCardBackGroundURL: 'BACKGROUNDURL',
         goodbyeMessage: '{member} just left the server, hope you enjoyed your stay!',
         goodbyeDM: '{member} were sad to see you go! We hope to see you soon.',
         goodbyeEmbed: {
-            title: '{username} left!',
-            description: '{member} just left the server, hope you enjoyed your stay!',
+            title: '{username} left',
+            description: '',
             color: '#ee6e84'
         }
     }

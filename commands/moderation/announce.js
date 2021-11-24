@@ -45,7 +45,8 @@ module.exports.run = async(client, message, args) => {
     message.channel.send({ embeds: [client.embedBuilder(client, message, "Error", "Invalid announcement.\nSelect one of the following: `update, announcement, maintenance`.", "RED")] });
     return;
   }
-
+  
+  message.delete();
   message.channel.send({ embeds: [embed] });
 
   if (mention == "yes") {
