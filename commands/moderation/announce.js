@@ -46,6 +46,7 @@ module.exports.run = async(client, message, args) => {
     return;
   }
 
+  message.delete();
   message.channel.send({ embeds: [embed] });
 
   if (mention == "yes") {
