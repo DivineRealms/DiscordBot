@@ -31,6 +31,7 @@ module.exports.run = async(client, message, args) => {
     if(colors.includes(item.name.toLowerCase())) return message.channel.send({ embeds: [client.embedBuilder(client, message, "Error", `You already have that name color.`, "RED")] });
 
     db.push(`colors_${message.guild.id}_${message.author.id}`, item.name.toLowerCase());
+    db.subtract(`money_${message.guild.id}_${message.author.id}`, item.price);
     message.channel.send({ embeds: [client.embedBuilder(client, message, "Color Purchased", `You have successfully purchased name color **${item.name}** for $${item.price}.`)] });
   }
 }
