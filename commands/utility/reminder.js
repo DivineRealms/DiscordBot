@@ -21,6 +21,6 @@ module.exports.run = async(client, message, args) => {
   message.channel.send({ embeds: [client.embedBuilder(client, message, "Reminder", `I'll remind you for \`${reason.join(' ')}\` in ${client.utils.formatTime(parse(end))}.`)] })
 
   setTimeout(() => {
-    message.channel.send({ content: `${message.author}`, embeds: [embed] }).catch(() => {})
+    message.reply({ embeds: [embed] }).catch(() => {})
   }, parse(end))
 }

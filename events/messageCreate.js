@@ -24,13 +24,13 @@ module.exports = async(client, message) => {
 
           setTimeout(() => {
             let bumpAgain = client.embedBuilder(client, message, "Server Bump", "Server can be bumped again, use `!d bump`")
-            bumpChannel.send({ embeds: [bumpAgain] });
+            bumpChannel.send({ content: bumpUser, embeds: [bumpAgain] });
             db.delete(`serverBump_${client.conf.settings.guildID}`);
           }, timeout); 
 
-          const bump = client.embedBuilder(client, message, "Server Bumped", `Hey ${bumpUser}, thank you for bump.`)
+          const bump = client.embedBuilder(client, message, "Server Bumped", "Thank you for bumping.")
               
-          message.channel.send({ embeds: [bump] });
+          message.reply({ embeds: [bump] });
         });
       }
     }
