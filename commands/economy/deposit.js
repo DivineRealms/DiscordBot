@@ -18,8 +18,8 @@ module.exports.run = async(client, message, args) => {
 
   if (args[0] === 'all') {
     message.channel.send({ embeds: [client.embedBuilder(client, message, "Deposit", `You have deposited $${balance} to bank.`) ]})
-    db.subtract(`money_${message.guild.id}_${message.author.id}`, Number(args[0]));
-    db.add(`bank_${message.guild.id}_${message.author.id}`, Number(args[0])); 
+    db.subtract(`money_${message.guild.id}_${message.author.id}`, Number(bal));
+    db.add(`bank_${message.guild.id}_${message.author.id}`, Number(bal)); 
     return;
   }
 
