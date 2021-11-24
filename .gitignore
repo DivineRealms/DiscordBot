@@ -106,3 +106,6 @@ json.sqlite
 data/enmap.sqlite-wal
 data/enmap.sqlite-shm
 data/enmap.sqlite
+
+# Config
+settings/config.js
