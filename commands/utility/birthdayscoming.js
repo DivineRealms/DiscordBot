@@ -8,7 +8,7 @@ module.exports = {
   permissions: [],
   cooldown: 0,
   aliases: [`bdaylist`],
-  usage: 'birthdydayscoming'
+  usage: 'birthdayscoming'
 }
 
 module.exports.run = async(client, message, args) => {
