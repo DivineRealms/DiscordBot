@@ -16,7 +16,7 @@ module.exports.run = async(client, message, args) => {
   if (!args[0] || isNaN(parse(end))) return message.channel.send({ embeds: [client.embedBuilder(client, message, "Error", "You need to provide time.", "RED")] });
   if (!reason[0]) return message.channel.send({ embeds: [client.embedBuilder(client, message, "Error", "You need to enter reminder reason.", "RED")] });
 
-  const embed = client.embedBuilder(client, message, "Reminder!", `${reason.join(' ')}`)
+  const embed = client.embedBuilder(client, message, "Reminder", `${reason.join(' ')}`)
 
   message.channel.send({ embeds: [client.embedBuilder(client, message, "Reminder", `I'll remind you for \`${reason.join(' ')}\` in ${client.utils.formatTime(parse(end))}.`)] })
 
