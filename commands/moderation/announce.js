@@ -33,19 +33,23 @@ module.exports.run = async(client, message, args) => {
     if (!description2) return message.channel.send({ embeds: [client.embedBuilder(client, message, "Error", "You need to provide the third description.", "RED")] });
   }
 
-  if (type == "update") {
+  let up_aliases = ['update', 'up', '0']
+  let an_aliases = ['announcement', 'announce', 'an', '1']
+  let mn_aliases = ['maintenance', 'main', '2']
+
+  if (up_aliases.includes(type)) {
     embed.setColor("#7edd8a");
-  } else if (type == "announcement") {
+  } else if (an_aliases.includes(type)) {
     embed;
-  } else if (type == "maintenance") {
+  } else if (mn_aliases.includes(type)) {
     embed.setColor("#ffae63");
   } else {
     message.channel.send({ embeds: [client.embedBuilder(client, message, "Error", "Invalid announcement.\nSelect one of the following: `update, announcement, maintenance`.", "RED")] });
     return;
   }
 
-  let msg = await message.channel.send({ embeds: [embed] });
-  
+  message.channel.send({ embeds: [embed] });
+
   if (mention == "yes") {
     message.channel.send(`@everyone`).then((msg) => setTimeout(() => msg.delete(), 2000));
   } else return;

@@ -70,7 +70,7 @@ module.exports = async(client, message) => {
       userPerms.push(perm);
     }
     });
-    if(userPerms.length > 0) return message.channel.send({ embeds: [lient.embedBuilder(client, message, "Error", `You don't have Permission to use this command`, "RED")] }).then(m => setTimeout(() => m.delete(), 7000));
+    if(userPerms.length > 0) return message.channel.send({ embeds: [client.embedBuilder(client, message, "Error", `You don't have Permission to use this command`, "RED")] }).then(m => setTimeout(() => m.delete(), 7000));
     let findCooldown = cooldownList.find((c) => c.name == command && c.id == message.author.id);
     if(!client.conf.automod.Bypass_Cooldown.some((r) => message.member.roles.cache.has(r))) {
       if(findCooldown) {
