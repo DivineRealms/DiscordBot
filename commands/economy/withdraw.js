@@ -23,7 +23,7 @@ module.exports.run = async(client, message, args) => {
       db.add(`money_${message.guild.id}_${message.author.id}`, Number(bank));
       return;
     }
-    if (args[0] > balance) return message.channel.send({ embeds: [client.embedBuilder(client, message, "Error", "You cannot withdraw that much.", "RED")] });
+    if (args[0] > bank) return message.channel.send({ embeds: [client.embedBuilder(client, message, "Error", "You cannot withdraw that much.", "RED")] });
     if (args[0] < 1) return message.channel.send({ embeds: [client.embedBuilder(client, message, "Error", "You cannot withdraw less than $1.", "RED")] });
 
     message.channel.send({ embeds: [client.embedBuilder(client, message, "Withdraw", `You have withdrawn $${Number(args[0])} from bank.`)] });
