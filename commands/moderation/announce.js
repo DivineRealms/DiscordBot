@@ -9,8 +9,6 @@ module.exports = {
 }
 
 module.exports.run = async(client, message, args) => {
-  const user = message.mentions.users.first() || client.users.cache.get(args[0]) || message.author
-
   let [type, mention, title, description, size, title1, description1, title2, description2] = args.join(' ').split(/\s*\|\s*/)
 
   if (!type) return message.channel.send({ embeds: [client.embedBuilder(client, message, "Error", "You need to provide a type.", "RED")] });
@@ -19,7 +17,7 @@ module.exports.run = async(client, message, args) => {
   if (!description) return message.channel.send({ embeds: [client.embedBuilder(client, message, "Error", "You need to provide the description.", "RED")] });
   if (!size) return message.channel.send({ embeds: [client.embedBuilder(client, message, "Error", "You need to provide the field amounts.", "RED")] });
 
-  let embed = client.embedBuilder(client, message, title, description.replace(/%n/g, "\n")).setFooter(`Sent by ${user.tag}`, user.displayAvatarURL({size: 1024, dynamic: true}));
+  let embed = client.embedBuilder(client, message, title, description.replace(/%n/g, "\n")).setFooter(`Sent by ${message.author.tag}`, message.author.displayAvatarURL({size: 1024, dynamic: true}));
 
   if (size == "0") { 
     embed;
