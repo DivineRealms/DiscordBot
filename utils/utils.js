@@ -30,7 +30,7 @@ function commandsList(client, message, category) {
 const logs = (client, guild, type, fields, user) => {
   const aChannel = client.channels.cache.get(client.conf.logging.Moderation_Channel_Logs)
   
-  let embed = client.embedBuilder(client, message, user.username, `Logging Type - \`${type}\``)
+  let embed = client.embedBuilder(client, "", user.username, `Logging Type - \`${type}\``)
     
   for(var i = 0; i < fields.length; i++) {
     embed.addField(fields[i].name + "", fields[i].desc + "");

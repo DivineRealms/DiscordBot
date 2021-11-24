@@ -18,7 +18,7 @@ module.exports.automod = async(client, message) => {
   if (message.mentions.users.first() && client.afk.has(message.mentions.users.first().id)) {
     const user = message.mentions.users.first()
 
-    const embed5 = client.embedBuilder(client, message,
+    const embed5 = client.embedBuilder(client, "",
       `${user.username} is currently afk`, user.displayAvatarURL({ dynamic: true }),
       `**Reason:** ${client.afk.get(user.id).message}, went AFK ${ms(Date.now() - client.afk.get(user.id).time, { long: true })} ago`)
 

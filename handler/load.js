@@ -36,59 +36,59 @@ module.exports = async client => {
   
   var date = new Date();
   
-  process.on('unhandledRejection', error => {
-    let ignoreErrors = [
-    `DiscordAPIError: Unknown Message`,
-    `DiscordAPIError: Missing Permissions`,
-    `DiscordAPIError: Missing Access`,
-    `DiscordAPIError: Unknown Channel`,
-    `DiscordAPIError: Cannot send messages to this user`,
-    "DiscordAPIError: Cannot execute action on a DM channel"
-    ];
-    let list = [];
-    for (const ignore of ignoreErrors) {
-    if (error.stack.includes(ignore)) list.push(true);
-    };
-    if (list.length !== 0) return null;
-    let errEmbed = new MessageEmbed()
-      .setTitle("Error Occurred")
-      .setDescription(`\`(${error.name})\`
-\`(${moment.utc().tz('Europe/Belgrade').format('HH:mm:ss, DD/MM/YYYY.')})\`
+  //process.on('unhandledRejection', error => {
+  //  let ignoreErrors = [
+  //  `DiscordAPIError: Unknown Message`,
+  //  `DiscordAPIError: Missing Permissions`,
+  //  `DiscordAPIError: Missing Access`,
+  //  `DiscordAPIError: Unknown Channel`,
+  //  `DiscordAPIError: Cannot send messages to this user`,
+  //  "DiscordAPIError: Cannot execute action on a DM channel"
+  //  ];
+  //  let list = [];
+  //  for (const ignore of ignoreErrors) {
+  //  if (error.stack.includes(ignore)) list.push(true);
+  //  };
+  //  if (list.length !== 0) return null;
+  //  let errEmbed = new MessageEmbed()
+  //    .setTitle("Error Occurred")
+  //    .setDescription(`\`(${error.name})\`
+//\`(${moment.utc().tz('Europe/Belgrade').format('HH:mm:ss, DD/MM/YYYY.')})\`
+//  
+//\`\`\`xl\n${error.stack}\n\`\`\``)
+  //    .setColor("RED");
+  //  
+  //  let log = client.channels.cache.get(client.conf.logging.Bot_Errors)
+  //  
+  //  if(log) log.send({ embeds: [errEmbed] })
+  //});
   
-\`\`\`xl\n${error.stack}\n\`\`\``)
-      .setColor("RED");
-    
-    let log = client.channels.cache.get(client.conf.logging.Bot_Errors)
-    
-    if(log) log.send({ embeds: [errEmbed] })
-  });
-  
-  process.on('uncaughtException', error => {
-    let ignoreErrors = [
-    `DiscordAPIError: Unknown Message`,
-    `DiscordAPIError: Missing Permissions`,
-    `DiscordAPIError: Missing Access`,
-    `DiscordAPIError: Unknown Channel`,
-    `DiscordAPIError: Cannot send messages to this user`,
-    "DiscordAPIError: Cannot execute action on a DM channel"
-    ];
-    let list = [];
-    for (const ignore of ignoreErrors) {
-    if (error.stack.includes(ignore)) list.push(true);
-    };
-    if (list.length !== 0) return null;
-    let errEmbed = new MessageEmbed()
-      .setTitle("Error Occurred")
-      .setDescription(`\`(${error.name})\`
-\`(${moment.utc().tz('Europe/Belgrade').format('HH:mm:ss, DD/MM/YYYY.')})\`
-  
-\`\`\`xl\n${error.stack}\n\`\`\``)
-      .setColor("RED");
-    
-    let log = client.channels.cache.get(client.conf.logging.Bot_Errors)
-    
-    if(log) log.send({ embeds: [errEmbed] })
-  });
+  //process.on('uncaughtException', error => {
+  //  let ignoreErrors = [
+  //  `DiscordAPIError: Unknown Message`,
+  //  `DiscordAPIError: Missing Permissions`,
+  //  `DiscordAPIError: Missing Access`,
+  //  `DiscordAPIError: Unknown Channel`,
+  //  `DiscordAPIError: Cannot send messages to this user`,
+  //  "DiscordAPIError: Cannot execute action on a DM channel"
+  //  ];
+  //  let list = [];
+  //  for (const ignore of ignoreErrors) {
+  //  if (error.stack.includes(ignore)) list.push(true);
+  //  };
+  //  if (list.length !== 0) return null;
+  //  let errEmbed = new MessageEmbed()
+  //    .setTitle("Error Occurred")
+  //    .setDescription(`\`(${error.name})\`
+//\`(${moment.utc().tz('Europe/Belgrade').format('HH:mm:ss, DD/MM/YYYY.')})\`
+//  
+//\`\`\`xl\n${error.stack}\n\`\`\``)
+  //    .setColor("RED");
+  //  
+  //  let log = client.channels.cache.get(client.conf.logging.Bot_Errors)
+  //  
+  //  if(log) log.send({ embeds: [errEmbed] })
+  //});
 
   for (const d of readdirSync('./commands/')) {
     client.categories.set(d, readdirSync(`./commands/${d}`).map(s => s.split('.')[0]))

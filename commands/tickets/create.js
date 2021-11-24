@@ -42,5 +42,5 @@ module.exports.run = async(client, message, args) => {   const settings = client
 
   if (log) log.send({ embeds: [client.embedBuilder(client, message, 'Ticket Created', `**Creator:** ${message.author}`)]});
   
-  db.set(`tickets_${message.guild.id}_${message.channel.id}`, message.author.id);
+  db.set(`tickets_${message.guild.id}_${channel.id}`, message.author.id);
 }
