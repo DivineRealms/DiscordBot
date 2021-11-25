@@ -83,7 +83,7 @@ module.exports = async client => {
         .setLabel("Vote")
         .setStyle('LINK')
       );
-    if(generalCh) generalCh.send({ embeds: [client.embedBuilder(client, "", "Minecraft-MP", "Click the button bellow to vote for our server and help us climb the leaderboard.")], components: [voteRow] });
+    if(generalCh) generalCh.send({ embeds: [client.embedBuilder(client, "", "Minecraft-MP", "Click the button below to vote for our server and help us climb the leaderboard.")], components: [voteRow] });
   }, {
   	  timezone: "Europe/Belgrade"
   });
