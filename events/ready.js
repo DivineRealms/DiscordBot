@@ -1,4 +1,5 @@
 const muteChecks = require("../utils/muteChecks.js");
+const { MessageActionRow, MessageButton } = require('discord.js')
 const cron = require('cron');
 const db = require('quick.db')
 const bumpReminder = require("../utils/bumpRemind.js")
@@ -72,6 +73,22 @@ module.exports = async client => {
   bdayCron.start();
   
   bumpReminder.bump(client);
+  
+  let voteCron = new cron.CronJob('0 0 1,5,11,20 * * *', () => {
+    let generalCh = client.channels.cache.get("512274978754920463");
+    const voteRow = new MessageActionRow()
+      .addComponents(
+        new MessageButton()
+        .setURL(`https://minecraft-mp.com/server/295045/vote/`)
+        .setLabel("Glasaj")
+        .setStyle('LINK')
+      );
+    if(generalCh) generalCh.send({ content: `> Glasajte za naš server svakog dana! Koristite Button da dobijete link za glasanje.`, components: [voteRow] });
+  }, {
+  	  timezone: "Europe/Belgrade"
+  });
+  
+  voteCron.start(); 
 
   while (guild) {
     counter()
