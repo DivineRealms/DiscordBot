@@ -14,7 +14,7 @@ module.exports.run = async(client, message, args) => {
   const gifs = client.users.fetch(args[0]).catch(() => {});
 
   if (!gifs) {
-    return message.channel.send({ embeds: [new client.embedBuilder(client, message, "Error", `You need to mention who you would like to hug!`, "RED")]})
+    return message.channel.send({ embeds: [client.embedBuilder(client, message, "Error", `You need to mention who you would like to hug!`, "RED")]})
   } else {
     let gifs = [
       "https://media.giphy.com/media/bbxTrFmeoM7aU/giphy.gif",

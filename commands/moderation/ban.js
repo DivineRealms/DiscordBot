@@ -9,7 +9,7 @@ module.exports = {
 }
 
 module.exports.run = async(client, message, args) => {
-  if (!message.guild.me.permissions.has("BAN_MEMBERS")) return message.channel.send({ embeds: [new client.embed().setDescription(`Sorry, I am missing my required permissions perhaps try moving my role up!`).setFooter(message.author.username, message.author.displayAvatarURL({ dynamic: true, size: 1024 }))]})
+  if (!message.guild.me.permissions.has("BAN_MEMBERS")) return message.channel.send({ embeds: [client.embedBuilder(client, message, "Error", `Sorry, I am missing my required permissions perhaps try moving my role up!`)]})
 
   const member = message.mentions.members.first() || message.guild.members.cache.get(args[0])
 
