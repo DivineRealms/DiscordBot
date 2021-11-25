@@ -11,9 +11,7 @@ module.exports = {
 module.exports.run = async(client, message, args) => {
   const mentionedMember = message.mentions.members.first()
 
-  const gifs = client.users.fetch(args[0]).catch(() => {});
-
-  if (!gifs) {
+  if (!args[0]) {
     return message.channel.send({ embeds: [client.embedBuilder(client, message, "Error", `You need to mention who you would like to hug!`, "RED")]})
   } else {
     let gifs = [
@@ -23,22 +21,12 @@ module.exports.run = async(client, message, args) => {
       "https://media.giphy.com/media/1o1ik0za0oj0461zPR/giphy.gif",
     ]
 
-    let reponses = [
-      `${message.author.username} just hugged ${mentionedMember.user.username}!`
-    ]
-
     const randomNumber = Math.floor(Math.random() * gifs.length)
     const randomGif = gifs[randomNumber]
 
-    const randomNumber2 = Math.floor(Math.random() * reponses.length)
-    const randomResponse = reponses[randomNumber2]
-
-    // za sta je sad ovo isuse izbacuje error da nije defined a nzm za sta je
-    //const randomNumber3 = Math.floor(Math.random() * botMessgaes.length)
-
     if (mentionedMember.user.id === message.author.id) return message.channel.send({ embeds: [client.embedBuilder(client, message, "Error", "You cannot hug yourself.", "RED")] });
 
-    var embed = client.embedBuilder(client, message, randomResponse, "").setImage(randomGif)
+    var embed = client.embedBuilder(client, message, `${message.author.username} just hugged ${mentionedMember.user.username}!`, "").setImage(randomGif)
     message.channel.send({ embeds: [embed] })
   }
 }
