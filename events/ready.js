@@ -80,10 +80,10 @@ module.exports = async client => {
       .addComponents(
         new MessageButton()
         .setURL(`https://minecraft-mp.com/server/295045/vote/`)
-        .setLabel("Glasaj")
+        .setLabel("Vote")
         .setStyle('LINK')
       );
-    if(generalCh) generalCh.send({ content: `> Glasajte za naš server svakog dana! Koristite Button da dobijete link za glasanje.`, components: [voteRow] });
+    if(generalCh) generalCh.send({ embeds: [client.embedBuilder(client, "", "Minecraft-MP", "Click the button bellow to vote for our server and help us climb the leaderboard.")], components: [voteRow] });
   }, {
   	  timezone: "Europe/Belgrade"
   });
