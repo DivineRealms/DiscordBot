@@ -43,7 +43,7 @@ module.exports.run = async(client, message, args) => {
   }
   
   baltop = baltop.sort((a, b) => b.balance - a.balance).map((x, i) => {
-    return `**#${i + 1}** ${client.users.cache.get(x.name) || "N/A"} - $${Number(balance)}`
+    return `**#${i + 1}** ${client.users.cache.get(x.name) || "N/A"} - $${Number(x.balance)}`
   });
   
   let ecoEmbed = client.embedBuilder(client, message, "Economy Leaderboard", baltop.join("\n"));
