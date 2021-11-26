@@ -72,7 +72,7 @@ module.exports = async client => {
   
   bumpReminder.bump(client);
   
-  let voteCron = new cron.CronJob('0 0 1,7,11,20 * * *', () => {
+  let voteCron = new cron.CronJob('0 0 10,20 * * *', () => {
     let generalCh = client.channels.cache.get("512274978754920463");
     const voteRow = new MessageActionRow()
       .addComponents(
