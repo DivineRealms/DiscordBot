@@ -67,5 +67,5 @@ module.exports.run = async(client, message, args) => {
     id: "leaderboard", 
     placeholder: "Select Leaderboard you want to see.", 
     options: data
-  });
+  }, true);
 }

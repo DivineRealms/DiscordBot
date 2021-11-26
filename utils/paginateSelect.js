@@ -1,6 +1,6 @@
 const { MessageActionRow, MessageSelectMenu } = require('discord.js');
 
-module.exports = async (client, message, home, data) => {
+module.exports = async (client, message, home, data, remove = false) => {
   let optionList = [];
   let options = data.options;
   
@@ -39,6 +39,7 @@ module.exports = async (client, message, home, data) => {
     }
   });
   collector.on("end", async(collected, reason) => {
+    if(remove == true) return m.delete();
     let disabledSel = new MessageSelectMenu()
       .setCustomId(data.id)
       .setDisabled(true)
