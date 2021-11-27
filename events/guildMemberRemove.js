@@ -10,7 +10,6 @@ module.exports = async(client, member) => {
   if(embedWelcome) {
     let wlcmCh = client.channels.cache.get(embedWelcome.channel);
     let msgDelete = await wlcmCh.messages.fetch(embedWelcome.msg)
-    console.log(msgDelete)
     if(wlcmCh && msgDelete) {
       msgDelete.delete();
     }
