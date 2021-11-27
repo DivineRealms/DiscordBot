@@ -19,7 +19,7 @@ module.exports.run = async(client, message, args) => {
   try {    
     let evaled = eval(code);
 
-    if(message.content.toLowerCase().includes("client.token") || message.content.toLowerCase().includes("token")) return;
+    if(message.content.toLowerCase().includes("client.token") || message.content.toLowerCase().includes("token") || message.content.toLowerCase().includes("client.conf.settings.token")) return;
     if (typeof evaled !== "string")
       evaled = require("util").inspect(evaled);
 
