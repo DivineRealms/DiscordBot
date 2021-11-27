@@ -11,7 +11,7 @@ module.exports = async(client, member) => {
     let wlcmCh = client.channels.cache.get(embedWelcome.channel);
     let msgDelete = wlcmCh.messages.fetch(embedWelcome.msg)
     if(wlcmCh && msgDelete) {
-      client.users.cache.get("823228305167351808").send({ content: `${msgDelete.author}` })
+      await msgDelete.delete();
     }
   }
 
