@@ -9,9 +9,10 @@ module.exports = async(client, member) => {
   let embedWelcome = db.fetch(`wlcmEmbed_${member.guild.id}_${member.id}`);
   if(embedWelcome) {
     let wlcmCh = client.channels.cache.get(embedWelcome.channel);
-    let msgDelete = wlcmCh.messages.fetch(embedWelcome.msg)
+    let msgDelete = await wlcmCh.messages.fetch(embedWelcome.msg)
+    console.log(msgDelete)
     if(wlcmCh && msgDelete) {
-      await msgDelete.delete();
+      msgDelete.delete();
     }
   }
 
