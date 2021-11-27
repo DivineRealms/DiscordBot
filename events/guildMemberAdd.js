@@ -1,5 +1,6 @@
 const { MessageAttachment } = require("discord.js");
 const Canvas = require("discord-canvas")
+const db = require("quick.db")
 const muteChecks = require('../utils/muteChecks.js')
 
 module.exports = async(client, member) => {
@@ -33,15 +34,15 @@ module.exports = async(client, member) => {
       .toAttachment()
 
     const attachment = new MessageAttachment(img.toBuffer(), "welcome-image.png");
-    if(log) log.send({ files: [attachment] });
+    if(log) log.send({ files: [attachment] }).then((msg) => db.set(`wlcmEmbed_${member.guild.id}_${member.id}`, { msg: msg.id, channel: msg.channel.id, }));
   } else if (settings.welcomeType == 'embed') {
     const embed = client.embedBuilder(client, "",
-      settings.welcomeEmbed.title.replace('{username}', member.user.username),
-      settings.welcomeEmbed.description.replace('{member}', member).replace('{joinPosition}', `${member.guild.memberCount}`))
+    settings.welcomeEmbed.title.replace('{username}', member.user.username),
+    settings.welcomeEmbed.description.replace('{member}', member).replace('{joinPosition}', `${member.guild.memberCount}`))
 
-    if(log) log.send({ embeds: [embed] })
+    if(log) log.send({ embeds: [embed] }).then((msg) => db.set(`wlcmEmbed_${member.guild.id}_${member.id}`, { msg: msg.id, channel: msg.channel.id, }))
   } else if (settings.welcomeType == 'message') {
-    if(log) log.send(settings.welcomeMessage.replace('{member}', member).replace('{joinPosition}', `${member.guild.memberCount}`))
+    if(log) log.send(settings.welcomeMessage.replace('{member}', member).replace('{joinPosition}', `${member.guild.memberCount}`)).then((msg) => db.set(`wlcmEmbed_${member.guild.id}_${member.id}`, { msg: msg.id, channel: msg.channel.id, }))
   } else if (settings.welcomeType == 'dm') {
     member.user.send(settings.welcomeDM.replace('{member}', member).replace('{joinPosition}', `${member.guild.memberCount}`)).catch(() => {})
   }
