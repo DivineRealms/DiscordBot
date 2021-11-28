@@ -16,7 +16,7 @@ module.exports.run = async(client, message, args) => {
   if (!args[0]) return message.channel.send({ embeds: [client.embedBuilder(client, message, "Error", "You need to mention user.", "RED")] });
   if (!member) return message.channel.send({ embeds: [client.embedBuilder(client, message, "Error", "Couldn't find that user.", "RED")] });
   if (member.id === message.author.id) return message.channel.send({ embeds: [client.embedBuilder(client, message, "Error", "You cannot ban yourself.", "RED")] });
-  if (member.bannable) return message.channel.send({ embeds: [client.embedBuilder(client, message, "Error", "I can't ban that user.", "RED")] });
+  if (!member.bannable) return message.channel.send({ embeds: [client.embedBuilder(client, message, "Error", "I can't ban that user.", "RED")] });
 
   const reason = args.slice(1).join(" ") || 'No Reason'
 
