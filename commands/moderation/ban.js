@@ -38,7 +38,6 @@ module.exports.run = async(client, message, args) => {
     message.guild.members.ban(member, { reason })
     await message.channel.send({ embeds: [embed] }) 
   } else if(!isNaN(args[0])) {
-    member = args[0]
     if (args[0] === message.author.id) return message.channel.send({ embeds: [client.embedBuilder(client, message, "Error", "You cannot ban yourself.", "RED")] });
   
     const reason = args.slice(1).join(" ") || 'No Reason'
@@ -59,7 +58,7 @@ module.exports.run = async(client, message, args) => {
       desc: "Permanent"
     }], message.author);
   
-    message.guild.members.ban(member, { reason })
+    message.guild.members.ban(args[0], { reason })
     await message.channel.send({ embeds: [embed] }) 
   } else {
     message.channel.send({ embeds: [client.embedBuilder(client, message, "Error", "You need to provide user.", "RED")] });
