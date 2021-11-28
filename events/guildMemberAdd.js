@@ -4,7 +4,6 @@ const db = require("quick.db")
 const muteChecks = require('../utils/muteChecks.js')
 
 module.exports = async(client, member) => {
-  client.members.ensure(member.guild.id, {})
   let guild = client.settings.ensure(member.guild.id, client.defaultSettings)
   if (guild.locked) {
     await member.send({ embeds: [client.embedBuilder(client, "", "Lockdown", 

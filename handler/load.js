@@ -19,11 +19,6 @@ module.exports = async client => {
     name: 'settings',
     ...settings
   })
-
-  client.members = new Enmap({
-    name: 'members',
-    ...settings
-  })
   
   const temporaryVC = require("../utils/temporaryVC.js");
   temporaryVC(client);

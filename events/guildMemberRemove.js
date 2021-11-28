@@ -3,7 +3,6 @@ const db = require("quick.db")
 const Canvas = require("discord-canvas")
 
 module.exports = async(client, member) => {
-  if (client.conf.leveling.remove_XP_on_Leave) client.members.set(member.guild.id, { level: 0, xp: 0, totalXP: 0 }, `${member.id}.xp`)
   const settings = client.conf.goodbyeSystem
   const log = client.channels.cache.get(settings.goodbyeChannel)
   let embedWelcome = db.fetch(`wlcmEmbed_${member.guild.id}_${member.id}`);

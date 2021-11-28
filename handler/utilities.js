@@ -3,8 +3,6 @@ const spam = new(require('enmap'))()
 const ms = require('ms')
 
 module.exports.automod = async(client, message) => {
-  client.members.ensure(message.guild.id, {})
-
   message.px = client.conf.settings.prefix
 
   const settings = client.conf.automod

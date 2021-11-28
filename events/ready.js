@@ -30,8 +30,7 @@ module.exports = async client => {
   }
 
   const guild = client.guilds.cache.get(client.conf.settings.GuildID)
-    client.members.ensure(guild.id, {})
-    client.settings.ensure(guild.id, client.defaultSettings)
+  client.settings.ensure(guild.id, client.defaultSettings)
 
   await muteChecks.checkMute(client, guild);
 
