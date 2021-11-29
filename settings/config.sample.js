@@ -31,47 +31,12 @@ module.exports.config = {
     }
   },
   automod: {
-    // - - - BANNED STUFF - - -
-    Banned_Words: [],
-    Banned_Links: ['discord.gg/'],
-    Banned_Emojis: [],
-    Banned_Attachments: [],
-    Banned_Words_Message: '{member}, Please dont use that language here.',
-    Banned_Links_Message: '{member}, Please dont post that link here.',
-    Banned_Emojis_Message: '{member}, Please dont post that emoji here.',
-    Banned_Attachments_Message: '{member}, Please dont post {attachment} attachments here.',
-
-    // - - - BYPASS PERMISSIONS - - -
-    Bypass_Links_Channels: ['747258761466609714', '734736802384052264', '536227607805558785'],
-    Bypass_Attachments_Roles: ['747258761466609714', '734736802384052264', '536227607805558785'],
-    Bypass_Words_Roles: ['747258761466609714', '734736802384052264', '536227607805558785'],
-    Bypass_Emojis_Roles: ['747258761466609714', '734736802384052264', '536227607805558785'],
-    Bypass_Links_Roles: ['747258761466609714', '734736802384052264', '536227607805558785'],
-    Bypass_Spam_Channels: ['529065596449456128', '912855458795094057', '536227607805558785'],
-    Allowed_Domains: ['youtube'],
-    Bypass_Spam_Roles: ['747258761466609714', '734736802384052264', '536227607805558785'],
+    // - - - COOLDOWN - - - 
     Bypass_Cooldown: ['747258761466609714', '734736802384052264', '536227607805558785'],
 
-	// - - - COMMAND CHANNEL - - - - 
-	Command_Channel: ['697830798002225162', '529065596449456128', '912855458795094057'],
-	Bypass_Command: ['747258761466609714', '734736802384052264', '536227607805558785'], 
-
-	// - - - SPAM PREVENTION - - - 
-    Enable_Spam: true,
-    Spam_Message: '{username}, you have been muted for spamming!',
-
-    // - - - CAPS SPAM - - -
-    Caps_Limit: '50%', //percentage of caps that users can type (leave blank to disable)
-    Caps_Minimum_Characters: '20', //how many characters in a message are needed to check for caps limit
-    Max_Caps_Message: '{member}, your message contained too many caps!',
-    Bypass_Caps_Roles: ['747258761466609714', '734736802384052264', '536227607805558785'], //has to be a role ik im dumb
-
-    // - - - MENTION SPAM - - -
-    Max_Role_Pings: 0, //max amount of times a user can ping a role in a single message
-    Max_User_Pings: 0, //set to 0 to disable
-    Max_Channel_Pings: 5, //any pings greater than this number will delete the message
-    Max_Total_Pings: 10, //max amount of any ping in a message allowed
-    Bypass_Pings: ['747258761466609714', '734736802384052264', '536227607805558785']
+	  // - - - COMMAND CHANNEL - - - - 
+  	Command_Channel: ['697830798002225162', '529065596449456128', '912855458795094057'],
+	  Bypass_Command: ['747258761466609714', '734736802384052264', '536227607805558785'], 
   },
   moderation: {
     Moderators: ['734736802384052264', '747258761466609714'], //roles that can use any moderation command
@@ -79,7 +44,6 @@ module.exports.config = {
     Mute_Role: '738142767326298183'
   },
   automation: {
-    Roles_On_Join: [],
     Member_Count_Channel: '586499141199200256',
     Member_Count_Message: '👥︲Members: {count}',
     Channel_Count_Channel: '',
@@ -102,7 +66,6 @@ module.exports.config = {
   },
   leveling: {
     enabled: true,
-    remove_XP_on_Leave: false,
     level_Up_Message: '{user} has just reached level {level}!',
     level_Up_Title: 'Level Up!',
     ignore_Xp_Channels: ['912855458795094057'], // ovde
@@ -140,23 +103,11 @@ module.exports.config = {
   },
   logging: {
     Report_Channel: '',
-    Ban_Channel_Logs: '512277268597309440',
-    Unban_Channel_Logs: '512277268597309440',
-    Kick_Channel_Logs: '512277268597309440',
-    Warn_Channel_Logs: '512277268597309440',
-    Mute_Channel_Logs: '512277268597309440',
-    Lock_Channel_Logs: '512277268597309440',
     Ticket_Channel_Logs: '512277268597309440',
-    Moderation_Channel_Logs: '512277268597309440',
     Suggestion_Channel_Logs: '512277268597309440',
     Report_Channel_Logs: '512277268597309440',
-    Server_Updates: '512277268597309440',
-    Voice_Updates: '512277268597309440',
-    Role_Updates: '512277268597309440',
-    Channel_Updates: '512277268597309440',
-    Message_Updates: '512277268597309440',
-	Bot_Errors: "512277268597309440",
-	Bump_Channel: "512277268597309440"
+	  Bot_Errors: "512277268597309440",
+	  Bump_Channel: "512277268597309440"
   },
   starBoard: {
     Enabled: false,

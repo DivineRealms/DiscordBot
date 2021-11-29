@@ -1,7 +1,6 @@
 const { MessageAttachment } = require("discord.js");
 const Canvas = require("discord-canvas")
 const db = require("quick.db")
-const muteChecks = require('../utils/muteChecks.js')
 
 module.exports = async(client, member) => {
   let guild = client.settings.ensure(member.guild.id, client.defaultSettings)
@@ -11,8 +10,6 @@ module.exports = async(client, member) => {
     member.kick().catch(() => {})
   }
 
-  member.roles.set(client.conf.automation.Roles_On_Join.slice(0, 5)).catch(() => {})
-  await muteChecks.checkMuteOnJoin(client, member, member.guild);
   const settings = client.conf.welcomeSystem
   const log = client.channels.cache.get(settings.welcomeChannel)
 

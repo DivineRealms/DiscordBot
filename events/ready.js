@@ -1,4 +1,3 @@
-const muteChecks = require("../utils/muteChecks.js");
 const { MessageActionRow, MessageButton } = require('discord.js')
 const cron = require('cron');
 const db = require('quick.db')
@@ -31,8 +30,6 @@ module.exports = async client => {
 
   const guild = client.guilds.cache.get(client.conf.settings.GuildID)
   client.settings.ensure(guild.id, client.defaultSettings)
-
-  await muteChecks.checkMute(client, guild);
 
   function counter() {
     const memberCount = client.channels.cache.get(client.conf.automation.Member_Count_Channel)
