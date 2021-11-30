@@ -238,11 +238,8 @@ module.exports.guildSettings = {
   prefix: this.config.settings.prefix,
   panels: [],
   counting: { current: 1, last: null },
-  dms: {},
-  vc: {},
   commands: {},
   suggestions: {},
-  lockdown: false,
   processing: {},
   completed: []
 }

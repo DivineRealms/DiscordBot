@@ -3,13 +3,6 @@ const Canvas = require("discord-canvas")
 const db = require("quick.db")
 
 module.exports = async(client, member) => {
-  let guild = client.settings.ensure(member.guild.id, client.defaultSettings)
-  if (guild.locked) {
-    await member.send({ embeds: [client.embedBuilder(client, "", "Lockdown", 
-      `${member.guild.name} is currently under a **SERVER-WIDE LOCKDOWN!** Please try joining back a little later!`)]})
-    member.kick().catch(() => {})
-  }
-
   const settings = client.conf.welcomeSystem
   const log = client.channels.cache.get(settings.welcomeChannel)
 
