@@ -30,13 +30,13 @@ module.exports.run = async(client, message, args) => {
     if (!title2) return message.channel.send({ embeds: [client.embedBuilder(client, message, "Error", "You need to provide a third title.", "RED")] });
     if (!description2) return message.channel.send({ embeds: [client.embedBuilder(client, message, "Error", "You need to provide the third description.", "RED")] });
   } else if (size == "3") {
-    embed.addField(title1, description1.replace(/%n/g, "\n"), false).addField(title2, description2.replace(/%n/g, "\n"), false).addField(title2, description2.replace(/%n/g, "\n"), false);
-    if (!title1) return message.channel.send({ embeds: [client.embedBuilder(client, message, "Error", "You need to provide the fourth title.", "RED")] });
-    if (!description1) return message.channel.send({ embeds: [client.embedBuilder(client, message, "Error", "You need to provide the fourth description.", "RED")] });
+    embed.addField(title1, description1.replace(/%n/g, "\n"), false).addField(title2, description2.replace(/%n/g, "\n"), false).addField(title3, description3.replace(/%n/g, "\n"), false);
+    if (!title3) return message.channel.send({ embeds: [client.embedBuilder(client, message, "Error", "You need to provide the fourth title.", "RED")] });
+    if (!description3) return message.channel.send({ embeds: [client.embedBuilder(client, message, "Error", "You need to provide the fourth description.", "RED")] });
   } else if (size == "4") {
     embed.addField(title1, description1.replace(/%n/g, "\n"), false).addField(title2, description2.replace(/%n/g, "\n"), false).addField(title3, description3.replace(/%n/g, "\n"), false).addField(title4, description4.replace(/%n/g, "\n"), false);
-    if (!title2) return message.channel.send({ embeds: [client.embedBuilder(client, message, "Error", "You need to provide the fifth title.", "RED")] });
-    if (!description2) return message.channel.send({ embeds: [client.embedBuilder(client, message, "Error", "You need to provide the fifth description.", "RED")] });
+    if (!title4) return message.channel.send({ embeds: [client.embedBuilder(client, message, "Error", "You need to provide the fifth title.", "RED")] });
+    if (!description4) return message.channel.send({ embeds: [client.embedBuilder(client, message, "Error", "You need to provide the fifth description.", "RED")] });
   }
 
   let up_aliases = ['update', 'up', '0']
