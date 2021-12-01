@@ -9,7 +9,7 @@ module.exports = {
 }
 
 module.exports.run = async(client, message, args) => {
-  let [type, mention, title, description, size, title1, description1, title2, description2] = args.join(' ').split(/\s*\|\s*/)
+  let [type, mention, title, description, size, title1, description1, title2, description2, title3, description3, title4, description4] = args.join(' ').split(/\s*\|\s*/)
 
   if (!type) return message.channel.send({ embeds: [client.embedBuilder(client, message, "Error", "You need to provide a type.", "RED")] });
   if (!mention) return message.channel.send({ embeds: [client.embedBuilder(client, message, "Error", "You need to select `yes` or `no` for the mention.", "RED")] });
@@ -29,7 +29,15 @@ module.exports.run = async(client, message, args) => {
     embed.addField(title1, description1.replace(/%n/g, "\n"), false).addField(title2, description2.replace(/%n/g, "\n"), false);
     if (!title2) return message.channel.send({ embeds: [client.embedBuilder(client, message, "Error", "You need to provide a third title.", "RED")] });
     if (!description2) return message.channel.send({ embeds: [client.embedBuilder(client, message, "Error", "You need to provide the third description.", "RED")] });
-  }
+  } else if (size == "3") {
+    embed.addField(title1, description1.replace(/%n/g, "\n"), false).addField(title2, description2.replace(/%n/g, "\n"), false).addField(title2, description2.replace(/%n/g, "\n"), false);
+    if (!title1) return message.channel.send({ embeds: [client.embedBuilder(client, message, "Error", "You need to provide the fourth title.", "RED")] });
+    if (!description1) return message.channel.send({ embeds: [client.embedBuilder(client, message, "Error", "You need to provide the fourth description.", "RED")] });
+  } else if (size == "4") {
+    embed.addField(title1, description1.replace(/%n/g, "\n"), false).addField(title2, description2.replace(/%n/g, "\n"), false).addField(title3, description3.replace(/%n/g, "\n"), false).addField(title4, description4.replace(/%n/g, "\n"), false);
+    if (!title2) return message.channel.send({ embeds: [client.embedBuilder(client, message, "Error", "You need to provide the fifth title.", "RED")] });
+    if (!description2) return message.channel.send({ embeds: [client.embedBuilder(client, message, "Error", "You need to provide the fifth description.", "RED")] });
+  } else if (size 
 
   let up_aliases = ['update', 'up', '0']
   let an_aliases = ['announcement', 'announce', 'an', '1']
