@@ -37,7 +37,7 @@ module.exports.run = async(client, message, args) => {
     embed.addField(title1, description1.replace(/%n/g, "\n"), false).addField(title2, description2.replace(/%n/g, "\n"), false).addField(title3, description3.replace(/%n/g, "\n"), false).addField(title4, description4.replace(/%n/g, "\n"), false);
     if (!title2) return message.channel.send({ embeds: [client.embedBuilder(client, message, "Error", "You need to provide the fifth title.", "RED")] });
     if (!description2) return message.channel.send({ embeds: [client.embedBuilder(client, message, "Error", "You need to provide the fifth description.", "RED")] });
-  } else if (size 
+  }
 
   let up_aliases = ['update', 'up', '0']
   let an_aliases = ['announcement', 'announce', 'an', '1']
