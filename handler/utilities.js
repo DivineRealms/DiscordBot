@@ -9,11 +9,11 @@ module.exports.automod = async(client, message) => {
   if (message.mentions.users.first() && client.afk.has(message.mentions.users.first().id)) {
     const user = message.mentions.users.first()
 
-    const embed5 = client.embedBuilder(client, "",
-      `${user.username} is currently afk`, user.displayAvatarURL({ dynamic: true }),
+    const embedAfk = client.embedBuilder(client, "",
+      `${user.username} is currently afk`,
       `**Reason:** ${client.afk.get(user.id).message}, went AFK ${ms(Date.now() - client.afk.get(user.id).time, { long: true })} ago`)
 
-    message.channel.send({ embeds: [embed5] })
+    message.channel.send({ embeds: [embedAfk] })
   }
 
   if (message.channel.id === client.conf.counting.Counting_Channel) {
