@@ -10,7 +10,7 @@ module.exports = async(client, reaction, user) => {
 
   if (['✅', '❌'].includes(reaction.emoji.name) && suggestion) {
     const user2 = await client.users.fetch(suggestion.user)
-    const embed = client.embedBuilder(client, message, "Suggestion", `**Suggestion by ${user2}**\n\n Suggestion: \`${suggestion.suggestion}\`\n\n**Status:**\n${reaction.emoji.name === '✅' ? 'Approved':'Denied'} by ${user}`, reaction.emoji.name === '✅' ? 'GREEN' : 'RED')
+    const embed = client.embedBuilder(client, "", "Suggestion", `**Suggestion by ${user2}**\n\n Suggestion: \`${suggestion.suggestion}\`\n\n**Status:**\n${reaction.emoji.name === '✅' ? 'Approved':'Denied'} by ${user}`, reaction.emoji.name === '✅' ? 'GREEN' : 'RED')
       .setThumbnail(user2.displayAvatarURL({ dynamic: true }))
 
     user2.send({ embeds: [embed] }).catch(console.error)
@@ -29,7 +29,7 @@ module.exports = async(client, reaction, user) => {
         board.embeds[0].footer.text = `${count} ${starboard.StarBoard_Emoji}`
         board.edit({ embeds: [board.embeds[0]] })
       } else if (reaction.count >= starboard.Minimum_Reactions) {
-        const embed = client.embedBuilder(client, message, reaction.message.author.username, "")
+        const embed = client.embedBuilder(client, "", reaction.message.author.username, "")
           .setThumbnail(reaction.message.author.displayAvatarURL({ dynamic: true }))
 
         if (reaction.message.content) embed.setDescription(`> ${reaction.message.content}\n\n[Click Here to View Message](${reaction.message.url})`)
