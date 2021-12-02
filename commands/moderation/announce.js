@@ -17,10 +17,12 @@ module.exports.run = async(client, message, args) => {
   let embed = client.embedBuilder(client, message, title, description.replace(/%n/g, "\n")).setFooter(`Sent by ${message.author.tag}`, message.author.displayAvatarURL({size: 1024, dynamic: true}));
   
   args.splice(0,4);
+  if (args.length % 2 !== 0) return message.channel.send({embeds:[client.embedBuilder(client, message, "Error", "Invalid number of arguments.", "RED")]});
+  
   const fields = [];
   for (let i = 0; i < args.length; i += 2) fields.push({title: args[i], description: args[i+1]});
 
-  for (let i = 0; i < args.length; i++) {
+  for (let i = 0; i < fields.length; i++) {
     embed.addField(fields[i].title, fields[i].description.replace(/%n/g, "\n"), false);
     if (!fields[i].title || !fields[i].description) return message.channel.send({embeds:[client.embedBuilder(client, message, "Error", "Invalid usage.", "RED")]});
   }
