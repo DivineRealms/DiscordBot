@@ -71,13 +71,17 @@ module.exports = async client => {
   let voteCron = new cron.CronJob('0 0 10,20 * * *', () => {
     let generalCh = client.channels.cache.get("512274978754920463");
     const voteRow = new MessageActionRow()
-      .addComponents(
+      .addComponents([
         new MessageButton()
         .setURL(`https://minecraft-mp.com/server/295045/vote/`)
-        .setLabel("Vote")
+        .setLabel("Vote for Divine Realms")
         .setStyle('LINK')
-      );
-    if(generalCh) generalCh.send({ embeds: [client.embedBuilder(client, "", "Minecraft-MP", "Click the button below to vote for our server and help us climb the leaderboard.")], components: [voteRow] });
+      ], [
+        new MessageButton()
+        .setURL(`https://minecraft-mp.com/server/296478/vote/`)
+        .setLabel("Support HogRealms")
+        .setStyle('LINK')
+    if(generalCh) generalCh.send({ embeds: [client.embedBuilder(client, "", "📝︲Support us by Voting!", "<:ArrowRightGray:813815804768026705>Click the button below to vote for our server and help us climb the leaderboard.")], components: [voteRow] });
   }, {
   	  timezone: "Europe/Belgrade"
   });
