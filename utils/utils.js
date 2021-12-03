@@ -37,10 +37,7 @@ function lbContent(client, message, lbType) {
   for (let i = 0; i < leaderboard.length; i++) {
     if (i === 10) break;
   
-    let user = client.users.cache.get(leaderboard[i].ID.split("_")[2]);
-    if (user == undefined) user = "N/A";
-    else user = user.username;
-    content += `**#${i + 1}** <@!${user}> - ${leaderboard[i].data}\n`;
+    content += `**#${i + 1}** <@!${leaderboard[i].ID.split("_")[2]}> - ${leaderboard[i].data}\n`;
   }
   
   return content;
@@ -59,10 +56,7 @@ function lbMoney(client, message) {
     let bank = db.fetch(`bank_${message.guild.id}_${leaderboard[i].ID.split("_")[2]}`);
     let total = leaderboard[i].data + bank;
   
-    let user = client.users.cache.get(leaderboard[i].ID.split("_")[2]);
-    if (user == undefined) user = "N/A";
-    else user = user.username;
-    content += `**#${i + 1}** <@!${user}> - $${total}\n`;
+    content += `**#${i + 1}** <@!${leaderboard[i].ID.split("_")[2]}> - $${total}\n`;
   }
   
   return content;
