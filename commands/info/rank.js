@@ -20,7 +20,7 @@ module.exports.run = async(client, message, args) => {
   let every = db.all().filter(i => i.ID.startsWith(`level_${message.guild.id}_`)).sort((a, b) => b.data - a.data);
   let rank = every.map(x => x.ID).indexOf(`level_${message.guild.id}_${user.id}`) + 1 || 1;
   
-  let embed = client.embedBuilder(client, message, "", ` <:ArrowRightGray:813815804768026705> Rank: **${rank}**\n <:ArrowRightGray:813815804768026705> Level: **${level}**\n: <:ArrowRightGray:813815804768026705> XP: **${xp}/${xpNeeded}**`, message.member.displayHexColor)
+  let embed = client.embedBuilder(client, message, "", ` <:ArrowRightGray:813815804768026705> Rank: **#${rank}**\n <:ArrowRightGray:813815804768026705> Level: **${level}**\n <:ArrowRightGray:813815804768026705> XP: **${xp}/${xpNeeded}**`, message.member.displayHexColor)
     .setAuthor(message.author.username, message.author.displayAvatarURL({ size: 1024, dynamic: true }))
     .setFooter("", "")
     .setTimestamp(null);
