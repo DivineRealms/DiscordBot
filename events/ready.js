@@ -68,7 +68,7 @@ module.exports = async client => {
   
   bumpReminder.bump(client);
   
-  let voteCron = new cron.CronJob('0 0 10,20 * * *', () => {
+  let voteCron = new cron.CronJob('0 0 13,21 * * *', () => {
     let generalCh = client.channels.cache.get("512274978754920463");
     const voteRow = new MessageActionRow()
       .addComponents([
@@ -82,7 +82,7 @@ module.exports = async client => {
         .setLabel("Support HogRealms")
         .setStyle('LINK')
       ])
-    if(generalCh) generalCh.send({ embeds: [client.embedBuilder(client, "", "📝︲Support us by Voting!", "<:ArrowRightGray:813815804768026705>Click the button below to vote for our server and help us climb the leaderboard.")], components: [voteRow] });
+    if(generalCh) generalCh.send({ embeds: [client.embedBuilder(client, "", "📝︲Support us by Voting!", "<:ArrowRightGray:813815804768026705>Click the button below to vote for our server and help us climb the leaderboard.").setFooter("", "").setTimestamp(null)], components: [voteRow] });
   }, {
   	  timezone: "Europe/Belgrade"
   });
