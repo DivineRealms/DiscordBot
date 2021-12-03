@@ -12,23 +12,11 @@ module.exports = {
 }
 
 module.exports.run = async(client, message, args) => {
-  let leveltop = db.all().filter(i => i.ID.startsWith(`level_${message.guild.id}_`));
-    leveltop = leveltop.sort((a, b) => b.data - a.data).map((x, i) => {
-      return `**#${i + 1}** ${client.users.cache.get(x.ID.split("_")[2]) || "N/A"} - ${x.data}. level`
-  });
+  let leveltop = client.utils.lbContent(client, message, "level");
+  let baltop = client.utils.lbMoney(client, message);
   
-  let total = db.all().filter(i => i.ID.startsWith(`money_${message.guild.id}_`)).sort((a, b) => b.data - a.data);
-  total = total.map((x, i) => {
-    let bank = db.fetch(`bank_${message.guild.id}_${x.ID.split("_")[2]}`) || 0;
-    return { user: x.ID.split("_")[2], money: Number(x.data + bank) };
-  }).sort((a, b) => b.money - a.money);
-
-  total = total.sort((a, b) => b.money - a.money).map((x, i) => {
-    return `**#${i + 1}** ${`<@!${x.user}>`} - $${x.money}`
-  });
-  
-  let ecoEmbed = client.embedBuilder(client, message, "Economy Leaderboard", total.join("\n"));
-  let lvlEmbed = client.embedBuilder(client, message, "Level Leaderboard", leveltop.join("\n"));
+  let ecoEmbed = client.embedBuilder(client, message, "Economy Leaderboard", baltop);
+  let lvlEmbed = client.embedBuilder(client, message, "Level Leaderboard", leveltop);
   
   let embeds = [ecoEmbed, lvlEmbed];
   let labelArr = ["Economy", "Level"];

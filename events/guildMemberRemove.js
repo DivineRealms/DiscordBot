@@ -14,6 +14,9 @@ module.exports = async(client, member) => {
     }
   }
 
+  let data = await db.all().filter(data => data.ID.includes(member.id));
+  data.forEach(data => db.delete(data.ID));
+
   if (settings.goodbyeType === 'card') {
     const image = await new Canvas.Goodbye()
       .setUsername(member.user.username)

@@ -20,17 +20,17 @@ module.exports = async(client, reaction, user) => {
   }
 
   if (starboard.Enabled && reaction.message) {
+    const r = await reaction.message.reactions.resolve("⭐")
     if (schannel && starboard.Enabled && reaction.emoji.name == starboard.StarBoard_Emoji) {
       const stars = db.fetch(`stars_${reaction.message.guild.id}_${reaction.message.id}`);
 
       if (stars) {
         const board = await schannel.messages.fetch(stars).catch(() => {})
         if (!board) return db.delete(`stars_${reaction.message.guild.id}_${reaction.message.id}`);
-        const count = board.reactions.cache.get(starboard.Minimum_Reactions)
-        board.embeds[0].footer.text = `${count} ${starboard.StarBoard_Emoji}`
+        board.embeds[0].footer.text = `${r.count} ${starboard.StarBoard_Emoji}`
         board.edit({ embeds: [board.embeds[0]] })
       } else if (reaction.count >= starboard.Minimum_Reactions) {
-        const embed = client.embedBuilder(client, message, "⭐︲" + reaction.message.author.username, "", "#ffc87e")
+        const embed = client.embedBuilder(client, message, "⭐︲" + reaction.message.author.username, "", "#ffc87e").setFooter(`${r.count} ${starboard.StarBoard_Emoji}`, client.user.displayAvatarURL({ size: 1024, dynamic: true }))
 
         if (reaction.message.content) embed.setDescription(`> ${reaction.message.content}\n\n[<:ArrowRightGray:813815804768026705> Click Here to View Message](${reaction.message.url})`)
         if (['png', 'jpg', 'jpeg', 'gif', 'webp'].some(e => (reaction.message.attachments.first() || { url: '' }).url.endsWith(e))) embed.setImage(reaction.message.attachments.first().url)

@@ -27,7 +27,50 @@ function commandsList(client, message, category) {
   return content;
 }
 
+function lbContent(client, message, lbType) {
+  let leaderboard = db
+    .all()
+    .filter(data => data.ID.startsWith(`${lbType}_${message.guild.id}`))
+    .sort((a, b) => b.data - a.data);
+  let content = "";
+  
+  for (let i = 0; i < leaderboard.length; i++) {
+    if (i === 10) break;
+  
+    let user = client.users.cache.get(leaderboard[i].ID.split("_")[2]);
+    if (user == undefined) user = "N/A";
+    else user = user.username;
+    content += `**#${i + 1}** ${user} - ${leaderboard[i].data}\n`;
+  }
+  
+  return content;
+}
+
+function lbMoney(client, message) {
+  let leaderboard = db
+    .all()
+    .filter(data => data.ID.startsWith(`money_${message.guild.id}`))
+    .sort((a, b) => b.data - a.data);
+  let content = "";
+  
+  for (let i = 0; i < leaderboard.length; i++) {
+    if (i === 10) break;
+
+    let bank = db.fetch(`bank_${message.guild.id}_${leaderboard[i].ID.split("_")[2]}`);
+    let total = leaderboard[i].data + bank;
+  
+    let user = client.users.cache.get(leaderboard[i].ID.split("_")[2]);
+    if (user == undefined) user = "N/A";
+    else user = user.username;
+    content += `**#${i + 1}** ${user} - $${total}\n`;
+  }
+  
+  return content;
+}
+
 module.exports = {
   formatTime,
-  commandsList
+  commandsList,
+  lbContent,
+  lbMoney,  
 }
