@@ -81,6 +81,7 @@ module.exports = async client => {
         .setURL(`https://minecraft-mp.com/server/296478/vote/`)
         .setLabel("Support HogRealms")
         .setStyle('LINK')
+      ])
     if(generalCh) generalCh.send({ embeds: [client.embedBuilder(client, "", "📝︲Support us by Voting!", "<:ArrowRightGray:813815804768026705>Click the button below to vote for our server and help us climb the leaderboard.")], components: [voteRow] });
   }, {
   	  timezone: "Europe/Belgrade"
