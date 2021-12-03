@@ -49,14 +49,23 @@ function lbMoney(client, message) {
     .filter(data => data.ID.startsWith(`money_${message.guild.id}`))
     .sort((a, b) => b.data - a.data);
   let content = "";
+  let data = [];
   
   for (let i = 0; i < leaderboard.length; i++) {
     if (i === 10) break;
 
     let bank = db.fetch(`bank_${message.guild.id}_${leaderboard[i].ID.split("_")[2]}`);
     let total = leaderboard[i].data + bank;
-  
-    content += `**#${i + 1}** <@!${leaderboard[i].ID.split("_")[2]}> - $${total}\n`;
+    
+    data.push({
+      user: leaderboard[i].ID.split("_")[2],
+      money: total
+    });
+  }
+  data.sort((a, b) => b.money - a.money)
+
+  for(let i = 0; i < data.length; i++) {
+    content += `**#${i + 1}** <@!${data[i].user}> - $${data[i].money}\n`;
   }
   
   return content;
