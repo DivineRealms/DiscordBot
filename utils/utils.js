@@ -40,7 +40,7 @@ function lbContent(client, message, lbType) {
     let user = client.users.cache.get(leaderboard[i].ID.split("_")[2]);
     if (user == undefined) user = "N/A";
     else user = user.username;
-    content += `**#${i + 1}** ${user} - ${leaderboard[i].data}\n`;
+    content += `**#${i + 1}** <@!${user}> - ${leaderboard[i].data}\n`;
   }
   
   return content;
@@ -62,7 +62,7 @@ function lbMoney(client, message) {
     let user = client.users.cache.get(leaderboard[i].ID.split("_")[2]);
     if (user == undefined) user = "N/A";
     else user = user.username;
-    content += `**#${i + 1}** ${user} - $${total}\n`;
+    content += `**#${i + 1}** <@!${user}> - $${total}\n`;
   }
   
   return content;

@@ -1,6 +1,4 @@
-const { MessageAttachment } = require('discord.js')
 const db = require('quick.db')
-const canvacord = require('canvacord')
 
 module.exports = {
   name: 'rank',
@@ -14,31 +12,18 @@ module.exports = {
 
 module.exports.run = async(client, message, args) => {
   let user = message.mentions.users.first() || client.users.cache.get(args[0]) || message.author;
-  let member = message.guild.members.cache.get(user.id);
   let level = db.fetch(`level_${message.guild.id}_${user.id}`) || 1;
   let xp = db.fetch(`xp_${message.guild.id}_${user.id}`) || 1;
+
+  const xpNeeded = (parseInt(level) + 1) * 2 * 250 + 250;
 
   let every = db.all().filter(i => i.ID.startsWith(`level_${message.guild.id}_`)).sort((a, b) => b.data - a.data);
   let rank = every.map(x => x.ID).indexOf(`level_${message.guild.id}_${user.id}`) + 1 || 1;
   
-  let presence = member.presence;
-  if(presence == null) presence == "offline";
-  else presence = presence.status;
+  let embed = client.embedBuilder(client, message, "", ` <:ArrowRightGray:813815804768026705> Rank: **${rank}**\n <:ArrowRightGray:813815804768026705> Level: **${level}**\n: <:ArrowRightGray:813815804768026705> XP: **${xp}/${xpNeeded}**`, message.member.displayHexColor)
+    .setAuthor(message.author.username, message.author.displayAvatarURL({ size: 1024, dynamic: true }))
+    .setFooter("", "")
+    .setTimestamp(null);
 
-  let image = await canvacord.rank({
-    username: user.username,
-    discrim: user.discriminator,
-    status: presence,
-    currentXP: xp,
-    neededXP: (level + 1) * 2 * 250 + 250,
-    rank: rank,
-    level: level,
-    background: client.conf.leveling.rankCardImage,
-    avatarURL: user.displayAvatarURL({ format: "png" }),
-    color: client.conf.leveling.rankCardColor
-  })
-
-  let file = new MessageAttachment(image, 'rank.png') 
-
-  message.channel.send({ files: [file] });
+  message.channel.send({ files: [embed] });
 }
