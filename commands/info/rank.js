@@ -25,5 +25,5 @@ module.exports.run = async(client, message, args) => {
     .setFooter("", "")
     .setTimestamp(null);
 
-  message.channel.send({ files: [embed] });
+  message.channel.send({ embeds: [embed] });
 }
