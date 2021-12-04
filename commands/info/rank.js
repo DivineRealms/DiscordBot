@@ -35,8 +35,9 @@ module.exports.run = async (client, message, args) => {
       "",
       `<:ArrowRightGray:813815804768026705> Rank: **#${rank}**\n<:ArrowRightGray:813815804768026705> Level: **${level}**\n<:ArrowRightGray:813815804768026705> XP: **${xp}/${xpNeeded}**`
     )
-      .setColor(message.member.displayHexColor)
       .setAuthor(user.username, user.displayAvatarURL({ size: 1024, dynamic: true }));
+  
+  if (args) embed.setColor(user.displayHexColor());
 
   message.channel.send({ embeds: [embed] });
 };
