@@ -18,7 +18,8 @@ module.exports.run = async(client, message, args) => {
 
   let embed = client.embedBuilder(client, message, `Balance of ${user}.username`, `<:ArrowRightGray:813815804768026705> Bank: **$${bank}**
 <:ArrowRightGray:813815804768026705> Balance: **$${balance}**
-<:ArrowRightGray:813815804768026705> Total: **$${balance + bank}**`, "author")
+<:ArrowRightGray:813815804768026705> Total: **$${balance + bank}**`)
+    .setAuthor(user.username, user.displayAvatarURL({ size: 1024, dynamic: true }));
 
   message.channel.send({ embeds: [embed] })
 }

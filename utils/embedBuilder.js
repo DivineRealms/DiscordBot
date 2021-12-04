@@ -16,8 +16,6 @@ module.exports = (client, user, title, description, type = "default") => {
       .setTimestamp();
   else if (type == "error")
     embed.setColor("RED");
-  else if (type == "author")
-    embed.setAuthor(user.username, user.displayAvatarURL({ size: 1024, dynamic: true }));
 
   return embed;
 };
