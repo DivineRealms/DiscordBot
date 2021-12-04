@@ -37,7 +37,7 @@ module.exports.run = async (client, message, args) => {
     )
       .setAuthor(user.username, user.displayAvatarURL({ size: 1024, dynamic: true }));
   
-  if (args) embed.setColor(user.displayHexColor());
+  if (args) embed.setColor(message.member.displayHexColor);
 
   message.channel.send({ embeds: [embed] });
 };
