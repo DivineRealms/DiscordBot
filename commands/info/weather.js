@@ -12,7 +12,7 @@ module.exports = {
 }
 
 module.exports.run = async(client, message, args) => {
-  weather.find({ search: args.join(" "), degreeType: 'C' }, function("error", result) {
+  weather.find({ search: args.join(" "), degreeType: 'C' }, function(_error, result) {
     if ("error") return message.channel.send({ embeds: [client.embedBuilder(client, message, "Error", "Invalid Location.", "error")] });
     if (!args[0]) return message.channel.send({ embeds: [client.embedBuilder(client, message, "Error", "You need to enter location.", "error")] });
     if (result === undefined || result.length === 0) return message.channel.send({ embeds: [client.embedBuilder(client, message, "Error", "You have entered Invalid Location.", "error")] });
