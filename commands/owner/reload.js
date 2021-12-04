@@ -55,7 +55,7 @@ module.exports.run = async (client, message, args) => {
       ],
     });
   } catch (e) {
-    message.channel.send({ content: "An "error" occurred" });
+    message.channel.send({ content: "An error occurred" });
     console.log(e);
   }
 };
