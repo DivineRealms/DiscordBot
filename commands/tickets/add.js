@@ -21,7 +21,7 @@ module.exports.run = async (client, message, args) => {
           message,
           "Error",
           "This command can only be used in Ticket Channel.",
-          error
+          "error"
         ),
       ],
     });
@@ -33,7 +33,7 @@ module.exports.run = async (client, message, args) => {
           message,
           "Error",
           "You need to mention user to add to ticket.",
-          error
+          "error"
         ),
       ],
     });
@@ -52,7 +52,7 @@ module.exports.run = async (client, message, args) => {
             message,
             "Error",
             "That User is already added in Ticket.",
-            error
+            "error"
           ),
         ],
       });

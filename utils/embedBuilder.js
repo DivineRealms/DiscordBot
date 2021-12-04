@@ -6,7 +6,7 @@ module.exports = (client, user, title, description, type = "default") => {
   if (title.length > 0) embed.setTitle(title);
   if (description.length > 0) embed.setDescription(description);
   if (type == "default")
-    embed;
+    embed.setColor(client.conf.settings.embedColor);
   else if (type == "footer")
     embed
       .setFooter(

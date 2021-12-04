@@ -29,7 +29,7 @@ module.exports.run = async (client, message, args) => {
           message,
           "Error",
           "You already have an ticket opened.",
-          error
+          "error"
         ),
       ],
     });

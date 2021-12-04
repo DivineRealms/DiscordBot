@@ -22,7 +22,7 @@ module.exports.run = async (client, message, args) => {
           message,
           "Error",
           "You have already set your birthday, contact staff if you want it changed.",
-          error
+          "error"
         ),
       ],
     });
@@ -38,7 +38,7 @@ module.exports.run = async (client, message, args) => {
           message,
           "Error",
           "You need to enter Date of Birthday. Example: Jan 21 2004.",
-          error
+          "error"
         ),
       ],
     });
@@ -54,7 +54,7 @@ module.exports.run = async (client, message, args) => {
           `You can't enter a year greater than ${
             new Date().getFullYear() - 12
           }.`,
-          error
+          "error"
         ),
       ],
     });

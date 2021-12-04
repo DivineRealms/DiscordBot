@@ -25,7 +25,7 @@ module.exports.run = async (client, message, args) => {
           message,
           "Error",
           "There are no applications available in this channel.",
-          error
+          "error"
         ),
       ],
     });
@@ -37,7 +37,7 @@ module.exports.run = async (client, message, args) => {
           message,
           "Error",
           "I can't find Application with that name.",
-          error
+          "error"
         ),
       ],
     });
@@ -51,7 +51,7 @@ module.exports.run = async (client, message, args) => {
           message,
           "Error",
           "Cannot find application log channel.",
-          error
+          "error"
         ),
       ],
     });
@@ -107,7 +107,7 @@ module.exports.run = async (client, message, args) => {
             message,
             "Error",
             "Time limit exceeded, application cancelled.",
-            error
+            "error"
           ),
         ],
       });

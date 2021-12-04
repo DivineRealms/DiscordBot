@@ -28,7 +28,7 @@ module.exports = async (client, reaction, user) => {
       )
       .setThumbnail(user2.displayAvatarURL({ dynamic: true }));
 
-    user2.send({ embeds: [embed] }).catch(console.error);
+    user2.send({ embeds: [embed] }).catch(console."error");
     reaction.message.channel.send({ embeds: [embed] });
     client.settings.delete(
       reaction.message.guild.id,

@@ -17,7 +17,7 @@ module.exports.run = async (client, message, args) => {
           message,
           "Error",
           `You're not Owner`,
-          error
+          "error"
         ),
       ],
     });
@@ -31,7 +31,7 @@ module.exports.run = async (client, message, args) => {
           message,
           "Error",
           `You need to provide Command to Reload`,
-          error
+          "error"
         ),
       ],
     });
@@ -55,7 +55,7 @@ module.exports.run = async (client, message, args) => {
       ],
     });
   } catch (e) {
-    message.channel.send({ content: "An error occurred" });
+    message.channel.send({ content: "An "error" occurred" });
     console.log(e);
   }
 };

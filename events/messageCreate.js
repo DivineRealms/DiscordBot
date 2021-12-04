@@ -123,7 +123,7 @@ module.exports = async (client, message) => {
               message,
               "Error",
               `You don't have Permission to use this command`,
-              error
+              "error"
             ),
           ],
         })
@@ -145,7 +145,7 @@ module.exports = async (client, message) => {
               message,
               "Error",
               `You can use that command again in ${time}`,
-              error
+              "error"
             ),
           ],
         });
@@ -182,7 +182,7 @@ module.exports = async (client, message) => {
             message,
             "Error",
             `Commands can only be used in ${cmdChannels.join(",").trim()}.`,
-            error
+            "error"
           ),
         ],
       })
@@ -195,7 +195,7 @@ module.exports = async (client, message) => {
           message,
           "Error",
           "The economy hasnt been enabled!",
-          error
+          "error"
         ),
       ],
     });

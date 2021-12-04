@@ -38,7 +38,7 @@ module.exports.run = async (client, message, args) => {
           message,
           "Error",
           "I couldn't find any applications available in this channel!",
-          error
+          "error"
         ),
       ],
     });

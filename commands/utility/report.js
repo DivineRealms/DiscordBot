@@ -21,7 +21,7 @@ module.exports.run = async (client, message, args) => {
           message,
           "Error",
           "A report channel hasn't been setup for this server!",
-          error
+          "error"
         ),
       ],
     });
@@ -33,7 +33,7 @@ module.exports.run = async (client, message, args) => {
           message,
           "Error",
           "Please provide me a report!",
-          error
+          "error"
         ),
       ],
     });

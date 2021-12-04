@@ -17,7 +17,7 @@ module.exports.run = async (client, message, args) => {
           message,
           "Error",
           `You're not Owner`,
-          error
+          "error"
         ),
       ],
     });

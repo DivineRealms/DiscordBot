@@ -21,7 +21,7 @@ module.exports.run = async (client, message, args) => {
           message,
           "Error",
           `You're not Owner`,
-          error
+          "error"
         ),
       ],
     });
@@ -35,7 +35,7 @@ module.exports.run = async (client, message, args) => {
           message,
           "Error",
           `You need to enter code to evaluate`,
-          error
+          "error"
         ),
       ],
     });
@@ -73,7 +73,7 @@ module.exports.run = async (client, message, args) => {
     message.channel.send({ embeds: [embed] });
   } catch (err) {
     let embed = client
-      .embedBuilder(client, message, "Error", "", error)
+      .embedBuilder(client, message, "Error", "", "error")
       .addField("Input", `\`\`\`xl\n${code}\`\`\``)
       .addField("Output", `\`\`\`xl\n${err}\`\`\``);
 

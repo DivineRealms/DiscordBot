@@ -92,7 +92,7 @@ module.exports.run = async (client, message, args) => {
           message,
           "Error",
           "This command can only be used inside of tickets.",
-          error
+          "error"
         ),
       ],
     });

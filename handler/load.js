@@ -41,7 +41,7 @@ module.exports = async (client) => {
 
   var date = new Date();
 
-  //process.on('unhandledRejection', error => {
+  //process.on('unhandledRejection', "error" => {
   //  let ignoreErrors = [
   //  `DiscordAPIError: Unknown Message`,
   //  `DiscordAPIError: Missing Permissions`,
@@ -52,23 +52,23 @@ module.exports = async (client) => {
   //  ];
   //  let list = [];
   //  for (const ignore of ignoreErrors) {
-  //  if (error.stack.includes(ignore)) list.push(true);
+  //  if ("error".stack.includes(ignore)) list.push(true);
   //  };
   //  if (list.length !== 0) return null;
   //  let errEmbed = new MessageEmbed()
   //    .setTitle("Error Occurred")
-  //    .setDescription(`\`(${error.name})\`
+  //    .setDescription(`\`(${"error".name})\`
   //\`(${moment.utc().tz('Europe/Belgrade').format('HH:mm:ss, DD/MM/YYYY.')})\`
   //
-  //\`\`\`xl\n${error.stack}\n\`\`\``)
-  //    .setColor(error);
+  //\`\`\`xl\n${"error".stack}\n\`\`\``)
+  //    .setColor("error");
   //
   //  let log = client.channels.cache.get(client.conf.logging.Bot_Errors)
   //
   //  if(log) log.send({ embeds: [errEmbed] })
   //});
 
-  //process.on('uncaughtException', error => {
+  //process.on('uncaughtException', "error" => {
   //  let ignoreErrors = [
   //  `DiscordAPIError: Unknown Message`,
   //  `DiscordAPIError: Missing Permissions`,
@@ -79,16 +79,16 @@ module.exports = async (client) => {
   //  ];
   //  let list = [];
   //  for (const ignore of ignoreErrors) {
-  //  if (error.stack.includes(ignore)) list.push(true);
+  //  if ("error".stack.includes(ignore)) list.push(true);
   //  };
   //  if (list.length !== 0) return null;
   //  let errEmbed = new MessageEmbed()
   //    .setTitle("Error Occurred")
-  //    .setDescription(`\`(${error.name})\`
+  //    .setDescription(`\`(${"error".name})\`
   //\`(${moment.utc().tz('Europe/Belgrade').format('HH:mm:ss, DD/MM/YYYY.')})\`
   //
-  //\`\`\`xl\n${error.stack}\n\`\`\``)
-  //    .setColor(error);
+  //\`\`\`xl\n${"error".stack}\n\`\`\``)
+  //    .setColor("error");
   //
   //  let log = client.channels.cache.get(client.conf.logging.Bot_Errors)
   //

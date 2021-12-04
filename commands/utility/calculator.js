@@ -28,7 +28,7 @@ module.exports.run = async (client, message, args) => {
           message,
           "Error",
           "You need to provide math problem.",
-          error
+          "error"
         ),
       ],
     });

@@ -16,7 +16,7 @@ module.exports.run = async (client, message, args) => {
     message,
     "Timer",
     "Please provide a valid time!",
-    error
+    "error"
   );
 
   if (isNaN(parse(args[0]))) return message.channel.send({ embeds: [embed3] });

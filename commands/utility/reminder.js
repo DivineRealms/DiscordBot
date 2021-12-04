@@ -21,7 +21,7 @@ module.exports.run = async (client, message, args) => {
           message,
           "Error",
           "You need to provide time.",
-          error
+          "error"
         ),
       ],
     });
@@ -33,7 +33,7 @@ module.exports.run = async (client, message, args) => {
           message,
           "Error",
           "You need to enter reminder reason.",
-          error
+          "error"
         ),
       ],
     });

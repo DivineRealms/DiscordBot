@@ -48,7 +48,7 @@ module.exports.automod = async (client, message) => {
                 client.conf.counting.Restart_On_Incorrect_Number
                   ? client.conf.counting.Restart_Message
                   : ""),
-              error
+              "error"
             ),
           ],
         })

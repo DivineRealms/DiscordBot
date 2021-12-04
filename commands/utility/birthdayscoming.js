@@ -50,7 +50,7 @@ module.exports.run = async (client, message, args) => {
           message,
           "Error",
           `There's no upcoming birthdays.`,
-          error
+          "error"
         ),
       ],
     });
