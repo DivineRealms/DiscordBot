@@ -2,6 +2,7 @@ const { MessageActionRow, MessageButton } = require('discord.js')
 const cron = require('cron');
 const db = require('quick.db')
 const bumpReminder = require("../utils/bumpRemind.js")
+const axios = require('axios')
 
 module.exports = async client => {
   console.log(" ")
@@ -87,7 +88,13 @@ module.exports = async client => {
   	  timezone: "Europe/Belgrade"
   });
   
-  voteCron.start(); 
+  voteCron.start();
+
+  let voteLeaderboardCron = new cron.CronJob('0 0 59 23 * * *', () => {
+    axios.get(`https://minecraft-mp.com/api/?object=servers&element=voters&key=${client.conf.settings.voteKey}&month=current&format=json?limit=10`).then((res) => db.set(`votes_${guild.id}`, res.data.voters))
+  }, { timezone: "Europe/Belgrade" });
+
+  voteLeaderboardCron.start();
 
   while (guild) {
     counter()

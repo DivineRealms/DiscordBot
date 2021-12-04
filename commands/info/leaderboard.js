@@ -11,32 +11,33 @@ module.exports = {
   usage: 'leaderboard'
 }
 
-module.exports.run = async(client, message, args) => {
-  let leveltop = client.utils.lbContent(client, message, "level");
-  let baltop = client.utils.lbMoney(client, message);
-  let bumptop = client.utils.lbContent(client, message, "bumps");
-  
-  let ecoEmbed = client.embedBuilder(client, message, "Economy Leaderboard", baltop);
-  let lvlEmbed = client.embedBuilder(client, message, "Level Leaderboard", leveltop);
-  let bumpEmbed = client.embedBuilder(client, message, "Bump Leaderboard", bumptop)
-  
-  let embeds = [ecoEmbed, lvlEmbed, bumpEmbed];
-  let labelArr = ["Economy", "Level", "Bumps"];
-  let emojiArr = ["💵", "⭐", "📊"];
-  let data = [];
+module.exports.run = async (client, message, args) => {
+  const leaderboards = [{
+    label: "Economy", emoji: "💵",
+    embed: client.embedBuilder(client, message, "Economy Leaderboard", client.utils.lbMoney(client, message))
+  }, {
+    label: "Level", emoji: "⭐",
+    embed: client.embedBuilder(client, message, "Level Leaderboard", client.utils.lbContent(client, message, "level"))
+  }, {
+    label: "Bumps", emoji: "📊",
+    embed: client.embedBuilder(client, message, "Bump Leaderboard", client.utils.lbContent(client, message, "bumps"))
+  }, {
+    label: "Votes", emoji: "📝",
+    embed: client.embedBuilder(client, message, "Voting Leaderboard", client.utils.lbContent(client, message, "votes"))
+  }], data = [];
 
-  for(let i = 0; i < embeds.length; i++) {
+  for (let i = 0; i < leaderboards.length; i++) {
     data.push({
-      label: labelArr[i], 
-      value: "val_" + labelArr[i].toLowerCase(), 
-      emoji: emojiArr[i],
-      embed: embeds[i], 
+      label: leaderboards.label[i],
+      value: "val_" + leaderboards.label[i].toLowerCase(),
+      emoji: leaderboards.emoji[i],
+      embed: leaderboards.embed[i],
     })
   }
-  
-  client.paginateSelect(client, message, ecoEmbed, {
-    id: "leaderboard", 
-    placeholder: "Select Leaderboard you want to see.", 
+
+  client.paginateSelect(client, message, leaderboards.embed[0], {
+    id: "leaderboard",
+    placeholder: "Select Leaderboard you want to see.",
     options: data
   }, true);
 }
