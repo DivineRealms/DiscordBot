@@ -28,14 +28,14 @@ module.exports.run = async (client, message, args) => {
 
   for (let i = 0; i < leaderboards.length; i++) {
     data.push({
-      label: leaderboards.label[i],
-      value: "val_" + leaderboards.label[i].toLowerCase(),
-      emoji: leaderboards.emoji[i],
-      embed: leaderboards.embed[i],
+      label: leaderboards[i].label,
+      value: "val_" + leaderboards[i].label.toLowerCase(),
+      emoji: leaderboards[i].emoji,
+      embed: leaderboards[i].embed,
     })
   }
 
-  client.paginateSelect(client, message, leaderboards.embed[0], {
+  client.paginateSelect(client, message, leaderboards[0].embed, {
     id: "leaderboard",
     placeholder: "Select Leaderboard you want to see.",
     options: data
