@@ -50,7 +50,7 @@ function lbVotes(client, message) {
   for (let i = 0; i < leaderboard.length; i++) {
     if (i == 10) break;
   
-    content += `**#${i + 1}** ${leaderboard[i].username} - ${leaderboard[i].votes}\n`;
+    content += `**#${i + 1}** ${leaderboard[i].nickname} - ${leaderboard[i].votes}\n`;
   }
   
   return content;
