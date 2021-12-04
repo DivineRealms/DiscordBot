@@ -42,7 +42,7 @@ module.exports = async(client, message) => {
           }, timeout); 
 
           const bump = client.embedBuilder(client, message, "Server Bumped", "Thank you for bumping.")
-          db.add(`bumps_${message.guild.id}_${message.author.id}`, 1);
+          db.add(`bumps_${message.guild.id}_${dbumper[0]}`, 1);
           
           bumpMsg[0].reply({ embeds: [bump] });
         });

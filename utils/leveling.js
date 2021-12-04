@@ -21,7 +21,7 @@ const manageLeveling = async (client, message) => {
         levelSettings.level_Up_Title,
         levelSettings.level_Up_Message.replace('{user}', message.author.toString()).replace('{level}', level + 1))
 
-      if (xpChannel) xpchannel.send({ embeds: [embed] })
+      if (xpChannel) xpChannel.send({ embeds: [embed] })
 
       if(xp + xpGive > xpNeeded) {
         db.set(`xp_${message.guild.id}_${message.author.id}`, xp - (xpNeeded - xpGive));
