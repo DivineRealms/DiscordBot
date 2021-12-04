@@ -13,10 +13,10 @@ module.exports = {
 module.exports.run = async(client, message, args) => {
     const user = message.mentions.users.first() || client.users.cache.get(args[0])
 
-    if (!user) return message.channel.send({ embeds: [client.embedBuilder(client, message, "Error", "You need to mention user.", "RED")] });
-    if (!['add', 'remove'].includes(args[1])) return message.channel.send({ embeds: [client.embedBuilder(client, message, "Error", "You need to specify do you want to `add` or `remove`.", "RED")] });
-    if (!['wallet', 'bank'].includes(args[2])) return message.channel.send({ embeds: [client.embedBuilder(client, message, "Error", "You need to specify do you want `wallet` or `bank`.", "RED")] });
-    if (isNaN(args[3]) || args[3] < 1) return message.channel.send({ embeds: [client.embedBuilder(client, message, "Error", "You need to enter amount.", "RED")] });
+    if (!user) return message.channel.send({ embeds: [client.embedBuilder(client, message, "Error", "You need to mention user.", error)] });
+    if (!['add', 'remove'].includes(args[1])) return message.channel.send({ embeds: [client.embedBuilder(client, message, "Error", "You need to specify do you want to `add` or `remove`.", error)] });
+    if (!['wallet', 'bank'].includes(args[2])) return message.channel.send({ embeds: [client.embedBuilder(client, message, "Error", "You need to specify do you want `wallet` or `bank`.", error)] });
+    if (isNaN(args[3]) || args[3] < 1) return message.channel.send({ embeds: [client.embedBuilder(client, message, "Error", "You need to enter amount.", error)] });
 
     if(args[1].toLowerCase() == "add") {
         if(args[2].toLowerCase() == "bank") {

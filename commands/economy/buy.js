@@ -16,19 +16,19 @@ module.exports.run = async(client, message, args) => {
   const shop = [...settings.shopItems]
   const item = shop.find((s, i) => i + 1 == args[0])
 
-  if (!item) return message.channel.send({ embeds: [client.embedBuilder(client, message, "Error", `You have entered invalid shop id.`, "RED")] });
+  if (!item) return message.channel.send({ embeds: [client.embedBuilder(client, message, "Error", `You have entered invalid shop id.`, error)] });
   if (item.type == 'role') {
-    if(!balance || balance < item.price) return message.channel.send({ embeds: [client.embedBuilder(client, message, "Error", `You don't have enough money.`, "RED")] });
+    if(!balance || balance < item.price) return message.channel.send({ embeds: [client.embedBuilder(client, message, "Error", `You don't have enough money.`, error)] });
     message.member.roles.add(item.roleID).then(() => {
       message.channel.send({ embeds: [client.embedBuilder(client, message, "Role Purchased", `You have successfully purchased role <@&${item.roleID}> for $${item.price}.`)] });
       db.subtract(`money_${message.guild.id}_${message.author.id}`, item.price);
     }).catch(() => {
-      message.channel.send({ embeds: [client.embedBuilder(client, message, "Error", `Cannot add role to that member`, "RED")] });
+      message.channel.send({ embeds: [client.embedBuilder(client, message, "Error", `Cannot add role to that member`, error)] });
     })
   } else if(item.type == "color") {
     let colors = db.fetch(`colors_${message.guild.id}_${message.author.id}`) || [];
-    if(!balance || balance < item.price) return message.channel.send({ embeds: [client.embedBuilder(client, message, "Error", `You don't have enough money.`, "RED")] });
-    if(colors.includes(item.name.toLowerCase())) return message.channel.send({ embeds: [client.embedBuilder(client, message, "Error", `You already have that name color.`, "RED")] });
+    if(!balance || balance < item.price) return message.channel.send({ embeds: [client.embedBuilder(client, message, "Error", `You don't have enough money.`, error)] });
+    if(colors.includes(item.name.toLowerCase())) return message.channel.send({ embeds: [client.embedBuilder(client, message, "Error", `You already have that name color.`, error)] });
 
     db.push(`colors_${message.guild.id}_${message.author.id}`, item.name.toLowerCase());
     db.subtract(`money_${message.guild.id}_${message.author.id}`, item.price);

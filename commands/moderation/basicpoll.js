@@ -12,8 +12,8 @@ module.exports.run = async(client, message, args) => {
   const channel = message.mentions.channels.first() || message.guild.channels.cache.get(args[0])
   const description = args.slice(1).join(" ")
 
-  if (!channel) return message.channel.send({ embeds: [client.embedBuilder(client, message, "Error", "You have entered invalid channel.", "RED")] });
-  if (!args[1]) return message.channel.send({ embeds: [client.embedBuilder(client, message, "Error", "You didn't specified question.", "RED")] });
+  if (!channel) return message.channel.send({ embeds: [client.embedBuilder(client, message, "Error", "You have entered invalid channel.", error)] });
+  if (!args[1]) return message.channel.send({ embeds: [client.embedBuilder(client, message, "Error", "You didn't specified question.", error)] });
 
   const embed = client.embedBuilder(client, message, `Poll Created By ${message.author.tag}`, description)
 

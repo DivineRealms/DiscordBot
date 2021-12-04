@@ -9,7 +9,7 @@ module.exports = {
 }
 
 module.exports.run = async(client, message, args) => {
-  let embed3 = client.embedBuilder(client, message, "Error", "Theres nothing to snipe :/", "RED")
+  let embed3 = client.embedBuilder(client, message, "Error", "Theres nothing to snipe :/", error)
 
   let snipe = client.snipes.get(message.channel.id)
   if (!snipe || !snipe.content) return message.channel.send({ embeds: [embed3] })

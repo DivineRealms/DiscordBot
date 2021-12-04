@@ -9,7 +9,7 @@ module.exports = {
 }
 module.exports.run = async(client, message, args) => {
   const status = args.join(' ');
-  if (!status) return message.channel.send({ embeds: [client.embedBuilder(client, message, "Error", `You need to provide Custom Status.`, "RED")] });
+  if (!status) return message.channel.send({ embeds: [client.embedBuilder(client, message, "Error", `You need to provide Custom Status.`, error)] });
 
   const embed = client.embedBuilder(client, message, "Bot Status", `Status has been changed to \`${status}\``)
 

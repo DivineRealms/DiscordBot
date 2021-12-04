@@ -4,21 +4,23 @@ const jsdom = require("jsdom");
 const { JSDOM } = jsdom;
 const dom = new JSDOM();
 const document = dom.window.document;
-const db = require('quick.db')
+const db = require("quick.db");
 
 module.exports = {
-  name: 'delete',
-  category: 'tickets',
-  usage: 'delete', 
-  description: 'Deletes the ticket.',
+  name: "delete",
+  category: "tickets",
+  usage: "delete",
+  description: "Deletes the ticket.",
   permissions: ["MANAGE_CHANNELS"],
   cooldown: 0,
-  aliases: [`close`]
-}
+  aliases: [`close`],
+};
 
-module.exports.run = async(client, message, args) => {
+module.exports.run = async (client, message, args) => {
   const ticket = db.fetch(`tickets_${message.guild.id}_${message.channel.id}`);
-  const log = client.channels.cache.get(client.conf.logging.Ticket_Channel_Logs)
+  const log = client.channels.cache.get(
+    client.conf.logging.Ticket_Channel_Logs
+  );
   const channelMessages = await message.channel.messages
     .fetch({ limit: 100, before: message.id })
     .catch((err) => console.log(err));
@@ -28,9 +30,9 @@ module.exports.run = async(client, message, args) => {
 
   let msgs = [...messageCollection.values()].reverse();
 
-  let data = await fs.readFile("./data/template.html", "utf8")
+  let data = await fs.readFile("./data/template.html", "utf8");
 
-  msgs.forEach(async(msg) => {
+  msgs.forEach(async (msg) => {
     let parentContainer = document.createElement("div");
     parentContainer.className = "parent-container";
 
@@ -49,11 +51,11 @@ module.exports.run = async(client, message, args) => {
     let nameElement = document.createElement("span");
     let name = document.createTextNode(
       msg.author.tag +
-      " " +
-      msg.createdAt.toDateString() +
-      " " +
-      msg.createdAt.toLocaleTimeString() +
-      " EST"
+        " " +
+        msg.createdAt.toDateString() +
+        " " +
+        msg.createdAt.toLocaleTimeString() +
+        " EST"
     );
     nameElement.appendChild(name);
     messageContainer.append(nameElement);
@@ -71,21 +73,42 @@ module.exports.run = async(client, message, args) => {
       messageContainer.appendChild(msgNode);
     }
     parentContainer.appendChild(messageContainer);
-    data += parentContainer.outerHTML
+    data += parentContainer.outerHTML;
   });
 
-  const attachment = new MessageAttachment(Buffer.from(data), 'ticket.html');
-  const loggingembed = client.embedBuilder(client, message, "Ticket Logging System", "")
+  const attachment = new MessageAttachment(Buffer.from(data), "ticket.html");
+  const loggingembed = client
+    .embedBuilder(client, message, "Ticket Logging System", "")
     .addField(`Ticket Name`, `${message.channel.name}`)
     .addField(`Channel`, `${message.channel}`)
     .setThumbnail(client.user.displayAvatarURL());
-  if (log) log.send({ files: [attachment], embeds: [loggingembed] })
+  if (log) log.send({ files: [attachment], embeds: [loggingembed] });
 
-  if (!ticket) return message.channel.send({ embeds: [client.embedBuilder(client, message, "Error", "This command can only be used inside of tickets.", "RED")]})
-  message.channel.send({ embeds: [client.embedBuilder(client, message, "Deleting..", "This channel will be deleted in 10 seconds.")]})
-  message.channel.send({ files: [attachment] })
+  if (!ticket)
+    return message.channel.send({
+      embeds: [
+        client.embedBuilder(
+          client,
+          message,
+          "Error",
+          "This command can only be used inside of tickets.",
+          error
+        ),
+      ],
+    });
+  message.channel.send({
+    embeds: [
+      client.embedBuilder(
+        client,
+        message,
+        "Deleting..",
+        "This channel will be deleted in 10 seconds."
+      ),
+    ],
+  });
+  message.channel.send({ files: [attachment] });
 
-  await new Promise(r => setTimeout(r, 10000))
-  message.channel.delete()
+  await new Promise((r) => setTimeout(r, 10000));
+  message.channel.delete();
   db.delete(`tickets_${message.guild.id}_${message.channel.id}`);
-}
+};

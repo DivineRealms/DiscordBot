@@ -13,19 +13,19 @@ module.exports = {
 module.exports.run = async(client, message, args) => {
     const member = message.mentions.members.first() || message.guild.members.cache.get(args[0])
 
-    if (!member) return message.channel.send({ embeds: [client.embedBuilder(client, message, "Error", `You need to provide user.`, "RED")] });
-    if (member.id === message.author.id) return message.channel.send({ embeds: [client.embedBuilder(client, message, "Error", `You cannot rob yourself.`, "RED")] });
+    if (!member) return message.channel.send({ embeds: [client.embedBuilder(client, message, "Error", `You need to provide user.`, error)] });
+    if (member.id === message.author.id) return message.channel.send({ embeds: [client.embedBuilder(client, message, "Error", `You cannot rob yourself.`, error)] });
 
     const memberbal = db.fetch(`money_${message.guild.id}_${member.id}`);
     const rob = ~~(Math.random() * 3)
     const amount = ~~(memberbal / 10)
 
-    if (!memberbal || memberbal < 200) return message.channel.send({ embeds: [client.embedBuilder(client, message, "Error", `That Member doesn't have money.`, "RED")] });
+    if (!memberbal || memberbal < 200) return message.channel.send({ embeds: [client.embedBuilder(client, message, "Error", `That Member doesn't have money.`, error)] });
     if (rob) {
-        message.channel.send({ embeds: [client.embedBuilder(client, message, "Rob", `You attempted to rob ${member} but got caught! The fine is **${amount}**.`, "RED")] });
+        message.channel.send({ embeds: [client.embedBuilder(client, message, "Rob", `You attempted to rob ${member} but got caught! The fine is **${amount}**.`, error)] });
         db.subtract(`money_${message.guild.id}_${message.author.id}`, amount);
     } else {
-        message.channel.send({ embeds: [client.embedBuilder(client, message, "Rob", `You successfully robbed ${member} gaining yourself **${amount}**.`, "RED")] });
+        message.channel.send({ embeds: [client.embedBuilder(client, message, "Rob", `You successfully robbed ${member} gaining yourself **${amount}**.`, error)] });
         db.subtract(`money_${message.guild.id}_${message.author.id}`, amount);
         db.add(`money_${message.guild.id}_${message.author.id}`, amount);
     }

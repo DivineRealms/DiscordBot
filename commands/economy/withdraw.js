@@ -14,17 +14,17 @@ module.exports.run = async(client, message, args) => {
     let bank = db.fetch(`bank_${message.guild.id}_${message.author.id}`);
     let balance = db.fetch(`money_${message.guild.id}_${message.author.id}`);
 
-    if (!args[0] || (isNaN(args[0]) && args[0] !== 'all')) return message.channel.send({ embeds: [client.embedBuilder(client, message, "Error", "You must provide amount to deposit.", "RED")] });
+    if (!args[0] || (isNaN(args[0]) && args[0] !== 'all')) return message.channel.send({ embeds: [client.embedBuilder(client, message, "Error", "You must provide amount to deposit.", error)] });
 
     if (args[0] === 'all') {
-      if (!bank || bank == 0) return message.channel.send({ embeds: [client.embedBuilder(client, message, "Error", "You don't have money to withdraw.", "RED")] });
+      if (!bank || bank == 0) return message.channel.send({ embeds: [client.embedBuilder(client, message, "Error", "You don't have money to withdraw.", error)] });
       message.channel.send({ embeds: [client.embedBuilder(client, message, "Withdraw", `You have withdrawn $${bank} from bank.`)] });
       db.subtract(`bank_${message.guild.id}_${message.author.id}`, Number(bank));
       db.add(`money_${message.guild.id}_${message.author.id}`, Number(bank));
       return;
     }
-    if (args[0] > bank) return message.channel.send({ embeds: [client.embedBuilder(client, message, "Error", "You cannot withdraw that much.", "RED")] });
-    if (args[0] < 1) return message.channel.send({ embeds: [client.embedBuilder(client, message, "Error", "You cannot withdraw less than $1.", "RED")] });
+    if (args[0] > bank) return message.channel.send({ embeds: [client.embedBuilder(client, message, "Error", "You cannot withdraw that much.", error)] });
+    if (args[0] < 1) return message.channel.send({ embeds: [client.embedBuilder(client, message, "Error", "You cannot withdraw less than $1.", error)] });
 
     message.channel.send({ embeds: [client.embedBuilder(client, message, "Withdraw", `You have withdrawn $${Number(args[0])} from bank.`)] });
     db.add(`money_${message.guild.id}_${message.author.id}`, Number(args[0]));

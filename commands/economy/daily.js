@@ -14,7 +14,7 @@ module.exports.run = async(client, message, args) => {
   let cooldown = db.fetch(`daily_${message.guild.id}_${message.author.id}`);
   let day = 86400000; 
     
-  if(cooldown != null && day - (Date.now() - cooldown) > 0) return message.channel.send({ embeds: [client.embedBuilder(client, message.author, "Error", "You're on cooldown, try again later.", "RED")] });
+  if(cooldown != null && day - (Date.now() - cooldown) > 0) return message.channel.send({ embeds: [client.embedBuilder(client, message.author, "Error", "You're on cooldown, try again later.", error)] });
     
   const embed = client.embedBuilder(client, message, "Daily", `You have claimed Daily Reward of $2500`);
   message.channel.send({ embeds: [embed] });
