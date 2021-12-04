@@ -14,13 +14,15 @@ module.exports = {
 module.exports.run = async(client, message, args) => {
   let leveltop = client.utils.lbContent(client, message, "level");
   let baltop = client.utils.lbMoney(client, message);
+  let bumptop = client.utils.lbContent(client, message, "bumps");
   
   let ecoEmbed = client.embedBuilder(client, message, "Economy Leaderboard", baltop);
   let lvlEmbed = client.embedBuilder(client, message, "Level Leaderboard", leveltop);
+  let bumpEmbed = client.embedBuilder(client, message, "Bump Leaderboard", bumptop)
   
-  let embeds = [ecoEmbed, lvlEmbed];
-  let labelArr = ["Economy", "Level"];
-  let emojiArr = ["💵", "⭐"];
+  let embeds = [ecoEmbed, lvlEmbed, bumpEmbed];
+  let labelArr = ["Economy", "Level", "Bumps"];
+  let emojiArr = ["💵", "⭐", "📊"];
   let data = [];
 
   for(let i = 0; i < embeds.length; i++) {
