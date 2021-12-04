@@ -43,6 +43,19 @@ function lbContent(client, message, lbType) {
   return content;
 }
 
+function lbVotes(client, message) {
+  let leaderboard = db.fetch(`votes_${message.guild.id}`).sort((a, b) => b.votes - a.votes);
+  let content = "";
+  
+  for (let i = 0; i < leaderboard.length; i++) {
+    if (i == 10) break;
+  
+    content += `**#${i + 1}** ${leaderboard[i].username} - ${leaderboard[i].votes}\n`;
+  }
+  
+  return content;
+}
+
 function lbMoney(client, message) {
   let leaderboard = db
     .all()
@@ -76,4 +89,5 @@ module.exports = {
   commandsList,
   lbContent,
   lbMoney,  
+  lbVotes, 
 }

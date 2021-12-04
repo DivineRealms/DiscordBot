@@ -23,7 +23,7 @@ module.exports.run = async (client, message, args) => {
     embed: client.embedBuilder(client, message, "Bump Leaderboard", client.utils.lbContent(client, message, "bumps"))
   }, {
     label: "Votes", emoji: "📝",
-    embed: client.embedBuilder(client, message, "Voting Leaderboard", client.utils.lbContent(client, message, "votes"))
+    embed: client.embedBuilder(client, message, "Voting Leaderboard", client.utils.lbVotes(client, message))
   }], data = [];
 
   for (let i = 0; i < leaderboards.length; i++) {
