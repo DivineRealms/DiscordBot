@@ -62,10 +62,10 @@ function lbVotes(message) {
   return content;
 }
 
-function lbMoney(message) {
+function lbMoney(client, message) {
   let leaderboard = db
     .all()
-    .filter(data => data.ID.startsWith(`money_${message.guild.id}`))
+    .filter((data) => data.ID.startsWith(`money_${message.guild.id}`))
     .sort((a, b) => b.data - a.data);
   let content = "";
   let data = [];
