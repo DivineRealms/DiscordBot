@@ -1,9 +1,9 @@
 const Discord = require("discord.js");
 
-module.exports = (client, user, title, description, type = "default") => {
+module.exports = (client, user, author, description, type = "default") => {
   let embed = new Discord.MessageEmbed();
 
-  if (title.length > 0) embed.setTitle(title);
+  if (author.length > 0) embed.setAuthor(author);
   if (description.length > 0) embed.setDescription(description);
   if (type == "default")
     embed.setColor(client.conf.settings.embedColor);
