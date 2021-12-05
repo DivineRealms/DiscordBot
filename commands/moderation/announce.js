@@ -14,7 +14,7 @@ module.exports.run = async(client, message, args) => {
 
   if (!type || !mention || !title || !description) return message.channel.send({embeds:[client.embedBuilder(client, message, "Error", "Invalid usage.", "error")]});
 
-  let embed = client.embedBuilder(client, message, title, description.replace(/%n/g, "\n")).setFooter(`Sent by ${message.author.tag}`, message.author.displayAvatarURL({size: 1024, dynamic: true}));
+  let embed = client.embedBuilder(client, message, title, description.replace(/%n/g, "\n")).setFooter(`Announcement by ${message.author.tag}`, message.author.displayAvatarURL({size: 1024, dynamic: true}));
   
   args.splice(0,4);
   if (args.length % 2 !== 0) return message.channel.send({embeds:[client.embedBuilder(client, message, "Error", "Invalid number of arguments.", "error")]});
