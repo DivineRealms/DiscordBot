@@ -27,7 +27,7 @@ function commandsList(client, message, category) {
   return content;
 }
 
-function lbContent(message, lbType) {
+function lbContent(client, message, lbType) {
   let leaderboard = db
     .all()
     .filter((data) => data.ID.startsWith(`${lbType}_${message.guild.id}`))
@@ -45,7 +45,7 @@ function lbContent(message, lbType) {
   return content;
 }
 
-function lbVotes(message) {
+function lbVotes(client, message) {
   let leaderboard = db
     .fetch(`votes_${message.guild.id}`)
     .sort((a, b) => b.votes - a.votes);
