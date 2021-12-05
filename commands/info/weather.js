@@ -1,4 +1,5 @@
 const weather = require("weather-js");
+const Discord = require("discord.js");
 
 module.exports = {
   name: "weather",
@@ -58,8 +59,8 @@ module.exports.run = async (client, message, args) => {
           client,
           message,
           "",
-          `<:ArrowRightGray:813815804768026705>Deegre Type: **${location.degreeType}**
-<:ArrowRightGray:813815804768026705>Temperature: **${current.temperature}**
+          `<:ArrowRightGray:813815804768026705>Deegre Type: **${location.degreetype}°**
+<:ArrowRightGray:813815804768026705>Temperature: **${current.temperature}°**
 <:ArrowRightGray:813815804768026705>Timezone: **UTC${location.timezone}**
 <:ArrowRightGray:813815804768026705>Humidity: **${current.humidity}%**
 <:ArrowRightGray:813815804768026705>Wind: **${current.winddisplay}**
