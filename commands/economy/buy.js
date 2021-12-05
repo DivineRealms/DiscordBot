@@ -19,7 +19,7 @@ module.exports.run = async(client, message, args) => {
   if (!item) return message.channel.send({ embeds: [client.embedBuilder(client, message, "Error", `You have entered invalid shop id.`, "error")] });
   if (item.type == 'role') {
     if(!balance || balance < item.price) return message.channel.send({ embeds: [client.embedBuilder(client, message, "Error", `You don't have enough money.`, "error")] });
-    message.member.roles.add(item.roleID).then(() => {
+    message.member.roles.add([item.roleID, "734759761660084268"]).then(() => {
       message.channel.send({ embeds: [client.embedBuilder(client, message, "Role Purchased", `You have successfully purchased role <@&${item.roleID}> for $${item.price}.`)] });
       db.subtract(`money_${message.guild.id}_${message.author.id}`, item.price);
     }).catch(() => {
