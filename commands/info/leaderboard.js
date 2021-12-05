@@ -1,6 +1,3 @@
-const Discord = require('discord.js');
-const db = require('quick.db')
-
 module.exports = {
   name: 'leaderboard',
   category: 'info',
@@ -11,19 +8,19 @@ module.exports = {
   usage: 'leaderboard'
 }
 
-module.exports.run = async (client, message, args) => {
+module.exports.run = async (client, message) => {
   const leaderboards = [{
     label: "Economy", emoji: "💵",
-    embed: client.embedBuilder(client, message, "Economy Leaderboard", client.utils.lbMoney(client, message))
+    embed: client.embedBuilder(client, message, "💵︲Economy Leaderboard", client.utils.lbMoney(client, message))
   }, {
     label: "Level", emoji: "⭐",
-    embed: client.embedBuilder(client, message, "Level Leaderboard", client.utils.lbContent(client, message, "level"))
+    embed: client.embedBuilder(client, message, "⭐︲Level Leaderboard", client.utils.lbContent(client, message, "level"))
   }, {
     label: "Bumps", emoji: "📊",
-    embed: client.embedBuilder(client, message, "Bump Leaderboard", client.utils.lbContent(client, message, "bumps"))
+    embed: client.embedBuilder(client, message, "📊︲Bump Leaderboard", client.utils.lbContent(client, message, "bumps"))
   }, {
     label: "Votes", emoji: "📝",
-    embed: client.embedBuilder(client, message, "Voting Leaderboard", client.utils.lbVotes(client, message))
+    embed: client.embedBuilder(client, message, "📝︲Voting Leaderboard", client.utils.lbVotes(client, message))
   }], data = [];
 
   for (let i = 0; i < leaderboards.length; i++) {

@@ -194,7 +194,7 @@ module.exports = async (client, message) => {
           client,
           message,
           "Error",
-          "The economy hasnt been enabled!",
+          "The economy hasn't been enabled!",
           "error"
         ),
       ],
