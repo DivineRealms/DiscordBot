@@ -40,17 +40,16 @@ module.exports.run = async (client, message, args) => {
       message,
       "",
       `<:ArrowRightGray:813815804768026705>Nickname: \`${nickname}\`
-<:ArrowRightGray:813815804768026705>Created: <t:${Math.round(
+<:ArrowRightGray:813815804768026705>Created <t:${Math.round(
         member.user.createdTimestamp / 1000
-      )}:R>
-<:ArrowRightGray:813815804768026705>Joined: <t:${Math.round(
+      )}:R>, joined <t:${Math.round(
         member.joinedTimestamp / 1000
       )}:R>
 <:ArrowRightGray:813815804768026705>Avatar: **[click here](${avatar})**
 <:ArrowRightGray:813815804768026705>Highest Role: ${highestRole}
 <:ArrowRightGray:813815804768026705>Hoisted Role: ${hoistRole}
 <:ArrowRightGray:813815804768026705>Bot: **${bot}**
-<:ArrowRightGray:813815804768026705>ID: \`${member.id}\`
+<:ArrowRightGray:813815804768026705>ID: **${member.id}**
 <:ArrowRightGray:813815804768026705>Roles: ${roles}`
     )
     .setAuthor(

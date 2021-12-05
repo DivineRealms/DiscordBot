@@ -32,9 +32,9 @@ module.exports.run = async (client, message) => {
     `<:ArrowRightGray:813815804768026705>Created: <t:${Math.round(
       role.createdTimestamp / 1000
     )}:R>
-<:ArrowRightGray:813815804768026705>ID: \`${role.id}\`
+<:ArrowRightGray:813815804768026705>ID: **${role.id}**
 <:ArrowRightGray:813815804768026705>Position: **${role.position}**
-<:ArrowRightGray:813815804768026705>Color: \`${role.hexColor}\`
+<:ArrowRightGray:813815804768026705>Color: **${role.hexColor}**
 <:ArrowRightGray:813815804768026705>Hoisted: **${role.hoist}**`
   );
 
