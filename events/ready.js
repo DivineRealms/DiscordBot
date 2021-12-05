@@ -97,7 +97,7 @@ module.exports = async (client) => {
 
     const embed = client.embedBuilder(
       client,
-      "",
+      null,
       "Todays Birthdays!",
       `${settings.birthdayMessage}\n${birthEmbed}`
     );
@@ -147,8 +147,6 @@ module.exports = async (client) => {
                 "📝︲Support us by Voting!",
                 "<:ArrowRightGray:813815804768026705>Click the button below to vote for our server and help us climb the leaderboard."
               )
-              .setFooter("", "")
-              .setTimestamp(null),
           ],
           components: [voteRow],
         });

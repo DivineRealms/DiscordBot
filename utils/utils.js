@@ -21,7 +21,8 @@ function commandsList(client, message, category) {
   let content = "";
 
   commands.forEach(
-    (c) => (content += `<:ArrowRightGray:813815804768026705>\`${message.px}${c.name}\`︲${c.description}\n`)
+    (c) =>
+      (content += `<:ArrowRightGray:813815804768026705>\`${message.px}${c.name}\`︲${c.description}\n`)
   );
 
   return content;
@@ -37,9 +38,12 @@ function lbContent(client, message, lbType) {
   for (let i = 0; i < leaderboard.length; i++) {
     if (i === 10) break;
 
-    content += `**#${i + 1}** <@!${leaderboard[i].ID.split("_")[2]}> - ${
+    content += `\`${i + 1}.\` <@!${leaderboard[i].ID.split("_")[2]}>︲${
       leaderboard[i].data
-    }\n`;
+    }\n`
+      .replace("1.", "🥇")
+      .replace("2.", "🥈")
+      .replace("3.", "🥉");
   }
 
   return content;
@@ -54,9 +58,12 @@ function lbVotes(client, message) {
   for (let i = 0; i < leaderboard.length; i++) {
     if (i == 10) break;
 
-    content += `**#${i + 1}** ${leaderboard[i].nickname} - ${
+    content += `\`${i + 1}.\` **${leaderboard[i].nickname}**︲${
       leaderboard[i].votes
-    }\n`;
+    }\n`
+      .replace("1.", "🥇")
+      .replace("2.", "🥈")
+      .replace("3.", "🥉");
   }
 
   return content;
@@ -86,7 +93,10 @@ function lbMoney(client, message) {
   data.sort((a, b) => b.money - a.money);
 
   for (let i = 0; i < data.length; i++) {
-    content += `**#${i + 1}** <@!${data[i].user}> - $${data[i].money}\n`;
+    content += `\`${i + 1}.\` <@!${data[i].user}>︲$${data[i].money}\n`
+      .replace("1.", "🥇")
+      .replace("2.", "🥈")
+      .replace("3.", "🥉");
   }
 
   return content;
