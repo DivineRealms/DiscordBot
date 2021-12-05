@@ -165,13 +165,16 @@ module.exports = async (client) => {
         .get(
           `https://minecraft-mp.com/api/?object=servers&element=voters&key=${client.conf.settings.voteKey}&month=current&format=json?limit=10`
         )
-        .then((res) => db.set(`votes_${guild.id}`, res.data.voters));
+        .then((res) => {
+          db.set(`votes_${guild.id}`, res.data.voters)
+          db.set(`untilVote_${guild.id}`, Date.now());
+         });
     },
     { timezone: "Europe/Belgrade" }
   );
 
   voteLeaderboardCron.start();
-
+  
   while (guild) {
     counter();
     await new Promise((r) => setTimeout(r, 310000));

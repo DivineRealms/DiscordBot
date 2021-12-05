@@ -9,6 +9,10 @@ module.exports = {
 }
 
 module.exports.run = async (client, message) => {
+  let until = db.fetch(`untilVote_${message.guild.id}`) || Date.now();
+  let timeout = 86400000 - (Date.now() - until);
+  let parsed = client.utils.formatTime(timeout);
+  
   const leaderboards = [{
     label: "Economy", emoji: "💵",
     embed: client.embedBuilder(client, message, "💵︲Economy Leaderboard", client.utils.lbMoney(client, message))
@@ -20,7 +24,7 @@ module.exports.run = async (client, message) => {
     embed: client.embedBuilder(client, message, "📊︲Bump Leaderboard", client.utils.lbContent(client, message, "bumps"))
   }, {
     label: "Votes", emoji: "📝",
-    embed: client.embedBuilder(client, message, "📝︲Voting Leaderboard", client.utils.lbVotes(client, message))
+    embed: client.embedBuilder(client, message, "📝︲Voting Leaderboard", client.utils.lbVotes(client, message)).setFooter(`Next Refresh in ${parsed}`, client.user.displayAvatarURL())
   }], data = [];
 
   for (let i = 0; i < leaderboards.length; i++) {
