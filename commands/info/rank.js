@@ -33,7 +33,7 @@ module.exports.run = async (client, message, args) => {
       client,
       message,
       "",
-      `<:ArrowRightGray:813815804768026705> Rank: **#${rank}**\n<:ArrowRightGray:813815804768026705> Level: **${level}**\n<:ArrowRightGray:813815804768026705> XP: **${xp}/${xpNeeded}**`
+      `<:ArrowRightGray:813815804768026705>Rank: **#${rank}**\n<:ArrowRightGray:813815804768026705>Level: **${level}**\n<:ArrowRightGray:813815804768026705>XP: **${xp}/${xpNeeded}**`
     )
       .setAuthor(user.username, user.displayAvatarURL({ size: 1024, dynamic: true }));
   
