@@ -12,7 +12,7 @@ module.exports.run = async(client, message, args) => {
   let cmd = args[0];
 
   if(!cmd) {
-    const mainMenu = client.embedBuilder(client, message, "Help Menu", `To view Commands use Drop Down to Select Command Category.\n> Total Commands: ${[...client.commands.values()].length}`)
+    const mainMenu = client.embedBuilder(client, message, "Help Menu", `<:ArrowRightGray:813815804768026705>Total Commands: **${[...client.commands.values()].length}**`)
     const economy = client.utils.commandsList(client, message, "economy");
     const ecoEmbed = client.embedBuilder(client, message, "Economy Commands", economy);
     const info = client.utils.commandsList(client, message, "info");
@@ -42,17 +42,17 @@ module.exports.run = async(client, message, args) => {
     
     client.paginateSelect(client, message, mainMenu, {
       id: "help", 
-      placeholder: "Choose Command Category.", 
+      placeholder: "Choose the command category", 
       options: data
     }, true);
   } else {
     const command = client.commands.find((c, n) => n === args[0].toLowerCase() || (c.aliases && c.aliases.includes(args[0].toLowerCase())))
     if (!command) return message.channel.send({ embeds: [client.embedBuilder(client, message, "Error", `I couldnt find a command named \`${args[0]}\``, "error")]})
 
-    const embed = client.embedBuilder(client, message, "Command Help", "")
-      .addField('Command Name', args[0].toLowerCase())
-      .addField('Aliases', command.aliases.map(s => `\`${s}\``).join(', ') || 'none')
-      .addField('Usage', `\`${message.px}${command.usage}\``)
+    const embed = client.embedBuilder(client, message, "Command Help", 
+    `<:ArrowRightGray:813815804768026705>Name: **${args[0].toLowerCase()}**
+<:ArrowRightGray:813815804768026705>Aliases: **${command.aliases.map(s => `\`${s}\``).join(', ') || 'none'}**
+<:ArrowRightGray:813815804768026705>Usage: \`${message.px}${command.usage}\``)
 
     message.channel.send({ embeds: [embed] })
   }
