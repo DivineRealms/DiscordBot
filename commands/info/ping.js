@@ -1,21 +1,33 @@
-const Discord = require('discord.js');
+const Discord = require("discord.js");
 
 module.exports = {
-  name: 'ping',
-  category: 'info',
-  description: 'Allows you to view the bots ping.',
+  name: "ping",
+  category: "info",
+  description: "Allows you to view the bots ping.",
   permissions: [],
   cooldown: 0,
-  aliases: ['pings', 'bping'],
-  usage: 'ping'
-}
+  aliases: ["pings", "bping"],
+  usage: "ping",
+};
 
-module.exports.run = async(client, message, args) => {
-  let embed = client.embedBuilder(client, message, "Pinging...", "")
+module.exports.run = async (client, message, args) => {
+  let embed = client.embedBuilder(client, message, "Pinging...", "");
 
   let m = await message.channel.send({ embeds: [embed] });
 
-  m.edit({ embeds: [embed.setDescription(`**Latency:** ${m.createdTimestamp - message.createdTimestamp}ms
-**API Latency:** ${client.ws.ping}ms
-**Uptime:** ${client.utils.formatTime(client.uptime)}`)] })
-}
+  m.edit({
+    embeds: [
+      embed
+        .setDescription(
+          `<:ArrowRightGray:813815804768026705>Latency: **${
+            m.createdTimestamp - message.createdTimestamp
+          }ms**
+<:ArrowRightGray:813815804768026705>API Latency: **${client.ws.ping}ms**
+<:ArrowRightGray:813815804768026705>Uptime: **${client.utils.formatTime(
+            client.uptime
+          )}**`
+        )
+        .setAuthor("Pinging finished!"),
+    ],
+  });
+};
