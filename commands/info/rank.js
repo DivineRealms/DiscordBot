@@ -15,6 +15,7 @@ module.exports.run = async (client, message, args) => {
     message.mentions.users.first() ||
     client.users.cache.get(args[0]) ||
     message.author;
+  let member = message.guild.members.cache.get(user.id);
   let level = db.fetch(`level_${message.guild.id}_${user.id}`) || 1;
   let xp = db.fetch(`xp_${message.guild.id}_${user.id}`) || 1;
 
@@ -37,7 +38,7 @@ module.exports.run = async (client, message, args) => {
     )
       .setAuthor(user.username, user.displayAvatarURL({ size: 1024, dynamic: true }));
   
-  if (args) embed.setColor(message.member.displayHexColor);
+  if (args) embed.setColor(member.displayHexColor);
 
   message.channel.send({ embeds: [embed] });
 };
