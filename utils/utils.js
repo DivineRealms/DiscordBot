@@ -1,4 +1,3 @@
-const Discord = require("discord.js");
 const db = require("quick.db");
 
 function formatTime(ms) {
@@ -21,13 +20,13 @@ function commandsList(client, message, category) {
   let content = "";
 
   commands.forEach(
-    (c) => (content += `\`${message.px}${c.usage}\` · ${c.description}\n`)
+    (c) => (content += `<:ArrowRightGray:813815804768026705>\`${message.px}${c.name}\`︲${c.description}\n`)
   );
 
   return content;
 }
 
-function lbContent(client, message, lbType) {
+function lbContent(message, lbType) {
   let leaderboard = db
     .all()
     .filter((data) => data.ID.startsWith(`${lbType}_${message.guild.id}`))
@@ -45,7 +44,7 @@ function lbContent(client, message, lbType) {
   return content;
 }
 
-function lbVotes(client, message) {
+function lbVotes(message) {
   let leaderboard = db
     .fetch(`votes_${message.guild.id}`)
     .sort((a, b) => b.votes - a.votes);
@@ -62,7 +61,7 @@ function lbVotes(client, message) {
   return content;
 }
 
-function lbMoney(client, message) {
+function lbMoney(message) {
   let leaderboard = db
     .all()
     .filter((data) => data.ID.startsWith(`money_${message.guild.id}`))
