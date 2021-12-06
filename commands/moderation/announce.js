@@ -53,6 +53,7 @@ module.exports.run = async (client, message, args) => {
 
   let upAliases = ["update", "up", "1"],
     mnAliases = ["maintenance", "main", "2"],
+    suAliases = ["survey", "3"],
     mentionAnswer = ["yes", "1"];
 
   if (upAliases.includes(type))
@@ -63,6 +64,8 @@ module.exports.run = async (client, message, args) => {
     embed
       .setColor("#ffae63")
       .setAuthor(title, `https://cdn.upload.systems/uploads/vRfWnVT5.png`);
+  else if (suAliases.includes(type))
+    embed.setAuthor(title, `https://cdn.upload.systems/uploads/KSTCcy4V.png`);
   else
     embed.setAuthor(title, `https://cdn.upload.systems/uploads/sYDS6yZI.png`);
 
