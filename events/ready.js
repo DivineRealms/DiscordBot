@@ -22,16 +22,24 @@ module.exports = async (client) => {
   console.log(" ");
 
   if (!client.conf.settings.changingActivity.enabled) {
-    const settings = client.conf.settings.botActivity;
-    client.user.setActivity(settings.activity.name, {
-      type: settings.activity.type,
-    });
+    const settings = client.conf.settings.botActivity,
+      guild = client.guilds.cache.get(client.conf.settings.GuildID);
+    client.user.setActivity(
+      settings.activity.name.replace("{count}", guild.memberCount),
+      {
+        type: settings.activity.type,
+      }
+    );
+    console.log(guild.memberCount);
   } else {
     const settings = client.conf.settings.changingActivity;
     let rand = Math.floor(Math.random() * settings.activities.length);
-    client.user.setActivity(settings.activities[rand], {
-      type: settings.types[rand],
-    });
+    client.user.setActivity(
+      settings.activities[rand].replace("{count}", client.users.cache.size),
+      {
+        type: settings.types[rand],
+      }
+    );
     let interval = setInterval(() => {
       if (!settings.enabled) return clearInterval(interval);
       let index = Math.floor(Math.random() * settings.activities.length);
@@ -140,13 +148,12 @@ module.exports = async (client) => {
       if (generalCh)
         generalCh.send({
           embeds: [
-            client
-              .embedBuilder(
-                client,
-                "",
-                "📝︲Support us by Voting!",
-                "<:ArrowRightGray:813815804768026705>Click the button below to vote for our server and help us climb the leaderboard."
-              )
+            client.embedBuilder(
+              client,
+              "",
+              "📝︲Support us by Voting!",
+              "<:ArrowRightGray:813815804768026705>Click the button below to vote for our server and help us climb the leaderboard."
+            ),
           ],
           components: [voteRow],
         });
@@ -166,15 +173,15 @@ module.exports = async (client) => {
           `https://minecraft-mp.com/api/?object=servers&element=voters&key=${client.conf.settings.voteKey}&month=current&format=json?limit=10`
         )
         .then((res) => {
-          db.set(`votes_${guild.id}`, res.data.voters)
+          db.set(`votes_${guild.id}`, res.data.voters);
           db.set(`untilVote_${guild.id}`, Date.now());
-         });
+        });
     },
     { timezone: "Europe/Belgrade" }
   );
 
   voteLeaderboardCron.start();
-  
+
   while (guild) {
     counter();
     await new Promise((r) => setTimeout(r, 310000));
