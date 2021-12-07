@@ -20,7 +20,7 @@ module.exports.run = async (client, message, args) => {
       embed
         .setDescription(
           `<:ArrowRightGray:813815804768026705>Latency: **${
-            m.createdTimestamp - message.createdTimestamp
+            embed.createdTimestamp - message.createdTimestamp
           }ms**
 <:ArrowRightGray:813815804768026705>API Latency: **${client.ws.ping}ms**
 <:ArrowRightGray:813815804768026705>Uptime: **${client.utils.formatTime(
