@@ -14,36 +14,47 @@ module.exports.run = async (client, message, args) => {
   let bal = db.fetch(`money_${message.guild.id}_${message.author.id}`);
 
   if (!args[0] || (isNaN(args[0]) && args[0] !== "all"))
-    return message.channel.send({embeds:[client.utils.errorEmbed(
-      client,
-      message,
-      "You need to enter an amount to deposit."
-    )]});
+    return message.channel.send({
+      embeds: [
+        client.utils.errorEmbed(
+          client,
+          message,
+          "You need to enter an amount to deposit."
+        ),
+      ],
+    });
 
   if (!bal || bal == 0)
-    return message.channel.send({embeds:[client.utils.errorEmbed(
-      client,
-      message,
-      "You don't have money to deposit."
-    )]});
+    return message.channel.send({
+      embeds: [
+        client.utils.errorEmbed(
+          client,
+          message,
+          "You don't have enough money to deposit."
+        ),
+      ],
+    });
 
   if (args[0] === "all") {
     if (!bal || bal == 0)
-      return message.channel.send({embeds:[client.utils.errorEmbed(
-        client,
-        message,
-        "You don't have money to deposit."
-      )]});
+      return message.channel.send({
+        embeds: [
+          client.utils.errorEmbed(
+            client,
+            message,
+            "You don't have enough money to deposit."
+          ),
+        ],
+      });
 
     message.channel.send({
       embeds: [
-        client.embedBuilder(
-          client,
-          message,
-          `You have deposited $${bal} to bank.`,
-          "",
-          "#3db39e"
-        ),
+        client
+          .embedBuilder(client, message, "", "", "#3db39e")
+          .setAuthor(
+            `You have deposited $${bal} to the bank.`,
+            `https://cdn.upload.systems/uploads/6KOGFYJM.png`
+          ),
       ],
     });
 
@@ -53,28 +64,35 @@ module.exports.run = async (client, message, args) => {
   }
 
   if (args[0] > bal)
-    return message.channel.send({embeds:[client.utils.errorEmbed(
-      client,
-      message,
-      "You don't have that much money."
-    )]});
+    return message.channel.send({
+      embeds: [
+        client.utils.errorEmbed(
+          client,
+          message,
+          "You don't have that much money."
+        ),
+      ],
+    });
 
   if (args[0] < 1)
-    return message.channel.send({embeds:[client.utils.errorEmbed(
-      client,
-      message,
-      "You cannot deposit less than $1."
-    )]});
+    return message.channel.send({
+      embeds: [
+        client.utils.errorEmbed(
+          client,
+          message,
+          "You cannot deposit less than $1."
+        ),
+      ],
+    });
 
   message.channel.send({
     embeds: [
-      client.embedBuilder(
-        client,
-        message,
-        `You have deposited $${Number(args[0])} to bank.`,
-        "",
-        "#3db39e"
-      ),
+      client
+        .embedBuilder(client, message, "", "", "#3db39e")
+        .setAuthor(
+          `You have deposited $${Number(args[0])} to the bank.`,
+          `https://cdn.upload.systems/uploads/6KOGFYJM.png`
+        ),
     ],
   });
 

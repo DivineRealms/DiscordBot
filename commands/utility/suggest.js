@@ -40,13 +40,12 @@ module.exports.run = async (client, message, args) => {
   setTimeout(() => message.delete(), 3000);
   message.channel.send({
     embeds: [
-      client.embedBuilder(
-        client,
-        message,
-        "Your suggestion has been submitted successfully.",
-        "",
-        "#3db39e"
-      ),
+      client
+        .embedBuilder(client, message, "", "", "#3db39e")
+        .setAuthor(
+          "Your suggestion has been submitted successfully.",
+          `https://cdn.upload.systems/uploads/6KOGFYJM.png`
+        ),
     ],
   });
 

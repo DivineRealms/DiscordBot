@@ -18,14 +18,16 @@ module.exports = {
 
 module.exports.run = async (client, message, args) => {
   const ticket = db.fetch(`tickets_${message.guild.id}_${message.channel.id}`);
-  const log = client.channels.cache.get(client.conf.logging.Ticket_Channel_Logs);
+  const log = client.channels.cache.get(
+    client.conf.logging.Ticket_Channel_Logs
+  );
 
   const channelMessages = await message.channel.messages
-      .fetch({ limit: 100, before: message.id })
-      .catch((err) => console.log(err));
+    .fetch({ limit: 100, before: message.id })
+    .catch((err) => console.log(err));
 
   let messageCollection = new Collection();
-  (messageCollection = messageCollection.concat(channelMessages));
+  messageCollection = messageCollection.concat(channelMessages);
 
   let msgs = [...messageCollection.values()].reverse();
   let data = await fs.readFile("./data/template.html", "utf8");
@@ -95,13 +97,12 @@ module.exports.run = async (client, message, args) => {
 
   message.channel.send({
     embeds: [
-      client.embedBuilder(
-        client,
-        message,
-        "This channel will be deleted in 10 seconds.",
-        "",
-        "#3db39e"
-      ),
+      client
+        .embedBuilder(client, message, "", "", "#3db39e")
+        .setAuthor(
+          "This channel will be deleted in 10 seconds.",
+          `https://cdn.upload.systems/uploads/6KOGFYJM.png`
+        ),
     ],
   });
 

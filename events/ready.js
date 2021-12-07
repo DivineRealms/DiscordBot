@@ -153,9 +153,9 @@ module.exports = async (client) => {
             client.embedBuilder(
               client,
               "",
-              "📝︲Support us by Voting!",
+              "",
               "<:ArrowRightGray:813815804768026705>Click the button below to vote for our server and help us climb the leaderboard."
-            ),
+            ).setAuthor("Support us by Voting!", `https://cdn.upload.systems/uploads/U5K71mCE.png`),
           ],
           components: [voteRow],
         });

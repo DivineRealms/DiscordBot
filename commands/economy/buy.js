@@ -44,13 +44,18 @@ module.exports.run = async (client, message, args) => {
       .then(() => {
         message.channel.send({
           embeds: [
-            client.embedBuilder(
-              client,
-              message,
-              "Role Purchased",
-              `You have successfully purchased role <@&${item.roleID}> for $${item.price}.`,
-              "#3db39e"
-            ),
+            client
+              .embedBuilder(
+                client,
+                message,
+                "",
+                `You have successfully purchased role <@&${item.roleID}> for $${item.price}.`,
+                "#3db39e"
+              )
+              .setAuthor(
+                "Role Purchased",
+                `https://cdn.upload.systems/uploads/6KOGFYJM.png`
+              ),
           ],
         });
         db.subtract(
@@ -99,13 +104,18 @@ module.exports.run = async (client, message, args) => {
     db.subtract(`money_${message.guild.id}_${message.author.id}`, item.price);
     message.channel.send({
       embeds: [
-        client.embedBuilder(
-          client,
-          message,
-          "Color Purchased",
-          `You have successfully purchased name color **${item.name}** for $${item.price}.`,
-          "#3db39e"
-        ),
+        client
+          .embedBuilder(
+            client,
+            message,
+            "",
+            `You have successfully purchased name color **${item.name}** for $${item.price}.`,
+            "#3db39e"
+          )
+          .setAuthor(
+            "Color Purchased",
+            `https://cdn.upload.systems/uploads/6KOGFYJM.png`
+          ),
       ],
     });
   }

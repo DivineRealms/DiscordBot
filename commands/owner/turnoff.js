@@ -23,13 +23,12 @@ module.exports.run = async (client, message, args) => {
   message.channel
     .send({
       embeds: [
-        client.embedBuilder(
-          client,
-          message,
-          "Bot has been turned off.",
-          "",
-          "#3db39e"
-        ),
+        client
+          .embedBuilder(client, message, "", "", "#3db39e")
+          .setAuthor(
+            "Bot has been turned off.",
+            `https://cdn.upload.systems/uploads/6KOGFYJM.png`
+          ),
       ],
     })
     .then(() => {

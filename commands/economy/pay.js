@@ -52,13 +52,12 @@ module.exports.run = async (client, message, args) => {
 
   message.channel.send({
     embeds: [
-      client.embedBuilder(
-        client,
-        message,
-        `You have paid $${args[1]} to ${user.tag}.`,
-        "",
-        "#3db39e"
-      ),
+      client
+        .embedBuilder(client, message, "", "", "#3db39e")
+        .setAuthor(
+          `You have paid $${args[1]} to ${user.tag}.`,
+          `https://cdn.upload.systems/uploads/6KOGFYJM.png`
+        ),
     ],
   });
 };

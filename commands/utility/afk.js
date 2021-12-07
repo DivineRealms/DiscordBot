@@ -22,13 +22,12 @@ module.exports.run = async (client, message, args) => {
 
   message.channel.send({
     embeds: [
-      client.embedBuilder(
-        client,
-        message,
-        `I have set your AFK status to ${args[0] ? args.join(" ") : "AFK"}`,
-        "",
-        "#3db39e"
-      ),
+      client
+        .embedBuilder(client, message, "", "", "#3db39e")
+        .setAuthor(
+          `I have set your AFK status to ${args[0] ? args.join(" ") : "AFK"}`,
+          `https://cdn.upload.systems/uploads/6KOGFYJM.png`
+        ),
     ],
   });
 };

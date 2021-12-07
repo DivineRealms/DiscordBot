@@ -104,13 +104,18 @@ module.exports.run = async (client, message, args) => {
     message.member.roles.add(color.role);
     message.channel.send({
       embeds: [
-        client.embedBuilder(
-          client,
-          message,
-          "Color Selected",
-          `Color Role <@&${color.role}> has been equiped.`,
-          "#3db39e"
-        ),
+        client
+          .embedBuilder(
+            client,
+            message,
+            "",
+            `Color Role <@&${color.role}> has been equiped.`,
+            "#3db39e"
+          )
+          .setAuthor(
+            "Color Selected",
+            `https://cdn.upload.systems/uploads/6KOGFYJM.png`
+          ),
       ],
     });
   } else if (option.toLowerCase() == "reset") {
@@ -121,13 +126,18 @@ module.exports.run = async (client, message, args) => {
 
     message.channel.send({
       embeds: [
-        client.embedBuilder(
-          client,
-          message,
-          "Color Selected",
-          "Your Name Color has been reset.",
-          "#3db39e"
-        ),
+        client
+          .embedBuilder(
+            client,
+            message,
+            "",
+            "Your Name Color has been reset.",
+            "#3db39e"
+          )
+          .setAuthor(
+            "Color Selected",
+            `https://cdn.upload.systems/uploads/6KOGFYJM.png`
+          ),
       ],
     });
   }

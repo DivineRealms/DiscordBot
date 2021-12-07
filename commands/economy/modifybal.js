@@ -59,26 +59,24 @@ module.exports.run = async (client, message, args) => {
       db.add(`bank_${message.guild.id}_${user.id}`, Number(args[3]));
       message.channel.send({
         embeds: [
-          client.embedBuilder(
-            client,
-            message,
-            `$${args[3]} has been added to ${user.tag}'s bank`,
-            "",
-            "#3db39e"
-          ),
+          client
+            .embedBuilder(client, message, "", "", "#3db39e")
+            .setAuthor(
+              `$${args[3]} has been added to ${user.tag}'s bank`,
+              `https://cdn.upload.systems/uploads/6KOGFYJM.png`
+            ),
         ],
       });
     } else if (args[2].toLowerCase() == "wallet") {
       db.add(`money_${message.guild.id}_${user.id}`, Number(args[3]));
       message.channel.send({
         embeds: [
-          client.embedBuilder(
-            client,
-            message,
-            `$${args[3]} has been added to ${user.tag}'s wallet`,
-            "",
-            "#3db39e"
-          ),
+          client
+            .embedBuilder(client, message, "", "", "#3db39e")
+            .setAuthor(
+              `$${args[3]} has been added to ${user.tag}'s wallet`,
+              `https://cdn.upload.systems/uploads/6KOGFYJM.png`
+            ),
         ],
       });
     }
@@ -87,26 +85,24 @@ module.exports.run = async (client, message, args) => {
       db.subtract(`bank_${message.guild.id}_${user.id}`, Number(args[3]));
       message.channel.send({
         embeds: [
-          client.embedBuilder(
-            client,
-            message,
-            `$${args[3]} has been removed from ${user.tag}'s bank`,
-            "",
-            "#3db39e"
-          ),
+          client
+            .embedBuilder(client, message, "", "", "#3db39e")
+            .setAuthor(
+              `$${args[3]} has been removed from ${user.tag}'s bank`,
+              `https://cdn.upload.systems/uploads/6KOGFYJM.png`
+            ),
         ],
       });
     } else if (args[2].toLowerCase() == "wallet") {
       db.subtract(`money_${message.guild.id}_${user.id}`, Number(args[3]));
       message.channel.send({
         embeds: [
-          client.embedBuilder(
-            client,
-            message,
-            `$${args[3]} has been removed from ${user.tag}'s wallet`,
-            "",
-            "#3db39e"
-          ),
+          client
+            .embedBuilder(client, message, "", "", "#3db39e")
+            .setAuthor(
+              `$${args[3]} has been removed from ${user.tag}'s wallet`,
+              `https://cdn.upload.systems/uploads/6KOGFYJM.png`
+            ),
         ],
       });
     }

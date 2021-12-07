@@ -43,13 +43,12 @@ module.exports.run = async (client, message, args) => {
 
     message.channel.send({
       embeds: [
-        client.embedBuilder(
-          client,
-          message,
-          "Command has been reloaded successfully.",
-          "",
-          "#3db39e"
-        ),
+        client
+          .embedBuilder(client, message, "", "", "#3db39e")
+          .setAuthor(
+            "Command has been reloaded successfully.",
+            `https://cdn.upload.systems/uploads/6KOGFYJM.png`
+          ),
       ],
     });
   } catch (err) {

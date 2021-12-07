@@ -26,15 +26,14 @@ module.exports.run = async (client, message, args) => {
 
   message.channel.send({
     embeds: [
-      client.embedBuilder(
-        client,
-        message,
-        `You have caught ${
-          fish[Math.floor(Math.random() * fish.length)]
-        } and earned $${amount}.`,
-        "",
-        "#3db39e"
-      ),
+      client
+        .embedBuilder(client, message, "", "", "#3db39e")
+        .setAuthor(
+          `You have caught a ${
+            fish[Math.floor(Math.random() * fish.length)]
+          } and earned $${amount}.`,
+          `https://cdn.upload.systems/uploads/6KOGFYJM.png`
+        ),
     ],
   });
 

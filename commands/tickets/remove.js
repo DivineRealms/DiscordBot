@@ -57,7 +57,7 @@ module.exports.run = async (client, message, args) => {
       client.embedBuilder(
         client,
         message,
-        `${
+        `📋︲${
           message.mentions.users.first().username
         } has been removed from the ticket!`,
         "",

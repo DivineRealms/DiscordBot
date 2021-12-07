@@ -12,7 +12,7 @@ module.exports = {
 };
 
 module.exports.run = async (client, message, args) => {
-  const embed = client.embedBuilder(client, message, "Birthday", ""),
+  const embed = client.embedBuilder(client, message, "", "", "#3db39e"),
     user = message.mentions.users.first(),
     birthd =
       args.slice(1).join(" ").toLowerCase().charAt(0).toUpperCase() +
@@ -47,11 +47,16 @@ module.exports.run = async (client, message, args) => {
   message.channel.send({
     embeds: [
       embed
-        .setAuthor(`🥳︲Successfully set your birthday.`)
+        .setAuthor(
+          "Successfully set your birthday.",
+          `https://cdn.upload.systems/uploads/6KOGFYJM.png`
+        )
         .setDescription(
-          `I have set ${user}'s birthday to ${args
+          `<:ArrowRightGray:813815804768026705>I have set ${user}'s birthday to ${args
             .slice(1)
-            .join(" ")}!\nThey will be ${age + 1}.`
+            .join(" ")}!\n<:ArrowRightGray:813815804768026705>They will be ${
+            age + 1
+          }.`
         ),
     ],
   });

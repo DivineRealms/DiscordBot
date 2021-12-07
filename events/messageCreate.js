@@ -39,12 +39,17 @@ module.exports = async (client, message) => {
         db.set(`lastBump_${client.conf.settings.guildID}`, dbumper[0]);
 
         setTimeout(() => {
-          let bumpAgain = client.embedBuilder(
-            client,
-            message,
-            "📊︲Server Bump",
-            "<:ArrowRightGray:813815804768026705>Server can be bumped again, use `!d bump`."
-          );
+          let bumpAgain = client
+            .embedBuilder(
+              client,
+              message,
+              "",
+              "<:ArrowRightGray:813815804768026705>Server can be bumped again, use `!d bump`."
+            )
+            .setAuthor(
+              "Server Bump",
+              `https://cdn.upload.systems/uploads/pVry3Mav.png`
+            );
 
           bumpChannel.send({
             content: `<@!${dbumper[0]}>`,
@@ -55,12 +60,17 @@ module.exports = async (client, message) => {
           db.delete(`lastBump_${client.conf.settings.guildID}`);
         }, timeout);
 
-        const bump = client.embedBuilder(
-          client,
-          message,
-          "📊︲Server Bumped",
-          `<:ArrowRightGray:813815804768026705>Thank you <@!${dbumper[0]}> for bumping!`
-        );
+        const bump = client
+          .embedBuilder(
+            client,
+            message,
+            "",
+            `<:ArrowRightGray:813815804768026705>Thank you <@!${dbumper[0]}> for bumping!`
+          )
+          .setAuthor(
+            "Server Bump",
+            `https://cdn.upload.systems/uploads/pVry3Mav.png`
+          );
 
         db.add(`bumps_${message.guild.id}_${dbumper[0]}`, 1);
 
@@ -82,7 +92,9 @@ module.exports = async (client, message) => {
 
   if (client.afk.has(message.author.id)) {
     message.channel
-      .send(`<:ArrowRightGray:813815804768026705>Hey ${message.author}, I removed your AFK Status.`)
+      .send(
+        `<:ArrowRightGray:813815804768026705>Hey ${message.author}, I removed your AFK Status.`
+      )
       .then((m) => setTimeout(() => m.delete(), 5000));
 
     client.afk.delete(message.author.id);

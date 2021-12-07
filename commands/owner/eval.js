@@ -50,7 +50,7 @@ module.exports.run = async (client, message, args) => {
       .embedBuilder(client, message, "", "", "GREEN")
       .setAuthor(
         "Code Evaluation",
-        `https://cdn.upload.systems/uploads/7GXLEDHZ.png`
+        `https://cdn.upload.systems/uploads/GVd0PBIt.png`
       )
       .addField("📥︲Input:", `\`\`\`${code}\`\`\``);
 

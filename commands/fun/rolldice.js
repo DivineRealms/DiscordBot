@@ -14,7 +14,7 @@ module.exports.run = async (client, message, args) =>
       client.embedBuilder(
         client,
         message,
-        "🎲 Dices Rolled! 🎲",
+        "🎲︲Dices Rolled!",
         `First Dice:  \`${~~(Math.random() * 6) + 1}\`\nSecond Dice: \`${
           ~~(Math.random() * 6) + 1
         }\``,
