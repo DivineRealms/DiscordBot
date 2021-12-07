@@ -15,6 +15,7 @@ module.exports.run = async (client, message, args) => {
     const menus = [
         {
           label: "Main Menu",
+          value: "val_mainMenu",
           emoji: "🏠",
           embed: client.embedBuilder(client, message, "🏠︲Main Menu", ""),
         },
