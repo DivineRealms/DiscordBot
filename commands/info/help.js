@@ -65,7 +65,7 @@ module.exports.run = async (client, message, args) => {
     client.paginateSelect(
       client,
       message,
-      mainMenu,
+      menus[0],
       {
         id: "help",
         placeholder: "Choose the command category",
