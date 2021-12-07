@@ -25,7 +25,9 @@ module.exports.run = async (client, message, args) => {
         client,
         message,
         `Last deleted message was from: ${user.tag}`,
-        `\`\`\`xl${snipe.content}\`\`\``
+        `\`\`\`xl
+${snipe.content}
+\`\`\``
       ),
     ],
   });

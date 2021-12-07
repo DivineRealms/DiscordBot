@@ -14,11 +14,11 @@ module.exports.run = async (client, message) => {
   let role = message.mentions.roles.first();
 
   if (!role)
-    return client.utils.errorEmbed(
-      client,
-      message,
-      "You need to mention a role."
-    );
+    return message.channel.send({
+      embeds: [
+        client.utils.errorEmbed(client, message, "You need to mention a role."),
+      ],
+    });
 
   message.channel.send({
     embeds: [

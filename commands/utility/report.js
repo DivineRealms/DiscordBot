@@ -10,33 +10,41 @@ module.exports = {
 
 module.exports.run = async (client, message, args) => {
   let logChannel = client.channels.cache.get(
-      client.conf.logging.Report_Channel_Logs
-    );
-  
-    if (!logChannel)
-      return client.utils.errorEmbed(
-        client,
-        message,
-        "A report channel hasn't been setup for this server!"
-      );
-  
-    if (!args[0])
-      return client.utils.errorEmbed(client, message, "Please provide a report.");
-  
-    setTimeout(() => message.delete(), 3000);
-    message.channel.send({
+    client.conf.logging.Report_Channel_Logs
+  );
+
+  if (!logChannel)
+    return message.channel.send({
       embeds: [
-        client.embedBuilder(
+        client.utils.errorEmbed(
           client,
           message,
-          `Your report for \`${args.join(" ")}\` was submitted!`,
-          "",
-          "GREEN"
+          "A report channel hasn't been setup for this server!"
         ),
       ],
     });
-  
-    logChannel.send({
+
+  if (!args[0])
+    return message.channel.send({
+      embeds: [
+        client.utils.errorEmbed(client, message, "Please provide a report."),
+      ],
+    });
+
+  setTimeout(() => message.delete(), 3000);
+  message.channel.send({
+    embeds: [
+      client.embedBuilder(
+        client,
+        message,
+        `Your report for \`${args.join(" ")}\` was submitted!`,
+        "",
+        "GREEN"
+      ),
+    ],
+  });
+
+  logChannel.send({
     embeds: [
       client
         .embedBuilder(client, message, "New Report", "")

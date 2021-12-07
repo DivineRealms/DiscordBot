@@ -14,26 +14,26 @@ module.exports.run = async (client, message, args) => {
   let bal = db.fetch(`money_${message.guild.id}_${message.author.id}`);
 
   if (!args[0] || (isNaN(args[0]) && args[0] !== "all"))
-    return client.utils.errorEmbed(
+    return message.channel.send({embeds:[client.utils.errorEmbed(
       client,
       message,
       "You need to enter an amount to deposit."
-    );
+    )]});
 
   if (!bal || bal == 0)
-    return client.utils.errorEmbed(
+    return message.channel.send({embeds:[client.utils.errorEmbed(
       client,
       message,
       "You don't have money to deposit."
-    );
+    )]});
 
   if (args[0] === "all") {
     if (!bal || bal == 0)
-      return client.utils.errorEmbed(
+      return message.channel.send({embeds:[client.utils.errorEmbed(
         client,
         message,
         "You don't have money to deposit."
-      );
+      )]});
 
     message.channel.send({
       embeds: [
@@ -53,18 +53,18 @@ module.exports.run = async (client, message, args) => {
   }
 
   if (args[0] > bal)
-    return client.utils.errorEmbed(
+    return message.channel.send({embeds:[client.utils.errorEmbed(
       client,
       message,
       "You don't have that much money."
-    );
+    )]});
 
   if (args[0] < 1)
-    return client.utils.errorEmbed(
+    return message.channel.send({embeds:[client.utils.errorEmbed(
       client,
       message,
       "You cannot deposit less than $1."
-    );
+    )]});
 
   message.channel.send({
     embeds: [

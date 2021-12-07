@@ -11,7 +11,7 @@ module.exports = {
 };
 
 module.exports.run = async (client, message, args) => {
-  const embed = await message.channel.send({
+  let embed = await message.channel.send({
     embeds: [client.embedBuilder(client, message, "Pinging...", "")],
   });
 

@@ -15,11 +15,15 @@ module.exports.run = async (client, message, args) => {
     day = 86400000;
 
   if (cooldown != null && day - (Date.now() - cooldown) > 0)
-    return client.utils.errorEmbed(
-      client,
-      message,
-      "You're on cooldown, try again later."
-    );
+    return message.channel.send({
+      embeds: [
+        client.utils.errorEmbed(
+          client,
+          message,
+          "You're on cooldown, try again later."
+        ),
+      ],
+    });
 
   message.channel.send({
     embeds: [

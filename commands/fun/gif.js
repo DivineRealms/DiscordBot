@@ -13,11 +13,15 @@ module.exports = {
 
 module.exports.run = async (client, message, args) => {
   if (!args[0])
-    return client.utils.errorEmbed(
-      client,
-      message,
-      "You need to enter something to search for!"
-    );
+    return message.channel.send({
+      embeds: [
+        client.utils.errorEmbed(
+          client,
+          message,
+          "You need to enter something to search for!"
+        ),
+      ],
+    });
 
   const body = await fetch(
       `https://tenor.com/search/${args.join("-")}-gifs`
@@ -26,11 +30,15 @@ module.exports.run = async (client, message, args) => {
     urls = new Array(data.length).fill(0).map((s, i) => data.eq(i).attr("src"));
 
   if (!urls[0])
-    return client.utils.errorEmbed(
-      client,
-      message,
-      "No search results found, did you check your spelling?"
-    );
+    return message.channel.send({
+      embeds: [
+        client.utils.errorEmbed(
+          client,
+          message,
+          "No search results found, did you check your spelling?"
+        ),
+      ],
+    });
 
   message.channel
     .send({

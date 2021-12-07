@@ -103,9 +103,7 @@ function lbMoney(client, message) {
 }
 
 function errorEmbed(client, message, err) {
-  return message.channel.send({
-    embeds: [client.embedBuilder(client, message, err, "", "error")],
-  });
+  return client.embedBuilder(client, message, err, "", "error");
 }
 
 module.exports = {

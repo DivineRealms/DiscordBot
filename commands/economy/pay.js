@@ -16,25 +16,33 @@ module.exports.run = async (client, message, args) => {
     bal = db.fetch(`money_${message.guild.id}_${message.author.id}`);
 
   if (!user)
-    return client.utils.errorEmbed(
-      client,
-      message,
-      "You need to mention a user."
-    );
+    return message.channel.send({
+      embeds: [
+        client.utils.errorEmbed(client, message, "You need to mention a user."),
+      ],
+    });
 
   if (isNaN(args[1]) || args[1] < 1 || args[1].includes("-"))
-    return client.utils.errorEmbed(
-      client,
-      message,
-      "You have entered an invalid amount."
-    );
+    return message.channel.send({
+      embeds: [
+        client.utils.errorEmbed(
+          client,
+          message,
+          "You have entered an invalid amount."
+        ),
+      ],
+    });
 
   if (bal < args[1])
-    return client.utils.errorEmbed(
-      client,
-      message,
-      "You don't have enough money."
-    );
+    return message.channel.send({
+      embeds: [
+        client.utils.errorEmbed(
+          client,
+          message,
+          "You don't have enough money."
+        ),
+      ],
+    });
 
   db.add(`money_${message.guild.id}_${user.id}`, Number(args[1]));
   db.subtract(

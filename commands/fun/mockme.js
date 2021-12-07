@@ -10,11 +10,15 @@ module.exports = {
 
 module.exports.run = async (client, message, args) => {
   if (!args[0])
-    return client.utils.errorEmbed(
-      client,
-      message,
-      "You need to give me something to mock!"
-    );
+    return message.channel.send({
+      embeds: [
+        client.utils.errorEmbed(
+          client,
+          message,
+          "You need to give me something to mock!"
+        ),
+      ],
+    });
 
   message.channel.send(
     args

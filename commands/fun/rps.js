@@ -10,11 +10,11 @@ module.exports = {
 
 module.exports.run = async (client, message, args, cmd) => {
   if (!args[0]) {
-    return client.utils.errorEmbed(
+    return message.channel.send({embeds:[client.utils.errorEmbed(
       client,
       message,
       "Please include your choice (rock/paper/scissors)."
-    );
+    )]});
   }
 
   let choices = ["rock", "paper", "scissors"];

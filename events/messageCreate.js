@@ -181,20 +181,28 @@ module.exports = async (client, message) => {
     !message.member.permissions.has("MANAGE_ROLES") &&
     !message.member.roles.cache.has(client.conf.automod.Bypass_Command)
   )
-    return client.utils
-      .errorEmbed(
-        client,
-        message,
-        `Commands can only be used in ${cmdChannels.join(",").trim()}.`
-      )
-      .then((m) => setTimeout(() => m.delete(), 7000));
-      
+    return message.channel.send({
+      embeds: [
+        client.utils
+          .errorEmbed(
+            client,
+            message,
+            `Commands can only be used in ${cmdChannels.join(",").trim()}.`
+          )
+          .then((m) => setTimeout(() => m.delete(), 7000)),
+      ],
+    });
+
   if (command && !client.conf.economy.enabled && command.category === "economy")
-    return client.utils.errorEmbed(
-      client,
-      message,
-      "The economy hasn't been enabled!"
-    );
+    return message.channel.send({
+      embeds: [
+        client.utils.errorEmbed(
+          client,
+          message,
+          "The economy hasn't been enabled!"
+        ),
+      ],
+    });
 
   if (command) command.run(client, message, args);
 };

@@ -16,19 +16,27 @@ module.exports.run = async (client, message, args) => {
     colors = db.fetch(`colors_${message.guild.id}_${message.author.id}`) || [];
 
   if (!option)
-    return client.utils.errorEmbed(
-      client,
-      message,
-      "You have entered invalid option, options: use, list, reset."
-    );
+    return message.channel.send({
+      embeds: [
+        client.utils.errorEmbed(
+          client,
+          message,
+          "You have entered invalid option, options: use, list, reset."
+        ),
+      ],
+    });
 
   if (option.toLowerCase() == "list") {
     if (colors.length == 0)
-      return client.utils.errorEmbed(
-        client,
-        message,
-        "You don't have any colors."
-      );
+      return message.channel.send({
+        embeds: [
+          client.utils.errorEmbed(
+            client,
+            message,
+            "You don't have any colors."
+          ),
+        ],
+      });
 
     message.channel.send({
       embeds: [
@@ -48,22 +56,30 @@ module.exports.run = async (client, message, args) => {
     let select = args[1];
 
     if (!colors.includes(select.toLowerCase()))
-      return client.utils.errorEmbed(
-        client,
-        message,
-        "You don't have that color in your inventory."
-      );
+      return message.channel.send({
+        embeds: [
+          client.utils.errorEmbed(
+            client,
+            message,
+            "You don't have that color in your inventory."
+          ),
+        ],
+      });
 
     let apply = client.conf.colors.list.find(
       (c) => c.name.toLowerCase() == select.toLowerCase()
     );
 
     if (!apply)
-      return client.utils.errorEmbed(
-        client,
-        message,
-        "You have provided an invalid color."
-      );
+      return message.channel.send({
+        embeds: [
+          client.utils.errorEmbed(
+            client,
+            message,
+            "You have provided an invalid color."
+          ),
+        ],
+      });
 
     client.conf.colors.list.forEach((m) => {
       if (message.member.roles.cache.has(m.role))
@@ -75,11 +91,15 @@ module.exports.run = async (client, message, args) => {
     );
 
     if (message.member.roles.cache.has(color.role))
-      return client.utils.errorEmbed(
-        client,
-        message,
-        "You already have that color selected."
-      );
+      return message.channel.send({
+        embeds: [
+          client.utils.errorEmbed(
+            client,
+            message,
+            "You already have that color selected."
+          ),
+        ],
+      });
 
     message.member.roles.add(color.role);
     message.channel.send({

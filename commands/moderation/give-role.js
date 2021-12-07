@@ -19,32 +19,44 @@ module.exports.run = async (client, message, args) => {
       );
 
   if (!member || !role)
-    return client.utils.errorEmbed(
-      client,
-      message,
-      "You need to provide a User & a Role."
-    );
+    return message.channel.send({
+      embeds: [
+        client.utils.errorEmbed(
+          client,
+          message,
+          "You need to provide a User & a Role."
+        ),
+      ],
+    });
 
   if (member.roles.highest.position >= message.member.roles.highest.position)
-    return client.utils.errorEmbed(
-      client,
-      message,
-      "That User has higher roles than you."
-    );
+    return message.channel.send({
+      embeds: [
+        client.utils.errorEmbed(
+          client,
+          message,
+          "That User has higher roles than you."
+        ),
+      ],
+    });
 
   if (member.roles.highest.position >= message.guild.me.roles.highest.position)
-    return client.utils.errorEmbed(
-      client,
-      message,
-      "That User has higher role than me."
-    );
+    return message.channel.send({
+      embeds: [
+        client.utils.errorEmbed(
+          client,
+          message,
+          "That User has higher role than me."
+        ),
+      ],
+    });
 
   if (member.roles.cache.has(role.id))
-    return client.utils.errorEmbed(
-      client,
-      message,
-      "User already has that role."
-    );
+    return message.channel.send({
+      embeds: [
+        client.utils.errorEmbed(client, message, "User already has that role."),
+      ],
+    });
 
   message.channel.send({
     embeds: [

@@ -13,27 +13,39 @@ module.exports.run = async (client, message, args) => {
     message.mentions.users.first() || message.guild.members.cache.get(args[0]);
 
   if (!user)
-    return client.utils.errorEmbed(
-      client,
-      message,
-      "You have provided an invalid user."
-    );
+    return message.channel.send({
+      embeds: [
+        client.utils.errorEmbed(
+          client,
+          message,
+          "You have provided an invalid user."
+        ),
+      ],
+    });
 
   const text = args.slice(1).join(" ");
 
   if (!text)
-    return client.utils.errorEmbed(
-      client,
-      message,
-      "You need to provide text to send."
-    );
+    return message.channel.send({
+      embeds: [
+        client.utils.errorEmbed(
+          client,
+          message,
+          "You need to provide text to send."
+        ),
+      ],
+    });
 
   user.send({ content: text }).catch(() => {
-    return client.utils.errorEmbed(
-      client,
-      message,
-      "This User has their DMs Closed."
-    );
+    return message.channel.send({
+      embeds: [
+        client.utils.errorEmbed(
+          client,
+          message,
+          "This User has their DMs Closed."
+        ),
+      ],
+    });
   });
 
   message.channel.send({

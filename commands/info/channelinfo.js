@@ -12,8 +12,12 @@ module.exports.run = async (client, message, args) => {
   message.channel.send({
     embeds: [
       client
-        .embedBuilder(client, message, "", "")
-        .setTitle(`<#${message.channel.name}> (${message.channel.id})`)
+        .embedBuilder(
+          client,
+          message,
+          `${message.channel.name} (${message.channel.id})`,
+          ""
+        )
         .addField(
           "Information",
           `<:ArrowRightGray:813815804768026705>Channel Name: ${message.channel.name} 
@@ -34,7 +38,7 @@ module.exports.run = async (client, message, args) => {
 <:ArrowRightGray:813815804768026705>Topic: **${
             message.channel.topic || "No Topic Set!"
           }** 
-<:ArrowRightGray:813815804768026705>Last Message Pinned: **<t:${
+<:ArrowRightGray:813815804768026705>Last Message Pinned: <t:${
             Math.round(message.channel.lastPinTimestamp / 1000) || "none"
           }:R>`,
           false

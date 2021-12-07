@@ -17,39 +17,55 @@ module.exports.run = async (client, message, args, cmd) => {
     return games.delete(message.guild.id + message.author.id);
 
   if (games.get(message.guild.id + message.author.id))
-    return client.utils.errorEmbed(
-      client,
-      message,
-      "You're already playing against someone.",
-      `<:ArrowRightGray:813815804768026705>Leave the game using ${
-        message.px + "" + cmd
-      } leave.`
-    );
+    return message.channel.send({
+      embeds: [
+        client.utils.errorEmbed(
+          client,
+          message,
+          "You're already playing against someone.",
+          `<:ArrowRightGray:813815804768026705>Leave the game using ${
+            message.px + "" + cmd
+          } leave.`
+        ),
+      ],
+    });
 
   if (
     !message.mentions.users.first() ||
     message.mentions.users.first().id == message.author.id ||
     message.mentions.users.first().bot
   )
-    return client.utils.errorEmbed(
-      client,
-      message,
-      "You need to mention a valid user."
-    );
+    return message.channel.send({
+      embeds: [
+        client.utils.errorEmbed(
+          client,
+          message,
+          "You need to mention a valid user."
+        ),
+      ],
+    });
 
   if (games.get(message.guild.id + message.mentions.users.first().id))
-    return client.utils.errorEmbed(
-      client,
-      message,
-      "That User is already playing."
-    );
+    return message.channel.send({
+      embeds: [
+        client.utils.errorEmbed(
+          client,
+          message,
+          "That User is already playing."
+        ),
+      ],
+    });
 
   if (requests.get(message.guild.id + message.mentions.users.first().id))
-    return client.utils.errorEmbed(
-      client,
-      message,
-      "That User has already sent request to someone else."
-    );
+    return message.channel.send({
+      embeds: [
+        client.utils.errorEmbed(
+          client,
+          message,
+          "That User has already sent request to someone else."
+        ),
+      ],
+    });
 
   requests.set(message.guild.id + message.author.id, true);
   requests.set(message.guild.id + message.mentions.users.first().id, true);
@@ -73,11 +89,15 @@ module.exports.run = async (client, message, args, cmd) => {
     .awaitMessages(filter1, { max: 1, time: 8000 })
     .then((collected) => {
       if (!collected.first())
-        return client.utils.errorEmbed(
-          client,
-          message,
-          "They didn't confirm in time."
-        );
+        return message.channel.send({
+          embeds: [
+            client.utils.errorEmbed(
+              client,
+              message,
+              "They didn't confirm in time."
+            ),
+          ],
+        });
 
       games.set(message.guild.id + message.mentions.users.first().id, true);
       games.set(message.guild.id + message.author.id, true);

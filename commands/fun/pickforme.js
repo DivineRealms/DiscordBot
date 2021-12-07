@@ -16,11 +16,19 @@ module.exports.run = async (client, message, args) => {
     choice = choices[~~(Math.random() * choices.length)];
 
   if (!choice)
-    return client.utils
-      .errorEmbed(client, message, `You must seperate choices with a \`|\`.`)
-      .setDescription(
-        `<:ArrowRightGray:813815804768026705>Example: \`${message.px}pickforme apple | banana | peach\`!`
-      );
+    return message.channel.send({
+      embeds: [
+        client
+          .errorEmbed(
+            client,
+            message,
+            `You must seperate choices with a \`|\`.`
+          )
+          .setDescription(
+            `<:ArrowRightGray:813815804768026705>Example: \`${message.px}pickforme apple | banana | peach\`!`
+          ),
+      ],
+    });
 
   message.channel.send(
     `You gave me the options of \`${choices.join(" ")}\`\nI chose: ${choice}`

@@ -28,14 +28,15 @@ module.exports.run = async (client, message, args) => {
   ];
 
   const isToday = (d) =>
-    d
-      ? new Date().getMonth() === new Date(d).getMonth() &&
-        new Date().getDate() <= new Date(d).getDate()
-      : false,birthdays = db
-    .all()
-    .filter((i) => i.ID.startsWith(`birthday_${message.guild.id}_`))
-    .sort((a, b) => b.data - a.data);
-    
+      d
+        ? new Date().getMonth() === new Date(d).getMonth() &&
+          new Date().getDate() <= new Date(d).getDate()
+        : false,
+    birthdays = db
+      .all()
+      .filter((i) => i.ID.startsWith(`birthday_${message.guild.id}_`))
+      .sort((a, b) => b.data - a.data);
+
   birthdays = birthdays
     .filter((b) => isToday(b.data))
     .map((s) => {
@@ -44,11 +45,15 @@ module.exports.run = async (client, message, args) => {
     });
 
   if (!birthdays.length)
-    return client.utils.errorEmbed(
-      client,
-      message,
-      "There aren't any upcoming birthdays."
-    );
+    return message.channel.send({
+      embeds: [
+        client.utils.errorEmbed(
+          client,
+          message,
+          "There aren't any upcoming birthdays."
+        ),
+      ],
+    });
 
   paginateContent(
     client,

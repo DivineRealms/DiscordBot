@@ -16,18 +16,26 @@ module.exports.run = async (client, message, args) => {
     chance = Math.floor(Math.random() * 100) + 1;
 
   if (!args[0] || (isNaN(args[0]) && args[0] !== "all"))
-    return client.utils.errorEmbed(
-      client,
-      message,
-      "You need to enter how much to bet."
-    );
+    return message.channel.send({
+      embeds: [
+        client.utils.errorEmbed(
+          client,
+          message,
+          "You need to enter how much to bet."
+        ),
+      ],
+    });
 
   if (!bal || bal == 0)
-    return client.utils.errorEmbed(
-      client,
-      message,
-      "You don't have money to bet."
-    );
+    return message.channel.send({
+      embeds: [
+        client.utils.errorEmbed(
+          client,
+          message,
+          "You don't have money to bet."
+        ),
+      ],
+    });
 
   if (args[0] === "all") {
     let money = parseInt(bal);
@@ -60,18 +68,26 @@ module.exports.run = async (client, message, args) => {
   }
 
   if (args[0] > bal)
-    return client.utils.errorEmbed(
-      client,
-      message,
-      "You don't have that much money."
-    );
+    return message.channel.send({
+      embeds: [
+        client.utils.errorEmbed(
+          client,
+          message,
+          "You don't have that much money."
+        ),
+      ],
+    });
 
   if (args[0] < 200)
-    return client.utils.errorEmbed(
-      client,
-      message,
-      "You cannot bet less than $200."
-    );
+    return message.channel.send({
+      embeds: [
+        client.utils.errorEmbed(
+          client,
+          message,
+          "You cannot bet less than $200."
+        ),
+      ],
+    });
 
   let money = parseInt(args[0]);
 
@@ -95,7 +111,7 @@ module.exports.run = async (client, message, args) => {
           .addField("Result:", `You lost!`),
       ],
     });
-    
+
     db.subtract(`money_${message.guild.id}_${message.author.id}`, money);
   }
 };

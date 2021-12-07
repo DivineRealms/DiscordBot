@@ -15,11 +15,15 @@ module.exports.run = async (client, message, args) => {
   let birthday = db.fetch(`birthday_${message.guild.id}_${message.author.id}`);
 
   if (birthday)
-    return client.utils.errorEmbed(
-      client,
-      message,
-      "You have already set your birthday."
-    );
+    return message.channel.send({
+      embeds: [
+        client.utils.errorEmbed(
+          client,
+          message,
+          "You have already set your birthday."
+        ),
+      ],
+    });
 
   const birthd =
       args.join(" ").toLowerCase().charAt(0).toUpperCase() +
@@ -27,19 +31,29 @@ module.exports.run = async (client, message, args) => {
     date = datetime.parse(birthd, "MMM D YYYY");
 
   if (!date.getDay())
-    return client.utils.errorEmbed(
-      client,
-      message,
-      "Invalid format, example: Jan 21 2004."
-    );
+    return message.channel.send({
+      embeds: [
+        client.utils.errorEmbed(
+          client,
+          message,
+          "Invalid format, example: Jan 21 2004."
+        ),
+      ],
+    });
 
   const age = getAge(args.join(" "));
   if (age <= 12)
-    return client.utils.errorEmbed(
-      client,
-      message,
-      `You can't enter a year greater than ${new Date().getFullYear() - 12}.`
-    );
+    return message.channel.send({
+      embeds: [
+        client.utils.errorEmbed(
+          client,
+          message,
+          `You can't enter a year greater than ${
+            new Date().getFullYear() - 12
+          }.`
+        ),
+      ],
+    });
 
   message.channel.send({
     embeds: [

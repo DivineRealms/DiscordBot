@@ -16,25 +16,33 @@ module.exports.run = async (client, message, args) => {
     message.guild.members.cache.get(args[0]);
 
   if (!member)
-    return client.utils.errorEmbed(
-      client,
-      message,
-      "You need to provide a user."
-    );
+    return message.channel.send({
+      embeds: [
+        client.utils.errorEmbed(client, message, "You need to provide a user."),
+      ],
+    });
 
   if (member.id === message.author.id)
-    return client.utils.errorEmbed(client, message, "You cannot rob yourself.");
+    return message.channel.send({
+      embeds: [
+        client.utils.errorEmbed(client, message, "You cannot rob yourself."),
+      ],
+    });
 
   const memberbal = db.fetch(`money_${message.guild.id}_${member.id}`),
     rob = ~~(Math.random() * 3),
     amount = ~~(memberbal / 10);
 
   if (!memberbal || memberbal < 200)
-    return client.utils.errorEmbed(
-      client,
-      message,
-      "That Member doesn't have money."
-    );
+    return message.channel.send({
+      embeds: [
+        client.utils.errorEmbed(
+          client,
+          message,
+          "That Member doesn't have money."
+        ),
+      ],
+    });
 
   if (rob) {
     client.utils.errorEmbed(

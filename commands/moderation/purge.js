@@ -10,25 +10,37 @@ module.exports = {
 
 module.exports.run = async (client, message, args) => {
   if (!args[0] || isNaN(args[0]))
-    return client.utils.errorEmbed(
-      client,
-      message,
-      "You need to provide amount of messages to remove."
-    );
+    return message.channel.send({
+      embeds: [
+        client.utils.errorEmbed(
+          client,
+          message,
+          "You need to provide amount of messages to remove."
+        ),
+      ],
+    });
 
   if (args[0] > 100)
-    return client.utils.errorEmbed(
-      client,
-      message,
-      "You cannot purge more than 100 messages at once."
-    );
-    
+    return message.channel.send({
+      embeds: [
+        client.utils.errorEmbed(
+          client,
+          message,
+          "You cannot purge more than 100 messages at once."
+        ),
+      ],
+    });
+
   if (args[0] < 1)
-    return client.utils.errorEmbed(
-      client,
-      message,
-      "You need to delete at least 1 message."
-    );
+    return message.channel.send({
+      embeds: [
+        client.utils.errorEmbed(
+          client,
+          message,
+          "You need to delete at least 1 message."
+        ),
+      ],
+    });
 
   message.channel
     .bulkDelete(args[0], true)

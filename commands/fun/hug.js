@@ -12,11 +12,15 @@ module.exports.run = async (client, message, args) => {
   const mentionedMember = message.mentions.members.first();
 
   if (!args[0]) {
-    return client.utils.errorEmbed(
-      client,
-      message,
-      "You need to mention who you would like to hug!"
-    );
+    return message.channel.send({
+      embeds: [
+        client.utils.errorEmbed(
+          client,
+          message,
+          "You need to mention who you would like to hug!"
+        ),
+      ],
+    });
   } else {
     const gifs = [
         "https://media.giphy.com/media/bbxTrFmeoM7aU/giphy.gif",
@@ -28,11 +32,11 @@ module.exports.run = async (client, message, args) => {
       randomGif = gifs[randomNumber];
 
     if (mentionedMember.user.id === message.author.id)
-      return client.utils.errorEmbed(
-        client,
-        message,
-        "You cannot hug yourself."
-      );
+      return message.channel.send({
+        embeds: [
+          client.utils.errorEmbed(client, message, "You cannot hug yourself."),
+        ],
+      });
 
     message.channel.send({
       embeds: [

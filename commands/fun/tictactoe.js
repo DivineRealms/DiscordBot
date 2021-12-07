@@ -27,19 +27,31 @@ module.exports.run = async (client, message, args, cmd) => {
     message.mentions.users.first().id == message.author.id ||
     message.mentions.users.first().bot
   )
-    return client.utils.errorEmbed(
-      "Please mention a valid person you want to play against"
-    );
+    return message.channel.send({
+      embeds: [
+        client.utils.errorEmbed(
+          "Please mention a valid person you want to play against"
+        ),
+      ],
+    });
 
   if (games.get(message.guild.id + message.mentions.users.first().id))
-    return client.utils.errorEmbed(
-      "That user is already playing a game of tic-tac-toe."
-    );
+    return message.channel.send({
+      embeds: [
+        client.utils.errorEmbed(
+          "That user is already playing a game of tic-tac-toe."
+        ),
+      ],
+    });
 
   if (requests.get(message.guild.id + message.mentions.users.first().id))
-    return client.utils.errorEmbed(
-      "That user is already requesting to play with someone else!"
-    );
+    return message.channel.send({
+      embeds: [
+        client.utils.errorEmbed(
+          "That user is already requesting to play with someone else!"
+        ),
+      ],
+    });
 
   requests.set(message.guild.id + message.author.id, true);
   requests.set(message.guild.id + message.mentions.users.first().id, true);
@@ -64,7 +76,11 @@ module.exports.run = async (client, message, args, cmd) => {
     });
 
   if (!msg.first())
-    return client.utils.errorEmbed("Looks like they didnt say yes in time..");
+    return message.channel.send({
+      embeds: [
+        client.utils.errorEmbed("Looks like they didnt say yes in time.."),
+      ],
+    });
 
   games.set(message.guild.id + message.mentions.users.first().id, true);
   games.set(message.guild.id + message.author.id, true);

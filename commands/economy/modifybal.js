@@ -15,32 +15,44 @@ module.exports.run = async (client, message, args) => {
     message.mentions.users.first() || client.users.cache.get(args[0]);
 
   if (!user)
-    return client.utils.errorEmbed(
-      client,
-      message,
-      "You need to mention a user."
-    );
+    return message.channel.send({
+      embeds: [
+        client.utils.errorEmbed(client, message, "You need to mention a user."),
+      ],
+    });
 
   if (!["add", "remove"].includes(args[1]))
-    return client.utils.errorEmbed(
-      client,
-      message,
-      "You need to specify do you want to add or remove."
-    );
+    return message.channel.send({
+      embeds: [
+        client.utils.errorEmbed(
+          client,
+          message,
+          "You need to specify do you want to add or remove."
+        ),
+      ],
+    });
 
   if (!["wallet", "bank"].includes(args[2]))
-    return client.utils.errorEmbed(
-      client,
-      message,
-      "You need to specify if you want wallet or bank."
-    );
+    return message.channel.send({
+      embeds: [
+        client.utils.errorEmbed(
+          client,
+          message,
+          "You need to specify if you want wallet or bank."
+        ),
+      ],
+    });
 
   if (isNaN(args[3]) || args[3] < 1)
-    return client.utils.errorEmbed(
-      client,
-      message,
-      "You need to enter an amount."
-    );
+    return message.channel.send({
+      embeds: [
+        client.utils.errorEmbed(
+          client,
+          message,
+          "You need to enter an amount."
+        ),
+      ],
+    });
 
   if (args[1].toLowerCase() == "add") {
     if (args[2].toLowerCase() == "bank") {

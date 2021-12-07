@@ -12,12 +12,20 @@ module.exports = {
 
 module.exports.run = async (client, message, args) => {
   if (!args[0])
-    return client.utils.errorEmbed(client, message, "Please provide some text.");
+    return message.channel.send({
+      embeds: [
+        client.utils.errorEmbed(client, message, "Please provide some text."),
+      ],
+    });
 
   figlet.text(args.join(" "), (err, data) => {
     if (err) return;
     if (data.length > 2000)
-      return client.utils.errorEmbed(client, message, "Max 2000 charachters.");
+      return message.channel.send({
+        embeds: [
+          client.utils.errorEmbed(client, message, "Max 2000 charachters."),
+        ],
+      });
 
     message.channel.send("```\n" + data + "```");
   });

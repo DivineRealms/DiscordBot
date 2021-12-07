@@ -14,11 +14,15 @@ module.exports.run = async (client, message, args) => {
   const [type, mention, title, description] = args;
 
   if (!args[0])
-    return client.utils.errorEmbed(
-      client,
-      message,
-      `Invalid usage; see ${message.px}help announce for correct usage.`
-    );
+    return message.channel.send({
+      embeds: [
+        client.utils.errorEmbed(
+          client,
+          message,
+          `Invalid usage; see ${message.px}help announce for correct usage.`
+        ),
+      ],
+    });
 
   let embed = client
     .embedBuilder(client, message, "", description)
@@ -30,11 +34,15 @@ module.exports.run = async (client, message, args) => {
 
   args.splice(0, 4);
   if (args.length % 2 !== 0)
-    return client.utils.errorEmbed(
-      client,
-      message,
-      "You are missing a title or a description."
-    );
+    return message.channel.send({
+      embeds: [
+        client.utils.errorEmbed(
+          client,
+          message,
+          "You are missing a title or a description."
+        ),
+      ],
+    });
 
   const fields = [];
   for (let i = 0; i < args.length; i += 2)
@@ -43,11 +51,15 @@ module.exports.run = async (client, message, args) => {
   for (let i = 0; i < fields.length; i++) {
     embed.addField(fields[i].title, fields[i].description, false);
     if (!fields[i].title || !fields[i].description)
-      return client.utils.errorEmbed(
-        client,
-        message,
-        "You need to provide both a title and a description."
-      );
+      return message.channel.send({
+        embeds: [
+          client.utils.errorEmbed(
+            client,
+            message,
+            "You need to provide both a title and a description."
+          ),
+        ],
+      });
   }
 
   let upAliases = ["update", "up", "1"],

@@ -14,19 +14,27 @@ module.exports = {
 
 module.exports.run = async (client, message, args) => {
   if (!client.conf.settings.BotOwnerDiscordID.includes(message.author.id))
-    return client.utils.errorEmbed(
-      client,
-      message,
-      "Only Developers can use this command."
-    );
+    return message.channel.send({
+      embeds: [
+        client.utils.errorEmbed(
+          client,
+          message,
+          "Only Developers can use this command."
+        ),
+      ],
+    });
 
   const code = args.join(" ");
   if (!code)
-    return client.utils.errorEmbed(
-      client,
-      message,
-      "You need to enter code to evaluate."
-    );
+    return message.channel.send({
+      embeds: [
+        client.utils.errorEmbed(
+          client,
+          message,
+          "You need to enter code to evaluate."
+        ),
+      ],
+    });
   try {
     let evaled = eval(code);
 
@@ -54,7 +62,7 @@ module.exports.run = async (client, message, args) => {
           body: evaled,
         }
       ).then((res) => res.json());
-      
+
       embed.addField(
         "📤︲Output:",
         `\`\`\`xl\nhttps://www.toptal.com/developers/hastebin/raw/${key}\`\`\``
@@ -63,9 +71,13 @@ module.exports.run = async (client, message, args) => {
 
     message.channel.send({ embeds: [embed] });
   } catch (err) {
-    client.utils
-      .errorEmbed(client, message, "Code Evaluation Failed")
-      .addField("📥︲Input:", `\`\`\`xl\n${code}\`\`\``)
-      .addField("📤︲Output:", `\`\`\`xl\n${err}\`\`\``);
+    message.channel.send({
+      embeds: [
+        client.utils
+          .errorEmbed(client, message, "Code Evaluation Failed")
+          .addField("📥︲Input:", `\`\`\`xl\n${code}\`\`\``)
+          .addField("📤︲Output:", `\`\`\`xl\n${err}\`\`\``),
+      ],
+    });
   }
 };

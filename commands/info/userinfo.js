@@ -29,7 +29,7 @@ module.exports.run = async (client, message, args) => {
       : "*None*",
     highestRole = member.roles.highest || "*None*",
     hoistRole = member.roles.hoist || "*None*",
-    memberColor = message.guild.members.cache.get(user.id).displayHexColor;
+    memberColor = message.guild.members.cache.get(member.id).displayHexColor;
 
   message.channel.send({
     embeds: [

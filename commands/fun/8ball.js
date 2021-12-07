@@ -10,11 +10,15 @@ module.exports = {
 
 module.exports.run = async (client, message, args) => {
   if (!args[1])
-    return client.utils.errorEmbed(
-      client,
-      message,
-      "Please specify your question."
-    );
+    return message.channel.send({
+      embeds: [
+        client.utils.errorEmbed(
+          client,
+          message,
+          "Please specify your question."
+        ),
+      ],
+    });
 
   const responses = [
     "Signs point to yes.",

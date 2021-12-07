@@ -80,11 +80,15 @@ module.exports.run = async (client, message, args) => {
   if (log) log.send({ files: [attachment], embeds: [loggingembed] });
 
   if (!ticket)
-    return client.utils.errorEmbed(
-      client,
-      message,
-      "This command can only be used inside of tickets."
-    );
+    return message.channel.send({
+      embeds: [
+        client.utils.errorEmbed(
+          client,
+          message,
+          "This command can only be used inside of tickets."
+        ),
+      ],
+    });
 
   message.channel.send({
     embeds: [
@@ -97,7 +101,7 @@ module.exports.run = async (client, message, args) => {
       ),
     ],
   });
-  
+
   message.channel.send({ files: [attachment] });
 
   await new Promise((r) => setTimeout(r, 10000));

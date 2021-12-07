@@ -10,11 +10,15 @@ module.exports = {
 
 module.exports.run = (client, message, args) => {
   if (!client.conf.settings.BotOwnerDiscordID.includes(message.author.id))
-    return client.utils.errorEmbed(
-      client,
-      message,
-      "Only Developers can use this command."
-    );
+    return message.channel.send({
+      embeds: [
+        client.utils.errorEmbed(
+          client,
+          message,
+          "Only Developers can use this command."
+        ),
+      ],
+    });
 
   client.settings.deleteAll();
 };

@@ -81,11 +81,15 @@ module.exports.run = async (client, message, args) => {
     );
 
     if (!command)
-      return client.utils.errorEmbed(
-        client,
-        message,
-        `I couldnt find a command named ${args[0]}.`
-      );
+      return message.channel.send({
+        embeds: [
+          client.utils.errorEmbed(
+            client,
+            message,
+            `I couldnt find a command named ${args[0]}.`
+          ),
+        ],
+      });
 
     message.channel.send({
       embeds: [

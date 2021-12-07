@@ -14,18 +14,26 @@ module.exports.run = async (client, message, args) => {
   const ticket = db.fetch(`tickets_${message.guild.id}_${message.channel.id}`);
 
   if (!ticket)
-    return client.utils.errorEmbed(
-      client,
-      message,
-      "This command can only be used in Ticket Channel."
-    );
+    return message.channel.send({
+      embeds: [
+        client.utils.errorEmbed(
+          client,
+          message,
+          "This command can only be used in Ticket Channel."
+        ),
+      ],
+    });
 
   if (!message.mentions.users.first())
-    return client.utils.errorEmbed(
-      client,
-      message,
-      "You need to mention the user."
-    );
+    return message.channel.send({
+      embeds: [
+        client.utils.errorEmbed(
+          client,
+          message,
+          "You need to mention the user."
+        ),
+      ],
+    });
 
   if (
     message.channel.permissionOverwrites.has(message.mentions.users.first().id)
@@ -35,11 +43,15 @@ module.exports.run = async (client, message, args) => {
         .get(message.mentions.users.first().id)
         .allow.has("VIEW_CHANNEL")
     )
-      return client.utils.errorEmbed(
-        client,
-        message,
-        "User is already added in the ticket."
-      );
+      return message.channel.send({
+        embeds: [
+          client.utils.errorEmbed(
+            client,
+            message,
+            "User is already added in the ticket."
+          ),
+        ],
+      });
 
   message.channel.permissionOverwrites.edit(message.mentions.users.first(), {
     VIEW_CHANNEL: true,

@@ -14,18 +14,18 @@ module.exports.run = async (client, message, args) => {
   let [end, ...reason] = args;
 
   if (!args[0] || isNaN(parse(end)))
-    return client.utils.errorEmbed(
-      client,
-      message,
-      "You need to provide time."
-    );
+    return message.channel.send({
+      embeds: [
+        client.utils.errorEmbed(client, message, "You need to provide time."),
+      ],
+    });
 
   if (!reason[0])
-    return client.utils.errorEmbed(
-      client,
-      message,
-      "You need to enter a reason."
-    );
+    return message.channel.send({
+      embeds: [
+        client.utils.errorEmbed(client, message, "You need to enter a reason."),
+      ],
+    });
 
   message.channel.send({
     embeds: [

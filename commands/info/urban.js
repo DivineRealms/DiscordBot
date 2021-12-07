@@ -13,20 +13,28 @@ module.exports = {
 
 module.exports.run = async (client, message, args) => {
   if (!args[0])
-    return client.utils.errorEmbed(
-      client,
-      message,
-      "You need to enter a term to search for."
-    );
+    return message.channel.send({
+      embeds: [
+        client.utils.errorEmbed(
+          client,
+          message,
+          "You need to enter a term to search for."
+        ),
+      ],
+    });
 
   let def = await urban(args[0]).catch(() => {});
 
   if (!def)
-    return client.utils.errorEmbed(
-      client,
-      message,
-      `No Results found for ${args[0]}.`
-    );
+    return message.channel.send({
+      embeds: [
+        client.utils.errorEmbed(
+          client,
+          message,
+          `No Results found for ${args[0]}.`
+        ),
+      ],
+    });
 
   message.channel.send({
     embeds: [

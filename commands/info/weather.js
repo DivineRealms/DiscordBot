@@ -16,21 +16,33 @@ module.exports.run = async (client, message, args) => {
     { search: args.join(" "), degreeType: "C" },
     function (error, result) {
       if (error)
-        return client.utils.errorEmbed(client, message, "Invalid Location.");
+        return message.channel.send({
+          embeds: [
+            client.utils.errorEmbed(client, message, "Invalid Location."),
+          ],
+        });
 
       if (!args[0])
-        return client.utils.errorEmbed(
-          client,
-          message,
-          "You need to enter a location."
-        );
+        return message.channel.send({
+          embeds: [
+            client.utils.errorEmbed(
+              client,
+              message,
+              "You need to enter a location."
+            ),
+          ],
+        });
 
       if (result === undefined || result.length === 0)
-        return client.utils.errorEmbed(
-          client,
-          message,
-          "You have entered an Invalid Location."
-        );
+        return message.channel.send({
+          embeds: [
+            client.utils.errorEmbed(
+              client,
+              message,
+              "You have entered an Invalid Location."
+            ),
+          ],
+        });
 
       var current = result[0].current,
         location = result[0].location;

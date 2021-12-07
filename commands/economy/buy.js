@@ -17,19 +17,27 @@ module.exports.run = async (client, message, args) => {
     balance = db.fetch(`money_${message.guild.id}_${message.author.id}`);
 
   if (!item)
-    return client.utils.errorEmbed(
-      client,
-      message,
-      "You have entered an invalid shop id."
-    );
+    return message.channel.send({
+      embeds: [
+        client.utils.errorEmbed(
+          client,
+          message,
+          "You have entered an invalid shop id."
+        ),
+      ],
+    });
 
   if (item.type == "role") {
     if (!balance || balance < item.price)
-      return client.utils.errorEmbed(
-        client,
-        message,
-        "You don't have enough money."
-      );
+      return message.channel.send({
+        embeds: [
+          client.utils.errorEmbed(
+            client,
+            message,
+            "You don't have enough money."
+          ),
+        ],
+      });
 
     message.member.roles
       .add([item.roleID, "734759761660084268"])
@@ -62,18 +70,26 @@ module.exports.run = async (client, message, args) => {
       db.fetch(`colors_${message.guild.id}_${message.author.id}`) || [];
 
     if (!balance || balance < item.price)
-      return client.utils.errorEmbed(
-        client,
-        message,
-        "You don't have enough money."
-      );
+      return message.channel.send({
+        embeds: [
+          client.utils.errorEmbed(
+            client,
+            message,
+            "You don't have enough money."
+          ),
+        ],
+      });
 
     if (colors.includes(item.name.toLowerCase()))
-      return client.utils.errorEmbed(
-        client,
-        message,
-        "You already have that name color."
-      );
+      return message.channel.send({
+        embeds: [
+          client.utils.errorEmbed(
+            client,
+            message,
+            "You already have that name color."
+          ),
+        ],
+      });
 
     db.push(
       `colors_${message.guild.id}_${message.author.id}`,

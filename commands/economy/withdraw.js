@@ -15,19 +15,27 @@ module.exports.run = async (client, message, args) => {
     balance = db.fetch(`money_${message.guild.id}_${message.author.id}`);
 
   if (!args[0] || (isNaN(args[0]) && args[0] !== "all"))
-    return client.utils.errorEmbed(
-      client,
-      message,
-      "You must provide an amount to deposit."
-    );
+    return message.channel.send({
+      embeds: [
+        client.utils.errorEmbed(
+          client,
+          message,
+          "You must provide an amount to deposit."
+        ),
+      ],
+    });
 
   if (args[0] === "all") {
     if (!bank || bank == 0)
-      return client.utils.errorEmbed(
-        client,
-        message,
-        "You don't have money to withdraw."
-      );
+      return message.channel.send({
+        embeds: [
+          client.utils.errorEmbed(
+            client,
+            message,
+            "You don't have money to withdraw."
+          ),
+        ],
+      });
 
     message.channel.send({
       embeds: [
@@ -45,18 +53,26 @@ module.exports.run = async (client, message, args) => {
     return;
   }
   if (args[0] > bank)
-    return client.utils.errorEmbed(
-      client,
-      message,
-      "You cannot withdraw that much."
-    );
+    return message.channel.send({
+      embeds: [
+        client.utils.errorEmbed(
+          client,
+          message,
+          "You cannot withdraw that much."
+        ),
+      ],
+    });
 
   if (args[0] < 1)
-    return client.utils.errorEmbed(
-      client,
-      message,
-      "You cannot withdraw less than $1."
-    );
+    return message.channel.send({
+      embeds: [
+        client.utils.errorEmbed(
+          client,
+          message,
+          "You cannot withdraw less than $1."
+        ),
+      ],
+    });
 
   message.channel.send({
     embeds: [

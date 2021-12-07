@@ -11,11 +11,15 @@ module.exports.run = async (client, message, args) => {
   const status = args.join(" ");
 
   if (!status)
-    return client.utils.errorEmbed(
-      client,
-      message,
-      `You need to provide Custom Status.`
-    );
+    return message.channel.send({
+      embeds: [
+        client.utils.errorEmbed(
+          client,
+          message,
+          `You need to provide Custom Status.`
+        ),
+      ],
+    });
 
   message.channel.send({
     embeds: [

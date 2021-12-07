@@ -21,11 +21,15 @@ module.exports.run = async (client, message, args) => {
     ticketNumber = "0".repeat(4 - num.toString().length) + num;
 
   if (tickets.find((u) => u.data.includes(message.author.id)))
-    return client.utils.errorEmbed(
-      client,
-      message,
-      "You already have a ticket opened."
-    );
+    return message.channel.send({
+      embeds: [
+        client.utils.errorEmbed(
+          client,
+          message,
+          "You already have a ticket opened."
+        ),
+      ],
+    });
 
   const permissions = settings.Support_Team_Roles.map((r) => ({
       id: r,

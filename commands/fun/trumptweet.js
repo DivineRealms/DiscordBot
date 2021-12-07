@@ -12,11 +12,15 @@ module.exports = {
 
 module.exports.run = async (client, message, args) => {
   if (!args[0])
-    return client.utils.errorEmbed(
-      client,
-      message,
-      "You need to provide a message."
-    );
+    return message.channel.send({
+      embeds: [
+        client.utils.errorEmbed(
+          client,
+          message,
+          "You need to provide a message."
+        ),
+      ],
+    });
 
   let tweet = message.content.slice(
     message.content.indexOf(args[0]),

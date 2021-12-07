@@ -12,11 +12,15 @@ module.exports.run = async (client, message, args) => {
   let say = args.slice(0).join(" ");
 
   if (!say)
-    return client.utils.errorEmbed(
-      client,
-      message,
-      "You need to provide text to send."
-    );
+    return message.channel.send({
+      embeds: [
+        client.utils.errorEmbed(
+          client,
+          message,
+          "You need to provide text to send."
+        ),
+      ],
+    });
 
   setTimeout(() => message.delete(), 3000);
   message.channel.send({ content: say });

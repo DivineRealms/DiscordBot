@@ -19,32 +19,48 @@ module.exports.run = async (client, message, args) => {
       );
 
   if (!member || !role)
-    return client.utils.errorEmbed(
-      client,
-      message,
-      "You need to provide a User & a Role."
-    );
+    return message.channel.send({
+      embeds: [
+        client.utils.errorEmbed(
+          client,
+          message,
+          "You need to provide a User & a Role."
+        ),
+      ],
+    });
 
   if (member.roles.highest.position >= message.member.roles.highest.position)
-    return client.utils.errorEmbed(
-      client,
-      message,
-      "That Member has higher roles than you."
-    );
+    return message.channel.send({
+      embeds: [
+        client.utils.errorEmbed(
+          client,
+          message,
+          "That Member has higher roles than you."
+        ),
+      ],
+    });
 
   if (member.roles.highest.position >= message.guild.me.roles.highest.position)
-    return client.utils.errorEmbed(
-      client,
-      message,
-      "That Member has higher roles than me."
-    );
+    return message.channel.send({
+      embeds: [
+        client.utils.errorEmbed(
+          client,
+          message,
+          "That Member has higher roles than me."
+        ),
+      ],
+    });
 
   if (!member.roles.cache.has(role.id))
-    return client.utils.errorEmbed(
-      client,
-      message,
-      "That Member don't have that role."
-    );
+    return message.channel.send({
+      embeds: [
+        client.utils.errorEmbed(
+          client,
+          message,
+          "That Member don't have that role."
+        ),
+      ],
+    });
 
   message.channel.send({
     embeds: [
@@ -58,10 +74,14 @@ module.exports.run = async (client, message, args) => {
   });
 
   return member.roles.remove(role).catch((err) => {
-    client.utils.errorEmbed(
-      client,
-      message,
-      "Cannot remove a role from that user."
-    );
+    message.channel.send({
+      embeds: [
+        client.utils.errorEmbed(
+          client,
+          message,
+          "Cannot remove a role from that user."
+        ),
+      ],
+    });
   });
 };

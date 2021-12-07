@@ -10,19 +10,27 @@ module.exports = {
 
 module.exports.run = async (client, message, args) => {
   if (!client.conf.settings.BotOwnerDiscordID.includes(message.author.id))
-    return client.utils.errorEmbed(
-      client,
-      message,
-      "Only Developers can use this command."
-    );
+    return message.channel.send({
+      embeds: [
+        client.utils.errorEmbed(
+          client,
+          message,
+          "Only Developers can use this command."
+        ),
+      ],
+    });
 
   const command = client.commands.get((args[0] || "").toLowerCase());
   if (!command)
-    return client.utils.errorEmbed(
-      client,
-      message,
-      `You need to provide a command to reload.`
-    );
+    return message.channel.send({
+      embeds: [
+        client.utils.errorEmbed(
+          client,
+          message,
+          `You need to provide a command to reload.`
+        ),
+      ],
+    });
   try {
     delete require.cache[
       require.resolve(`../${command.category}/${args[0].toLowerCase()}.js`)

@@ -20,19 +20,29 @@ module.exports.run = async (client, message, args) => {
     date = datetime.parse(birthd, "MMM D YYYY");
 
   if (!user || !date.getDay())
-    return client.utils.errorEmbed(
-      client,
-      message,
-      `Invalid usage, check ${message.px}help setbirthday`
-    );
+    return message.channel.send({
+      embeds: [
+        client.utils.errorEmbed(
+          client,
+          message,
+          `Invalid usage, check ${message.px}help setbirthday`
+        ),
+      ],
+    });
 
   const age = getAge(args.slice(1).join(" "));
   if (age <= 12)
-    return client.utils.errorEmbed(
-      client,
-      message,
-      `You can\'t enter a year greater than ${new Date().getFullYear() - 12}!`
-    );
+    return message.channel.send({
+      embeds: [
+        client.utils.errorEmbed(
+          client,
+          message,
+          `You can\'t enter a year greater than ${
+            new Date().getFullYear() - 12
+          }!`
+        ),
+      ],
+    });
 
   message.channel.send({
     embeds: [

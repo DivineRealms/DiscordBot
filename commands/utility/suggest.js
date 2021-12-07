@@ -16,18 +16,26 @@ module.exports.run = async (client, message, args) => {
   );
 
   if (!channel)
-    return client.utils.errorEmbed(
-      client,
-      message,
-      "The suggestions channel hasn't been setup for this server!"
-    );
+    return message.channel.send({
+      embeds: [
+        client.utils.errorEmbed(
+          client,
+          message,
+          "The suggestions channel hasn't been setup for this server!"
+        ),
+      ],
+    });
 
   if (!args[0])
-    return client.utils.errorEmbed(
-      client,
-      message,
-      "Please provide a suggestion!"
-    );
+    return message.channel.send({
+      embeds: [
+        client.utils.errorEmbed(
+          client,
+          message,
+          "Please provide a suggestion!"
+        ),
+      ],
+    });
 
   setTimeout(() => message.delete(), 3000);
   message.channel.send({
