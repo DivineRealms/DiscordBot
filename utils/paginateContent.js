@@ -30,8 +30,8 @@ module.exports = async function paginate(
   title,
   color
 ) {
-  const buttonFilter = (i) => {
-    return i.user.id == message.author.id;
+  const filter = (interaction) => {
+    return interaction.user.id == message.author.id;
   };
 
   let maxPage = Math.ceil(array.length / perPage);
@@ -53,54 +53,55 @@ module.exports = async function paginate(
   let row = new MessageActionRow().addComponents([prevBttn, nextBttn]);
 
   currentPage = firstPage;
-  message.channel.send({ embeds: [embed], components: [row] }).then((m) => {
-    const collector = m.createMessageComponentCollector({
-      buttonFilter,
-      type: "BUTTON",
-      time: 300000,
-    });
+  let m = await message.channel.send({ embeds: [embed], components: [row] });
+  
+  const collector = m.createMessageComponentCollector({
+    filter,
+    componentType: "BUTTON",
+    time: 300000,
+  }); 
+  
+  collector.on("collect", async (interaction) => {
+    switch (interaction.customId) {
+      case "nextPage":
+        currentPage >= maxPage ? (currentPage = 1) : currentPage++;
 
-    collector.on("collect", async (interaction) => {
-      switch (interaction.customId) {
-        case "nextPage":
-          currentPage >= maxPage ? (currentPage = 1) : currentPage++;
+        updatePage(
+          interaction,
+          embed,
+          array,
+          perPage,
+          currentPage,
+          maxPage,
+          row
+        );
+        interaction.deferUpdate();
+        break;
+      case "prevPage":
+        currentPage <= 1 ? (currentPage = maxPage) : currentPage--;
 
-          updatePage(
-            interaction,
-            embed,
-            array,
-            perPage,
-            currentPage,
-            maxPage,
-            row
-          );
-          interaction.deferUpdate();
-          break;
-        case "prevPage":
-          currentPage <= 1 ? (currentPage = maxPage) : currentPage--;
-
-          updatePage(
-            interaction,
-            embed,
-            array,
-            perPage,
-            currentPage,
-            maxPage,
-            row
-          );
-          interaction.deferUpdate();
-          break;
-      }
-    });
-
-    collector.on("end", async (collected, reason) => {
-      prevBttn.setDisabled(true).setStyle("SECONDARY");
-      nextBttn.setDisabled(true).setStyle("SECONDARY");
-      let disabledRow = new MessageActionRow().addComponents([
-        prevBttn,
-        nextBttn,
-      ]);
-      await m.edit({ embeds: [embed], components: [disabledRow] });
-    });
+        updatePage(
+          interaction,
+          embed,
+          array,
+          perPage,
+          currentPage,
+          maxPage,
+          row
+        );
+        interaction.deferUpdate();
+        break;
+    }
   });
+
+  collector.on("end", async (collected, reason) => {
+    prevBttn.setDisabled(true).setStyle("SECONDARY");
+    nextBttn.setDisabled(true).setStyle("SECONDARY");
+    let disabledRow = new MessageActionRow().addComponents([
+      prevBttn,
+      nextBttn,
+    ]);
+    await m.edit({ embeds: [embed], components: [disabledRow] });
+  });
+  
 };
