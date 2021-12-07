@@ -89,7 +89,7 @@ module.exports.run = async (client, message, args) => {
         client,
         message,
         settings.Ticket_Title,
-        client.resolveMember(settings.Ticket_Message, message.author),
+        client.resolveMember(settings.Ticket_Message, `<@!${message.author.id}>`),
         "GREEN"
       ),
     ],

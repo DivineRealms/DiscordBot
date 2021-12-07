@@ -145,7 +145,7 @@ module.exports = async (client, reaction, user) => {
         client,
         "",
         settings.Ticket_Title,
-        client.resolveMember(settings.Ticket_Message, `<@!${user.id}>`)
+        client.resolveMember(settings.Ticket_Message, user)
       ),
     ],
   });
