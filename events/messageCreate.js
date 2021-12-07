@@ -42,8 +42,8 @@ module.exports = async (client, message) => {
           let bumpAgain = client.embedBuilder(
             client,
             message,
-            "Server Bump",
-            "Server can be bumped again, use `!d bump`"
+            "📊︲Server Bump",
+            "<:ArrowRightGray:813815804768026705>Server can be bumped again, use `!d bump`."
           );
 
           bumpChannel.send({
@@ -58,8 +58,8 @@ module.exports = async (client, message) => {
         const bump = client.embedBuilder(
           client,
           message,
-          "Server Bumped",
-          "Thank you for bumping."
+          "📊︲Server Bumped",
+          `<:ArrowRightGray:813815804768026705>Thank you <@!${dbumper[0]}> for bumping!`
         );
 
         db.add(`bumps_${message.guild.id}_${dbumper[0]}`, 1);
@@ -82,7 +82,7 @@ module.exports = async (client, message) => {
 
   if (client.afk.has(message.author.id)) {
     message.channel
-      .send(`> Hey ${message.author}, I removed your AFK Status`)
+      .send(`<:ArrowRightGray:813815804768026705>Hey ${message.author}, I removed your AFK Status.`)
       .then((m) => setTimeout(() => m.delete(), 5000));
 
     client.afk.delete(message.author.id);
@@ -124,16 +124,15 @@ module.exports = async (client, message) => {
       return message.channel
         .send({
           embeds: [
-            client.embedBuilder(
+            client.utils.errorEmbed(
               client,
               message,
-              "Error",
-              `You don't have Permission to use this command`,
-              "error"
+              `Insufficient permission.`
             ),
           ],
         })
         .then((m) => setTimeout(() => m.delete(), 7000));
+
     let findCooldown = cooldownList.find(
       (c) => c.name == command && c.id == message.author.id
     );
@@ -150,7 +149,7 @@ module.exports = async (client, message) => {
             client.utils.errorEmbed(
               client,
               message,
-              `You can use that command again in ${time}`
+              `You can use that command again in ${time}.`
             ),
           ],
         });
@@ -179,17 +178,17 @@ module.exports = async (client, message) => {
     !message.member.permissions.has("MANAGE_ROLES") &&
     !message.member.roles.cache.has(client.conf.automod.Bypass_Command)
   )
-    return message.channel.send({
-      embeds: [
-        client.utils
-          .errorEmbed(
+    return message.channel
+      .send({
+        embeds: [
+          client.utils.errorEmbed(
             client,
             message,
             `Commands can only be used in ${cmdChannels.join(",").trim()}.`
-          )
-          .then((m) => setTimeout(() => m.delete(), 7000)),
-      ],
-    });
+          ),
+        ],
+      })
+      .then((m) => setTimeout(() => m.delete(), 7000));
 
   if (command && !client.conf.economy.enabled && command.category === "economy")
     return message.channel.send({
