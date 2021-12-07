@@ -16,6 +16,7 @@ module.exports.run = async (client, message, args) => {
         {
           label: "Main Menu",
           emoji: "🏠",
+          embed: client.embedBuilder(client, message, "🏠︲Main Menu", ""),
         },
         {
           label: "Economy",
@@ -44,7 +45,7 @@ module.exports.run = async (client, message, args) => {
       ],
       data = [];
 
-    for (let i = 0; i < menus.length; i++) {
+    for (let i = 1; i < menus.length; i++) {
       data.push({
         label: menus[i].label,
         value: "val_" + menus[i].label.toLowerCase(),
