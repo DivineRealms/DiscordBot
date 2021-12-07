@@ -10,7 +10,7 @@ module.exports = {
 
 module.exports.run = async(client, message, args) => {
   let say = args.slice(0).join(" ")
-  if (!say) return message.channel.send({ embeds: [client.embedBuilder(client, message, "Error", "You need to provide text to send.", "error")] });
+  if (!say) return message.channel.send({ embeds: [client.embedBuilder(client, message, "You need to provide text to send.", "", "error")] });
   message.delete()
   message.channel.send({ content: say })
 }

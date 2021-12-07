@@ -13,19 +13,19 @@ module.exports = {
 module.exports.run = async(client, message, args) => {
   let bal = db.fetch(`money_${message.guild.id}_${message.author.id}`);
 
-  if (!args[0] || (isNaN(args[0]) && args[0] !== 'all')) return message.channel.send({ embeds: [client.embedBuilder(client, message, "Error", "You need to enter how much to deposit.", "error")] });
-  if (!bal || bal == 0) return message.channel.send({ embeds: [client.embedBuilder(client, message, "Error", "You don't have money to deposit.", "error")] });
+  if (!args[0] || (isNaN(args[0]) && args[0] !== 'all')) return message.channel.send({ embeds: [client.embedBuilder(client, message, "You need to enter how much to deposit.", "", "error")] });
+  if (!bal || bal == 0) return message.channel.send({ embeds: [client.embedBuilder(client, message, "You don't have money to deposit.", "", "error")] });
 
   if (args[0] === 'all') {
-    if (!bal || bal == 0) return message.channel.send({ embeds: [client.embedBuilder(client, message, "Error", "You don't have money to deposit.", "error")] });
+    if (!bal || bal == 0) return message.channel.send({ embeds: [client.embedBuilder(client, message, "You don't have money to deposit.", "", "error")] });
     message.channel.send({ embeds: [client.embedBuilder(client, message, "Deposit", `You have deposited $${bal} to bank.`) ]})
     db.subtract(`money_${message.guild.id}_${message.author.id}`, Number(bal));
     db.add(`bank_${message.guild.id}_${message.author.id}`, Number(bal)); 
     return;
   }
 
-  if (args[0] > bal) return message.channel.send({ embeds: [client.embedBuilder(client, message, "Error", "You don't have that much money.", "error")] });
-  if (args[0] < 1) return message.channel.send({ embeds: [client.embedBuilder(client, message, "Error", "You cannot deposit less than $1.", "error")] });
+  if (args[0] > bal) return message.channel.send({ embeds: [client.embedBuilder(client, message, "You don't have that much money.", "", "error")] });
+  if (args[0] < 1) return message.channel.send({ embeds: [client.embedBuilder(client, message, "You cannot deposit less than $1.", "", "error")] });
 
   message.channel.send({ embeds: [client.embedBuilder(client, message, "Deposit", `You have deposited $${Number(args[0])} to bank.`)] })
   db.subtract(`money_${message.guild.id}_${message.author.id}`, Number(args[0]));

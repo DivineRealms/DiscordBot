@@ -73,7 +73,7 @@ module.exports.run = async (client, message, args) => {
     message.channel.send({ embeds: [embed] });
   } catch (err) {
     let embed = client
-      .embedBuilder(client, message, "Error", "", "error")
+      .embedBuilder(client, message, "", "error")
       .addField("Input", `\`\`\`xl\n${code}\`\`\``)
       .addField("Output", `\`\`\`xl\n${err}\`\`\``);
 

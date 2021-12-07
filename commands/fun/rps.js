@@ -9,7 +9,7 @@ module.exports = {
 }
 
 module.exports.run = async(client, message, args, cmd) => {
-  let embed1 = client.embedBuilder(client, message, "Error", "Please include your choice, you can pick from rock,paper or scissors.", "error")
+  let embed1 = client.embedBuilder(client, message, "Please include your choice, you can pick from rock,paper or scissors.", "error")
   let embed2 = client.embedBuilder(client, message, "RPS", "I won, I had paper.")
   let embed3 = client.embedBuilder(client, message, "RPS", "I won, I had scissors.")
   let embed4 = client.embedBuilder(client, message, "RPS", "I won I had rock.")

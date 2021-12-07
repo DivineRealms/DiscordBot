@@ -12,7 +12,7 @@ module.exports.run = async(client, message, args) => {
   const mentionedMember = message.mentions.members.first()
 
   if (!args[0]) {
-    return message.channel.send({ embeds: [client.embedBuilder(client, message, "Error", `You need to mention who you would like to hug!`, "error")]})
+    return message.channel.send({ embeds: [client.embedBuilder(client, message, "Error", `You need to mention who you would like to hug!`, "", "error")]})
   } else {
     let gifs = [
       "https://media.giphy.com/media/bbxTrFmeoM7aU/giphy.gif",
@@ -24,7 +24,7 @@ module.exports.run = async(client, message, args) => {
     const randomNumber = Math.floor(Math.random() * gifs.length)
     const randomGif = gifs[randomNumber]
 
-    if (mentionedMember.user.id === message.author.id) return message.channel.send({ embeds: [client.embedBuilder(client, message, "Error", "You cannot hug yourself.", "error")] });
+    if (mentionedMember.user.id === message.author.id) return message.channel.send({ embeds: [client.embedBuilder(client, message, "You cannot hug yourself.", "", "error")] });
 
     var embed = client.embedBuilder(client, message, `${message.author.username} just hugged ${mentionedMember.user.username}!`, "").setImage(randomGif)
     message.channel.send({ embeds: [embed] })

@@ -12,12 +12,12 @@ module.exports = {
 }
 
 module.exports.run = async(client, message, args) => {
-  if (!args[0]) return message.channel.send({ embeds: [client.embedBuilder(client, message, "Error", "You need to enter something to search for!", "error")]})
+  if (!args[0]) return message.channel.send({ embeds: [client.embedBuilder(client, message, "You need to enter something to search for!", "", "error")]})
 
   const body = await fetch(`https://tenor.com/search/${args.join('-')}-gifs`).then(r => r.text())
   const data = load(body)('div.Gif > img')
   const urls = new Array(data.length).fill(0).map((s, i) => data.eq(i).attr('src'))
-  if (!urls[0]) return message.channel.send({ embeds: [client.embedBuilder(client, message, "Error", "No search results found, did you check your spelling?", "error")]})
+  if (!urls[0]) return message.channel.send({ embeds: [client.embedBuilder(client, message, "No search results found, did you check your spelling?", "", "error")]})
 
   const embed = client.embedBuilder(client, message, "GIF", `Image not loading? click [here](${urls[0]})`)
     .setImage(urls[0])

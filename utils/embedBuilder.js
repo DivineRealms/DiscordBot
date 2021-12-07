@@ -17,7 +17,7 @@ module.exports = (client, user, author, description, type = "default") => {
     embed
       .setColor("RED")
       .setAuthor(
-        "Error",
+        author,
         `https://cdn.upload.systems/uploads/nI7qtXd7.png`
       );
 
