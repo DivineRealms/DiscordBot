@@ -18,7 +18,7 @@ module.exports.run = async (client, message, args) =>
         `First Dice:  \`${~~(Math.random() * 6) + 1}\`\nSecond Dice: \`${
           ~~(Math.random() * 6) + 1
         }\``,
-        "GREEN"
+        "#3db39e"
       ),
     ],
   });

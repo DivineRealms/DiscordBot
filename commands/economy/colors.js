@@ -109,7 +109,7 @@ module.exports.run = async (client, message, args) => {
           message,
           "Color Selected",
           `Color Role <@&${color.role}> has been equiped.`,
-          "GREEN"
+          "#3db39e"
         ),
       ],
     });
@@ -126,7 +126,7 @@ module.exports.run = async (client, message, args) => {
           message,
           "Color Selected",
           "Your Name Color has been reset.",
-          "GREEN"
+          "#3db39e"
         ),
       ],
     });

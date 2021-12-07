@@ -27,7 +27,7 @@ module.exports.run = async (client, message, args) => {
         message,
         `I have set your AFK status to ${args[0] ? args.join(" ") : "AFK"}`,
         "",
-        "GREEN"
+        "#3db39e"
       ),
     ],
   });

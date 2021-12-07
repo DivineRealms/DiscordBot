@@ -39,7 +39,7 @@ module.exports.run = async (client, message, args) => {
         message,
         `Your report for ${args.join(" ")} was submitted!`,
         "",
-        "GREEN"
+        "#3db39e"
       ),
     ],
   });

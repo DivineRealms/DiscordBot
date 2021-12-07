@@ -62,7 +62,7 @@ module.exports.run = async (client, message, args) => {
         message,
         "Successfully set your birthday.",
         "",
-        "GREEN"
+        "#3db39e"
       ),
     ],
   });

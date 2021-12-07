@@ -48,7 +48,7 @@ module.exports.run = async (client, message, args) => {
           message,
           "Command has been reloaded successfully.",
           "",
-          "GREEN"
+          "#3db39e"
         ),
       ],
     });

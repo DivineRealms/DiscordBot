@@ -57,7 +57,7 @@ module.exports.run = async (client, message, args) => {
         message,
         `You have paid $${args[1]} to ${user.tag}.`,
         "",
-        "GREEN"
+        "#3db39e"
       ),
     ],
   });

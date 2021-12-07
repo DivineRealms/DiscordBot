@@ -42,7 +42,7 @@ module.exports.run = async (client, message, args) => {
           message,
           `You have deposited $${bal} to bank.`,
           "",
-          "GREEN"
+          "#3db39e"
         ),
       ],
     });
@@ -73,7 +73,7 @@ module.exports.run = async (client, message, args) => {
         message,
         `You have deposited $${Number(args[0])} to bank.`,
         "",
-        "GREEN"
+        "#3db39e"
       ),
     ],
   });

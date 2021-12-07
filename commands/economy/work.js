@@ -31,7 +31,7 @@ module.exports.run = async (client, message, args) => {
           jobs[Math.floor(Math.random() * jobs.length)]
         } and earned $${amount}.`,
         "",
-        "GREEN"
+        "#3db39e"
       ),
     ],
   });

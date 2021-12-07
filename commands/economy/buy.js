@@ -49,7 +49,7 @@ module.exports.run = async (client, message, args) => {
               message,
               "Role Purchased",
               `You have successfully purchased role <@&${item.roleID}> for $${item.price}.`,
-              "GREEN"
+              "#3db39e"
             ),
           ],
         });
@@ -104,7 +104,7 @@ module.exports.run = async (client, message, args) => {
           message,
           "Color Purchased",
           `You have successfully purchased name color **${item.name}** for $${item.price}.`,
-          "GREEN"
+          "#3db39e"
         ),
       ],
     });

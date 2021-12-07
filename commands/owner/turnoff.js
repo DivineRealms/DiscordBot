@@ -28,7 +28,7 @@ module.exports.run = async (client, message, args) => {
           message,
           "Bot has been turned off.",
           "",
-          "GREEN"
+          "#3db39e"
         ),
       ],
     })

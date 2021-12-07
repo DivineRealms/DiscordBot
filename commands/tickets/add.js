@@ -66,7 +66,7 @@ module.exports.run = async (client, message, args) => {
           message.mentions.users.first().username
         } has been added to the ticket.`,
         "",
-        "GREEN"
+        "#3db39e"
       ),
     ],
   });

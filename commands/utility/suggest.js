@@ -21,7 +21,7 @@ module.exports.run = async (client, message, args) => {
         client.utils.errorEmbed(
           client,
           message,
-          "The suggestions channel hasn't been setup for this server!"
+          "The suggestions channel hasn't been setup for this server."
         ),
       ],
     });
@@ -32,7 +32,7 @@ module.exports.run = async (client, message, args) => {
         client.utils.errorEmbed(
           client,
           message,
-          "Please provide a suggestion!"
+          "Please provide a suggestion."
         ),
       ],
     });
@@ -45,7 +45,7 @@ module.exports.run = async (client, message, args) => {
         message,
         "Your suggestion has been submitted successfully.",
         "",
-        "GREEN"
+        "#3db39e"
       ),
     ],
   });

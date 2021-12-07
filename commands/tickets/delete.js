@@ -100,7 +100,7 @@ module.exports.run = async (client, message, args) => {
         message,
         "This channel will be deleted in 10 seconds.",
         "",
-        "GREEN"
+        "#3db39e"
       ),
     ],
   });

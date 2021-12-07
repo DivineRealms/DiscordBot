@@ -55,7 +55,7 @@ module.exports.run = async (client, message, args) => {
         message,
         `Successfully sent a DM to ${user.username}.`,
         "",
-        "GREEN"
+        "GR#3db39eEEN"
       ),
     ],
   });

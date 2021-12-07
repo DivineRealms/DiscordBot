@@ -33,7 +33,7 @@ module.exports.run = async (client, message, args) => {
           fish[Math.floor(Math.random() * fish.length)]
         } and earned $${amount}.`,
         "",
-        "GREEN"
+        "#3db39e"
       ),
     ],
   });

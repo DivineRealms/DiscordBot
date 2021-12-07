@@ -77,7 +77,7 @@ module.exports.run = async (client, message, args) => {
         message,
         "📋︲Ticket Created",
         `<:ArrowRightGray:813815804768026705>Ticket has been successfully created in channel <#${channel.id}>.`,
-        "GREEN"
+        "#3db39e"
       ),
     ],
     components: [jumpRow],
@@ -90,7 +90,7 @@ module.exports.run = async (client, message, args) => {
         message,
         settings.Ticket_Title,
         client.resolveMember(settings.Ticket_Message, `<@!${message.author.id}>`),
-        "GREEN"
+        "#3db39e"
       ),
     ],
   });
@@ -103,7 +103,7 @@ module.exports.run = async (client, message, args) => {
           message,
           "📋︲Ticket Created",
           `Creator: ${message.author}`,
-          "GREEN"
+          "#3db39e"
         ),
       ],
     });

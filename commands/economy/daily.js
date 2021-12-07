@@ -32,7 +32,7 @@ module.exports.run = async (client, message, args) => {
         message,
         "You have claimed your Daily Reward of $2500.",
         "",
-        "GREEN"
+        "#3db39e"
       ),
     ],
   });

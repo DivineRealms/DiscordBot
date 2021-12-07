@@ -21,8 +21,7 @@ module.exports.run = async (client, message, args) => {
   if (isNaN(parse(args[0]))) return message.channel.send({ embeds: [errEmb] });
 
   const end = Date.now() + parse(args[0]);
-
-  const msg = await message.channel.send({
+  const msg = await message.reply({
     embeds: [
       client
         .embedBuilder(

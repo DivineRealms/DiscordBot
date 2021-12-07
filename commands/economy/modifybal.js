@@ -64,7 +64,7 @@ module.exports.run = async (client, message, args) => {
             message,
             `$${args[3]} has been added to ${user.tag}'s bank`,
             "",
-            "GREEN"
+            "#3db39e"
           ),
         ],
       });
@@ -77,7 +77,7 @@ module.exports.run = async (client, message, args) => {
             message,
             `$${args[3]} has been added to ${user.tag}'s wallet`,
             "",
-            "GREEN"
+            "#3db39e"
           ),
         ],
       });
@@ -92,7 +92,7 @@ module.exports.run = async (client, message, args) => {
             message,
             `$${args[3]} has been removed from ${user.tag}'s bank`,
             "",
-            "GREEN"
+            "#3db39e"
           ),
         ],
       });
@@ -105,7 +105,7 @@ module.exports.run = async (client, message, args) => {
             message,
             `$${args[3]} has been removed from ${user.tag}'s wallet`,
             "",
-            "GREEN"
+            "#3db39e"
           ),
         ],
       });
