@@ -103,7 +103,10 @@ function lbMoney(client, message) {
 }
 
 function errorEmbed(client, message, err) {
-  return client.embedBuilder(client, message, err, "", "error");
+  return client
+    .embedBuilder(client, message, err, "", "error")
+    .setColor("RED")
+    .setAuthor(author, `https://cdn.upload.systems/uploads/nI7qtXd7.png`);
 }
 
 module.exports = {
