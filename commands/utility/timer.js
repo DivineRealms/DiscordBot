@@ -29,12 +29,12 @@ module.exports.run = async (client, message, args) => {
           client,
           message,
           "",
-          `<:ArrowRightGray:813815804768026705>Time: ${client.utils.formatTime(
+          `<:ArrowRightGray:813815804768026705>Time: **${client.utils.formatTime(
             end - Date.now(),
             {
               round: true,
             }
-          )}`,
+          )}**.`,
           "#ffc13f"
         )
         .setAuthor(
@@ -50,12 +50,12 @@ module.exports.run = async (client, message, args) => {
         client,
         message,
         "",
-        `:ArrowRightGray:813815804768026705>Time: ${client.utils.formatTime(
+        `<:ArrowRightGray:813815804768026705>Time: **${client.utils.formatTime(
           end - Date.now(),
           {
             round: true,
           }
-        )}`,
+        )}**.`,
         "#ffc13f"
       )
       .setAuthor(
