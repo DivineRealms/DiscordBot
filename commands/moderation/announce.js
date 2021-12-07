@@ -10,8 +10,8 @@ module.exports = {
 };
 
 module.exports.run = async (client, message, args) => {
-  const args = args.join(" ").split(/\s*\|\s*/),
-    [type, mention, title, description] = args;
+  args = args.join(" ").split(/\s*\|\s*/);
+  const [type, mention, title, description] = args;
 
   if (!args[0])
     return client.utils.errorEmbed(
