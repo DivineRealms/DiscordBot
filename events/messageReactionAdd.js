@@ -124,7 +124,7 @@ module.exports = async (client, reaction, user) => {
   const channel = await reaction.message.guild.channels.create(
     settings.Ticket_Name.replace("{number}", ticketNumber).replace(
       "{username}",
-      `<@!${user.id}>`
+      user.username
     ),
     {
       parent: settings.Ticket_Category,
@@ -145,7 +145,7 @@ module.exports = async (client, reaction, user) => {
         client,
         "",
         settings.Ticket_Title,
-        client.resolveMember(settings.Ticket_Message, user)
+        client.resolveMember(settings.Ticket_Message, `<@!${user.id}>`)
       ),
     ],
   });
