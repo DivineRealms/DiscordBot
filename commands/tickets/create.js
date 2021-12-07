@@ -12,13 +12,17 @@ module.exports = {
 };
 
 module.exports.run = async (client, message, args) => {
-  const settings = client.conf.ticketSystem,
-    tickets =
-      db.all().filter((i) => i.ID.startsWith(`tickets_${message.guild.id}_`)) ||
-      [],
-    log = client.channels.cache.get(client.conf.logging.Ticket_Channel_Logs),
-    num = tickets.length || 1,
-    ticketNumber = "0".repeat(4 - num.toString().length) + num;
+  const settings = client.conf.ticketSystem;
+  const tickets =
+    db.all().filter((i) => i.ID.startsWith(`tickets_${message.guild.id}_`)) ||
+    [];
+
+  const log = client.channels.cache.get(
+    client.conf.logging.Ticket_Channel_Logs
+  );
+
+  const num = tickets.length || 1;
+  const ticketNumber = "0".repeat(4 - num.toString().length) + num;
 
   if (tickets.find((u) => u.data.includes(message.author.id)))
     return message.channel.send({
@@ -72,7 +76,7 @@ module.exports.run = async (client, message, args) => {
         client,
         message,
         "📋︲Ticket Created",
-        `<:ArrowRightGray:813815804768026705>Ticket has been successfully created in channel ${channel}.`,
+        `<:ArrowRightGray:813815804768026705>Ticket has been successfully created in channel <#${channel.id}>.`,
         "GREEN"
       ),
     ],
@@ -98,7 +102,7 @@ module.exports.run = async (client, message, args) => {
           client,
           message,
           "📋︲Ticket Created",
-          `Creator: **${message.author}**`,
+          `Creator: ${message.author}`,
           "GREEN"
         ),
       ],
