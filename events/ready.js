@@ -30,7 +30,6 @@ module.exports = async (client) => {
         type: settings.activity.type,
       }
     );
-    console.log(guild.memberCount);
   } else {
     const settings = client.conf.settings.changingActivity;
     let rand = Math.floor(Math.random() * settings.activities.length);
