@@ -11,8 +11,8 @@ const bump = (client) => {
       let embed = client.embedBuilder(
         client,
         null,
-        "Server Bump",
-        "Server can be bumped again, use `!d bump`"
+        "📊︲Server Bump",
+        "<:ArrowRightGray:813815804768026705>Server can be bumped again, use `!d bump`."
       );
 
       db.delete(`serverBump_${client.conf.settings.guildID}`);
