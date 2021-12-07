@@ -11,17 +11,14 @@ module.exports = {
 module.exports.run = async (client, message, args) => {
   const settings = client.conf.ticketSystem;
 
-  const msg = message.channel.send({
-    embeds: [
-      client.embedBuilder(
-        client,
-        message,
-        settings.Panel_Title,
-        settings.Panel_Message
-      ),
-    ],
-  });
+  const embed = client.embedBuilder(
+    client,
+    message,
+    settings.Panel_Title,
+    settings.Panel_Message
+  );
 
+  const msg = await message.channel.send({ embeds: [embed] });
   await msg.react(settings.Panel_Emoji).catch(() => msg.react("✉️"));
 
   client.settings.push(message.guild.id, msg.id, "panels");
