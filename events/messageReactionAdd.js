@@ -148,7 +148,7 @@ module.exports = async (client, reaction, user) => {
         client.resolveMember(settings.Ticket_Message, user)
       ),
     ],
-  });/
+  });
 
   db.set(`tickets_${reaction.message.guild.id}_${channel.id}`, user.id);
 };
