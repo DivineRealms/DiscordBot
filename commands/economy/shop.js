@@ -14,7 +14,7 @@ module.exports.run = async (client, message, args) => {
   const settings = client.conf.economy,
     shop = [...settings.shopItems];
 
-  let format = `\`[ID].\` **[NAME]**︲$[PRICE]\n><:ArrowRightGray:813815804768026705>[DESCRIPTION]`,
+  let format = `\`[ID].\` **[NAME]**︲$[PRICE]\n<:ArrowRightGray:813815804768026705>[DESCRIPTION]`,
     shopArray = [`<:ArrowRightGray:813815804768026705>To purchase an item from shop use \`${message.px}buy [id]\`.\n`];
 
   for (let i = 0; i < shop.length; i++) {
