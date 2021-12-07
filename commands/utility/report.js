@@ -37,7 +37,7 @@ module.exports.run = async (client, message, args) => {
       client.embedBuilder(
         client,
         message,
-        `Your report for \`${args.join(" ")}\` was submitted!`,
+        `Your report for ${args.join(" ")} was submitted!`,
         "",
         "GREEN"
       ),
@@ -50,7 +50,7 @@ module.exports.run = async (client, message, args) => {
         .embedBuilder(client, message, "New Report", "")
         .addField("Submitter:", message.author, false)
         .addField("Report:", args.join(" "), false)
-        .addField("Time:", `<t:${Math.round(Date.now() / 1000)}:R>`),
+        .addField("Time:", `<t:${Math.round(Date.now() / 1000)}:R>`, false),
     ],
   });
 };

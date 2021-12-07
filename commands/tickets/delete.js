@@ -17,15 +17,18 @@ module.exports = {
 };
 
 module.exports.run = async (client, message, args) => {
-  const ticket = db.fetch(`tickets_${message.guild.id}_${message.channel.id}`),
-    log = client.channels.cache.get(client.conf.logging.Ticket_Channel_Logs),
-    channelMessages = await message.channel.messages
+  const ticket = db.fetch(`tickets_${message.guild.id}_${message.channel.id}`);
+  const log = client.channels.cache.get(client.conf.logging.Ticket_Channel_Logs);
+
+  const channelMessages = await message.channel.messages
       .fetch({ limit: 100, before: message.id })
-      .catch((err) => console.log(err)),
-    messageCollection = new Collection();
-  (messageCollection = messageCollection.concat(channelMessages)),
-    (msgs = [...messageCollection.values()].reverse()),
-    (data = await fs.readFile("./data/template.html", "utf8"));
+      .catch((err) => console.log(err));
+
+  let messageCollection = new Collection();
+  (messageCollection = messageCollection.concat(channelMessages));
+
+  let msgs = [...messageCollection.values()].reverse();
+  let data = await fs.readFile("./data/template.html", "utf8");
 
   msgs.forEach(async (msg) => {
     let parentContainer = document.createElement("div");
@@ -73,9 +76,9 @@ module.exports.run = async (client, message, args) => {
 
   const attachment = new MessageAttachment(Buffer.from(data), "ticket.html"),
     loggingembed = client
-      .embedBuilder(client, message, "Ticket Logging System", "")
-      .addField(`Ticket Name`, `${message.channel.name}`)
-      .addField(`Channel`, `${message.channel}`)
+      .embedBuilder(client, message, "📋︲Ticket Logging System", "")
+      .addField(`Ticket Name:`, `${message.channel.name}`, false)
+      .addField(`Channel:`, `${message.channel}`, false)
       .setThumbnail(client.user.displayAvatarURL());
   if (log) log.send({ files: [attachment], embeds: [loggingembed] });
 

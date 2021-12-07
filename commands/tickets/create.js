@@ -71,8 +71,8 @@ module.exports.run = async (client, message, args) => {
       client.embedBuilder(
         client,
         message,
-        "Ticket Created",
-        `Ticket has been successfully created in channel ${channel}.`,
+        "📋︲Ticket Created",
+        `<:ArrowRightGray:813815804768026705>Ticket has been successfully created in channel ${channel}.`,
         "GREEN"
       ),
     ],
@@ -97,8 +97,8 @@ module.exports.run = async (client, message, args) => {
         client.embedBuilder(
           client,
           message,
-          "Ticket Created",
-          `**Creator:** ${message.author}`,
+          "📋︲Ticket Created",
+          `Creator: **${message.author}**`,
           "GREEN"
         ),
       ],
