@@ -11,16 +11,16 @@ module.exports = {
 };
 
 module.exports.run = async (client, message, args) => {
-  let embed = await message.channel.send({
-    embeds: [client.embedBuilder(client, message, "Pinging...", "")],
-  });
+  let embed = client.embedBuilder(client, message, "Pinging...", "");
 
-  embed.edit({
+  let msg = await message.channel.send({ embeds: [embed]});
+
+  msg.edit({
     embeds: [
       embed
         .setDescription(
           `<:ArrowRightGray:813815804768026705>Latency: **${
-            embed.createdTimestamp - message.createdTimestamp
+            msg.createdTimestamp - message.createdTimestamp
           }ms**
 <:ArrowRightGray:813815804768026705>API Latency: **${client.ws.ping}ms**
 <:ArrowRightGray:813815804768026705>Uptime: **${client.utils.formatTime(
