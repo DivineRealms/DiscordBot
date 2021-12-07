@@ -147,12 +147,10 @@ module.exports = async (client, message) => {
         let time = client.utils.formatTime(findCooldown.expiring - Date.now());
         return message.channel.send({
           embeds: [
-            client.embedBuilder(
+            client.utils.errorEmbed(
               client,
               message,
-              "Error",
-              `You can use that command again in ${time}`,
-              "error"
+              `You can use that command again in ${time}`
             ),
           ],
         });
