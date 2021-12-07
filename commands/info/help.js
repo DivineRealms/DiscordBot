@@ -82,7 +82,6 @@ module.exports.run = async (client, message, args) => {
       },
       true
     );
-    console.log(menus[0])
   } else {
     const command = client.commands.find(
       (c, n) =>
