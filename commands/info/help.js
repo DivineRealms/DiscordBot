@@ -31,7 +31,7 @@ module.exports.run = async (client, message, args) => {
           emoji: "💵",
         },
         {
-          label: "Informations",
+          label: "Info",
           emoji: "✨",
         },
         {
