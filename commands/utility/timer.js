@@ -17,10 +17,8 @@ module.exports.run = async (client, message, args) => {
     "Please provide a valid time."
   );
 
-  if (isNaN(parse(args[0])))
-    return message.channel.send({
-      embeds: [errEmb],
-    });
+  if (!args[0]) return message.channel.send({ embeds: [errEmb] });
+  if (isNaN(parse(args[0]))) return message.channel.send({ embeds: [errEmb] });
 
   const end = Date.now() + parse(args[0]);
 
@@ -66,13 +64,12 @@ module.exports.run = async (client, message, args) => {
       );
 
     if (Date.now() > end) {
-      const done = client.embedBuilder(
-        client,
-        message,
-        "Timer has ended!",
-        "",
-        "#ffc13f"
-      );
+      const done = client
+        .embedBuilder(client, message, "", "", "#ffc13f")
+        .setAuthor(
+          "Timer has ended!",
+          `https://cdn.upload.systems/uploads/40vZa4wv.png`
+        );
 
       clearInterval(timer);
       return msg.edit({ embeds: [done] });
