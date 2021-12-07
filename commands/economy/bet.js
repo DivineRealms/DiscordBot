@@ -21,7 +21,7 @@ module.exports.run = async (client, message, args) => {
         client.utils.errorEmbed(
           client,
           message,
-          "You need to enter how much to bet."
+          "Betting value not given."
         ),
       ],
     });
@@ -32,7 +32,7 @@ module.exports.run = async (client, message, args) => {
         client.utils.errorEmbed(
           client,
           message,
-          "You don't have money to bet."
+          "You don't have enough money."
         ),
       ],
     });
@@ -44,9 +44,10 @@ module.exports.run = async (client, message, args) => {
       message.channel.send({
         embeds: [
           client
-            .embedBuilder(client, message, "Betting", "", "GREEN")
-            .addField("Bet:", `$${money}`)
-            .addField("Result:", "You won!"),
+            .embedBuilder(client, message, "", "", "#3db39e")
+            .addField("Amount:", `$${money}`, true)
+            .addField("Result:", "You won!", true)
+            .setAuthor("Betting", `https://cdn.upload.systems/uploads/HJGA3pxp.png`),
         ],
       });
 
@@ -55,9 +56,10 @@ module.exports.run = async (client, message, args) => {
       message.channel.send({
         embeds: [
           client
-            .embedBuilder(client, message, "Betting", "", "RED")
-            .addField("Bet:", `$${money}`)
-            .addField("Result:", "You lost!"),
+            .embedBuilder(client, message, "", "", "RED")
+            .addField("Amount:", `$${money}`, true)
+            .addField("Result:", "You lost!", true)
+            .setAuthor("Betting", `https://cdn.upload.systems/uploads/HJGA3pxp.png`),
         ],
       });
 
@@ -95,9 +97,10 @@ module.exports.run = async (client, message, args) => {
     message.channel.send({
       embeds: [
         client
-          .embedBuilder(client, message, "Betting", "", "GREEN")
-          .addField("Bet:", `$${args[0]}`)
-          .addField("Result:", `You won!`),
+          .embedBuilder(client, message, "", "", "#3db39e")
+          .addField("Amount:", `$${args[0]}`, true)
+          .addField("Result:", `You won!`, true)
+          .setAuthor("Betting", `https://cdn.upload.systems/uploads/HJGA3pxp.png`),
       ],
     });
 
@@ -106,9 +109,10 @@ module.exports.run = async (client, message, args) => {
     message.channel.send({
       embeds: [
         client
-          .embedBuilder(client, message, "Betting", "", "RED")
-          .addField("Bet:", `$${args[0]}`)
-          .addField("Result:", `You lost!`),
+          .embedBuilder(client, message, "", "", "RED")
+          .addField("Amount:", `$${args[0]}`, true)
+          .addField("Result:", `You lost!`, true)
+          .setAuthor("Betting", `https://cdn.upload.systems/uploads/HJGA3pxp.png`),
       ],
     });
 
