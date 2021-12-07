@@ -10,32 +10,30 @@ module.exports = {
 
 module.exports.run = async (client, message, args) => {
   if (!client.conf.settings.BotOwnerDiscordID.includes(message.author.id))
-    return message.channel.send({
-      embeds: [
-        client.embedBuilder(
-          client,
-          message,
-          "Error",
-          `You're not Owner`,
-          "error"
-        ),
-      ],
-    });
-  let restarting = client.embedBuilder(
-    client,
-    message,
-    "Restart",
-    "Bot is restarting.."
-  );
-  let m = await message.channel.send({ embeds: [restarting] });
-  let restarted = client.embedBuilder(
-    client,
-    message,
-    "Restart",
-    `Bot has been restarted by <@!${message.author.id}>.`
-  );
+    return client.utils.errorEmbed(
+      client,
+      message,
+      "Only Developers can use this command."
+    );
 
-  await m.edit({ embeds: [restarted] }).then(() => {
+  const restarting = await message.channel.send({
+      embeds: [
+        client
+          .embedBuilder(client, message, "", "")
+          .setAuthor(
+            "Bot is restarting...",
+            `https://cdn.upload.systems/uploads/AgC8qbkL.png`
+          ),
+      ],
+    }),
+    restarted = client
+      .embedBuilder(client, message, "", "")
+      .setAuthor(
+        `Bot has been restarted by ${message.author.username}.`,
+        `https://cdn.upload.systems/uploads/AgC8qbkL.png`
+      );
+
+  await restarting.edit({ embeds: [restarted] }).then(() => {
     process.exit();
   });
 };

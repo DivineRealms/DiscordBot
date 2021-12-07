@@ -42,9 +42,12 @@ module.exports = async (client) => {
     let interval = setInterval(() => {
       if (!settings.enabled) return clearInterval(interval);
       let index = Math.floor(Math.random() * settings.activities.length);
-      client.user.setActivity(settings.activities[index], {
-        type: settings.types[index],
-      });
+      client.user.setActivity(
+        settings.activities[index].replace("{count}", client.users.cache.size),
+        {
+          type: settings.types[index],
+        }
+      );
     }, 180000);
   }
 

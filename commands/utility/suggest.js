@@ -16,51 +16,41 @@ module.exports.run = async (client, message, args) => {
   );
 
   if (!channel)
-    return message.channel.send({
-      embeds: [
-        client.embedBuilder(
-          client,
-          message,
-          "Error",
-          "A suggestions channel hasn't been setup for this server!",
-          "error"
-        ),
-      ],
-    });
+    return client.utils.errorEmbed(
+      client,
+      message,
+      "The suggestions channel hasn't been setup for this server!"
+    );
+
   if (!args[0])
-    return message.channel.send({
-      embeds: [
-        client.embedBuilder(
-          client,
-          message,
-          "Error",
-          "Please provide me a suggestion!",
-          "error"
-        ),
-      ],
-    });
+    return client.utils.errorEmbed(
+      client,
+      message,
+      "Please provide a suggestion!"
+    );
 
-  const embed = client.embedBuilder(
-    client,
-    message,
-    "Suggestion",
-    `${args.join(" ")}`
-  );
-
-  message.delete();
+  setTimeout(() => message.delete(), 3000);
   message.channel.send({
     embeds: [
       client.embedBuilder(
         client,
         message,
-        "Suggestion",
-        "Your suggestion has been submitted successfully."
+        "Your suggestion has been submitted successfully.",
+        "",
+        "GREEN"
       ),
     ],
   });
-  const msg = await channel.send({ embeds: [embed] });
+
+  const msg = await channel.send({
+    embeds: [
+      client.embedBuilder(client, message, "Suggestion", `${args.join(" ")}`),
+    ],
+  });
+
   await msg.react(client.conf.settings.Emojis.Yes);
   await msg.react(client.conf.settings.Emojis.No);
+
   db.set(`suggestion_${msg.id}`, {
     user: message.author,
     suggestion: args.join(" "),

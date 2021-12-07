@@ -1,25 +1,50 @@
 module.exports = {
-  name: 'dm',
-  category: 'moderation',
-  description: 'I will dm someone for you.',
+  name: "dm",
+  category: "moderation",
+  description: "I will dm someone for you.",
   permissions: ["MANAGE_GUILD"],
   cooldown: 0,
   aliases: [`direct-message`],
-  usage: 'dm <Text>'
-}
+  usage: "dm <Text>",
+};
 
-module.exports.run = async(client, message, args) => {
-  const user = message.mentions.users.first() || message.guild.members.cache.get(args[0]);
+module.exports.run = async (client, message, args) => {
+  const user =
+    message.mentions.users.first() || message.guild.members.cache.get(args[0]);
 
-  if (!user) return message.channel.send({ embeds: [client.embedBuilder(client, message, "You have provided invalid user.", "", "error")] });
+  if (!user)
+    return client.utils.errorEmbed(
+      client,
+      message,
+      "You have provided an invalid user."
+    );
 
-  const text = args.slice(1).join(' ');
+  const text = args.slice(1).join(" ");
 
-  if (!text) return message.channel.send({ embeds: [client.embedBuilder(client, message, "You need to provide text to send.", "", "error")] });
+  if (!text)
+    return client.utils.errorEmbed(
+      client,
+      message,
+      "You need to provide text to send."
+    );
 
   user.send({ content: text }).catch(() => {
-    return  message.channel.send({ embeds: [client.embedBuilder(client, message, "This User has theirs DMs Closed.", "", "error")] });
+    return client.utils.errorEmbed(
+      client,
+      message,
+      "This User has their DMs Closed."
+    );
   });
 
-  message.channel.send({ embeds: [client.embedBuilder(client, message, "DM", `DM has successfully been sent to ${user.username}`)] });
-}
+  message.channel.send({
+    embeds: [
+      client.embedBuilder(
+        client,
+        message,
+        `Successfully sent a DM to ${user.username}.`,
+        "",
+        "GREEN"
+      ),
+    ],
+  });
+};

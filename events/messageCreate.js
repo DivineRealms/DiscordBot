@@ -45,10 +45,12 @@ module.exports = async (client, message) => {
             "Server Bump",
             "Server can be bumped again, use `!d bump`"
           );
+
           bumpChannel.send({
             content: `<@!${dbumper[0]}>`,
             embeds: [bumpAgain],
           });
+
           db.delete(`serverBump_${client.conf.settings.guildID}`);
           db.delete(`lastBump_${client.conf.settings.guildID}`);
         }, timeout);
@@ -59,6 +61,7 @@ module.exports = async (client, message) => {
           "Server Bumped",
           "Thank you for bumping."
         );
+
         db.add(`bumps_${message.guild.id}_${dbumper[0]}`, 1);
 
         bumpMsg[0].reply({ embeds: [bump] });
@@ -71,6 +74,7 @@ module.exports = async (client, message) => {
 
   let level = db.fetch(`level_${message.guild.id}_${message.author.id}`);
   let xp = db.fetch(`xp_${message.guild.id}_${message.author.id}`);
+
   if (level == null || xp == null) {
     db.add(`level_${message.guild.id}_${message.author.id}`, 1);
     db.add(`xp_${message.guild.id}_${message.author.id}`, 1);
@@ -80,7 +84,9 @@ module.exports = async (client, message) => {
     message.channel
       .send(`> Hey ${message.author}, I removed your AFK Status`)
       .then((m) => setTimeout(() => m.delete(), 5000));
+
     client.afk.delete(message.author.id);
+
     return message.member
       .setNickname(message.member.displayName.replace(/(\[AFK\])/g, ""))
       .catch(() => {});
@@ -89,9 +95,8 @@ module.exports = async (client, message) => {
   if (
     client.conf.leveling.enabled == true &&
     !client.conf.leveling.ignore_Xp_Channels.includes(message.channel.id)
-  ) {
+  )
     await leveling.manageLeveling(client, message);
-  }
 
   const prefixRegex = new RegExp(
     `^(${
@@ -114,6 +119,7 @@ module.exports = async (client, message) => {
         userPerms.push(perm);
       }
     });
+
     if (userPerms.length > 0)
       return message.channel
         .send({
@@ -131,6 +137,7 @@ module.exports = async (client, message) => {
     let findCooldown = cooldownList.find(
       (c) => c.name == command && c.id == message.author.id
     );
+
     if (
       !client.conf.automod.Bypass_Cooldown.some((r) =>
         message.member.roles.cache.has(r)
@@ -174,30 +181,20 @@ module.exports = async (client, message) => {
     !message.member.permissions.has("MANAGE_ROLES") &&
     !message.member.roles.cache.has(client.conf.automod.Bypass_Command)
   )
-    return message.channel
-      .send({
-        embeds: [
-          client.embedBuilder(
-            client,
-            message,
-            "Error",
-            `Commands can only be used in ${cmdChannels.join(",").trim()}.`,
-            "error"
-          ),
-        ],
-      })
+    return client.utils
+      .errorEmbed(
+        client,
+        message,
+        `Commands can only be used in ${cmdChannels.join(",").trim()}.`
+      )
       .then((m) => setTimeout(() => m.delete(), 7000));
+      
   if (command && !client.conf.economy.enabled && command.category === "economy")
-    return message.channel.send({
-      embeds: [
-        client.embedBuilder(
-          client,
-          message,
-          "Error",
-          "The economy hasn't been enabled!",
-          "error"
-        ),
-      ],
-    });
+    return client.utils.errorEmbed(
+      client,
+      message,
+      "The economy hasn't been enabled!"
+    );
+
   if (command) command.run(client, message, args);
 };

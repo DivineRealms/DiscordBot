@@ -102,10 +102,17 @@ function lbMoney(client, message) {
   return content;
 }
 
+function errorEmbed(client, message, err) {
+  return message.channel.send({
+    embeds: [client.embedBuilder(client, message, err, "", "error")],
+  });
+}
+
 module.exports = {
   formatTime,
   commandsList,
   lbContent,
   lbMoney,
   lbVotes,
+  errorEmbed,
 };

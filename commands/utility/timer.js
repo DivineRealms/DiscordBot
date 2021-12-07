@@ -11,33 +11,38 @@ module.exports = {
 };
 
 module.exports.run = async (client, message, args) => {
-  let embed3 = client.embedBuilder(
-    client,
-    message,
-    "Timer",
-    "Please provide a valid time!",
-    "error"
-  );
-
-  if (isNaN(parse(args[0]))) return message.channel.send({ embeds: [embed3] });
+  if (isNaN(parse(args[0])))
+    return message.channel.send({
+      embeds: [
+        client.utils.errorEmbed(
+          client,
+          message,
+          "Please provide a valid time."
+        ),
+      ],
+    });
 
   const end = Date.now() + parse(args[0]);
 
-  const embed = client.embedBuilder(
-    client,
-    message,
-    "Active Timer",
-    `⏰ **Time**: ${client.utils.formatTime(end - Date.now(), { round: true })}`
-  );
-
-  const msg = await message.channel.send({ embeds: [embed] });
+  const msg = await message.channel.send({
+    embeds: [
+      client.embedBuilder(
+        client,
+        message,
+        "Active Timer",
+        `⏰ Time: ${client.utils.formatTime(end - Date.now(), {
+          round: true,
+        })}`
+      ),
+    ],
+  });
 
   const timer = setInterval(() => {
     const embed2 = client.embedBuilder(
       client,
       message,
       "Active Timer",
-      `⏰ **Time**: ${client.utils.formatTime(end - Date.now(), {
+      `⏰ Time: ${client.utils.formatTime(end - Date.now(), {
         round: true,
       })}`
     );
@@ -46,9 +51,11 @@ module.exports.run = async (client, message, args) => {
       const done = client.embedBuilder(
         client,
         message,
-        "Timer",
-        "Timer has ended!"
+        "Timer has ended!",
+        "",
+        "GREEN"
       );
+      
       clearInterval(timer);
       return msg.edit({ embeds: [done] });
     } else msg.edit({ embeds: [embed2] });

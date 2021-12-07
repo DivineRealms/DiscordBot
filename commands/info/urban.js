@@ -1,27 +1,49 @@
-const fetch = require('node-fetch')
-const urban = require(`relevant-urban`)
+const fetch = require("node-fetch");
+const urban = require(`relevant-urban`);
 
 module.exports = {
-  name: 'urban',
-  category: 'info',
-  description: 'Lets you search whatever you want on urban dictionary.',
+  name: "urban",
+  category: "info",
+  description: "Lets you search whatever you want on urban dictionary.",
   permissions: [],
   cooldown: 0,
-  aliases: ['ud'],
-  usage: 'urban <search>'
-}
+  aliases: ["ud"],
+  usage: "urban <search>",
+};
 
-module.exports.run = async(client, message, args) => {
-  if (!args[0]) return message.channel.send({ embeds: [client.embedBuilder(client, message, "You need to enter term to search for.", "", "error")] });
+module.exports.run = async (client, message, args) => {
+  if (!args[0])
+    return client.utils.errorEmbed(
+      client,
+      message,
+      "You need to enter a term to search for."
+    );
 
-  let def = await urban(args[0]).catch(() => {})
-  if (!def) return message.channel.send({ embeds: [client.embedBuilder(client, message, "Error", `No Results found for ${args[0]}.`, "", "error")] });
+  let def = await urban(args[0]).catch(() => {});
 
-  const embed = client.embedBuilder(client, message, "Click Me To View The Word Online!", "")
-    .setURL(def.urbanURL)
-    .addField(`Definition`, `${def.definition}`.slice(0, 1000), false)
-    .addField(`Definition In An Example`, `${def.example || 'none'}`.slice(0, 1000), false)
-    .addField(`Author`, def.author, false)
+  if (!def)
+    return client.utils.errorEmbed(
+      client,
+      message,
+      `No Results found for ${args[0]}.`
+    );
 
-  message.channel.send({ embeds: [embed] })
-}
+  message.channel.send({
+    embeds: [
+      client
+        .embedBuilder(client, message, "", "")
+        .setAuthor(args[0], "", def.urbanURL)
+        .addField(`Definition`, `${def.definition}`.slice(0, 1000), false)
+        .addField(
+          `Definition in an example:`,
+          `${def.example || "none"}`.slice(0, 1000),
+          false
+        )
+        .addField(
+          `Author:`,
+          "<:ArrowRightGray:813815804768026705>" + def.author,
+          false
+        ),
+    ],
+  });
+};

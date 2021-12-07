@@ -4,6 +4,7 @@ module.exports = async (client, message) => {
     user: message.author.id,
     content: message.content,
   });
+
   setTimeout(() => {
     if (
       client.snipes.get(message.channel.id) &&

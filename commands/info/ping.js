@@ -11,11 +11,11 @@ module.exports = {
 };
 
 module.exports.run = async (client, message, args) => {
-  let embed = client.embedBuilder(client, message, "Pinging...", "");
+  const embed = await message.channel.send({
+    embeds: [client.embedBuilder(client, message, "Pinging...", "")],
+  });
 
-  let m = await message.channel.send({ embeds: [embed] });
-
-  m.edit({
+  embed.edit({
     embeds: [
       embed
         .setDescription(

@@ -1,14 +1,14 @@
 module.exports = {
-  name: 'devjoke',
-  category: 'fun',
-  description: 'A programmer joke only some will get...',
+  name: "devjoke",
+  category: "fun",
+  description: "A programmer joke only some will get...",
   permissions: [],
   cooldown: 0,
-  aliases: ['dvjoke'],
-  usage: 'devjoke '
-}
+  aliases: ["dvjoke"],
+  usage: "devjoke ",
+};
 
-module.exports.run = async(client, message) => {
+module.exports.run = async (client, message) => {
   let responses = [
     "Q: How many programmers does it take to screw in a light bulb?\nA: None. It's a hardware problem.",
     "A programmer puts two glasses on his bedside table before going to sleep.\nA full one, in case he gets thirsty, and an empty one, in case he doesn’t.",
@@ -38,7 +38,18 @@ module.exports.run = async(client, message) => {
     "Im old fashioned when it comes to coffee. If someone offers me a hot cup of java, I say no thanks.\nI'd much prefer a cup of C++.",
   ];
 
-  let embed = client.embedBuilder(client, message, `Developer Joke`, responses[~~(Math.random() * responses.length)])
-    .setThumbnail(`https://cdn.discordapp.com/attachments/735248366291648523/742124928165347428/hi.png`)
-  message.channel.send({ embeds: [embed] });
-}
+  message.channel.send({
+    embeds: [
+      client
+        .embedBuilder(
+          client,
+          message,
+          `Developer Joke`,
+          responses[~~(Math.random() * responses.length)]
+        )
+        .setThumbnail(
+          `https://cdn.discordapp.com/attachments/735248366291648523/742124928165347428/hi.png`
+        ),
+    ],
+  });
+};

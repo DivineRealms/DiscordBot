@@ -8,46 +8,40 @@ module.exports = {
   permissions: ["MANAGE_ROLES"],
   cooldown: 0,
   aliases: [`setbday`],
-  usage: "setbirthday",
+  usage: "setbirthday @user Sep 4 2004",
 };
 
 module.exports.run = async (client, message, args) => {
-  const embed = client.embedBuilder(client, message, "Birthday", "");
-  const user = message.mentions.users.first();
-  const birthd =
-    args.slice(1).join(" ").toLowerCase().charAt(0).toUpperCase() +
-    args.slice(1).join(" ").slice(1).toLowerCase();
-  const date = datetime.parse(birthd, "MMM D YYYY");
+  const embed = client.embedBuilder(client, message, "Birthday", ""),
+    user = message.mentions.users.first(),
+    birthd =
+      args.slice(1).join(" ").toLowerCase().charAt(0).toUpperCase() +
+      args.slice(1).join(" ").slice(1).toLowerCase(),
+    date = datetime.parse(birthd, "MMM D YYYY");
 
   if (!user || !date.getDay())
-    return message.channel.send({
-      embeds: [
-        embed.setDescription(
-          `You need to mention a user and enter the date of that users birthday!\nExample: \`${message.px}setbirthday @user Sep 4 2004\``
-        ),
-      ],
-    });
+    return client.utils.errorEmbed(
+      client,
+      message,
+      `Invalid usage, check ${message.px}help setbirthday`
+    );
 
   const age = getAge(args.slice(1).join(" "));
   if (age <= 12)
-    return message.channel.send({
-      embeds: [
-        embed.setDescription(
-          `You can\'t enter a year greater than ${
-            new Date().getFullYear() - 12
-          }!`
-        ),
-      ],
-    });
+    return client.utils.errorEmbed(
+      client,
+      message,
+      `You can\'t enter a year greater than ${new Date().getFullYear() - 12}!`
+    );
 
   message.channel.send({
     embeds: [
       embed
-        .setTitle(`🥳 Successfully set their birthday! 🥳`)
+        .setAuthor(`🥳︲Successfully set your birthday.`)
         .setDescription(
           `I have set ${user}'s birthday to ${args
             .slice(1)
-            .join(" ")}!\n\nThey will be ${age + 1}`
+            .join(" ")}!\nThey will be ${age + 1}.`
         ),
     ],
   });

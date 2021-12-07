@@ -9,19 +9,22 @@ module.exports = {
 };
 
 module.exports.run = async (client, message, args) => {
-  const info = client.embedBuilder(
-    client,
-    message,
-    `🔹 Bot Info`,
-    `<:ArrowRightGray:813815804768026705>Prefix: \`${message.px}\`
+  message.channel.send({
+    embeds: [
+      client.embedBuilder(
+        client,
+        message,
+        `🔹 Bot Info`,
+        `<:ArrowRightGray:813815804768026705>Prefix: \`${message.px}\`
 \<:ArrowRightGray:813815804768026705>Commands: **${
-      [...client.commands.values()].length
-    }**
+          [...client.commands.values()].length
+        }**
 \<:ArrowRightGray:813815804768026705>Developers: ${client.conf.settings.BotOwnerDiscordID.map(
-      (x) => client.users.cache.get(x)
-    )
-      .join(", ")
-      .trim()}`
-  );
-  message.channel.send({ embeds: [info] });
+          (x) => client.users.cache.get(x)
+        )
+          .join(", ")
+          .trim()}`
+      ),
+    ],
+  });
 };

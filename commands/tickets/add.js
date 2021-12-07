@@ -14,29 +14,19 @@ module.exports.run = async (client, message, args) => {
   const ticket = db.fetch(`tickets_${message.guild.id}_${message.channel.id}`);
 
   if (!ticket)
-    return message.channel.send({
-      embeds: [
-        client.embedBuilder(
-          client,
-          message,
-          "Error",
-          "This command can only be used in Ticket Channel.",
-          "error"
-        ),
-      ],
-    });
+    return client.utils.errorEmbed(
+      client,
+      message,
+      "This command can only be used in Ticket Channel."
+    );
+
   if (!message.mentions.users.first())
-    return message.channel.send({
-      embeds: [
-        client.embedBuilder(
-          client,
-          message,
-          "Error",
-          "You need to mention user to add to ticket.",
-          "error"
-        ),
-      ],
-    });
+    return client.utils.errorEmbed(
+      client,
+      message,
+      "You need to mention the user."
+    );
+
   if (
     message.channel.permissionOverwrites.has(message.mentions.users.first().id)
   )
@@ -45,28 +35,26 @@ module.exports.run = async (client, message, args) => {
         .get(message.mentions.users.first().id)
         .allow.has("VIEW_CHANNEL")
     )
-      return message.channel.send({
-        embeds: [
-          client.embedBuilder(
-            client,
-            message,
-            "Error",
-            "That User is already added in Ticket.",
-            "error"
-          ),
-        ],
-      });
+      return client.utils.errorEmbed(
+        client,
+        message,
+        "User is already added in the ticket."
+      );
 
   message.channel.permissionOverwrites.edit(message.mentions.users.first(), {
     VIEW_CHANNEL: true,
   });
+
   message.channel.send({
     embeds: [
       client.embedBuilder(
         client,
         message,
-        "Add",
-        `${message.mentions.users.first()} has been added to ticket.`
+        `${
+          message.mentions.users.first().username
+        } has been added to the ticket.`,
+        "",
+        "GREEN"
       ),
     ],
   });

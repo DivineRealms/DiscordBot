@@ -15,22 +15,20 @@ module.exports.run = async (client, message, args) => {
     message.channel.send({
       embeds: [
         client
-          .embedBuilder(client, message, "Math", "")
-          .addField("Problem", "```\n" + args.join(" ") + "```")
-          .addField("Solution", "```\n" + evaluate(args.join(" ")) + "```"),
+          .embedBuilder(client, message, "", "")
+          .setAuthor(
+            "Calculator",
+            `https://cdn.upload.systems/uploads/LRa9Ebl5.png`
+          )
+          .addField("📥︲Problem:", "```\n" + args.join(" ") + "```")
+          .addField("📤︲Solution:", "```\n" + evaluate(args.join(" ")) + "```"),
       ],
     });
   } catch (e) {
-    message.channel.send({
-      embeds: [
-        client.embedBuilder(
-          client,
-          message,
-          "Error",
-          "You need to provide math problem.",
-          "error"
-        ),
-      ],
-    });
+    client.utils.errorEmbed(
+      client,
+      message,
+      "You need to provide a math problem."
+    );
   }
 };

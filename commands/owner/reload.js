@@ -10,52 +10,42 @@ module.exports = {
 
 module.exports.run = async (client, message, args) => {
   if (!client.conf.settings.BotOwnerDiscordID.includes(message.author.id))
-    return message.channel.send({
-      embeds: [
-        client.embedBuilder(
-          client,
-          message,
-          "Error",
-          `You're not Owner`,
-          "error"
-        ),
-      ],
-    });
+    return client.utils.errorEmbed(
+      client,
+      message,
+      "Only Developers can use this command."
+    );
 
   const command = client.commands.get((args[0] || "").toLowerCase());
   if (!command)
-    return message.channel.send({
-      embeds: [
-        client.embedBuilder(
-          client,
-          message,
-          "Error",
-          `You need to provide Command to Reload`,
-          "error"
-        ),
-      ],
-    });
-
+    return client.utils.errorEmbed(
+      client,
+      message,
+      `You need to provide a command to reload.`
+    );
   try {
     delete require.cache[
       require.resolve(`../${command.category}/${args[0].toLowerCase()}.js`)
     ];
+
     client.commands.set(args[0].toLowerCase(), {
       ...require(`../${command.category}/${args[0].toLowerCase()}.js`),
       category: command.category,
     });
+
     message.channel.send({
       embeds: [
         client.embedBuilder(
           client,
           message,
-          "Reload",
-          "Command has been reloaded successfully."
+          "Command has been reloaded successfully.",
+          "",
+          "GREEN"
         ),
       ],
     });
-  } catch (e) {
+  } catch (err) {
     message.channel.send({ content: "An error occurred" });
-    console.log(e);
+    console.log(err);
   }
 };

@@ -3,8 +3,8 @@ const Canvas = require("discord-canvas");
 const db = require("quick.db");
 
 module.exports = async (client, member) => {
-  const settings = client.conf.welcomeSystem;
-  const log = client.channels.cache.get(settings.welcomeChannel);
+  const settings = client.conf.welcomeSystem,
+    log = client.channels.cache.get(settings.welcomeChannel);
 
   if (settings.welcomeType === "card") {
     const img = await new Canvas.Welcome()
@@ -27,14 +27,12 @@ module.exports = async (client, member) => {
       "welcome-image.png"
     );
     if (log)
-      log
-        .send({ files: [attachment] })
-        .then((msg) =>
-          db.set(`wlcmEmbed_${member.guild.id}_${member.id}`, {
-            msg: msg.id,
-            channel: msg.channel.id,
-          })
-        );
+      log.send({ files: [attachment] }).then((msg) =>
+        db.set(`wlcmEmbed_${member.guild.id}_${member.id}`, {
+          msg: msg.id,
+          channel: msg.channel.id,
+        })
+      );
   } else if (settings.welcomeType == "embed") {
     const embed = client.embedBuilder(
       client,
@@ -46,14 +44,12 @@ module.exports = async (client, member) => {
     );
 
     if (log)
-      log
-        .send({ embeds: [embed] })
-        .then((msg) =>
-          db.set(`wlcmEmbed_${member.guild.id}_${member.id}`, {
-            msg: msg.id,
-            channel: msg.channel.id,
-          })
-        );
+      log.send({ embeds: [embed] }).then((msg) =>
+        db.set(`wlcmEmbed_${member.guild.id}_${member.id}`, {
+          msg: msg.id,
+          channel: msg.channel.id,
+        })
+      );
   } else if (settings.welcomeType == "message") {
     if (log)
       log

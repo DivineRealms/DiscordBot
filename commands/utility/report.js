@@ -9,54 +9,40 @@ module.exports = {
 };
 
 module.exports.run = async (client, message, args) => {
-  let channel = client.channels.cache.get(
-    client.conf.logging.Report_Channel_Logs
-  );
-
-  if (!channel)
-    return message.channel.send({
-      embeds: [
-        client.embedBuilder(
-          client,
-          message,
-          "Error",
-          "A report channel hasn't been setup for this server!",
-          "error"
-        ),
-      ],
-    });
-  if (!args[0])
-    return message.channel.send({
-      embeds: [
-        client.embedBuilder(
-          client,
-          message,
-          "Error",
-          "Please provide me a report!",
-          "error"
-        ),
-      ],
-    });
-
-  const report = client
-    .embedBuilder(client, message, "New Report", "")
-    .addField("Submitter", `${message.author}`)
-    .addField("Report", `${args.join(" ")}`)
-    .addField(
-      "Time",
-      `${require("moment")().format("ddd, MMMM Do YYYY [at] hh:mm A")}`
+  let logChannel = client.channels.cache.get(
+      client.conf.logging.Report_Channel_Logs
     );
-
-  message.delete();
-  message.channel.send({
-    embeds: [
-      client.embedBuilder(
+  
+    if (!logChannel)
+      return client.utils.errorEmbed(
         client,
         message,
-        "Report",
-        `Your report for \`${args.join(" ")}\` was submitted!`
-      ),
+        "A report channel hasn't been setup for this server!"
+      );
+  
+    if (!args[0])
+      return client.utils.errorEmbed(client, message, "Please provide a report.");
+  
+    setTimeout(() => message.delete(), 3000);
+    message.channel.send({
+      embeds: [
+        client.embedBuilder(
+          client,
+          message,
+          `Your report for \`${args.join(" ")}\` was submitted!`,
+          "",
+          "GREEN"
+        ),
+      ],
+    });
+  
+    logChannel.send({
+    embeds: [
+      client
+        .embedBuilder(client, message, "New Report", "")
+        .addField("Submitter:", message.author, false)
+        .addField("Report:", args.join(" "), false)
+        .addField("Time:", `<t:${Math.round(Date.now() / 1000)}:R>`),
     ],
   });
-  const msg = await channel.send({ embeds: [report] });
 };

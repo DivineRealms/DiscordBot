@@ -3,15 +3,15 @@ const db = require("quick.db");
 const Canvas = require("discord-canvas");
 
 module.exports = async (client, member) => {
-  const settings = client.conf.goodbyeSystem;
-  const log = client.channels.cache.get(settings.goodbyeChannel);
-  let embedWelcome = db.fetch(`wlcmEmbed_${member.guild.id}_${member.id}`);
+  const settings = client.conf.goodbyeSystem,
+    log = client.channels.cache.get(settings.goodbyeChannel),
+    embedWelcome = db.fetch(`wlcmEmbed_${member.guild.id}_${member.id}`);
+
   if (embedWelcome) {
-    let wlcmCh = client.channels.cache.get(embedWelcome.channel);
-    let msgDelete = await wlcmCh.messages.fetch(embedWelcome.msg);
-    if (wlcmCh && msgDelete) {
-      msgDelete.delete();
-    }
+    let wlcmCh = client.channels.cache.get(embedWelcome.channel),
+      msgDelete = await wlcmCh.messages.fetch(embedWelcome.msg);
+
+    if (wlcmCh && msgDelete) msgDelete.delete();
   }
 
   let data = await db.all().filter((data) => data.ID.includes(member.id));
@@ -33,21 +33,25 @@ module.exports = async (client, member) => {
       .setBackground(settings.goodbyeCardBackGroundURL)
       .toAttachment();
 
-    const attachment = new MessageAttachment(
-      image.toBuffer(),
-      "goodbye-image.png"
-    );
-    if (log) log.send({ files: [attachment] });
+    if (log)
+      log.send({
+        files: [new MessageAttachment(image.toBuffer(), "goodbye-image.png")],
+      });
   } else if (settings.goodbyeType === "embed") {
-    const embed = client.embedBuilder(
-      client,
-      "",
-      settings.goodbyeEmbed.title.replace("{username}", member.user.username),
-      settings.goodbyeEmbed.description.replace("{member}", member)
-    );
-
-    if (log) log.send({ embeds: [embed] });
-  } else if (settings.goodbyeType === "message") {
+    if (log)
+      log.send({
+        embeds: [
+          client.embedBuilder(
+            client,
+            "",
+            settings.goodbyeEmbed.title.replace(
+              "{username}",
+              member.user.username
+            ),
+            settings.goodbyeEmbed.description.replace("{member}", member)
+          ),
+        ],
+      });
+  } else if (settings.goodbyeType === "message")
     if (log) log.send(settings.goodbyeMessage.replace("{member}", member));
-  }
 };

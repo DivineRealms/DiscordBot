@@ -15,57 +15,40 @@ module.exports.run = async (client, message, args) => {
   let birthday = db.fetch(`birthday_${message.guild.id}_${message.author.id}`);
 
   if (birthday)
-    return message.channel.send({
-      embeds: [
-        client.embedBuilder(
-          client,
-          message,
-          "Error",
-          "You have already set your birthday, contact staff if you want it changed.",
-          "error"
-        ),
-      ],
-    });
+    return client.utils.errorEmbed(
+      client,
+      message,
+      "You have already set your birthday."
+    );
+
   const birthd =
-    args.join(" ").toLowerCase().charAt(0).toUpperCase() +
-    args.join(" ").slice(1).toLowerCase();
-  const date = datetime.parse(birthd, "MMM D YYYY");
+      args.join(" ").toLowerCase().charAt(0).toUpperCase() +
+      args.join(" ").slice(1).toLowerCase(),
+    date = datetime.parse(birthd, "MMM D YYYY");
+
   if (!date.getDay())
-    return message.channel.send({
-      embeds: [
-        client.embedBuilder(
-          client,
-          message,
-          "Error",
-          "You need to enter Date of Birthday. Example: Jan 21 2004.",
-          "error"
-        ),
-      ],
-    });
+    return client.utils.errorEmbed(
+      client,
+      message,
+      "Invalid format, example: Jan 21 2004."
+    );
 
   const age = getAge(args.join(" "));
   if (age <= 12)
-    return message.channel.send({
-      embeds: [
-        client.embedBuilder(
-          client,
-          message,
-          "Error",
-          `You can't enter a year greater than ${
-            new Date().getFullYear() - 12
-          }.`,
-          "error"
-        ),
-      ],
-    });
+    return client.utils.errorEmbed(
+      client,
+      message,
+      `You can't enter a year greater than ${new Date().getFullYear() - 12}.`
+    );
 
   message.channel.send({
     embeds: [
       client.embedBuilder(
         client,
         message,
-        "Birthday",
-        "Successfully set your birthday."
+        "Successfully set your birthday.",
+        "",
+        "GREEN"
       ),
     ],
   });

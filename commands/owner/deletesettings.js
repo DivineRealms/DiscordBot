@@ -10,16 +10,11 @@ module.exports = {
 
 module.exports.run = (client, message, args) => {
   if (!client.conf.settings.BotOwnerDiscordID.includes(message.author.id))
-    return message.channel.send({
-      embeds: [
-        client.embedBuilder(
-          client,
-          message,
-          "Error",
-          `You're not Owner`,
-          "error"
-        ),
-      ],
-    });
+    return client.utils.errorEmbed(
+      client,
+      message,
+      "Only Developers can use this command."
+    );
+
   client.settings.deleteAll();
 };

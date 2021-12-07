@@ -14,51 +14,49 @@ module.exports.run = async (client, message, args) => {
   let [end, ...reason] = args;
 
   if (!args[0] || isNaN(parse(end)))
-    return message.channel.send({
-      embeds: [
-        client.embedBuilder(
-          client,
-          message,
-          "Error",
-          "You need to provide time.",
-          "error"
-        ),
-      ],
-    });
-  if (!reason[0])
-    return message.channel.send({
-      embeds: [
-        client.embedBuilder(
-          client,
-          message,
-          "Error",
-          "You need to enter reminder reason.",
-          "error"
-        ),
-      ],
-    });
+    return client.utils.errorEmbed(
+      client,
+      message,
+      "You need to provide time."
+    );
 
-  const embed = client.embedBuilder(
-    client,
-    message,
-    "Reminder",
-    `${reason.join(" ")}`
-  );
+  if (!reason[0])
+    return client.utils.errorEmbed(
+      client,
+      message,
+      "You need to enter a reason."
+    );
 
   message.channel.send({
     embeds: [
-      client.embedBuilder(
-        client,
-        message,
-        "Reminder",
-        `I'll remind you for \`${reason.join(
-          " "
-        )}\` in ${client.utils.formatTime(parse(end))}.`
-      ),
+      client
+        .embedBuilder(
+          client,
+          message,
+          "",
+          `I'll remind you for \`${reason.join(
+            " "
+          )}\` in ${client.utils.formatTime(parse(end))}.`
+        )
+        .setAuthor(
+          "Reminder",
+          `https://cdn.upload.systems/uploads/PX2kS3Kp.png`
+        ),
     ],
   });
 
   setTimeout(() => {
-    message.reply({ embeds: [embed] }).catch(() => {});
+    message
+      .reply({
+        embeds: [
+          client
+            .embedBuilder(client, message, "", `${reason.join(" ")}`)
+            .setAuthor(
+              "Reminder",
+              `https://cdn.upload.systems/uploads/PX2kS3Kp.png`
+            ),
+        ],
+      })
+      .catch(() => {});
   }, parse(end));
 };

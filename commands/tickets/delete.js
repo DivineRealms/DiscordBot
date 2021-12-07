@@ -17,20 +17,15 @@ module.exports = {
 };
 
 module.exports.run = async (client, message, args) => {
-  const ticket = db.fetch(`tickets_${message.guild.id}_${message.channel.id}`);
-  const log = client.channels.cache.get(
-    client.conf.logging.Ticket_Channel_Logs
-  );
-  const channelMessages = await message.channel.messages
-    .fetch({ limit: 100, before: message.id })
-    .catch((err) => console.log(err));
-
-  let messageCollection = new Collection();
-  messageCollection = messageCollection.concat(channelMessages);
-
-  let msgs = [...messageCollection.values()].reverse();
-
-  let data = await fs.readFile("./data/template.html", "utf8");
+  const ticket = db.fetch(`tickets_${message.guild.id}_${message.channel.id}`),
+    log = client.channels.cache.get(client.conf.logging.Ticket_Channel_Logs),
+    channelMessages = await message.channel.messages
+      .fetch({ limit: 100, before: message.id })
+      .catch((err) => console.log(err)),
+    messageCollection = new Collection();
+  (messageCollection = messageCollection.concat(channelMessages)),
+    (msgs = [...messageCollection.values()].reverse()),
+    (data = await fs.readFile("./data/template.html", "utf8"));
 
   msgs.forEach(async (msg) => {
     let parentContainer = document.createElement("div");
@@ -76,36 +71,33 @@ module.exports.run = async (client, message, args) => {
     data += parentContainer.outerHTML;
   });
 
-  const attachment = new MessageAttachment(Buffer.from(data), "ticket.html");
-  const loggingembed = client
-    .embedBuilder(client, message, "Ticket Logging System", "")
-    .addField(`Ticket Name`, `${message.channel.name}`)
-    .addField(`Channel`, `${message.channel}`)
-    .setThumbnail(client.user.displayAvatarURL());
+  const attachment = new MessageAttachment(Buffer.from(data), "ticket.html"),
+    loggingembed = client
+      .embedBuilder(client, message, "Ticket Logging System", "")
+      .addField(`Ticket Name`, `${message.channel.name}`)
+      .addField(`Channel`, `${message.channel}`)
+      .setThumbnail(client.user.displayAvatarURL());
   if (log) log.send({ files: [attachment], embeds: [loggingembed] });
 
   if (!ticket)
-    return message.channel.send({
-      embeds: [
-        client.embedBuilder(
-          client,
-          message,
-          "Error",
-          "This command can only be used inside of tickets.",
-          "error"
-        ),
-      ],
-    });
+    return client.utils.errorEmbed(
+      client,
+      message,
+      "This command can only be used inside of tickets."
+    );
+
   message.channel.send({
     embeds: [
       client.embedBuilder(
         client,
         message,
-        "Deleting..",
-        "This channel will be deleted in 10 seconds."
+        "This channel will be deleted in 10 seconds.",
+        "",
+        "GREEN"
       ),
     ],
   });
+  
   message.channel.send({ files: [attachment] });
 
   await new Promise((r) => setTimeout(r, 10000));

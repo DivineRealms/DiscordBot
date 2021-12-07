@@ -14,31 +14,19 @@ module.exports = {
 
 module.exports.run = async (client, message, args) => {
   if (!client.conf.settings.BotOwnerDiscordID.includes(message.author.id))
-    return message.channel.send({
-      embeds: [
-        client.embedBuilder(
-          client,
-          message,
-          "Error",
-          `You're not Owner`,
-          "error"
-        ),
-      ],
-    });
+    return client.utils.errorEmbed(
+      client,
+      message,
+      "Only Developers can use this command."
+    );
 
   const code = args.join(" ");
   if (!code)
-    return message.channel.send({
-      embeds: [
-        client.embedBuilder(
-          client,
-          message,
-          "Error",
-          `You need to enter code to evaluate`,
-          "error"
-        ),
-      ],
-    });
+    return client.utils.errorEmbed(
+      client,
+      message,
+      "You need to enter code to evaluate."
+    );
   try {
     let evaled = eval(code);
 
@@ -51,8 +39,12 @@ module.exports.run = async (client, message, args) => {
     if (typeof evaled !== "string") evaled = require("util").inspect(evaled);
 
     let embed = client
-      .embedBuilder(client, message, "Eval", "", "GREEN")
-      .addField("Input", `\`\`\`${code}\`\`\``);
+      .embedBuilder(client, message, "", "", "GREEN")
+      .setAuthor(
+        "Code Evaluation",
+        `https://cdn.upload.systems/uploads/7GXLEDHZ.png`
+      )
+      .addField("📥︲Input:", `\`\`\`${code}\`\`\``);
 
     if (evaled.length >= 1024) {
       const { key } = await fetch(
@@ -62,21 +54,18 @@ module.exports.run = async (client, message, args) => {
           body: evaled,
         }
       ).then((res) => res.json());
+      
       embed.addField(
-        "Output",
+        "📤︲Output:",
         `\`\`\`xl\nhttps://www.toptal.com/developers/hastebin/raw/${key}\`\`\``
       );
-    } else {
-      embed.addField("Output", `\`\`\`xl\n${evaled}\`\`\``);
-    }
+    } else embed.addField("📤︲Output", `\`\`\`xl\n${evaled}\`\`\``);
 
     message.channel.send({ embeds: [embed] });
   } catch (err) {
-    let embed = client
-      .embedBuilder(client, message, "", "error")
-      .addField("Input", `\`\`\`xl\n${code}\`\`\``)
-      .addField("Output", `\`\`\`xl\n${err}\`\`\``);
-
-    message.channel.send({ embeds: [embed] });
+    client.utils
+      .errorEmbed(client, message, "Code Evaluation Failed")
+      .addField("📥︲Input:", `\`\`\`xl\n${code}\`\`\``)
+      .addField("📤︲Output:", `\`\`\`xl\n${err}\`\`\``);
   }
 };
