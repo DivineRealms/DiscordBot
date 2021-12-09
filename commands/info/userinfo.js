@@ -50,7 +50,7 @@ module.exports.run = async (client, message, args) => {
           "#60b8ff"
         )
         .setAuthor(
-          user.username + "'s Information",
+          member.user.username + "'s Information",
           `https://cdn.upload.systems/uploads/6uDK0XAN.png`
         )
         .setThumbnail(
