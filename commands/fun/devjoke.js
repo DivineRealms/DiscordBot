@@ -44,11 +44,16 @@ module.exports.run = async (client, message) => {
         .embedBuilder(
           client,
           message,
-          `Developer Joke`,
-          responses[~~(Math.random() * responses.length)]
+          "",
+          responses[~~(Math.random() * responses.length)],
+          "#ec3d93"
         )
         .setThumbnail(
           `https://cdn.discordapp.com/attachments/735248366291648523/742124928165347428/hi.png`
+        )
+        .setAuthor(
+          "Developer Joke",
+          `https://cdn.upload.systems/uploads/ZdKDK7Tx.png`
         ),
     ],
   });

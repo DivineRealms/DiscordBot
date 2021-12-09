@@ -22,18 +22,24 @@ module.exports.run = async (client, message) => {
 
   message.channel.send({
     embeds: [
-      client.embedBuilder(
-        client,
-        message,
-        `${role.name} Role Information`,
-        `<:ArrowRightGray:813815804768026705>Created: <t:${Math.round(
-          role.createdTimestamp / 1000
-        )}:R>
+      client
+        .embedBuilder(
+          client,
+          message,
+          `${role.name} Role Information`,
+          `<:ArrowRightGray:813815804768026705>Created: <t:${Math.round(
+            role.createdTimestamp / 1000
+          )}:R>
 <:ArrowRightGray:813815804768026705>ID: **${role.id}**
 <:ArrowRightGray:813815804768026705>Position: **${role.position}**
 <:ArrowRightGray:813815804768026705>Color: **${role.hexColor}**
-<:ArrowRightGray:813815804768026705>Hoisted: **${role.hoist}**`
-      ),
+<:ArrowRightGray:813815804768026705>Hoisted: **${role.hoist}**`,
+          "#60b8ff"
+        )
+        .setAuthor(
+          `${role.name}'s Information`,
+          `https://cdn.upload.systems/uploads/6uDK0XAN.png`
+        ),
     ],
   });
 };

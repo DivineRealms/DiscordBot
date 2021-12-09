@@ -47,12 +47,12 @@ module.exports.run = async (client, message, args) => {
     .then((_messages) => {
       message.channel.send({
         embeds: [
-          client.embedBuilder(
-            client,
-            message,
-            `${message.author.username} has purged ${args[0]} messages.`,
-            ""
-          ),
+          client
+            .embedBuilder(client, message, "", "", "#f44336")
+            .setAuthor(
+              `${message.author.username} has purged ${args[0]} mesages.`,
+              `https://cdn.upload.systems/uploads/6Xdg16Gh.png`
+            ),
         ],
       });
     })

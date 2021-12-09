@@ -20,14 +20,20 @@ const manageLeveling = async (client, message) => {
     );
 
     if (xp + xpGive >= xpNeeded) {
-      const embed = client.embedBuilder(
-        client,
-        "",
-        levelSettings.level_Up_Title,
-        levelSettings.level_Up_Message
-          .replace("{user}", message.author.toString())
-          .replace("{level}", level + 1)
-      );
+      const embed = client
+        .embedBuilder(
+          client,
+          "",
+          "",
+          levelSettings.level_Up_Message
+            .replace("{user}", message.author.toString())
+            .replace("{level}", level + 1)
+        )
+        .setAuthor(
+          levelSettings.level_Up_Title,
+          `https://cdn.upload.systems/uploads/OJ9pgcy2.png`
+        )
+        .setColor("#f2d422");
 
       if (xpChannel) xpChannel.send({ embeds: [embed] });
 

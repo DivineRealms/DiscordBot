@@ -60,7 +60,7 @@ module.exports.run = async (client, message, args) => {
           `${
             message.mentions.users.first().username
           } has been removed from the ticket!`,
-          `https://i.imgur.com/A6ou6sG.png`
+          `https://cdn.upload.systems/uploads/4mFVRE7f.png`
         ),
     ],
   });

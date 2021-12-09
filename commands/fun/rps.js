@@ -10,11 +10,15 @@ module.exports = {
 
 module.exports.run = async (client, message, args, cmd) => {
   if (!args[0]) {
-    return message.channel.send({embeds:[client.utils.errorEmbed(
-      client,
-      message,
-      "Please include your choice (rock/paper/scissors)."
-    )]});
+    return message.channel.send({
+      embeds: [
+        client.utils.errorEmbed(
+          client,
+          message,
+          "Please include your choice (rock/paper/scissors)."
+        ),
+      ],
+    });
   }
 
   let choices = ["rock", "paper", "scissors"];
@@ -28,10 +32,14 @@ module.exports.run = async (client, message, args, cmd) => {
           client.embedBuilder(
             client,
             message,
+            "",
+            `<:ArrowRightGray:813815804768026705>It was a tie, we both had ${args[0]}`,
+            "#ec3d93"
+          )
+          .setAuthor(
             "Rock Paper Scissors",
-            `It was a tie, we both had ${args[0]}`,
-            "#2f3134"
-          ),
+            `https://cdn.upload.systems/uploads/ZdKDK7Tx.png`
+          )
         ],
       });
     }
@@ -43,9 +51,14 @@ module.exports.run = async (client, message, args, cmd) => {
             client.embedBuilder(
               client,
               message,
+              "",
+              "<:ArrowRightGray:813815804768026705>I won! I had paper.",
+              "#ec3d93"
+            )
+            .setAuthor(
               "Rock Paper Scissors",
-              "I've won! I had paper."
-            ),
+              `https://cdn.upload.systems/uploads/ZdKDK7Tx.png`
+            )
           ],
         });
       }
@@ -56,9 +69,14 @@ module.exports.run = async (client, message, args, cmd) => {
             client.embedBuilder(
               client,
               message,
+              "",
+              "<:ArrowRightGray:813815804768026705>I won! I had scissors.",
+              "#ec3d93"
+            )
+            .setAuthor(
               "Rock Paper Scissors",
-              "I've won! I had scissors."
-            ),
+              `https://cdn.upload.systems/uploads/ZdKDK7Tx.png`
+            )
           ],
         });
       }
@@ -69,9 +87,14 @@ module.exports.run = async (client, message, args, cmd) => {
             client.embedBuilder(
               client,
               message,
+              "",
+              "<:ArrowRightGray:813815804768026705>I won! I had rock.",
+              "#ec3d93"
+            )
+            .setAuthor(
               "Rock Paper Scissors",
-              "I've won! I had rock."
-            ),
+              `https://cdn.upload.systems/uploads/ZdKDK7Tx.png`
+            )
           ],
         });
       }
@@ -81,25 +104,37 @@ module.exports.run = async (client, message, args, cmd) => {
       if (args[0].toLowerCase() == "rock") {
         return message.channel.send({
           embeds: [
-            client.embedBuilder(
-              client,
-              message,
-              "Rock Paper Scissors",
-              "You won, I had scissors."
-            ),
+            client
+              .embedBuilder(
+                client,
+                message,
+                "",
+                "<:ArrowRightGray:813815804768026705>You won, I had scissors.",
+                "#ec3d93"
+              )
+              .setAuthor(
+                "Rock Paper Scissors",
+                `https://cdn.upload.systems/uploads/ZdKDK7Tx.png`
+              ),
           ],
         });
       }
-      
+
       if (args[0].toLowerCase() == "paper") {
         return message.channel.send({
           embeds: [
-            client.embedBuilder(
-              client,
-              message,
-              "Rock Paper Scissors",
-              "You won, I had rock."
-            ),
+            client
+              .embedBuilder(
+                client,
+                message,
+                "",
+                "<:ArrowRightGray:813815804768026705>You won, I had rock.",
+                "#ec3d93"
+              )
+              .setAuthor(
+                "Rock Paper Scissors",
+                `https://cdn.upload.systems/uploads/ZdKDK7Tx.png`
+              ),
           ],
         });
       }
@@ -107,12 +142,18 @@ module.exports.run = async (client, message, args, cmd) => {
       if (args[0].toLowerCase() == "scissors") {
         return message.channel.send({
           embeds: [
-            client.embedBuilder(
-              client,
-              message,
-              "Rock Paper Scissors",
-              "You won, I had paper."
-            ),
+            client
+              .embedBuilder(
+                client,
+                message,
+                "",
+                "<:ArrowRightGray:813815804768026705>You won, I had paper.",
+                "#ec3d93"
+              )
+              .setAuthor(
+                "Rock Paper Scissors",
+                `https://cdn.upload.systems/uploads/ZdKDK7Tx.png`
+              ),
           ],
         });
       }

@@ -39,8 +39,12 @@ module.exports.run = async (client, message, args) => {
   message.channel.send({
     embeds: [
       client
-        .embedBuilder(client, message, "", "")
-        .setAuthor(args[0], "", def.urbanURL)
+        .embedBuilder(client, message, "", "", "#60b8ff")
+        .setAuthor(
+          args[0],
+          `https://cdn.upload.systems/uploads/6uDK0XAN.png`,
+          def.urbanURL
+        )
         .addField(`Definition`, `${def.definition}`.slice(0, 1000), false)
         .addField(
           `Definition in an example:`,

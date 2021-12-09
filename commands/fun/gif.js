@@ -47,11 +47,13 @@ module.exports.run = async (client, message, args) => {
           .embedBuilder(
             client,
             message,
-            "GIF",
-            `Image not loading? click [here](${urls[0]}).`
+            "",
+            `<:ArrowRightGray:813815804768026705>Image not loading? click [here](${urls[0]}).`,
+            "#ec3d93"
           )
           .setImage(urls[0])
-          .setFooter(`Pages 1/${urls.length}`),
+          .setFooter(`Pages 1/${urls.length}`)
+          .setAuthor("GIF", `https://cdn.upload.systems/uploads/ZdKDK7Tx.png`),
       ],
     })
     .then(async (emb) => {

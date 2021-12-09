@@ -78,9 +78,12 @@ module.exports.run = async (client, message, args) => {
           message,
           "",
           `<:ArrowRightGray:813815804768026705>Ticket has been successfully created in channel <#${channel.id}>.`,
-          "#3db39e"
+          "#b3e59f"
         )
-        .setAuthor("Ticket Created", `https://i.imgur.com/A6ou6sG.png`),
+        .setAuthor(
+          "Ticket Created",
+          `https://cdn.upload.systems/uploads/4mFVRE7f.png`
+        ),
     ],
     components: [jumpRow],
   });
@@ -96,9 +99,12 @@ module.exports.run = async (client, message, args) => {
             "{username}",
             `<@!${message.author.id}>`
           ),
-          "#3db39e"
+          "#b3e59f"
         )
-        .setAuthor(settings.Ticket_Title, `https://i.imgur.com/A6ou6sG.png`),
+        .setAuthor(
+          settings.Ticket_Title,
+          `https://cdn.upload.systems/uploads/4mFVRE7f.png`
+        ),
     ],
   });
 
@@ -111,9 +117,12 @@ module.exports.run = async (client, message, args) => {
             message,
             "",
             `Creator: ${message.author}`,
-            "#3db39e"
+            "#b3e59f"
           )
-          .setAuthor("Ticket Created", `https://i.imgur.com/A6ou6sG.png`),
+          .setAuthor(
+            "Ticket Created",
+            `https://cdn.upload.systems/uploads/4mFVRE7f.png`
+          ),
       ],
     });
 

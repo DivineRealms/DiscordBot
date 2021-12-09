@@ -21,14 +21,18 @@ module.exports.run = async (client, message, args) => {
 
   message.channel.send({
     embeds: [
-      client.embedBuilder(
-        client,
-        message,
-        `Last deleted message was from: ${user.tag}`,
-        `\`\`\`xl
-${snipe.content}
-\`\`\``
-      ),
+      client
+        .embedBuilder(
+          client,
+          message,
+          "",
+          `\`\`\`xl${snipe.content}\`\`\``,
+          "#60b8ff"
+        )
+        .setAuthor(
+          `Last deleted message was from: ${user.tag}`,
+          `https://cdn.upload.systems/uploads/6uDK0XAN.png`
+        ),
     ],
   });
 };

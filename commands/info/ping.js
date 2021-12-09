@@ -11,9 +11,11 @@ module.exports = {
 };
 
 module.exports.run = async (client, message, args) => {
-  let embed = client.embedBuilder(client, message, "Pinging...", "");
+  let embed = client
+    .embedBuilder(client, message, "", "", "#60b8ff")
+    .setAuthor("Pinging...", `https://cdn.upload.systems/uploads/6uDK0XAN.png`);
 
-  let msg = await message.channel.send({ embeds: [embed]});
+  let msg = await message.channel.send({ embeds: [embed] });
 
   msg.edit({
     embeds: [
@@ -25,9 +27,13 @@ module.exports.run = async (client, message, args) => {
 <:ArrowRightGray:813815804768026705>API Latency: **${client.ws.ping}ms**
 <:ArrowRightGray:813815804768026705>Uptime: **${client.utils.formatTime(
             client.uptime
-          )}**`
+          )}**`,
+          "#60b8ff"
         )
-        .setAuthor("Pinging finished!"),
+        .setAuthor(
+          "Pinging finished!",
+          `https://cdn.upload.systems/uploads/6uDK0XAN.png`
+        ),
     ],
   });
 };

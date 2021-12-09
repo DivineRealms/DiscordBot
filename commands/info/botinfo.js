@@ -11,20 +11,26 @@ module.exports = {
 module.exports.run = async (client, message, args) => {
   message.channel.send({
     embeds: [
-      client.embedBuilder(
-        client,
-        message,
-        `🔹 Bot Info`,
-        `<:ArrowRightGray:813815804768026705>Prefix: \`${message.px}\`
+      client
+        .embedBuilder(
+          client,
+          message,
+          `🔹 Bot Info`,
+          `<:ArrowRightGray:813815804768026705>Prefix: \`${message.px}\`
 \<:ArrowRightGray:813815804768026705>Commands: **${
-          [...client.commands.values()].length
-        }**
+            [...client.commands.values()].length
+          }**
 \<:ArrowRightGray:813815804768026705>Developers: ${client.conf.settings.BotOwnerDiscordID.map(
-          (x) => client.users.cache.get(x)
+            (x) => client.users.cache.get(x)
+          )
+            .join(", ")
+            .trim()}`,
+          "#60b8ff"
         )
-          .join(", ")
-          .trim()}`
-      ),
+        .setAuthor(
+          "Bot Info",
+          `https://cdn.upload.systems/uploads/6uDK0XAN.png`
+        ),
     ],
   });
 };

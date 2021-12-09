@@ -49,7 +49,8 @@ module.exports = async (client, message) => {
             .setAuthor(
               "Server Bump",
               `https://cdn.upload.systems/uploads/pVry3Mav.png`
-            );
+            )
+            .setColor("#d6ccc5");
 
           bumpChannel.send({
             content: `<@!${dbumper[0]}>`,

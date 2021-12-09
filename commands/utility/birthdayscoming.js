@@ -31,8 +31,9 @@ module.exports.run = async (client, message, args) => {
       d
         ? new Date().getMonth() === new Date(d).getMonth() &&
           new Date().getDate() <= new Date(d).getDate()
-        : false,
-    birthdays = db
+        : false;
+        
+  let birthdays = db
       .all()
       .filter((i) => i.ID.startsWith(`birthday_${message.guild.id}_`))
       .sort((a, b) => b.data - a.data);

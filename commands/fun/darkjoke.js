@@ -35,6 +35,10 @@ module.exports.run = async (client, message) => {
     response = responses[Math.floor(Math.random() * responses.length)];
 
   message.channel.send({
-    embeds: [client.embedBuilder(client, message, "Dark Joke", `${response}`)],
+    embeds: [
+      client
+        .embedBuilder(client, message, "", `${response}`, "#ec3d93")
+        .setAuthor("Dark Joke", `https://cdn.upload.systems/uploads/ZdKDK7Tx.png`),
+    ],
   });
 };

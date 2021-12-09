@@ -18,7 +18,8 @@ const bump = (client) => {
         .setAuthor(
           "Server Bump",
           `https://cdn.upload.systems/uploads/pVry3Mav.png`
-        );
+        )
+        .setColor("#d6ccc5");
 
       db.delete(`serverBump_${client.conf.settings.guildID}`);
       if (bumpChannel)

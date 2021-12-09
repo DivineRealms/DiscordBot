@@ -108,88 +108,94 @@ module.exports.run = async (client, message, args, cmd) => {
         ]),
         currentPlayer = message.author.id;
 
-      message.channel
-        .send({
-          embeds: [
-            client.embedBuilder(
+      let embed = client
+        .embedBuilder(
+          client,
+          message,
+          "",
+          board(game).join("\n").replace(/,/g, ""),
+          "#ec3d93"
+        )
+        .setAuthor(
+          `${message.author.username} vs. ${
+            message.mentions.users.first().username
+          }`,
+          `https://cdn.upload.systems/uploads/ZdKDK7Tx.png`
+        );
+
+      message.channel.send({ embeds: [embed] }).then((emb) => {
+        let filter = (m) =>
+          m.author.id == currentPlayer &&
+          !isNaN(m.content) &&
+          m.content > 0 &&
+          m.content < 8;
+
+        let collector = message.channel.createMessageCollector({
+          filter,
+          time: 30000,
+        });
+
+        collector.on("collect", (m) => {
+          if (
+            !games.get(message.guild.id + message.author.id) ||
+            !games.get(message.guild.id + message.mentions.users.first().id)
+          )
+            return;
+
+          if (currentPlayer == message.author.id)
+            currentPlayer = message.mentions.users.first().id;
+          else currentPlayer = message.author.id;
+
+          game.insert(m.content - 1);
+
+          emb.edit({
+            embeds: [
+              embed.setDescription(board(game).join("\n").replace(/,/g, "")),
+            ],
+          });
+
+          m.delete();
+
+          collector.resetTimer({ time: 30000 });
+
+          if (game.state.winner !== null || game.state.status == "1")
+            collector.stop();
+        });
+
+        collector.on("end", () => {
+          if (
+            !games.get(message.guild.id + message.author.id) ||
+            !games.get(message.guild.id + message.mentions.users.first().id)
+          )
+            return;
+
+          if (game.state.status == "0")
+            embed.setAuthor(
+              `The winner is ${
+                game.state.winner.color == game.players["0"].color
+                  ? message.author.username
+                  : message.mentions.users.first().username
+              }!`,
+              `https://cdn.upload.systems/uploads/ZdKDK7Tx.png`
+            );
+          else if (game.state.status == "1")
+            embed.setAuthor(
+              `Looks like you tied!`,
+              `https://cdn.upload.systems/uploads/ZdKDK7Tx.png`
+            );
+          else
+            client.utils.errorEmbed(
               client,
               message,
-              `${message.author.username} vs. ${
-                message.mentions.users.first().username
-              }`,
-              board(game).join("\n").replace(/,/g, "")
-            ),
-          ],
-        })
-        .then((emb) => {
-          let filter = (m) =>
-            m.author.id == currentPlayer &&
-            !isNaN(m.content) &&
-            m.content > 0 &&
-            m.content < 8;
+              "Time Limit has reached and there's no winners."
+            );
 
-          let collector = message.channel.createMessageCollector({
-            filter,
-            time: 30000,
-          });
+          emb.edit({ embeds: [embed] });
 
-          collector.on("collect", (m) => {
-            if (
-              !games.get(message.guild.id + message.author.id) ||
-              !games.get(message.guild.id + message.mentions.users.first().id)
-            )
-              return;
-
-            if (currentPlayer == message.author.id)
-              currentPlayer = message.mentions.users.first().id;
-            else currentPlayer = message.author.id;
-
-            game.insert(m.content - 1);
-
-            emb.edit({
-              embeds: [
-                embed.setDescription(board(game).join("\n").replace(/,/g, "")),
-              ],
-            });
-
-            m.delete();
-
-            collector.resetTimer({ time: 30000 });
-
-            if (game.state.winner !== null || game.state.status == "1")
-              collector.stop();
-          });
-
-          collector.on("end", () => {
-            if (
-              !games.get(message.guild.id + message.author.id) ||
-              !games.get(message.guild.id + message.mentions.users.first().id)
-            )
-              return;
-
-            if (game.state.status == "0")
-              embed.setTitle(
-                `The winner is ${
-                  game.state.winner.color == game.players["0"].color
-                    ? message.author.username
-                    : message.mentions.users.first().username
-                }!`
-              );
-            else if (game.state.status == "1")
-              embed.setTitle(`Looks like you tied!`);
-            else
-              client.utils.errorEmbed(
-                client,
-                message,
-                "Time Limit has reached and there's no winners."
-              );
-
-            emb.edit({ embeds: [embed] });
-
-            games.delete(message.guild.id + message.author.id);
-            games.delete(message.guild.id + message.mentions.users.first().id);
-          });
+          games.delete(message.guild.id + message.author.id);
+          games.delete(message.guild.id + message.mentions.users.first().id);
         });
+      });
     });
 };
 

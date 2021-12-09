@@ -25,9 +25,13 @@ module.exports.run = async (client, message, args) => {
   message.channel.send({
     embeds: [
       client
-        .embedBuilder(client, message, "Random Reddit Meme", "")
+        .embedBuilder(client, message, "", "", "#ec3d93")
         .setURL(`http://reddit.com/${item.permalink}`)
-        .setImage(item.data.url),
+        .setImage(item.data.url)
+        .setAuthor(
+          "Random Reddit Meme",
+          `https://cdn.upload.systems/uploads/ZdKDK7Tx.png`
+        ),
     ],
   });
 };

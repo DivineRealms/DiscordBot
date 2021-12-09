@@ -23,11 +23,12 @@ module.exports.run = async (client, message, args) => {
 
   message.channel.send({
     embeds: [
-      client.embedBuilder(
-        client,
-        message,
-        `Status has been changed to ${status}.`
-      ),
+      client
+        .embedBuilder(client, message, "", "#f44336")
+        .setAuthor(
+          `Status has been changed to ${status}.`,
+          `https://cdn.upload.systems/uploads/6Xdg16Gh.png`
+        ),
     ],
   });
 

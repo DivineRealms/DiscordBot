@@ -17,8 +17,12 @@ module.exports.run = async (client, message, args) => {
   message.channel.send({
     embeds: [
       client
-        .embedBuilder(client, message, `${user.tag}'s Avatar`, "")
-        .setImage(user.displayAvatarURL({ dynamic: true })),
+        .embedBuilder(client, message, "", "", "#ec3d93")
+        .setImage(user.displayAvatarURL({ dynamic: true }))
+        .setAuthor(
+          `${user.tag}'s Avatar`,
+          `https://cdn.upload.systems/uploads/ZdKDK7Tx.png`
+        ),
     ],
   });
 };

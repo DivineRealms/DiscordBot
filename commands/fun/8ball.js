@@ -40,13 +40,14 @@ module.exports.run = async (client, message, args) => {
   message.channel.send({
     embeds: [
       client
-        .embedBuilder(client, message, "8ball", "")
+        .embedBuilder(client, message, "", "", "#ec3d93")
         .addField("Question:", args.join(" "), false)
         .addField(
           "Answer:",
           responses[~~(Math.random() * responses.length)],
           false
-        ),
+        )
+        .setAuthor("8ball", `https://cdn.upload.systems/uploads/ZdKDK7Tx.png`),
     ],
   });
 };

@@ -60,11 +60,12 @@ module.exports.run = async (client, message, args) => {
 
   message.channel.send({
     embeds: [
-      client.embedBuilder(
-        client,
-        message,
-        `Successfully added the ${role} role to ${member.username}.`
-      ),
+      client
+        .embedBuilder(client, message, "", "#3db39e")
+        .setAuthor(
+          `Successfully added the ${role} role to ${member.username}.`,
+          `https://cdn.upload.systems/uploads/6KOGFYJM.png`
+        ),
     ],
   });
 

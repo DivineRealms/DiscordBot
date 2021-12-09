@@ -57,12 +57,14 @@ module.exports.run = async (client, message, args) => {
               `<:ArrowRightGray:813815804768026705>Temperature: **${current.temperature}°${location.degreetype}**
 <:ArrowRightGray:813815804768026705>Timezone: **UTC${location.timezone}**
 <:ArrowRightGray:813815804768026705>Humidity: **${current.humidity}%**
-<:ArrowRightGray:813815804768026705>Wind: **${current.winddisplay}**`
+<:ArrowRightGray:813815804768026705>Wind: **${current.winddisplay}**`,
+              "#60b8ff"
             )
             .setAuthor(
               `Weather in ${current.observationpoint}`,
-              current.imageUrl
-            ),
+              `https://cdn.upload.systems/uploads/6uDK0XAN.png`
+            )
+            .setThumbnail(current.imageUrl),
         ],
       });
     }

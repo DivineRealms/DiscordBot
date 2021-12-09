@@ -11,13 +11,19 @@ module.exports = {
 module.exports.run = async (client, message) =>
   message.channel.send({
     embeds: [
-      client.embedBuilder(
-        client,
-        message,
-        "Coinflip",
-        `Coin flipped by <@!${message.author.id}> and it landed on **${
-          Math.random() > 0.5 ? "Heads" : "Tails"
-        }**.`
-      ),
+      client
+        .embedBuilder(
+          client,
+          message,
+          "",
+          `Coin flipped by <@!${message.author.id}> and it landed on **${
+            Math.random() > 0.5 ? "Heads" : "Tails"
+          }**.`,
+          "#ec3d93"
+        )
+        .setAuthor(
+          "Coinflip",
+          `https://cdn.upload.systems/uploads/ZdKDK7Tx.png`
+        ),
     ],
   });

@@ -11,14 +11,22 @@ module.exports = {
 module.exports.run = async (client, message, args) =>
   message.channel.send({
     embeds: [
-      client.embedBuilder(
-        client,
-        message,
-        "🎲︲Dices Rolled!",
-        `First Dice:  \`${~~(Math.random() * 6) + 1}\`\nSecond Dice: \`${
-          ~~(Math.random() * 6) + 1
-        }\``,
-        "#3db39e"
-      ),
+      client
+        .embedBuilder(
+          client,
+          message,
+          "",
+          `<:ArrowRightGray:813815804768026705>First Dice: \`${
+            ~~(Math.random() * 6) + 1
+          }\`
+<:ArrowRightGray:813815804768026705>Second Dice: \`${
+            ~~(Math.random() * 6) + 1
+          }\``,
+          "#ec3d93"
+        )
+        .setAuthor(
+          "Dices rolled!",
+          `https://cdn.upload.systems/uploads/ZdKDK7Tx.png`
+        ),
     ],
   });

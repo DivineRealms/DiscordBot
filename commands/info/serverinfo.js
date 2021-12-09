@@ -33,12 +33,13 @@ module.exports.run = async (client, message, args) =>
           }**
 <:ArrowRightGray:813815804768026705>Emoji Count: **${
             message.guild.emojis.cache.size
-          }**
-`
+          }**`,
+          "#60b8ff"
         )
         .setAuthor(
-          message.guild.name,
-          message.guild.iconURL({ size: 1024, dynamic: true })
-        ),
+          message.guild.name + "'s Information",
+          `https://cdn.upload.systems/uploads/6uDK0XAN.png`
+        )
+        .setThumbnail(message.guild.iconURL({ size: 1024, dynamic: true })),
     ],
   });

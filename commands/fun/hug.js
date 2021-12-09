@@ -41,13 +41,12 @@ module.exports.run = async (client, message, args) => {
     message.channel.send({
       embeds: [
         client
-          .embedBuilder(
-            client,
-            message,
+          .embedBuilder(client, message, "", "", "#ec3d93")
+          .setImage(randomGif)
+          .setAuthor(
             `${message.author.username} just hugged ${mentionedMember.user.username}!`,
-            ""
-          )
-          .setImage(randomGif),
+            `https://cdn.upload.systems/uploads/ZdKDK7Tx.png`
+          ),
       ],
     });
   }

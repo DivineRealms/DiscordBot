@@ -39,7 +39,15 @@ module.exports.run = async (client, message, args) => {
       img = (await res.json()).message;
 
     message.channel.send({
-      embeds: [client.embedBuilder(client, message, "", "").setImage(img)],
+      embeds: [
+        client
+          .embedBuilder(client, message, "", "", "#ec3d93")
+          .setAuthor(
+            "Trump Tweet",
+            `https://cdn.upload.systems/uploads/ZdKDK7Tx.png`
+          )
+          .setImage(img),
+      ],
     });
   } finally {
   }

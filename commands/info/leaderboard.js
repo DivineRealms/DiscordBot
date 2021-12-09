@@ -24,9 +24,13 @@ module.exports.run = async (client, message) => {
             client,
             message,
             "",
-            client.utils.lbMoney(client, message)
+            client.utils.lbMoney(client, message),
+            "#47a047"
           )
-          .setAuthor("Economy Leaderboard", `https://i.imgur.com/iaQBPKj.png`),
+          .setAuthor(
+            "Economy Leaderboard",
+            `https://cdn.upload.systems/uploads/LrdB6F1N.png`
+          ),
       },
       {
         label: "Level",
@@ -36,9 +40,13 @@ module.exports.run = async (client, message) => {
             client,
             message,
             "",
-            client.utils.lbContent(client, message, "level")
+            client.utils.lbContent(client, message, "level"),
+            "#f2d422"
           )
-          .setAuthor("Level Leaderboard", `https://i.imgur.com/urqA2vZ.png`),
+          .setAuthor(
+            "Level Leaderboard",
+            `https://cdn.upload.systems/uploads/JOATppQ3.png`
+          ),
       },
       {
         label: "Bumps",
@@ -48,7 +56,8 @@ module.exports.run = async (client, message) => {
             client,
             message,
             "",
-            client.utils.lbContent(client, message, "bumps")
+            client.utils.lbContent(client, message, "bumps"),
+            "#d6ccc5"
           )
           .setAuthor(
             "Bump Leaderboard",
@@ -63,7 +72,8 @@ module.exports.run = async (client, message) => {
             client,
             message,
             "",
-            client.utils.lbVotes(client, message)
+            client.utils.lbVotes(client, message),
+            "#8ee26b"
           )
           .setFooter(`This page is going to update in ${parsed}.`)
           .setAuthor(

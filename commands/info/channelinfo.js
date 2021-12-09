@@ -12,11 +12,10 @@ module.exports.run = async (client, message, args) => {
   message.channel.send({
     embeds: [
       client
-        .embedBuilder(
-          client,
-          message,
+        .embedBuilder(client, message, "", "", "#60b8ff")
+        .setAuthor(
           `${message.channel.name} (${message.channel.id})`,
-          ""
+          `https://cdn.upload.systems/uploads/6uDK0XAN.png`
         )
         .addField(
           "Information",

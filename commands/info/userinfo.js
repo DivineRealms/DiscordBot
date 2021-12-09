@@ -12,24 +12,23 @@ module.exports = {
 
 module.exports.run = async (client, message, args) => {
   const member =
-      message.mentions.members.first() ||
-      client.users.cache.get(args[0]) ||
-      message.member,
-    nickname = member.nickname || "None",
-    avatar =
-      member.user.displayAvatarURL({
-        dynamic: true,
-        size: 4096,
-      }) || "*No Avatar!*",
-    bot = member.user.bot ? "Yes" : "No",
-    roles = [...member.roles.cache.values()].length
-      ? [...member.roles.cache.values()]
-          .filter((role) => role.name !== "@everyone")
-          .join(", ")
-      : "*None*",
-    highestRole = member.roles.highest || "*None*",
-    hoistRole = member.roles.hoist || "*None*",
-    memberColor = message.guild.members.cache.get(member.id).displayHexColor;
+    message.mentions.members.first() ||
+    client.users.cache.get(args[0]) ||
+    message.member;
+  let nickname = member.nickname || "None";
+  let avatar =
+    member.user.displayAvatarURL({
+      dynamic: true,
+      size: 4096,
+    }) || "*No Avatar!*";
+  let bot = member.user.bot ? "Yes" : "No";
+  let roles = [...member.roles.cache.values()].length
+    ? [...member.roles.cache.values()]
+        .filter((role) => role.name !== "@everyone")
+        .join(", ")
+    : "*None*";
+  let highestRole = member.roles.highest || "*None*";
+  let hoistRole = member.roles.hoist || "*None*";
 
   message.channel.send({
     embeds: [
@@ -47,13 +46,16 @@ module.exports.run = async (client, message, args) => {
 <:ArrowRightGray:813815804768026705>Hoisted Role: ${hoistRole}
 <:ArrowRightGray:813815804768026705>Bot: **${bot}**
 <:ArrowRightGray:813815804768026705>ID: **${member.id}**
-<:ArrowRightGray:813815804768026705>Roles: ${roles}`
+<:ArrowRightGray:813815804768026705>Roles: ${roles}`,
+          "#60b8ff"
         )
         .setAuthor(
-          member.user.tag,
-          member.user.displayAvatarURL({ size: 1024, dynamic: true })
+          user.username + "'s Information",
+          `https://cdn.upload.systems/uploads/6uDK0XAN.png`
         )
-        .setColor(memberColor),
+        .setThumbnail(
+          member.user.displayAvatarURL({ size: 1024, dynamic: true })
+        ),
     ],
   });
 };

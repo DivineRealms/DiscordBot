@@ -31,8 +31,9 @@ module.exports.run = async (client, message, args) => {
         )
         .setAuthor(
           user.username + "'s Balance",
-          user.displayAvatarURL({ size: 1024, dynamic: true })
-        ),
+          `https://cdn.upload.systems/uploads/LrdB6F1N.png`
+        )
+        .setColor("#47a047"),
     ],
   });
 };
