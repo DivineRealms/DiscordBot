@@ -105,8 +105,8 @@ module.exports.run = async (client, message, args, cmd) => {
       const game = new Connect4([
           new Player(":orange_circle:"),
           new Player(":red_circle:"),
-        ]),
-        currentPlayer = message.author.id;
+        ]);
+      let currentPlayer = message.author.id;
 
       let embed = client
         .embedBuilder(
