@@ -83,7 +83,7 @@ module.exports.run = async (client, message, args) => {
       .addField(`Channel:`, `${message.channel}`, false)
       .setThumbnail(client.user.displayAvatarURL())
       .setAuthor("Ticket Logging System", `https://i.imgur.com/A6ou6sG.png`);
-  if (log) log.send({ files: [attachment], embeds: [loggingembed] });
+  if (log) log.send({ embeds: [loggingembed], files: [attachment] });
 
   if (!ticket)
     return message.channel.send({
@@ -106,8 +106,6 @@ module.exports.run = async (client, message, args) => {
         ),
     ],
   });
-
-  message.channel.send({ files: [attachment] });
 
   await new Promise((r) => setTimeout(r, 10000));
   message.channel.delete();

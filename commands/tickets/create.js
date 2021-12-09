@@ -90,13 +90,13 @@ module.exports.run = async (client, message, args) => {
       client.embedBuilder(
         client,
         message,
-        settings.Ticket_Title,
+        "",
         client.resolveMember(
           settings.Ticket_Message,
           `<@!${message.author.id}>`
         ),
         "#3db39e"
-      ),
+      ).setAuthor(settings.Ticket_Title, `https://i.imgur.com/A6ou6sG.png`),
     ],
   });
 
