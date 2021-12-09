@@ -26,7 +26,7 @@ module.exports.run = async (client, message, args) => {
                 [...client.commands.values()].length
               }**`
             )
-            .setAvatar("Main Menu", `https://i.imgur.com/pJqB3Wm.png`),
+            .setAuthor("Main Menu", `https://i.imgur.com/pJqB3Wm.png`),
         },
         {
           label: "Economy",

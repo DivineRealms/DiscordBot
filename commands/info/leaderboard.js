@@ -65,11 +65,12 @@ module.exports.run = async (client, message) => {
             "",
             client.utils.lbVotes(client, message)
           )
-          .setFooter(`This page is going to update in ${parsed}.`),
-      }.setAuthor(
-        "Voting Leaderboard",
-        `https://cdn.upload.systems/uploads/U5K71mCE.png`
-      ),
+          .setFooter(`This page is going to update in ${parsed}.`)
+          .setAuthor(
+            "Voting Leaderboard",
+            `https://cdn.upload.systems/uploads/U5K71mCE.png`
+          ),
+      },
     ],
     data = [];
 
