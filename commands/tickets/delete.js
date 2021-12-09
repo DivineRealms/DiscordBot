@@ -80,8 +80,6 @@ module.exports.run = async (client, message, args) => {
     loggingembed = client
       .embedBuilder(client, message, "Ticket Logging System", "")
       .addField(`Ticket Name:`, `${message.channel.name}`, false)
-      .addField(`Channel:`, `${message.channel}`, false)
-      .setThumbnail(client.user.displayAvatarURL())
       .setAuthor("Ticket Logging System", `https://i.imgur.com/A6ou6sG.png`);
   if (log) log.send({ embeds: [loggingembed], files: [attachment] });
 

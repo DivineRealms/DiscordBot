@@ -87,16 +87,18 @@ module.exports.run = async (client, message, args) => {
 
   channel.send({
     embeds: [
-      client.embedBuilder(
-        client,
-        message,
-        "",
-        client.resolveMember(
-          settings.Ticket_Message,
-          `<@!${message.author.id}>`
-        ),
-        "#3db39e"
-      ).setAuthor(settings.Ticket_Title, `https://i.imgur.com/A6ou6sG.png`),
+      client
+        .embedBuilder(
+          client,
+          message,
+          "",
+          settings.Ticket_Message.replace(
+            "{username}",
+            `<@!${message.author.id}>`
+          ),
+          "#3db39e"
+        )
+        .setAuthor(settings.Ticket_Title, `https://i.imgur.com/A6ou6sG.png`),
     ],
   });
 
