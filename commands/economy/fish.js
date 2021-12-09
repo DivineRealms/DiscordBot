@@ -5,7 +5,7 @@ module.exports = {
   category: "economy",
   description: "Go fishing and get some tasty fish.",
   permissions: [],
-  cooldown: 60,
+  cooldown: 120,
   aliases: [],
   usage: "fish",
 };
@@ -22,7 +22,7 @@ module.exports.run = async (client, message, args) => {
       "cod",
       "tropical fish",
     ],
-    amount = Math.floor(Math.random() * 340) + 1;
+    amount = Math.floor(Math.random() * 200) + 1;
 
   message.channel.send({
     embeds: [

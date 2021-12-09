@@ -73,6 +73,7 @@ module.exports = async (client, message) => {
           );
 
         db.add(`bumps_${message.guild.id}_${dbumper[0]}`, 1);
+        db.add(`money_${message.guild.id}_${dbumper[0]}`, 1000);
 
         bumpMsg[0].reply({ embeds: [bump] });
       });

@@ -30,12 +30,12 @@ module.exports.run = async (client, message, args) => {
       client
         .embedBuilder(client, message, "", "", "#3db39e")
         .setAuthor(
-          "You have claimed your Daily Reward of $2500.",
+          "You have claimed your Daily Reward of $500.",
           `https://cdn.upload.systems/uploads/6KOGFYJM.png`
         ),
     ],
   });
 
-  db.add(`money_${message.guild.id}_${message.author.id}`, 2500);
+  db.add(`money_${message.guild.id}_${message.author.id}`, 500);
   db.set(`daily_${message.guild.id}_${message.author.id}`, Date.now());
 };

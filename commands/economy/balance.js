@@ -6,7 +6,7 @@ module.exports = {
   description: "Check your balance on the server.",
   permissions: [],
   cooldown: 0,
-  aliases: ["bal"],
+  aliases: ["bal", "b"],
   usage: "balance [@User]",
 };
 

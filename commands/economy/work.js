@@ -6,8 +6,8 @@ module.exports = {
   description: "Check your balance on the server.",
   permissions: [],
   cooldown: 120,
-  aliases: ["bal"],
-  usage: "balance [@User]",
+  aliases: [],
+  usage: "work",
 };
 
 module.exports.run = async (client, message, args) => {
@@ -20,7 +20,7 @@ module.exports.run = async (client, message, args) => {
       "doctor",
       "tv host",
     ],
-    amount = Math.floor(Math.random() * 2500) + 1;
+    amount = Math.floor(Math.random() * 600) + 1;
 
   message.channel.send({
     embeds: [
