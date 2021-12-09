@@ -76,11 +76,12 @@ module.exports.run = async (client, message, args) => {
     data += parentContainer.outerHTML;
   });
 
-  const attachment = new MessageAttachment(Buffer.from(data), "ticket.html"),
-    loggingembed = client
+  const loggingembed = client
       .embedBuilder(client, message, "Ticket Logging System", "")
       .addField(`Ticket Name:`, `${message.channel.name}`, false)
-      .setAuthor("Ticket Logging System", `https://i.imgur.com/A6ou6sG.png`);
+      .setAuthor("Ticket Logging System", `https://i.imgur.com/A6ou6sG.png`),
+    attachment = new MessageAttachment(Buffer.from(data), "ticket.html");
+
   if (log) log.send({ embeds: [loggingembed], files: [attachment] });
 
   if (!ticket)
