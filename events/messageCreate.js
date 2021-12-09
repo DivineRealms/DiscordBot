@@ -183,10 +183,6 @@ module.exports = async (client, message) => {
     }
   }
 
-  let cmdChannels = client.conf.automod.Command_Channel.map((x) =>
-    client.channels.cache.get(x)
-  );
-
   if (
     !client.conf.automod.Command_Channel.includes(message.channel.id) &&
     !message.member.permissions.has("MANAGE_ROLES") &&
@@ -198,7 +194,7 @@ module.exports = async (client, message) => {
           client.utils.errorEmbed(
             client,
             message,
-            `Commands can only be used in ${cmdChannels.join(",").trim()}.`
+            `Please use the commands channel.`
           ),
         ],
       })
