@@ -72,13 +72,15 @@ module.exports.run = async (client, message, args) => {
 
   message.channel.send({
     embeds: [
-      client.embedBuilder(
-        client,
-        message,
-        "📋︲Ticket Created",
-        `<:ArrowRightGray:813815804768026705>Ticket has been successfully created in channel <#${channel.id}>.`,
-        "#3db39e"
-      ),
+      client
+        .embedBuilder(
+          client,
+          message,
+          "",
+          `<:ArrowRightGray:813815804768026705>Ticket has been successfully created in channel <#${channel.id}>.`,
+          "#3db39e"
+        )
+        .setAuthor("Ticket Created", `https://i.imgur.com/A6ou6sG.png`),
     ],
     components: [jumpRow],
   });
@@ -89,7 +91,10 @@ module.exports.run = async (client, message, args) => {
         client,
         message,
         settings.Ticket_Title,
-        client.resolveMember(settings.Ticket_Message, `<@!${message.author.id}>`),
+        client.resolveMember(
+          settings.Ticket_Message,
+          `<@!${message.author.id}>`
+        ),
         "#3db39e"
       ),
     ],
@@ -98,13 +103,15 @@ module.exports.run = async (client, message, args) => {
   if (log)
     log.send({
       embeds: [
-        client.embedBuilder(
-          client,
-          message,
-          "📋︲Ticket Created",
-          `Creator: ${message.author}`,
-          "#3db39e"
-        ),
+        client
+          .embedBuilder(
+            client,
+            message,
+            "",
+            `Creator: ${message.author}`,
+            "#3db39e"
+          )
+          .setAuthor("Ticket Created", `https://i.imgur.com/A6ou6sG.png`),
       ],
     });
 

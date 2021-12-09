@@ -59,15 +59,14 @@ module.exports.run = async (client, message, args) => {
 
   message.channel.send({
     embeds: [
-      client.embedBuilder(
-        client,
-        message,
-        `📋︲${
-          message.mentions.users.first().username
-        } has been added to the ticket.`,
-        "",
-        "#3db39e"
-      ),
+      client
+        .embedBuilder(client, message, "", "", "#3db39e")
+        .setAuthor(
+          `${
+            message.mentions.users.first().username
+          } has been added to the ticket.`,
+          `https://i.imgur.com/A6ou6sG.png`
+        ),
     ],
   });
 };

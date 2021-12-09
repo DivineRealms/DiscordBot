@@ -17,38 +17,46 @@ module.exports.run = async (client, message, args) => {
           label: "Main Menu",
           value: "val_mainmenu",
           emoji: "🏠",
-          embed: client.embedBuilder(
-            client,
-            message,
-            "🏠︲Main Menu",
-            `<:ArrowRightGray:813815804768026705>Total Commands: **${
-              [...client.commands.values()].length
-            }**`
-          ),
+          embed: client
+            .embedBuilder(
+              client,
+              message,
+              "",
+              `<:ArrowRightGray:813815804768026705>Total Commands: **${
+                [...client.commands.values()].length
+              }**`
+            )
+            .setAvatar("Main Menu", `https://i.imgur.com/pJqB3Wm.png`),
         },
         {
           label: "Economy",
           emoji: "💵",
+          avatar: `https://i.imgur.com/iaQBPKj.png`,
         },
         {
           label: "Info",
           emoji: "✨",
+          avatar: `https://i.imgur.com/Wgad4Kn.png`,
         },
         {
           label: "Fun",
           emoji: "☁️",
+          avatar: `https://i.imgur.com/3ZSMPLg.png`,
         },
         {
           label: "Moderation",
           emoji: "🎫",
+          avatar: `https://i.imgur.com/PvrgMlm.png`,
         },
         {
           label: "Tickets",
           emoji: "📦",
+          avatar: `https://i.imgur.com/A6ou6sG.png`,
         },
         {
           label: "Utility",
           emoji: "📏",
+          avatar: `https://i.imgur.com/uml7Ar0.png`,
         },
       ],
       data = [];
@@ -58,16 +66,18 @@ module.exports.run = async (client, message, args) => {
         label: menus[i].label,
         value: "val_" + menus[i].label.toLowerCase(),
         emoji: menus[i].emoji,
-        embed: client.embedBuilder(
-          client,
-          message,
-          menus[i].emoji + "︲" + menus[i].label + " Commands",
-          client.utils.commandsList(
+        embed: client
+          .embedBuilder(
             client,
             message,
-            menus[i].label.toLowerCase()
+            "",
+            client.utils.commandsList(
+              client,
+              message,
+              menus[i].label.toLowerCase()
+            )
           )
-        ),
+          .setAuthor(menus[i].label + " Commands", menus[i].avatar),
       });
     }
 

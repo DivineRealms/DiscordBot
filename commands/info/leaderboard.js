@@ -19,32 +19,41 @@ module.exports.run = async (client, message) => {
       {
         label: "Economy",
         emoji: "💵",
-        embed: client.embedBuilder(
-          client,
-          message,
-          "💵︲Economy Leaderboard",
-          client.utils.lbMoney(client, message)
-        ),
+        embed: client
+          .embedBuilder(
+            client,
+            message,
+            "",
+            client.utils.lbMoney(client, message)
+          )
+          .setAuthor("Economy Leaderboard", `https://i.imgur.com/iaQBPKj.png`),
       },
       {
         label: "Level",
         emoji: "⭐",
-        embed: client.embedBuilder(
-          client,
-          message,
-          "⭐︲Level Leaderboard",
-          client.utils.lbContent(client, message, "level")
-        ),
+        embed: client
+          .embedBuilder(
+            client,
+            message,
+            "",
+            client.utils.lbContent(client, message, "level")
+          )
+          .setAuthor("Level Leaderboard", `https://i.imgur.com/urqA2vZ.png`),
       },
       {
         label: "Bumps",
         emoji: "📊",
-        embed: client.embedBuilder(
-          client,
-          message,
-          "📊︲Bump Leaderboard",
-          client.utils.lbContent(client, message, "bumps")
-        ),
+        embed: client
+          .embedBuilder(
+            client,
+            message,
+            "",
+            client.utils.lbContent(client, message, "bumps")
+          )
+          .setAuthor(
+            "Bump Leaderboard",
+            `https://cdn.upload.systems/uploads/pVry3Mav.png`
+          ),
       },
       {
         label: "Votes",
@@ -53,11 +62,14 @@ module.exports.run = async (client, message) => {
           .embedBuilder(
             client,
             message,
-            "📝︲Voting Leaderboard",
+            "",
             client.utils.lbVotes(client, message)
           )
           .setFooter(`This page is going to update in ${parsed}.`),
-      },
+      }.setAuthor(
+        "Voting Leaderboard",
+        `https://cdn.upload.systems/uploads/U5K71mCE.png`
+      ),
     ],
     data = [];
 
