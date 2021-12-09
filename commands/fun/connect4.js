@@ -86,7 +86,7 @@ module.exports.run = async (client, message, args, cmd) => {
     response.author == message.mentions.users.first();
 
   message.channel
-    .awaitMessages(filter1, { max: 1, time: 8000 })
+    .awaitMessages({ filter1, max: 1, time: 8000 })
     .then((collected) => {
       if (!collected.first())
         return message.channel.send({

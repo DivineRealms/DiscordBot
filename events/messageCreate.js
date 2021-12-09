@@ -124,8 +124,9 @@ module.exports = async (client, message) => {
   const args = message.content.slice(matchedPrefix.length).trim().split(/ +/);
   const cmd = args.shift().toLowerCase();
   const command = client.commands.find(
-    (c, a) => a === cmd || (c.aliases && c.aliases.includes(cmd))
+    (c, a) => a == cmd || (c.aliases && c.aliases.includes(cmd))
   );
+  if(!command) return;
 
   if (command) {
     let userPerms = [];
