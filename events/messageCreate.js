@@ -65,7 +65,8 @@ module.exports = async (client, message) => {
             client,
             message,
             "",
-            `<:ArrowRightGray:813815804768026705>Thank you <@!${dbumper[0]}> for bumping!`
+            `<:ArrowRightGray:813815804768026705>Thank you <@!${dbumper[0]}> for bumping!
+<:ArrowRightGray:813815804768026705>You've received **$1000** as a reward.`
           )
           .setAuthor(
             "Server Bump",
