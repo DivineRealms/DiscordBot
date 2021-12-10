@@ -76,13 +76,12 @@ module.exports.run = async (client, message, args) => {
         else if (r.emoji.name === "🔢") {
           let msg = await message.channel.send(
               "What page would you like to flip to?"
-            ),
-            collector = await message.channel.awaitMessages(
-              (m) =>
-                m.author.id === message.author.id &&
-                m.content > 0 &&
-                m.content <= urls.length,
-              { max: 1, time: 8000 }
+            );
+            
+            let filterTic = (m) => {
+              return m.author.id === message.author.id && m.content > 0 && m.content <= urls.length
+            }
+            collector = await message.channel.awaitMessages({ filterTic, max: 1, time: 8000 }
             );
 
           msg.delete();

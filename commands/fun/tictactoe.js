@@ -74,7 +74,7 @@ module.exports.run = async (client, message, args, cmd) => {
   let filter1 = (m) =>
       m.content.toLowerCase().includes("yes") &&
       m.author.id == message.mentions.users.first().id,
-    msg = await message.channel.awaitMessages(filter1, {
+    msg = await message.channel.awaitMessages({ filter1,
       max: 1,
       time: 8000,
     });

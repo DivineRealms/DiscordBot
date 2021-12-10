@@ -86,7 +86,7 @@ module.exports.run = async (client, message, args, cmd) => {
     response.author == message.mentions.users.first();
 
   message.channel
-    .awaitMessages(filter1, { max: 1, time: 8000 })
+    .awaitMessages({ filter1, max: 1, time: 8000 })
     .then((collected) => {
       if (!collected.first())
         return message.channel.send({
@@ -105,8 +105,8 @@ module.exports.run = async (client, message, args, cmd) => {
       const game = new Connect4([
           new Player(":orange_circle:"),
           new Player(":red_circle:"),
-        ]),
-        currentPlayer = message.author.id;
+        ]);
+      let currentPlayer = message.author.id;
 
       let embed = client
         .embedBuilder(
