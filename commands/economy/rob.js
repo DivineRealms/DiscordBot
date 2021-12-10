@@ -65,7 +65,6 @@ module.exports.run = async (client, message, args) => {
             `You successfully robbed ${member.username} gaining yourself ${amount}.`,
             `https://cdn.upload.systems/uploads/LrdB6F1N.png`
           ),
-        ,
       ],
     });
 
