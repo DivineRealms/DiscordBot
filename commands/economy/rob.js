@@ -56,7 +56,7 @@ module.exports.run = async (client, message, args) => {
     });
 
     db.subtract(`money_${message.guild.id}_${message.author.id}`, amount);
-    db.add(`money_${message.guild.id}_${message.author.id}`, amount);
+    db.add(`money_${message.guild.id}_${member.id}`, amount);
   } else {
     message.channel.send({
       embeds: [
@@ -69,7 +69,7 @@ module.exports.run = async (client, message, args) => {
       ],
     });
 
-    db.subtract(`money_${message.guild.id}_${message.author.id}`, amount);
-    db.add(`money_${message.guild.id}_${member.id}`, amount);
+    db.subtract(`money_${message.guild.id}_${member.id}`, amount);
+    db.add(`money_${message.guild.id}_${message.author.id}`, amount);
   }
 };
