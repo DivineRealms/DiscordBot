@@ -114,7 +114,7 @@ module.exports.run = async (client, message, args) => {
           embeds: [
             embed.setAuthor(
               `GIF (${page}/${urls.length})`,
-              `https://cdn.upload.systems/uploads/ZdKDK7Tx.pn`
+              `https://cdn.upload.systems/uploads/ZdKDK7Tx.png`
             ),
           ],
         });
