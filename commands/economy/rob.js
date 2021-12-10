@@ -29,9 +29,9 @@ module.exports.run = async (client, message, args) => {
       ],
     });
 
-  const memberbal = db.fetch(`money_${message.guild.id}_${member.id}`),
-    rob = ~~(Math.random() * 3),
-    amount = ~~(memberbal / 10);
+  const memberbal = db.fetch(`money_${message.guild.id}_${member.id}`);
+  let rob = ~~(Math.random() * 3);
+  let amount = ~~(memberbal / 10);
 
   if (!memberbal || memberbal < 200)
     return message.channel.send({
