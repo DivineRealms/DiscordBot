@@ -50,7 +50,7 @@ module.exports.run = async (client, message, args) => {
         client.utils.errorEmbed(
           client,
           message,
-          `You attempted to rob ${member.username} but got caught! The fine is ${amount}.`
+          `You attempted to rob ${member.username} but got caught! The fine is $${amount}.`
         ),
       ],
     });
@@ -62,7 +62,7 @@ module.exports.run = async (client, message, args) => {
         client
           .embedBuilder(client, message, "", "", "#47a047")
           .setAuthor(
-            `You successfully robbed ${member.username} gaining yourself ${amount}.`,
+            `You successfully robbed ${member.username} gaining yourself $${amount}.`,
             `https://cdn.upload.systems/uploads/LrdB6F1N.png`
           ),
       ],
