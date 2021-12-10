@@ -25,9 +25,9 @@ module.exports.run = async (client, message, args) => {
 
   const body = await fetch(
       `https://tenor.com/search/${args.join("-")}-gifs`
-    ).then((r) => r.text()),
-    data = load(body)("div.Gif > img"),
-    urls = new Array(data.length).fill(0).map((s, i) => data.eq(i).attr("src"));
+    ).then((r) => r.text());
+  let data = load(body)("div.Gif > img");
+  let urls = new Array(data.length).fill(0).map((s, i) => data.eq(i).attr("src"));
 
   if (!urls[0])
     return message.channel.send({
@@ -61,9 +61,9 @@ module.exports.run = async (client, message, args) => {
         async (m) => await emb.react(m)
       );
 
-      const filter = (_, u) => u.id === message.author.id,
-        collector = emb.createReactionCollector({ filter, time: 300000 }),
-        page = 1;
+      const filter = (_, u) => u.id === message.author.id;
+      let collector = emb.createReactionCollector({ filter, time: 300000 });
+      let page = 1;
 
       collector.on("collect", async (r, user) => {
         let current = page;
