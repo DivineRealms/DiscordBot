@@ -45,19 +45,29 @@ module.exports.run = async (client, message, args) => {
     });
 
   if (rob) {
-    client.utils.errorEmbed(
-      client,
-      message,
-      `You attempted to rob ${member.username} but got caught! The fine is **${amount}**.`
-    );
+    message.channel.send({
+      embeds: [
+        client.utils.errorEmbed(
+          client,
+          message,
+          `You attempted to rob ${member.username} but got caught! The fine is **${amount}**.`
+        ),
+      ],
+    });
 
     db.subtract(`money_${message.guild.id}_${message.author.id}`, amount);
   } else {
-    client.utils.errorEmbed(
-      client,
-      message,
-      `You successfully robbed ${member.username} gaining yourself **${amount}**.`
-    );
+    message.channel.send({
+      embeds: [
+        client
+          .embedBuilder(client, message, "", "", "#47a047")
+          .setAuthor(
+            `You successfully robbed ${member.username} gaining yourself **${amount}**.`,
+            `https://cdn.upload.systems/uploads/LrdB6F1N.png`
+          ),
+        ,
+      ],
+    });
 
     db.subtract(`money_${message.guild.id}_${message.author.id}`, amount);
     db.add(`money_${message.guild.id}_${message.author.id}`, amount);
