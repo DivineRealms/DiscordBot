@@ -155,13 +155,13 @@ module.exports = async (client) => {
                 client,
                 "",
                 "",
-                "<:ArrowRightGray:813815804768026705>Click the buttons below to vote and help us climb the leaderboard."
+                "<:ArrowRightGray:813815804768026705>Click the buttons below to vote and help us climb the leaderboard.",
+                "#8ee26b"
               )
               .setAuthor(
                 "Support us by Voting!",
                 `https://cdn.upload.systems/uploads/U5K71mCE.png`
-              )
-              .setColor("#8ee26b"),
+              ),
           ],
           components: [voteRow],
         });

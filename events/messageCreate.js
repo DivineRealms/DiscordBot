@@ -44,13 +44,13 @@ module.exports = async (client, message) => {
               client,
               message,
               "",
-              "<:ArrowRightGray:813815804768026705>Server can be bumped again, use `!d bump`."
+              "<:ArrowRightGray:813815804768026705>Server can be bumped again, use `!d bump`.",
+              "#d6ccc6"
             )
             .setAuthor(
               "Server Bump",
               `https://cdn.upload.systems/uploads/pVry3Mav.png`
-            )
-            .setColor("#d6ccc5");
+            );
 
           bumpChannel.send({
             content: `<@!${dbumper[0]}>`,
@@ -67,7 +67,8 @@ module.exports = async (client, message) => {
             message,
             "",
             `<:ArrowRightGray:813815804768026705>Thank you <@!${dbumper[0]}> for bumping!
-<:ArrowRightGray:813815804768026705>You've received **$1000** as a reward.`
+<:ArrowRightGray:813815804768026705>You've received **$1000** as a reward.`,
+            "#d6ccc5"
           )
           .setAuthor(
             "Server Bump",

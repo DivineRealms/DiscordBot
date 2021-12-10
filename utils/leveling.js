@@ -27,13 +27,13 @@ const manageLeveling = async (client, message) => {
           "",
           levelSettings.level_Up_Message
             .replace("{user}", message.author.toString())
-            .replace("{level}", level + 1)
+            .replace("{level}", level + 1),
+          "#f2d422"
         )
         .setAuthor(
           levelSettings.level_Up_Title,
           `https://cdn.upload.systems/uploads/OJ9pgcy2.png`
-        )
-        .setColor("#f2d422");
+        );
 
       if (xpChannel) xpChannel.send({ embeds: [embed] });
 

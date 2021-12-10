@@ -27,13 +27,13 @@ module.exports.run = async (client, message, args) => {
           "",
           `<:ArrowRightGray:813815804768026705> Bank: **$${bank}**
 <:ArrowRightGray:813815804768026705> Balance: **$${balance}**
-<:ArrowRightGray:813815804768026705> Total: **$${balance + bank}**`
+<:ArrowRightGray:813815804768026705> Total: **$${balance + bank}**`,
+          "#47a047"
         )
         .setAuthor(
           user.username + "'s Balance",
           `https://cdn.upload.systems/uploads/LrdB6F1N.png`
-        )
-        .setColor("#47a047"),
+        ),
     ],
   });
 };

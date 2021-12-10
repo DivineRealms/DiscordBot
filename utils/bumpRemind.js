@@ -13,13 +13,13 @@ const bump = (client) => {
           client,
           null,
           "",
-          "<:ArrowRightGray:813815804768026705>Server can be bumped again, use `!d bump`."
+          "<:ArrowRightGray:813815804768026705>Server can be bumped again, use `!d bump`.",
+          "#d6ccc5"
         )
         .setAuthor(
           "Server Bump",
           `https://cdn.upload.systems/uploads/pVry3Mav.png`
-        )
-        .setColor("#d6ccc5");
+        );
 
       db.delete(`serverBump_${client.conf.settings.guildID}`);
       if (bumpChannel)
