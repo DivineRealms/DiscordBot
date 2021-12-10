@@ -52,7 +52,7 @@ module.exports.run = async (client, message, args) => {
     )
     .setImage(urls[0])
     .setAuthor(
-      `GIF (1/${urls.lenght}`,
+      `GIF (1/${urls.length}`,
       `https://cdn.upload.systems/uploads/ZdKDK7Tx.png`
     );
 
