@@ -51,8 +51,10 @@ module.exports.run = async (client, message, args) => {
       "#ec3d93"
     )
     .setImage(urls[0])
-    .setFooter(`Pages 1/${urls.length}`)
-    .setAuthor("GIF", `https://cdn.upload.systems/uploads/ZdKDK7Tx.png`);
+    .setAuthor(
+      `GIF (1/${urls.lenght}`,
+      `https://cdn.upload.systems/uploads/ZdKDK7Tx.png`
+    );
 
   message.channel.send({ embeds: [embed] }).then(async (emb) => {
     ["⏮️", "◀️", "▶️", "⏭️", "⏹️", "🔢"].forEach(
@@ -100,14 +102,21 @@ module.exports.run = async (client, message, args) => {
       }
 
       embed.setDescription(
-        `Image not loading? click [here](${urls[page - 1]}).`
+        `<:ArrowRightGray:813815804768026705>Image not loading? click [here](${
+          urls[page - 1]
+        }).`
       );
 
       embed.setImage(urls[page - 1]);
 
       if (current !== page)
         emb.edit({
-          embeds: [embed.setFooter(`Pages ${page}/${urls.length}`)],
+          embeds: [
+            embed.setAuthor(
+              `GIF (${page}/${urls.length})`,
+              `https://cdn.upload.systems/uploads/ZdKDK7Tx.pn`
+            ),
+          ],
         });
     });
   });
