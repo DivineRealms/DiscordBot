@@ -34,14 +34,21 @@ module.exports = async (client, member) => {
         })
       );
   } else if (settings.welcomeType == "embed") {
-    const embed = client.embedBuilder(
-      client,
-      "",
-      settings.welcomeEmbed.title.replace("{username}", member.user.username),
-      settings.welcomeEmbed.description
-        .replace("{member}", member)
-        .replace("{joinPosition}", `${member.guild.memberCount}`)
-    );
+    const embed = client
+      .embedBuilder(
+        client,
+        "",
+        "",
+        settings.welcomeEmbed.description,
+        settings.welcomeEmbed.color
+      )
+      .setAuthor(
+        settings.welcomeEmbed.title
+          .replace("{username}", member.user.username)
+          .replace("{joinPosition}", `${member.guild.memberCount}`),
+        `https://cdn.upload.systems/uploads/hhgfsHXT.png`
+      )
+      .setThumbnail(member.displayAvatarURL({ size: 1024, dynamic: true }));
 
     if (log)
       log.send({ embeds: [embed] }).then((msg) =>
