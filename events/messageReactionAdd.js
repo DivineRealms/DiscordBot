@@ -141,12 +141,12 @@ module.exports = async (client, reaction, user) => {
 
   channel.send({
     embeds: [
-      client.embedBuilder(
-        client,
-        "",
-        settings.Ticket_Title,
-        client.resolveMember(settings.Ticket_Message, user)
-      ),
+      client
+        .embedBuilder(client, "", "", settings.Ticket_Message, "#b3e59f")
+        .setAuthor(
+          settings.Ticket_Title,
+          `https://cdn.upload.systems/uploads/4mFVRE7f.png`
+        ),
     ],
   });
 

@@ -91,16 +91,7 @@ module.exports.run = async (client, message, args) => {
   channel.send({
     embeds: [
       client
-        .embedBuilder(
-          client,
-          message,
-          "",
-          settings.Ticket_Message.replace(
-            "{username}",
-            `<@!${message.author.id}>`
-          ),
-          "#b3e59f"
-        )
+        .embedBuilder(client, message, "", settings.Ticket_Message, "#b3e59f")
         .setAuthor(
           settings.Ticket_Title,
           `https://cdn.upload.systems/uploads/4mFVRE7f.png`
@@ -116,7 +107,7 @@ module.exports.run = async (client, message, args) => {
             client,
             message,
             "",
-            `Creator: ${message.author}`,
+            `Created by: ${message.author}`,
             "#b3e59f"
           )
           .setAuthor(
