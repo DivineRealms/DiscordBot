@@ -28,7 +28,7 @@ const manageLeveling = async (client, message) => {
           levelSettings.level_Up_Message
             .replace("{user}", message.author.toString())
             .replace("{level}", level + 1),
-          "#f2d422"
+          "#b7e445"
         )
         .setAuthor(
           levelSettings.level_Up_Title,
