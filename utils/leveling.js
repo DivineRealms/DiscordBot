@@ -21,17 +21,11 @@ const manageLeveling = async (client, message) => {
 
     if (xp + xpGive >= xpNeeded) {
       const embed = client
-        .embedBuilder(
-          client,
-          "",
-          "",
-          levelSettings.level_Up_Message
-            .replace("{user}", message.author.toString())
-            .replace("{level}", level + 1),
-          "#b7e445"
-        )
+        .embedBuilder(client, "", "", "", "#b7e445")
         .setAuthor(
-          levelSettings.level_Up_Title,
+          levelSettings.level_Up_Message
+            .replace("{user}", message.author.username)
+            .replace("{level}", level + 1),
           `https://cdn.upload.systems/uploads/OJ9pgcy2.png`
         );
 

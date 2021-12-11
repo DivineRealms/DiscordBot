@@ -54,8 +54,6 @@ module.exports.config = {
   },
   moderation: {
     Moderators: ["734736802384052264", "747258761466609714"], //roles that can use any moderation command
-    serverLock: true, //whether or not to enable the server lock command
-    Mute_Role: "738142767326298183",
   },
   automation: {
     Member_Count_Channel: "586499141199200256",
@@ -84,7 +82,6 @@ module.exports.config = {
   leveling: {
     enabled: true,
     level_Up_Message: "{user} has just reached level {level}!",
-    level_Up_Title: "Level Up!",
     ignore_Xp_Channels: ["912855458795094057"], // ovde
     level_Up_Channel: "", //channel id, or write current for the current channel their in, leave blank for none
     level_Up_Roles: [
