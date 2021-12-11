@@ -21,7 +21,7 @@ module.exports = (client, oldMember, newMember) => {
           "",
           "",
           settings.welcomeSystem.welcomeEmbed.description,
-          settings.welcomeEmbed.color
+          settings.welcomeSystem.welcomeEmbed.color
         )
         .setAuthor(
           settings.welcomeSystem.welcomeEmbed.title
