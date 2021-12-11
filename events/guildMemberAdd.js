@@ -33,30 +33,6 @@ module.exports = async (client, member) => {
           channel: msg.channel.id,
         })
       );
-  } else if (settings.welcomeType == "embed") {
-    const embed = client
-      .embedBuilder(
-        client,
-        "",
-        "",
-        settings.welcomeEmbed.description,
-        settings.welcomeEmbed.color
-      )
-      .setAuthor(
-        settings.welcomeEmbed.title
-          .replace("{username}", member.user.username)
-          .replace("{joinPosition}", `${member.guild.memberCount}`),
-        `https://cdn.upload.systems/uploads/hhgfsHXT.png`
-      )
-      .setThumbnail(member.displayAvatarURL({ size: 1024, dynamic: true }));
-
-    if (log)
-      log.send({ embeds: [embed] }).then((msg) =>
-        db.set(`wlcmEmbed_${member.guild.id}_${member.id}`, {
-          msg: msg.id,
-          channel: msg.channel.id,
-        })
-      );
   } else if (settings.welcomeType == "message") {
     if (log)
       log
