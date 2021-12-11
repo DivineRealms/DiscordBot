@@ -77,7 +77,7 @@ module.exports.run = async (client, message, args) => {
   });
 
   const loggingembed = client
-      .embedBuilder(client, message, "Ticket Logging System", "")
+      .embedBuilder(client, message, "Ticket Logging System", "", "#3db39e")
       .addField(`Ticket Name:`, `${message.channel.name}`, false)
       .setAuthor("Ticket Logging System", `https://cdn.upload.systems/uploads/4mFVRE7f.png`),
     attachment = new MessageAttachment(Buffer.from(data), "ticket.html");
