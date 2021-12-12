@@ -59,19 +59,23 @@ module.exports.run = async (client, message, args) => {
       const form = new FormData();
       form.append("key", client.conf.settings.pasteKey);
       form.append("body", evaled)
+      
+      try {
+        const { key } = await fetch(
+          "https://api.upload.systems/pastes/new",
+          {
+            method: "POST",
+            body: form,
+          }
+        ).then((res) => res.json());
 
-      const { key } = await fetch(
-        "https://api.upload.systems/pastes/new",
-        {
-          method: "POST",
-          body: form,
-        }
-      ).then((res) => res.json());
-
-      embed.addField(
-        "📤︲Output:",
-        `\`\`\`xl\nhttps://api.upload.systems/pastes/${key}/raw\`\`\``
-      );
+        embed.addField(
+          "📤︲Output:",
+          `\`\`\`xl\nhttps://api.upload.systems/pastes/${key}/raw\`\`\``
+        );
+      } catch (error) {
+        console.log(error);
+      }
     } else embed.addField("📤︲Output", `\`\`\`xl\n${evaled}\`\`\``);
 
     message.channel.send({ embeds: [embed] });
