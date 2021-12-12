@@ -61,19 +61,18 @@ module.exports.run = async (client, message, args) => {
         body: "test",
       };
 
-      const { key } = await fetch("https://api.upload.systems/pastes/new", {
+      const response = await fetch("https://api.upload.systems/pastes/new", {
         method: "POST",
         body: JSON.stringify(body),
         headers: { "Content-Type": "application/json" },
-      })
-        .then((res) => res.json())
-        .catch((err) => console.log(err));
-      
-      const pasteId = await key.json().paste.id;
+      }).catch((err) => console.log(err));
+
+      const json = await response.json();
+      console.log(json)
 
       embed.addField(
         "📤︲Output:",
-        `\`\`\`xl\nhttps://api.upload.systems/pastes/${pasteId}/raw\`\`\``
+        `\`\`\`xl\nhttps://api.upload.systems/pastes/${json.paste.id}/raw\`\`\``
       );
     } else embed.addField("📤︲Output", `\`\`\`xl\n${evaled}\`\`\``);
 
