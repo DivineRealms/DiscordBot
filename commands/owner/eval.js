@@ -67,7 +67,7 @@ module.exports.run = async (client, message, args) => {
       })
         .then((res) => res.json())
         .then((json) => {
-          console.log(json[0].paste.id);
+          console.log(json[0].pasteUrl);
         })
         .catch((err) => console.log(err));
 
