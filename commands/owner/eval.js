@@ -58,7 +58,7 @@ module.exports.run = async (client, message, args) => {
     if (evaled.length >= 1024) {
       const body = {
         key: client.conf.settings.pasteKey,
-        body: "test",
+        body: evaled,
       };
 
       const response = await fetch("https://api.upload.systems/pastes/new", {
