@@ -1,6 +1,6 @@
 const Discord = require("discord.js");
 const fetch = require("node-fetch");
-const formData = require("formdata");
+const FormData = require("form-data");
 
 module.exports = {
   name: "eval",
@@ -56,8 +56,9 @@ module.exports.run = async (client, message, args) => {
       .addField("📥︲Input:", `\`\`\`${code}\`\`\``);
 
     if (evaled.length >= 1024) {
-      formData.append(key, client.conf.settings.pasteKey);
-      formData.append(body, form)
+      const form = new FormData();
+      form.append("key", client.conf.settings.pasteKey);
+      form.append("body", evaled)
 
       const { key } = await fetch(
         "https://api.upload.systems/pastes/new",
