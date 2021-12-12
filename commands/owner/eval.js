@@ -55,10 +55,21 @@ module.exports.run = async (client, message, args) => {
       .addField("📥︲Input:", `\`\`\`${code}\`\`\``);
 
     if (evaled.length >= 1024) {
+      const body = {
+        key: client.conf.settings.pasteKey,
+        body: "test",
+      };
+
       const { key } = await fetch("https://api.upload.systems/pastes/new", {
         method: "POST",
-        body: `key=${client.conf.settings.pasteKey}&body=${evaled}`,
-      }).then((res) => res.json());
+        body: JSON.stringify(body),
+        headers: { "Content-Type": "application/json" },
+      })
+        .then((res) => res.json())
+        .then((json) => {
+          console.log(json[0].paste.id);
+        })
+        .catch((err) => console.log(err));
 
       embed.addField(
         "📤︲Output:",
