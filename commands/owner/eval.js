@@ -1,6 +1,6 @@
 const Discord = require("discord.js");
 const fetch = require("node-fetch");
-const formData = require("formdata-polyfill");
+const formData = require("formdata");
 
 module.exports = {
   name: "eval",
