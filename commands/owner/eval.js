@@ -69,11 +69,11 @@ module.exports.run = async (client, message, args) => {
         .then((res) => res.json())
         .catch((err) => console.log(err));
       
-      const json = await key.json();
+      const pasteId = await key.json().paste.id;
 
       embed.addField(
         "📤︲Output:",
-        `\`\`\`xl\nhttps://api.upload.systems/pastes/${json.paste.id}/raw\`\`\``
+        `\`\`\`xl\nhttps://api.upload.systems/pastes/${pasteId}/raw\`\`\``
       );
     } else embed.addField("📤︲Output", `\`\`\`xl\n${evaled}\`\`\``);
 
