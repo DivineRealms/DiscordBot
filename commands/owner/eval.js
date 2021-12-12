@@ -66,9 +66,6 @@ module.exports.run = async (client, message, args) => {
         headers: { "Content-Type": "application/json" },
       })
         .then((res) => res.json())
-        .then((json) => {
-          console.log(json[0].pasteUrl);
-        })
         .catch((err) => console.log(err));
 
       embed.addField(
