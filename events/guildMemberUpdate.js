@@ -35,7 +35,7 @@ module.exports = (client, oldMember, newMember) => {
 
       if (welcomeChannel)
         welcomeChannel.send({ embeds: [embed] }).then((msg) =>
-          db.set(`wlcmEmbed_${member.guild.id}_${member.id}`, {
+          db.set(`wlcmEmbed_${newMember.guild.id}_${newMember.id}`, {
             msg: msg.id,
             channel: msg.channel.id,
           })
