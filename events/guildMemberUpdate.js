@@ -1,3 +1,5 @@
+const db = require("quick.db");
+
 module.exports = (client, oldMember, newMember) => {
   const settings = client.conf;
   let channel = client.channels.cache.get(settings.Booster_Channel);
