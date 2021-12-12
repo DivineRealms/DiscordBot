@@ -10,6 +10,7 @@
     "author": "",
     "license": "ISC",
     "dependencies": {
+        "axios": "latest",
         "better-sqlite3": "^7.1.0",
         "canvacord": "^4.0.1",
         "canvas": "^2.6.1",
@@ -21,6 +22,7 @@
         "discord.js": "latest",
         "enmap": "^5.3.1",
         "figlet": "^1.5.0",
+        "formdata-polyfill": "^4.0.10",
         "jsdom": "latest",
         "lodash": "^4.17.20",
         "mathjs": "^7.2.0",
@@ -34,7 +36,6 @@
         "relevant-urban": "^2.0.0",
         "smart-timeout": "^2.5.0",
         "tic-tac-toe-stateless-engine": "^1.0.0",
-        "weather-js": "^2.0.0",
-        "axios": "latest"
+        "weather-js": "^2.0.0"
     }
 }

@@ -1,5 +1,6 @@
 const Discord = require("discord.js");
 const fetch = require("node-fetch");
+const formData = require("formdata-polyfill");
 
 module.exports = {
   name: "eval",
@@ -55,17 +56,20 @@ module.exports.run = async (client, message, args) => {
       .addField("📥︲Input:", `\`\`\`${code}\`\`\``);
 
     if (evaled.length >= 1024) {
+      formData.append(key, client.conf.settings.pasteKey);
+      formData.append(body, form)
+
       const { key } = await fetch(
-        "https://www.toptal.com/developers/hastebin/documents",
+        "https://api.upload.systems/pastes/new",
         {
           method: "POST",
-          body: evaled,
+          body: form,
         }
       ).then((res) => res.json());
 
       embed.addField(
         "📤︲Output:",
-        `\`\`\`xl\nhttps://www.toptal.com/developers/hastebin/raw/${key}\`\`\``
+        `\`\`\`xl\nhttps://api.upload.systems/pastes/${key}/raw\`\`\``
       );
     } else embed.addField("📤︲Output", `\`\`\`xl\n${evaled}\`\`\``);
 
