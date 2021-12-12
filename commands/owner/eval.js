@@ -68,7 +68,6 @@ module.exports.run = async (client, message, args) => {
       }).catch((err) => console.log(err));
 
       const json = await response.json();
-      console.log(json)
 
       embed.addField(
         "📤︲Output:",
