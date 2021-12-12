@@ -1,4 +1,5 @@
 const Discord = require("discord.js");
+const { result } = require("lodash");
 const fetch = require("node-fetch");
 
 module.exports = {
@@ -67,10 +68,12 @@ module.exports.run = async (client, message, args) => {
       })
         .then((res) => res.json())
         .catch((err) => console.log(err));
+      
+      const json = await key.json();
 
       embed.addField(
         "📤︲Output:",
-        `\`\`\`xl\nhttps://api.upload.systems/pastes/${key}/raw\`\`\``
+        `\`\`\`xl\nhttps://api.upload.systems/pastes/${json.paste.id}/raw\`\`\``
       );
     } else embed.addField("📤︲Output", `\`\`\`xl\n${evaled}\`\`\``);
 
