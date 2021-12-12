@@ -1,6 +1,5 @@
 const Discord = require("discord.js");
 const fetch = require("node-fetch");
-const FormData = require("form-data");
 
 module.exports = {
   name: "eval",
@@ -56,26 +55,15 @@ module.exports.run = async (client, message, args) => {
       .addField("📥︲Input:", `\`\`\`${code}\`\`\``);
 
     if (evaled.length >= 1024) {
-      const form = new FormData();
-      form.append("key", client.conf.settings.pasteKey);
-      form.append("body", evaled)
-      
-      try {
-        const { key } = await fetch(
-          "https://api.upload.systems/pastes/new",
-          {
-            method: "POST",
-            body: form,
-          }
-        ).then((res) => res.json());
+      const { key } = await fetch("https://api.upload.systems/pastes/new", {
+        method: "POST",
+        body: `key=${client.conf.settings.pasteKey}&body=${evaled}`,
+      }).then((res) => res.json());
 
-        embed.addField(
-          "📤︲Output:",
-          `\`\`\`xl\nhttps://api.upload.systems/pastes/${key}/raw\`\`\``
-        );
-      } catch (error) {
-        console.log(error);
-      }
+      embed.addField(
+        "📤︲Output:",
+        `\`\`\`xl\nhttps://api.upload.systems/pastes/${key}/raw\n${res}\`\`\``
+      );
     } else embed.addField("📤︲Output", `\`\`\`xl\n${evaled}\`\`\``);
 
     message.channel.send({ embeds: [embed] });
