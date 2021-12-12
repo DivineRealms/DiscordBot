@@ -62,7 +62,7 @@ module.exports.run = async (client, message, args) => {
 
       embed.addField(
         "📤︲Output:",
-        `\`\`\`xl\nhttps://api.upload.systems/pastes/${key}/raw\n${res}\`\`\``
+        `\`\`\`xl\nhttps://api.upload.systems/pastes/${key}/raw\`\`\``
       );
     } else embed.addField("📤︲Output", `\`\`\`xl\n${evaled}\`\`\``);
 
