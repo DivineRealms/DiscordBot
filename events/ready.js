@@ -174,7 +174,7 @@ module.exports = async (client) => {
   voteCron.start();
 
   let voteLeaderboardCron = new cron.CronJob(
-    "0 59 23 * * *",
+    "0 0 */2 * * *",
     () => {
       axios
         .get(
