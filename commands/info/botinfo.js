@@ -31,7 +31,7 @@ module.exports.run = async (client, message, args) => {
           "Bot Info",
           `https://cdn.upload.systems/uploads/6uDK0XAN.png`
         )
-        .setThumbnail(client.displayAvatarURL({ size: 1024, dynamic: true })),
+        .setThumbnail(client.user.displayAvatarURL({ size: 1024, dynamic: true })),
     ],
   });
 };
