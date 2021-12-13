@@ -57,7 +57,7 @@ module.exports.run = async (client, message) => {
             message,
             "",
             client.utils.lbContent(client, message, "bumps"),
-            "#d6ccc5"
+            "#1cc0f9"
           )
           .setAuthor(
             "Bump Leaderboard",

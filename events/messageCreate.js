@@ -45,7 +45,7 @@ module.exports = async (client, message) => {
               message,
               "",
               "<:ArrowRightGray:813815804768026705>Server can be bumped again, use `!d bump`.",
-              "#d6ccc6"
+              "#1cc0f9"
             )
             .setAuthor(
               "Server Bump",
@@ -68,7 +68,7 @@ module.exports = async (client, message) => {
             "",
             `<:ArrowRightGray:813815804768026705>Thank you <@!${dbumper[0]}> for bumping!
 <:ArrowRightGray:813815804768026705>You've received **$1000** as a reward.`,
-            "#d6ccc5"
+            "#1cc0f9"
           )
           .setAuthor(
             "Server Bump",
