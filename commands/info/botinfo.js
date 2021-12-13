@@ -30,7 +30,8 @@ module.exports.run = async (client, message, args) => {
         .setAuthor(
           "Bot Info",
           `https://cdn.upload.systems/uploads/6uDK0XAN.png`
-        ),
+        )
+        .setThumbnail(client.displayAvatarURL({ size: 1024, dynamic: true })),
     ],
   });
 };
