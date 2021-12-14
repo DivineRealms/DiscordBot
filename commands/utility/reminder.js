@@ -34,9 +34,10 @@ module.exports.run = async (client, message, args) => {
           client,
           message,
           "",
-          `I'll remind you for **\`${reason.join(
+          `<:ArrowRightGray:813815804768026705>I'll remind you for **\`${reason.join(
             " "
-          )}\`** in ${client.utils.formatTime(parse(end))}.`
+          )}\`** in ${client.utils.formatTime(parse(end))}.`,
+          "#f1d333"
         )
         .setAuthor(
           "Reminder",
@@ -50,7 +51,13 @@ module.exports.run = async (client, message, args) => {
       .reply({
         embeds: [
           client
-            .embedBuilder(client, message, "", `${reason.join(" ")}`)
+            .embedBuilder(
+              client,
+              message,
+              "",
+              `<:ArrowRightGray:813815804768026705>${reason.join(" ")}.`,
+              "#f1d333"
+            )
             .setAuthor(
               "Reminder",
               `https://cdn.upload.systems/uploads/PX2kS3Kp.png`
