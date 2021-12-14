@@ -34,9 +34,9 @@ module.exports.run = async (client, message, args) => {
           client,
           message,
           "",
-          `I'll remind you for \`${reason.join(
+          `I'll remind you for **\`${reason.join(
             " "
-          )}\` in ${client.utils.formatTime(parse(end))}.`
+          )}\`** in ${client.utils.formatTime(parse(end))}.`
         )
         .setAuthor(
           "Reminder",

@@ -16,12 +16,12 @@ module.exports.run = async (client, message, args) =>
           client,
           message,
           "",
-          `<:ArrowRightGray:813815804768026705>First Dice: \`${
+          `<:ArrowRightGray:813815804768026705>First Dice: **\`${
             ~~(Math.random() * 6) + 1
-          }\`
-<:ArrowRightGray:813815804768026705>Second Dice: \`${
+          }\`**.
+<:ArrowRightGray:813815804768026705>Second Dice: **\`${
             ~~(Math.random() * 6) + 1
-          }\``,
+          }\`**.`,
           "#ec3d93"
         )
         .setAuthor(

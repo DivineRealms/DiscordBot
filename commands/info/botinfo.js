@@ -16,7 +16,7 @@ module.exports.run = async (client, message, args) => {
           client,
           message,
           `🔹 Bot Info`,
-          `<:ArrowRightGray:813815804768026705>Prefix: \`${message.px}\`
+          `<:ArrowRightGray:813815804768026705>Prefix: **\`${message.px}\`**
 \<:ArrowRightGray:813815804768026705>Commands: **${
             [...client.commands.values()].length
           }**

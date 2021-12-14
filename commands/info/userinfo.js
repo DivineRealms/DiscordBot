@@ -37,7 +37,7 @@ module.exports.run = async (client, message, args) => {
           client,
           message,
           "",
-          `<:ArrowRightGray:813815804768026705>Nickname: \`${nickname}\`
+          `<:ArrowRightGray:813815804768026705>Nickname: **\`${nickname}\`**
 <:ArrowRightGray:813815804768026705>Created <t:${Math.round(
             member.user.createdTimestamp / 1000
           )}:R>, joined <t:${Math.round(member.joinedTimestamp / 1000)}:R>

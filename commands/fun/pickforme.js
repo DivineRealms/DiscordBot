@@ -25,12 +25,12 @@ module.exports.run = async (client, message, args) => {
             `You must seperate choices with a \`|\`.`
           )
           .setDescription(
-            `<:ArrowRightGray:813815804768026705>Example: \`${message.px}pickforme apple | banana | peach\`!`
+            `<:ArrowRightGray:813815804768026705>Example: **\`${message.px}pickforme apple | banana | peach\`**.`
           ),
       ],
     });
 
   message.channel.send(
-    `You gave me the options of \`${choices.join(" ")}\`\nI chose: ${choice}`
+    `You gave me the options of **\`${choices.join(" ")}\`**.\nI chose: ${choice}.`
   );
 };

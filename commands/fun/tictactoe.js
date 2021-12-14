@@ -21,9 +21,9 @@ module.exports.run = async (client, message, args, cmd) => {
     return client.utils
       .errorEmbed(`You are already playing a game of tic-tac-toe.`)
       .setDescription(
-        `<:ArrowRightGray:813815804768026705>Leave the game by using \`${
+        `<:ArrowRightGray:813815804768026705>Leave the game by using **\`${
           message.px + cmd
-        } leave\``
+        } leave\`**.`
       );
 
   if (

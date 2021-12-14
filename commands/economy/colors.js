@@ -46,9 +46,9 @@ module.exports.run = async (client, message, args) => {
           "List of Colors",
           `You have a total of ${
             colors.length
-          } colors available\n\n<:ArrowRightGray:813815804768026705> \`${colors.join(
+          } colors available\n\n<:ArrowRightGray:813815804768026705> **\`${colors.join(
             "`, `"
-          )}\``
+          )}\`**.`
         ),
       ],
     });

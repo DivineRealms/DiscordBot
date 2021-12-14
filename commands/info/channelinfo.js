@@ -22,7 +22,7 @@ module.exports.run = async (client, message, args) => {
           `<:ArrowRightGray:813815804768026705>Channel Name: ${message.channel.name} 
 <:ArrowRightGray:813815804768026705>Channel ID: **${message.channel.id}**
 <:ArrowRightGray:813815804768026705>Channel Type: **${message.channel.type}**
-<:ArrowRightGray:813815804768026705>NSFW: \`${message.channel.nsfw}\``,
+<:ArrowRightGray:813815804768026705>NSFW: **\`${message.channel.nsfw}\`**`,
           false
         )
         .addField(

@@ -132,7 +132,7 @@ module.exports.run = async (client, message, args) => {
 <:ArrowRightGray:813815804768026705>Aliases: **${
               command.aliases.map((s) => `\`${s}\``).join(", ") || "none"
             }**
-<:ArrowRightGray:813815804768026705>Usage: \`${message.px}${command.usage}\``,
+<:ArrowRightGray:813815804768026705>Usage: **\`${message.px}${command.usage}\`**.`,
             "#7bc2cc"
           )
           .setAuthor(
