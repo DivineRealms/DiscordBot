@@ -37,7 +37,7 @@ module.exports.run = async (client, message, args) => {
         client
           .embedBuilder(client, message, "", "", "#3db39e")
           .setAuthor(
-            `Your report for was submitted!`,
+            `Your report was submitted!`,
             `https://cdn.upload.systems/uploads/6KOGFYJM.png`
           ),
       ],
