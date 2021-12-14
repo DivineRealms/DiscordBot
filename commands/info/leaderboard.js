@@ -12,7 +12,7 @@ module.exports = {
 
 module.exports.run = async (client, message) => {
   let until = db.fetch(`untilVote_${message.guild.id}`) || Date.now(),
-    timeout = 86400000 - (Date.now() - until),
+    timeout = 7200000 - (Date.now() - until),
     parsed = client.utils.formatTime(timeout);
 
   const leaderboards = [
