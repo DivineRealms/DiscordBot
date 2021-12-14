@@ -104,8 +104,8 @@ function lbMoney(client, message) {
 
 function errorEmbed(client, message, err) {
   return client
-    .embedBuilder(client, message, err, "", "RED")
-    .setAuthor(err, `https://cdn.upload.systems/uploads/nI7qtXd7.png`);
+    .embedBuilder(client, message, err, "", "#e24c4b")
+    .setAuthor(err, `https://cdn.upload.systems/uploads/96HNGxzL.png`);
 }
 
 module.exports = {

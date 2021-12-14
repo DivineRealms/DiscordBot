@@ -62,7 +62,7 @@ module.exports.run = async (client, message, args) => {
           client
             .embedBuilder(client, message, "", "", "#3db39e")
             .setAuthor(
-              `$${args[3]} has been added to ${user.tag}'s bank`,
+              `$${args[3]} has been added to ${user.username}'s bank`,
               `https://cdn.upload.systems/uploads/6KOGFYJM.png`
             ),
         ],
@@ -74,7 +74,7 @@ module.exports.run = async (client, message, args) => {
           client
             .embedBuilder(client, message, "", "", "#3db39e")
             .setAuthor(
-              `$${args[3]} has been added to ${user.tag}'s wallet`,
+              `$${args[3]} has been added to ${user.username}'s wallet`,
               `https://cdn.upload.systems/uploads/6KOGFYJM.png`
             ),
         ],
@@ -88,7 +88,7 @@ module.exports.run = async (client, message, args) => {
           client
             .embedBuilder(client, message, "", "", "#3db39e")
             .setAuthor(
-              `$${args[3]} has been removed from ${user.tag}'s bank`,
+              `$${args[3]} has been removed from ${user.username}'s bank`,
               `https://cdn.upload.systems/uploads/6KOGFYJM.png`
             ),
         ],
@@ -100,7 +100,7 @@ module.exports.run = async (client, message, args) => {
           client
             .embedBuilder(client, message, "", "", "#3db39e")
             .setAuthor(
-              `$${args[3]} has been removed from ${user.tag}'s wallet`,
+              `$${args[3]} has been removed from ${user.username}'s wallet`,
               `https://cdn.upload.systems/uploads/6KOGFYJM.png`
             ),
         ],
