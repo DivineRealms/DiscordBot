@@ -13,6 +13,9 @@ module.exports.run = async (client, message, args) => {
     client.conf.logging.Report_Channel_Logs
   );
 
+  let user =
+    message.mentions.members.first() || client.users.cache.get(args[0]);
+
   if (!logChannel)
     return message.channel.send({
       embeds: [
@@ -31,8 +34,10 @@ module.exports.run = async (client, message, args) => {
       ],
     });
 
-  setTimeout(() => {
-    message.channel.send({
+  setTimeout(() => message.delete(), 1000);
+
+  message.channel
+    .send({
       embeds: [
         client
           .embedBuilder(client, message, "", "", "#3db39e")
@@ -41,22 +46,29 @@ module.exports.run = async (client, message, args) => {
             `https://cdn.upload.systems/uploads/6KOGFYJM.png`
           ),
       ],
+    })
+    .then((msg) => setTimeout(() => msg.delete(), 3000));
+
+  let embed = client
+    .embedBuilder(client, message, "", "")
+    .addField("Submitter:", `${message.author}`, false)
+    .addField("Timestamp:", `<t:${Math.round(Date.now() / 1000)}:R>`, false)
+    .setAuthor("New Report", `https://cdn.upload.systems/uploads/iHhkS5zu.png`)
+    .setThumbnail(
+      message.author.displayAvatarURL({ size: 1024, dynamic: true })
+    );
+
+  if (user) {
+    embed
+      .addField("Reported:", `${user}`, false)
+      .addField("Reason:", `**\`${args.slice(1).join(" ")}\`**`, false);
+
+    logChannel.send({ embeds: [embed] });
+  } else {
+    logChannel.send({
+      embeds: [
+        embed.addField("Report reason:", `**\`${args.join(" ")}\`**`, false),
+      ],
     });
-
-    message.delete();
-  }, 6000);
-
-  logChannel.send({
-    embeds: [
-      client
-        .embedBuilder(client, message, "", "")
-        .addField("Submitter:", `${message.author}`, true)
-        .addField("Time:", `<t:${Math.round(Date.now() / 1000)}:R>`, true)
-        .addField("Report reason:", `**\`${args.join(" ")}\`**`, false)
-        .setAuthor(
-          "New Report",
-          `https://cdn.upload.systems/uploads/iHhkS5zu.png`
-        ),
-    ],
-  });
+  }
 };
