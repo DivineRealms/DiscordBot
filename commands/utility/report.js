@@ -31,25 +31,32 @@ module.exports.run = async (client, message, args) => {
       ],
     });
 
-  setTimeout(() => message.delete(), 3000);
-  message.channel.send({
-    embeds: [
-      client
-        .embedBuilder(client, message, "", "", "#3db39e")
-        .setAuthor(
-          `Your report for ${args.join(" ")} was submitted!`,
-          `https://cdn.upload.systems/uploads/6KOGFYJM.png`
-        ),
-    ],
-  });
+  setTimeout(() => {
+    message.channel.send({
+      embeds: [
+        client
+          .embedBuilder(client, message, "", "", "#3db39e")
+          .setAuthor(
+            `Your report for was submitted!`,
+            `https://cdn.upload.systems/uploads/6KOGFYJM.png`
+          ),
+      ],
+    });
+
+    message.delete();
+  }, 6000);
 
   logChannel.send({
     embeds: [
       client
-        .embedBuilder(client, message, "New Report", "")
-        .addField("Submitter:", message.author, false)
-        .addField("Report:", args.join(" "), false)
-        .addField("Time:", `<t:${Math.round(Date.now() / 1000)}:R>`, false),
+        .embedBuilder(client, message, "", "")
+        .addField("Submitter:", `${message.author}`, true)
+        .addField("Time:", `<t:${Math.round(Date.now() / 1000)}:R>`, true)
+        .addField("Report reason:", `**\`${args.join(" ")}\`**`, false)
+        .setAuthor(
+          "New Report",
+          `https://cdn.upload.systems/uploads/iHhkS5zu.png`
+        ),
     ],
   });
 };
