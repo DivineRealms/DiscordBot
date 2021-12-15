@@ -18,16 +18,14 @@ module.exports.run = async (client, message, args) => {
         [r.name, r.id].includes(args.slice(1).join(" "))
       );
 
-  if (!member || !role)
-    return message.channel.send({
-      embeds: [
-        client.utils.errorEmbed(
-          client,
-          message,
-          "You need to provide a User & a Role."
-        ),
-      ],
-    });
+  let embed = client.utils.errorEmbed(
+    client,
+    message,
+    "You need to provide a User & a Role."
+  );
+
+  if (!member) return message.channel.send({ embeds: [embed] });
+  if (!role) return message.channel.send({ embeds: [embed] });
 
   if (member.roles.highest.position >= message.member.roles.highest.position)
     return message.channel.send({
@@ -61,9 +59,9 @@ module.exports.run = async (client, message, args) => {
   message.channel.send({
     embeds: [
       client
-        .embedBuilder(client, message, "", "#3db39e")
+        .embedBuilder(client, message, "", "", "#3db39e")
         .setAuthor(
-          `Successfully added the ${role} role to ${member.username}.`,
+          `Successfully added the ${role.name} role to ${member.username}.`,
           `https://cdn.upload.systems/uploads/6KOGFYJM.png`
         ),
     ],

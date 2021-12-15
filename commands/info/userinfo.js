@@ -7,28 +7,43 @@ module.exports = {
   permissions: [],
   cooldown: 0,
   aliases: ["whois", "uinfo"],
-  usage: "userinfo <@User>",
+  usage: "userinfo <@User | ID>",
 };
 
 module.exports.run = async (client, message, args) => {
   const member =
     message.mentions.members.first() ||
-    client.users.cache.get(args[0]) ||
-    message.member;
+    client.users.cache.get(args[0]);
+
   let nickname = member.nickname || "None";
+
   let avatar =
     member.user.displayAvatarURL({
       dynamic: true,
       size: 4096,
     }) || "*No Avatar!*";
+
   let bot = member.user.bot ? "Yes" : "No";
+
   let roles = [...member.roles.cache.values()].length
     ? [...member.roles.cache.values()]
         .filter((role) => role.name !== "@everyone")
         .join(", ")
     : "*None*";
+
   let highestRole = member.roles.highest || "*None*";
   let hoistRole = member.roles.hoist || "*None*";
+
+  if (!member)
+    return message.channel.send({
+      embeds: [
+        client.utils.errorEmbed(
+          client,
+          message,
+          "You need to provide to mention a user."
+        ),
+      ],
+    });
 
   message.channel.send({
     embeds: [
