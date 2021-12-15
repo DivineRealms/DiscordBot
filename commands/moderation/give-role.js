@@ -10,13 +10,14 @@ module.exports = {
 
 module.exports.run = async (client, message, args) => {
   const member =
-      message.mentions.members.first() ||
-      message.guild.members.cache.get(args[0]),
-    role =
-      message.mentions.roles.first() ||
-      message.guild.roles.cache.find((r) =>
-        [r.name, r.id].includes(args.slice(1).join(" "))
-      );
+    message.mentions.members.first() ||
+    message.guild.members.cache.get(args[0]);
+
+  const role =
+    message.mentions.roles.first() ||
+    message.guild.roles.cache.find((r) =>
+      [r.name, r.id].includes(args.slice(1).join(" "))
+    );
 
   let embed = client.utils.errorEmbed(
     client,
@@ -61,7 +62,7 @@ module.exports.run = async (client, message, args) => {
       client
         .embedBuilder(client, message, "", "", "#3db39e")
         .setAuthor(
-          `Successfully added the ${role.name} role to ${member.username}.`,
+          `Successfully added the ${role.name} role to ${member.user.username}.`,
           `https://cdn.upload.systems/uploads/6KOGFYJM.png`
         ),
     ],
