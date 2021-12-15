@@ -30,7 +30,7 @@ module.exports.run = async (client, message, args) => {
         client.utils.errorEmbed(
           client,
           message,
-          "You need to mention the user."
+          "You need to mention a user."
         ),
       ],
     });
@@ -48,7 +48,7 @@ module.exports.run = async (client, message, args) => {
           client.utils.errorEmbed(
             client,
             message,
-            "User is already added in the ticket."
+            "They're already in the ticket."
           ),
         ],
       });

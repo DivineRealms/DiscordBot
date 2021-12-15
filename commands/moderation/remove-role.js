@@ -24,7 +24,7 @@ module.exports.run = async (client, message, args) => {
         client.utils.errorEmbed(
           client,
           message,
-          "You need to provide a User & a Role."
+          `Invalid arguments, see ${message.px}help remove-role.`
         ),
       ],
     });

@@ -51,7 +51,7 @@ module.exports.run = async (client, message, args, cmd) => {
         client.utils.errorEmbed(
           client,
           message,
-          "That User is already playing."
+          "They're already playing."
         ),
       ],
     });
@@ -62,7 +62,7 @@ module.exports.run = async (client, message, args, cmd) => {
         client.utils.errorEmbed(
           client,
           message,
-          "That User has already sent request to someone else."
+          "They've already sent request to someone else."
         ),
       ],
     });

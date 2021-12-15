@@ -22,7 +22,7 @@ module.exports.run = async (client, message, args) => {
   let embed = client.utils.errorEmbed(
     client,
     message,
-    "You need to provide a User & a Role."
+    `Invalid arguments, see ${message.px}help give-role.`
   );
 
   if (!member) return message.channel.send({ embeds: [embed] });
@@ -34,7 +34,7 @@ module.exports.run = async (client, message, args) => {
         client.utils.errorEmbed(
           client,
           message,
-          "That User has higher roles than you."
+          "They have higher roles than you."
         ),
       ],
     });
@@ -45,7 +45,7 @@ module.exports.run = async (client, message, args) => {
         client.utils.errorEmbed(
           client,
           message,
-          "That User has higher role than me."
+          "They have a higher role than me."
         ),
       ],
     });
@@ -53,7 +53,11 @@ module.exports.run = async (client, message, args) => {
   if (member.roles.cache.has(role.id))
     return message.channel.send({
       embeds: [
-        client.utils.errorEmbed(client, message, "User already has that role."),
+        client.utils.errorEmbed(
+          client,
+          message,
+          "They already have that role."
+        ),
       ],
     });
 

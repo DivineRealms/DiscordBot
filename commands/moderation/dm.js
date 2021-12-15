@@ -42,7 +42,7 @@ module.exports.run = async (client, message, args) => {
         client.utils.errorEmbed(
           client,
           message,
-          "This User has their DMs Closed."
+          "Their DMs are closed."
         ),
       ],
     });
