@@ -13,7 +13,8 @@ module.exports = {
 module.exports.run = async (client, message, args) => {
   const member =
     message.mentions.members.first() ||
-    client.users.cache.get(args[0]);
+    message.guild.members.cache.get(args[0]) ||
+    message.member;
 
   let nickname = member.nickname || "None";
 
@@ -45,32 +46,28 @@ module.exports.run = async (client, message, args) => {
       ],
     });
 
-  message.channel.send({
-    embeds: [
-      client
-        .embedBuilder(
-          client,
-          message,
-          "",
-          `<:ArrowRightGray:813815804768026705>Nickname: **\`${nickname}\`**
+  let embed = client
+    .embedBuilder(
+      client,
+      message,
+      "",
+      `<:ArrowRightGray:813815804768026705>Nickname: **\`${nickname}\`**
 <:ArrowRightGray:813815804768026705>Created <t:${Math.round(
-            member.user.createdTimestamp / 1000
-          )}:R>, joined <t:${Math.round(member.joinedTimestamp / 1000)}:R>
+        member.user.createdTimestamp / 1000
+      )}:R>, joined <t:${Math.round(member.joinedTimestamp / 1000)}:R>
 <:ArrowRightGray:813815804768026705>Avatar: **[click here](${avatar})**
 <:ArrowRightGray:813815804768026705>Highest Role: ${highestRole}
 <:ArrowRightGray:813815804768026705>Hoisted Role: ${hoistRole}
 <:ArrowRightGray:813815804768026705>Bot: **${bot}**
 <:ArrowRightGray:813815804768026705>ID: **${member.id}**
 <:ArrowRightGray:813815804768026705>Roles: ${roles}`,
-          "#60b8ff"
-        )
-        .setAuthor(
-          member.user.username + "'s Information",
-          `https://cdn.upload.systems/uploads/6uDK0XAN.png`
-        )
-        .setThumbnail(
-          member.user.displayAvatarURL({ size: 1024, dynamic: true })
-        ),
-    ],
-  });
+      "#60b8ff"
+    )
+    .setThumbnail(member.user.displayAvatarURL({ size: 1024, dynamic: true }))
+    .setAuthor(
+      member.user.username + "'s Information",
+      `https://cdn.upload.systems/uploads/6uDK0XAN.png`
+    );
+
+  message.channel.send({ embeds: [embed] });
 };
