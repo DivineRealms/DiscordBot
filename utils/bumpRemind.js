@@ -13,7 +13,7 @@ const bump = (client) => {
           client,
           null,
           "",
-          "<:ArrowRightGray:813815804768026705>Server can be bumped again, use `!d bump`.",
+          "<:ArrowRightGray:813815804768026705>Server can be bumped again, use **`!d bump`**.",
           "#1cc0f9"
         )
         .setAuthor(
