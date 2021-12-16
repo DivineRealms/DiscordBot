@@ -53,24 +53,22 @@ module.exports = async (client, reaction, user) => {
           return db.delete(
             `stars_${reaction.message.guild.id}_${reaction.message.id}`
           );
-        board.embeds[0].footer.text = `${r.count} ${starboard.StarBoard_Emoji}`;
-        board.edit({ embeds: [board.embeds[0]] });
+        board.content = `\`${starboard.StarBoard_Emoji}\` ${r.count}︲<#${reaction.message.channel.id}>`;
+        board.edit({ content: `${board}` });
       } else if (reaction.count >= starboard.Minimum_Reactions) {
         const embed = new Discord.MessageEmbed()
           .setAuthor(
-            reaction.message.author.username,
-            reaction.message.author.displayAvatarURL({ dynamic: true })
+            reaction.message.author.tag,
+            reaction.message.author.displayAvatarURL({
+              size: 1024,
+              dynamic: true,
+            })
           )
-          .setColor("#ffc87e")
-          .setTimestamp()
-          .setFooter(
-            `${r.count} ${starboard.StarBoard_Emoji}`,
-            client.user.displayAvatarURL({ size: 1024, dynamic: true })
-          );
+          .setColor("#ffac33");
 
         if (reaction.message.content)
           embed.setDescription(
-            `> ${reaction.message.content}\n\n[<:ArrowRightGray:813815804768026705> Click Here to View Message](${reaction.message.url})`
+            `<:ArrowRightGray:813815804768026705>${reaction.message.content}\n\n[**Click here to view the message**](${reaction.message.url})`
           );
         if (
           ["png", "jpg", "jpeg", "gif", "webp"].some((e) =>
@@ -83,10 +81,13 @@ module.exports = async (client, reaction, user) => {
             .setImage(reaction.message.attachments.first().url)
             .setDescription(
               reaction.message.content
-                ? `> ${reaction.message.content}\n\n[<:ArrowRightGray:813815804768026705> Click Here to View Message](${reaction.message.url})`
-                : `\n[<:ArrowRightGray:813815804768026705> Click Here to View Message](${reaction.message.url})`
+                ? `${reaction.message.content}\n\n[**Click here to view the message**](${reaction.message.url})`
+                : `\n\n[**Click here to view the message**](${reaction.message.url})`
             );
-        let msg = await schannel.send({ embeds: [embed] });
+        let msg = await schannel.send({
+          embeds: [embed],
+          content: `\`${starboard.StarBoard_Emoji}\` ${r.count}︲<#${reaction.message.channel.id}>`,
+        });
         db.set(
           `stars_${reaction.message.guild.id}_${reaction.message.id}`,
           msg.id
