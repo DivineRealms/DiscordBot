@@ -69,8 +69,6 @@ module.exports.run = async (client, message) => {
     });
   }
 
-  console.log(data);
-
   client.paginateSelect(
     client,
     message,
