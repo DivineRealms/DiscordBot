@@ -141,7 +141,7 @@ module.exports = async (client, reaction, user) => {
   );
 
   channel.send({
-    content: message.author.toString(),
+    content: user.toString(),
     embeds: [
       client
         .embedBuilder(client, "", "", settings.Ticket_Message, "#b3e59f")
