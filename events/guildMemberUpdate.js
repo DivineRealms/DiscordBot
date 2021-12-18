@@ -14,7 +14,9 @@ module.exports = (client, oldMember, newMember) => {
     );
 
     const added = addedRoles.map((r) => r.id);
-    const welcomeChannel = client.channels.cache.get(settings.welcomeSystem.welcomeChannel);
+    const welcomeChannel = client.channels.cache.get(
+      settings.welcomeSystem.welcomeChannel
+    );
 
     if (added.includes("597888019663421440")) {
       const embed = client
@@ -22,7 +24,10 @@ module.exports = (client, oldMember, newMember) => {
           client,
           "",
           "",
-          settings.welcomeSystem.welcomeEmbed.description,
+          settings.welcomeSystem.welcomeEmbed.description.replace(
+            "{member}",
+            newMember.user.toString()
+          ),
           settings.welcomeSystem.welcomeEmbed.color
         )
         .setAuthor(
@@ -31,7 +36,9 @@ module.exports = (client, oldMember, newMember) => {
             .replace("{joinPosition}", `${newMember.guild.memberCount}`),
           `https://cdn.upload.systems/uploads/hhgfsHXT.png`
         )
-        .setThumbnail(newMember.displayAvatarURL({ size: 1024, dynamic: true }));
+        .setThumbnail(
+          newMember.displayAvatarURL({ size: 1024, dynamic: true })
+        );
 
       if (welcomeChannel)
         welcomeChannel.send({ embeds: [embed] }).then((msg) =>
