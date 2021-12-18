@@ -11,16 +11,17 @@ module.exports = {
 };
 
 module.exports.run = async (client, message, args) => {
-  let cooldown = db.fetch(`daily_${message.guild.id}_${message.author.id}`),
-    day = 86400000;
+  let cooldown = db.fetch(`daily_${message.guild.id}_${message.author.id}`) || Date.now(),
+    timeout = 86400000 - (Date.now() - cooldown),
+    parsed = client.utils.formatTime(timeout);
 
-  if (cooldown != null && day - (Date.now() - cooldown) > 0)
+  if (cooldown != null && timeout > 0)
     return message.channel.send({
       embeds: [
         client.utils.errorEmbed(
           client,
           message,
-          "You're on cooldown, try again later."
+          `You're on cooldown, try again in ${parsed}.`
         ),
       ],
     });
