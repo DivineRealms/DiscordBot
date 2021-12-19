@@ -15,7 +15,7 @@ module.exports.run = async (client, message, args) =>
         .embedBuilder(client, message, "", "", "#60b8ff")
         .addField(
           "Minecraft Server IPs:",
-          "`:one:` **`divinerealms.ga`**\n`:two:` **`divinemc.ga`**",
+          "`1️⃣` **`divinerealms.ga`**\n`2️⃣` **`divinemc.ga`**",
           true
         )
         .addField("Version:", "**`1.17.1`**", true)
