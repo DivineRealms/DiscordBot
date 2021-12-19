@@ -6,7 +6,7 @@ module.exports = {
   category: "economy",
   description: "Bet money.",
   permissions: [],
-  cooldown: 120,
+  cooldown: 15,
   aliases: [],
   usage: "bet <amount | all>",
 };
