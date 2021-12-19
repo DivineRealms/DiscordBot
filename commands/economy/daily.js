@@ -11,7 +11,7 @@ module.exports = {
 };
 
 module.exports.run = async (client, message, args) => {
-  let cooldown = db.fetch(`daily_${message.guild.id}_${message.author.id}`) || Date.now(),
+  let cooldown = db.fetch(`daily_${message.guild.id}_${message.author.id}`),
     timeout = 86400000 - (Date.now() - cooldown),
     parsed = client.utils.formatTime(timeout);
 
