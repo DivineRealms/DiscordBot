@@ -1,15 +1,23 @@
 const { MessageEmbed } = require("discord.js");
 const { readdirSync } = require("fs");
 const moment = require("moment-timezone");
+const fs = require("fs");
 const Enmap = require("enmap");
 
 module.exports = async (client) => {
+  // OVO OBRISATI //
   Object.defineProperty(client, "conf", {
     get: () => {
       delete require.cache[require.resolve("../settings/config")];
       return require("../settings/config").config;
     },
   });
+  // ILI KOMENTARISATI //
+  
+  /* OVO OD-KOMENTARISATI
+  client.conf = yaml.load(fs.readFileSync('./settings/config.yml', 'utf8'));
+  */
+  
   client.resolveMember = (str, user, title) =>
     str.replace(/\{(.+)\}/, (...e) =>
       e[1] === "mention" && title ? user.toString() : user[e[1]]
