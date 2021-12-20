@@ -18,9 +18,18 @@ module.exports = {
 
 module.exports.run = async (client, message, args) => {
   const ticket = db.fetch(`tickets_${message.guild.id}_${message.channel.id}`);
-  const log = client.channels.cache.get(
-    client.conf.logging.Ticket_Channel_Logs
-  );
+  const log = client.channels.cache.get(client.conf.Logging.Tickets);
+
+  if (!client.conf.Ticket_System.Enabled)
+    return message.channel.send({
+      embeds: [
+        client.utils.errorEmbed(
+          client,
+          message,
+          "Ticket System is not enabled."
+        ),
+      ],
+    });
 
   const channelMessages = await message.channel.messages
     .fetch({ limit: 100, before: message.id })
@@ -79,7 +88,10 @@ module.exports.run = async (client, message, args) => {
   const loggingembed = client
       .embedBuilder(client, message, "Ticket Logging System", "", "#b3e59f")
       .addField(`Ticket Name:`, `${message.channel.name}`, false)
-      .setAuthor("Ticket Logging System", `https://cdn.upload.systems/uploads/4mFVRE7f.png`),
+      .setAuthor(
+        "Ticket Logging System",
+        `https://cdn.upload.systems/uploads/4mFVRE7f.png`
+      ),
     attachment = new MessageAttachment(Buffer.from(data), "ticket.html");
 
   if (log) log.send({ embeds: [loggingembed], files: [attachment] });

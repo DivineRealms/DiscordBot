@@ -11,6 +11,13 @@ module.exports = {
 };
 
 module.exports.run = async (client, message, args) => {
+  if (!args[0])
+    return message.channel.send({
+      embeds: [
+        client.utils.errorEmbed(client, message, "Please provide a problem."),
+      ],
+    });
+
   try {
     message.channel.send({
       embeds: [
@@ -21,14 +28,13 @@ module.exports.run = async (client, message, args) => {
             `https://cdn.upload.systems/uploads/LRa9Ebl5.png`
           )
           .addField("📥︲Problem:", "```\n" + args.join(" ") + "```")
-          .addField("📤︲Solution:", "```\n" + evaluate(args.join(" ")) + "```"),
+          .addField(
+            "📤︲Solution:",
+            "```\n" + evaluate(args.join(" ")) + "```"
+          ),
       ],
     });
   } catch (e) {
-    client.utils.errorEmbed(
-      client,
-      message,
-      "You need to provide a math problem."
-    );
+    client.utils.errorEmbed(client, message, "Please provide a problem.");
   }
 };

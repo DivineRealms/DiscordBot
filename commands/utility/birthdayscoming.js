@@ -12,6 +12,17 @@ module.exports = {
 };
 
 module.exports.run = async (client, message, args) => {
+  if (!client.conf.Birthday_System.Enabled)
+    return message.channel.send({
+      embeds: [
+        client.utils.errorEmbed(
+          client,
+          message,
+          "Birthday System is not enabled."
+        ),
+      ],
+    });
+
   const dates = [
     "January",
     "Februrary",
@@ -28,15 +39,15 @@ module.exports.run = async (client, message, args) => {
   ];
 
   const isToday = (d) =>
-      d
-        ? new Date().getMonth() === new Date(d).getMonth() &&
-          new Date().getDate() <= new Date(d).getDate()
-        : false;
-        
+    d
+      ? new Date().getMonth() === new Date(d).getMonth() &&
+        new Date().getDate() <= new Date(d).getDate()
+      : false;
+
   let birthdays = db
-      .all()
-      .filter((i) => i.ID.startsWith(`birthday_${message.guild.id}_`))
-      .sort((a, b) => b.data - a.data);
+    .all()
+    .filter((i) => i.ID.startsWith(`birthday_${message.guild.id}_`))
+    .sort((a, b) => b.data - a.data);
 
   birthdays = birthdays
     .filter((b) => isToday(b.data))

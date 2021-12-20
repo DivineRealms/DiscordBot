@@ -12,17 +12,26 @@ module.exports = {
 };
 
 module.exports.run = async (client, message, args) => {
-  const settings = client.conf.ticketSystem;
+  const settings = client.conf.Ticket_System;
   const tickets =
     db.all().filter((i) => i.ID.startsWith(`tickets_${message.guild.id}_`)) ||
     [];
 
-  const log = client.channels.cache.get(
-    client.conf.logging.Ticket_Channel_Logs
-  );
+  const log = client.channels.cache.get(client.conf.Logging.Tickets);
 
   const num = tickets.length || 1;
   const ticketNumber = "0".repeat(4 - num.toString().length) + num;
+
+  if (!settings.Enabled)
+    return message.channel.send({
+      embeds: [
+        client.utils.errorEmbed(
+          client,
+          message,
+          "Ticket System is not enabled."
+        ),
+      ],
+    });
 
   if (tickets.find((u) => u.data.includes(message.author.id)))
     return message.channel.send({
@@ -35,7 +44,7 @@ module.exports.run = async (client, message, args) => {
       ],
     });
 
-  const permissions = settings.Support_Team_Roles.map((r) => ({
+  const permissions = settings.Support_Roles.map((r) => ({
       id: r,
       allow: "VIEW_CHANNEL",
     })),
@@ -44,12 +53,9 @@ module.exports.run = async (client, message, args) => {
       allow: "VIEW_CHANNEL",
     })),
     channel = await message.guild.channels.create(
-      settings.Ticket_Name.replace("{number}", ticketNumber).replace(
-        "{username}",
-        message.author.username
-      ),
+      `📋︲${message.author.username}-${ticketNumber}`,
       {
-        parent: settings.Ticket_Category,
+        parent: settings.Category,
         permissionOverwrites: [
           {
             id: message.guild.id,
@@ -92,9 +98,15 @@ module.exports.run = async (client, message, args) => {
     content: message.author.toString(),
     embeds: [
       client
-        .embedBuilder(client, message, "", settings.Ticket_Message, "#b3e59f")
+        .embedBuilder(
+          client,
+          message,
+          "",
+          `<:ArrowRightGray:813815804768026705>A staff member will be with you shortly.`,
+          "#b3e59f"
+        )
         .setAuthor(
-          settings.Ticket_Title,
+          `Thank you for creating a ticket`,
           `https://cdn.upload.systems/uploads/4mFVRE7f.png`
         ),
     ],

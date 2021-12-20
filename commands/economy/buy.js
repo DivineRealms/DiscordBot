@@ -11,10 +11,21 @@ module.exports = {
 };
 
 module.exports.run = async (client, message, args) => {
-  const settings = client.conf.economy,
-    shop = [...settings.shopItems],
+  const settings = client.conf.Economy,
+    shop = [...settings.Shop_Items],
     item = shop.find((s, i) => i + 1 == args[0]),
     balance = db.fetch(`money_${message.guild.id}_${message.author.id}`);
+
+  if (!settings.Enabled)
+    return message.channel.send({
+      embeds: [
+        client.utils.errorEmbed(
+          client,
+          message,
+          "Economy is not enabled."
+        ),
+      ],
+    });
 
   if (!item)
     return message.channel.send({

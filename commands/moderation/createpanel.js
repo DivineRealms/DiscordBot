@@ -9,12 +9,25 @@ module.exports = {
 };
 
 module.exports.run = async (client, message, args) => {
-  const settings = client.conf.ticketSystem;
+  const settings = client.conf.Ticket_System;
+
+  if (!settings.Enabled)
+    return message.channel.send({
+      embeds: [
+        client.utils.errorEmbed(client, message, "Economy is not enabled."),
+      ],
+    });
 
   const embed = client
-    .embedBuilder(client, message, "", settings.Panel_Message, "#b3e59f")
+    .embedBuilder(
+      client,
+      message,
+      "",
+      `<:ArrowRightGray:813815804768026705>A staff member will be with you shortly.`,
+      "#b3e59f"
+    )
     .setAuthor(
-      settings.Panel_Title,
+      `Thank you for creating a ticket`,
       `https://cdn.upload.systems/uploads/4mFVRE7f.png`
     );
 

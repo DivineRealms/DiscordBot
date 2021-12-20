@@ -11,11 +11,20 @@ module.exports = {
 };
 
 module.exports.run = async (client, message, args) => {
-  const settings = client.conf.economy,
-    shop = [...settings.shopItems];
+  const settings = client.conf.Economy,
+    shop = [...settings.Shop_Items];
 
   let format = `\`[ID].\` **[NAME]**︲$[PRICE]\n<:ArrowRightGray:813815804768026705>[DESCRIPTION]`,
-    shopArray = [`<:ArrowRightGray:813815804768026705>Command: **\`${message.px}buy [id]\`**.\n`];
+    shopArray = [
+      `<:ArrowRightGray:813815804768026705>Command: **\`${message.px}buy [id]\`**.\n`,
+    ];
+
+  if (!settings.Enabled)
+    return message.channel.send({
+      embeds: [
+        client.utils.errorEmbed(client, message, "Economy is not enabled."),
+      ],
+    });
 
   for (let i = 0; i < shop.length; i++) {
     let desc = shop[i].description.replace(

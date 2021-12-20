@@ -21,57 +21,46 @@ module.exports = async (client) => {
   console.log("             Bot has started and is online now");
   console.log(" ");
 
-  if (!client.conf.settings.changingActivity.enabled) {
-    const settings = client.conf.settings.botActivity,
-      guild = client.guilds.cache.get(client.conf.settings.GuildID);
-    client.user.setActivity(
-      settings.activity.name.replace("{count}", guild.memberCount),
-      {
-        type: settings.activity.type,
-      }
-    );
-  } else {
-    const settings = client.conf.settings.changingActivity;
-    let rand = Math.floor(Math.random() * settings.activities.length);
-    client.user.setActivity(
-      settings.activities[rand].replace("{count}", client.users.cache.size),
-      {
-        type: settings.types[rand],
-      }
-    );
-    let interval = setInterval(() => {
-      if (!settings.enabled) return clearInterval(interval);
-      let index = Math.floor(Math.random() * settings.activities.length);
-      client.user.setActivity(
-        settings.activities[index].replace("{count}", client.users.cache.size),
-        {
-          type: settings.types[index],
-        }
-      );
-    }, 180000);
-  }
+  const settings = client.conf.Settings.Bot_Activity;
 
-  const guild = client.guilds.cache.get(client.conf.settings.GuildID);
+  let rand = Math.floor(Math.random() * settings.Activities.length);
+  client.user.setActivity(
+    settings.Activities[rand].replace("{count}", client.users.cache.size),
+    {
+      type: settings.Types[rand],
+    }
+  );
+
+  setInterval(() => {
+    let index = Math.floor(Math.random() * settings.Activities.length);
+    client.user.setActivity(
+      settings.Activities[index].replace("{count}", client.users.cache.size),
+      { type: settings.Types[index] }
+    );
+  }, 180000);
+
+  const guild = client.guilds.cache.get(client.conf.Settings.Guild_ID);
   client.settings.ensure(guild.id, client.defaultSettings);
 
   function counter() {
+    const settings = client.conf.Automation;
+
     const memberCount = client.channels.cache.get(
-      client.conf.automation.Member_Count_Channel
-    );
-    const channelCount = client.channels.cache.get(
-      client.conf.automation.Channel_Count_Channel
+      settings.Member_Count.Channel
     );
 
-    if (memberCount)
+    const channelCount = client.channels.cache.get(
+      settings.Channel_Count.Channel
+    );
+
+    if (settings.Member_Count.Enabled)
       memberCount.setName(
-        client.conf.automation.Member_Count_Message.replace(
-          "{count}",
-          guild.memberCount
-        )
+        settings.Member_Count.Message.replace("{count}", guild.memberCount)
       );
-    if (channelCount)
+
+    if (settings.Channel_Count.Enabled)
       channelCount.setName(
-        client.conf.automation.Channel_Count_Message.replace(
+        settings.Channel_Count.Message.replace(
           "{count}",
           guild.channels.cache.size
         )
@@ -84,11 +73,11 @@ module.exports = async (client) => {
         ? new Date().getDate() === new Date(d).getDate() &&
           new Date().getMonth() === new Date(d).getMonth()
         : false;
-    const settings = client.conf.birthdaySystem;
-    const channel = client.channels.cache.get(settings.birthdayChannel);
+    const settings = client.conf.Birthday_System;
+    const channel = client.channels.cache.get(settings.Channel);
     const today = new Date().getMonth() + " " + new Date().getDate();
     if (
-      !settings.enabled ||
+      !settings.Enabled ||
       client.settings.get(guild.id, "birthday") === today
     )
       return;
@@ -109,21 +98,15 @@ module.exports = async (client) => {
       client,
       null,
       "Todays Birthdays!",
-      `${settings.birthdayMessage}\n${birthEmbed}`
+      `Happy birthday to the following member(s)!\nMake sure to wish them a happy birthday in general!\n${birthEmbed}`
     );
 
     if (channel && birthEmbed.length > 0) channel.send({ embeds: [embed] });
   }
 
-  let bdayCron = new cron.CronJob(
-    "59 59 23 * * *",
-    () => {
-      birthday();
-    },
-    {
-      timezone: "Europe/Belgrade",
-    }
-  );
+  let bdayCron = new cron.CronJob("59 59 23 * * *", () => birthday(), {
+    timezone: "Europe/Belgrade",
+  });
 
   bdayCron.start();
 
@@ -166,9 +149,7 @@ module.exports = async (client) => {
           components: [voteRow],
         });
     },
-    {
-      timezone: "Europe/Belgrade",
-    }
+    { timezone: "Europe/Belgrade" }
   );
 
   voteCron.start();
@@ -178,7 +159,7 @@ module.exports = async (client) => {
     () => {
       axios
         .get(
-          `https://minecraft-mp.com/api/?object=servers&element=voters&key=${client.conf.settings.voteKey}&month=current&format=json?limit=10`
+          `https://minecraft-mp.com/api/?object=servers&element=voters&key=${client.conf.Settings.Vote_Key}&month=current&format=json?limit=10`
         )
         .then((res) => {
           db.set(`votes_${guild.id}`, res.data.voters);

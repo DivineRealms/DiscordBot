@@ -9,12 +9,12 @@ module.exports = {
 };
 
 module.exports.run = async (client, message, args) => {
-  const applications = client.conf.applicationSystem.applications.filter(
-    (s) =>
-      !s.Application_Channel || s.Application_Channel === message.channel.id
+  const applications = client.conf.Application_System.Applications.filter(
+    (s) => !s.Channel || s.Channel === message.channel.id
   );
+
   const app = applications.find(
-    (a) => a.Application_Name.toLowerCase() == args.join(" ").toLowerCase()
+    (a) => a.Name.toLowerCase() == args.join(" ").toLowerCase()
   );
 
   if (!applications.length)
@@ -29,6 +29,7 @@ module.exports.run = async (client, message, args) => {
         ),
       ],
     });
+
   if (!app)
     return message.channel.send({
       embeds: [
@@ -42,7 +43,8 @@ module.exports.run = async (client, message, args) => {
       ],
     });
 
-  const chan = client.channels.cache.get(app.Application_Log);
+  const chan = client.channels.cache.get(app.Logs);
+
   if (!chan)
     return message.channel.send({
       embeds: [
@@ -55,6 +57,7 @@ module.exports.run = async (client, message, args) => {
         ),
       ],
     });
+
   const msg = await message.author
     .send({
       embeds: [
@@ -79,7 +82,7 @@ module.exports.run = async (client, message, args) => {
     return msg.channel.send("Time limit exceeded, application cancelled.");
   else if (resp.first().emoji.name !== "✅")
     return msg.channel.send("Application cancelled.");
-  const questions = app.questions;
+  const questions = app.Questions;
   const answers = [];
   client.processes.set(message.author.id, true);
 

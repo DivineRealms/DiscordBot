@@ -1,15 +1,11 @@
 const { MessageEmbed } = require("discord.js");
 const { readdirSync } = require("fs");
 const moment = require("moment-timezone");
+const fs = require("fs");
 const Enmap = require("enmap");
 
 module.exports = async (client) => {
-  Object.defineProperty(client, "conf", {
-    get: () => {
-      delete require.cache[require.resolve("../settings/config")];
-      return require("../settings/config").config;
-    },
-  });
+  client.conf = yaml.load(fs.readFileSync('./settings/config.yml', 'utf8'));
   client.resolveMember = (str, user, title) =>
     str.replace(/\{(.+)\}/, (...e) =>
       e[1] === "mention" && title ? user.toString() : user[e[1]]
@@ -21,10 +17,10 @@ module.exports = async (client) => {
   client.snipes = new Enmap();
   client.afk = new Enmap();
   client.embed = class Embed extends MessageEmbed {
-    color = client.conf.settings.embedColor;
+    color = client.conf.Settings.Embed_Color;
   };
   const settings = { fetchAll: true, autoFetch: true, cloneLevel: "deep" };
-  client.defaultSettings = require("../settings/config").guildSettings;
+  client.defaultSettings = require("../settings/config").Guild_Settings;
   client.settings = new Enmap({
     name: "settings",
     ...settings,
@@ -114,6 +110,6 @@ module.exports = async (client) => {
     );
 
   client
-    .login(client.conf.settings.token)
+    .login(client.conf.Settings.Token)
     .catch(() => console.log("[Error] Invalid token provided in config"));
 };

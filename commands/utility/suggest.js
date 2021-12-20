@@ -11,9 +11,7 @@ module.exports = {
 };
 
 module.exports.run = async (client, message, args) => {
-  let channel = client.channels.cache.get(
-    client.conf.logging.Suggestion_Channel_Logs
-  );
+  let channel = client.channels.cache.get(client.conf.Logging.Suggestions);
 
   if (!channel)
     return message.channel.send({
@@ -55,8 +53,8 @@ module.exports.run = async (client, message, args) => {
     ],
   });
 
-  await msg.react(client.conf.settings.Emojis.Yes);
-  await msg.react(client.conf.settings.Emojis.No);
+  await msg.react("👍");
+  await msg.react("👎");
 
   db.set(`suggestion_${msg.id}`, {
     user: message.author,

@@ -14,7 +14,7 @@ module.exports = {
 };
 
 module.exports.run = async (client, message, args) => {
-  if (!client.conf.settings.BotOwnerDiscordID.includes(message.author.id))
+  if (!client.conf.Settings.Owner_Discord_ID.includes(message.author.id))
     return message.channel.send({
       embeds: [
         client.utils.errorEmbed(
@@ -42,7 +42,7 @@ module.exports.run = async (client, message, args) => {
     if (
       message.content.toLowerCase().includes("client.token") ||
       message.content.toLowerCase().includes("token") ||
-      message.content.toLowerCase().includes("client.conf.settings.token")
+      message.content.toLowerCase().includes("client.conf.Settings.Token")
     )
       return;
     if (typeof evaled !== "string") evaled = require("util").inspect(evaled);
@@ -57,7 +57,7 @@ module.exports.run = async (client, message, args) => {
 
     if (evaled.length >= 1024) {
       const body = {
-        key: client.conf.settings.pasteKey,
+        key: client.conf.Settings.Paste_Key,
         body: evaled,
       };
 

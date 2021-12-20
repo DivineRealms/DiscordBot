@@ -2,8 +2,8 @@ const db = require("quick.db");
 
 const bump = (client) => {
   setInterval(async () => {
-    let time = db.fetch(`serverBump_${client.conf.settings.guildID}`);
-    let last = db.fetch(`lastBump_${client.conf.settings.guildID}`);
+    let time = db.fetch(`serverBump_${client.conf.Settings.guildID}`);
+    let last = db.fetch(`lastBump_${client.conf.Settings.guildID}`);
     if (time && Date.now() > time) {
       let bumpChannel = client.channels.cache.get(
         client.conf.logging.Bump_Channel
@@ -21,10 +21,10 @@ const bump = (client) => {
           `https://cdn.upload.systems/uploads/pVry3Mav.png`
         );
 
-      db.delete(`serverBump_${client.conf.settings.guildID}`);
+      db.delete(`serverBump_${client.conf.Settings.guildID}`);
       if (bumpChannel)
         bumpChannel.send({ content: `<@!${last}>`, embeds: [embed] });
-      db.delete(`lastBump_${client.conf.settings.guildID}`);
+      db.delete(`lastBump_${client.conf.Settings.guildID}`);
     }
   }, 30000);
 };

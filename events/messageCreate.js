@@ -24,9 +24,7 @@ module.exports = async (client, message) => {
           .filter((msg) => msg.content.toLowerCase().startsWith("!d bump"))
           .map((msg) => msg.author.id);
 
-        let bumpChannel = client.channels.cache.get(
-          client.conf.logging.Bump_Channel
-        );
+        let bumpChannel = client.channels.cache.get(client.conf.Logging.Bumps);
 
         let bumpMsg = messages
           .filter((msg) => msg.content.toLowerCase().startsWith("!d bump"))
@@ -35,8 +33,8 @@ module.exports = async (client, message) => {
         let timeout = 7200000;
         let time = Date.now() + timeout;
 
-        db.set(`serverBump_${client.conf.settings.guildID}`, time);
-        db.set(`lastBump_${client.conf.settings.guildID}`, dbumper[0]);
+        db.set(`serverBump_${client.conf.Settings.guildID}`, time);
+        db.set(`lastBump_${client.conf.Settings.guildID}`, dbumper[0]);
 
         setTimeout(() => {
           let bumpAgain = client
@@ -52,13 +50,14 @@ module.exports = async (client, message) => {
               `https://cdn.upload.systems/uploads/pVry3Mav.png`
             );
 
-          bumpChannel.send({
-            content: `<@!${dbumper[0]}>`,
-            embeds: [bumpAgain],
-          });
+          if (client.conf.Logging.Enabled)
+            bumpChannel.send({
+              content: `<@!${dbumper[0]}>`,
+              embeds: [bumpAgain],
+            });
 
-          db.delete(`serverBump_${client.conf.settings.guildID}`);
-          db.delete(`lastBump_${client.conf.settings.guildID}`);
+          db.delete(`serverBump_${client.conf.Settings.Guild_ID}`);
+          db.delete(`lastBump_${client.conf.Settings.Guild_ID}`);
         }, timeout);
 
         const bump = client
@@ -78,7 +77,7 @@ module.exports = async (client, message) => {
         db.add(`bumps_${message.guild.id}_${dbumper[0]}`, 1);
         db.add(`money_${message.guild.id}_${dbumper[0]}`, 1000);
 
-        bumpMsg[0].reply({ embeds: [bump] });
+        if (client.conf.Logging.Enabled) bumpMsg[0].reply({ embeds: [bump] });
       });
     }
   }
@@ -109,14 +108,14 @@ module.exports = async (client, message) => {
   }
 
   if (
-    client.conf.leveling.enabled == true &&
-    !client.conf.leveling.ignore_Xp_Channels.includes(message.channel.id)
+    client.conf.Leveling.Enabled &&
+    !client.conf.Leveling.Ignore_XP_Channels.includes(message.channel.id)
   )
     await leveling.manageLeveling(client, message);
 
   const prefixRegex = new RegExp(
     `^(${
-      client.conf.settings.mentionPrefix ? `<@!?${client.user.id}>|` : ""
+      client.conf.Settings.Mention_Prefix ? `<@!?${client.user.id}>|` : ""
     }${escapeRegex(message.px)})\\s*`
   );
   if (!prefixRegex.test(message.content)) return;
@@ -127,7 +126,7 @@ module.exports = async (client, message) => {
   const command = client.commands.find(
     (c, a) => a == cmd || (c.aliases && c.aliases.includes(cmd))
   );
-  if(!command) return;
+  if (!command) return;
 
   if (command) {
     let userPerms = [];
@@ -155,7 +154,7 @@ module.exports = async (client, message) => {
     );
 
     if (
-      !client.conf.automod.Bypass_Cooldown.some((r) =>
+      !client.conf.Automod.Bypass_Cooldown.some((r) =>
         message.member.roles.cache.has(r)
       )
     ) {
@@ -187,9 +186,9 @@ module.exports = async (client, message) => {
   }
 
   if (
-    !client.conf.automod.Command_Channel.includes(message.channel.id) &&
+    !client.conf.Automod.Commands_Channel.includes(message.channel.id) &&
     !message.member.permissions.has("MANAGE_ROLES") &&
-    !message.member.roles.cache.has(client.conf.automod.Bypass_Command)
+    !message.member.roles.cache.has(client.conf.Automod.Bypass_Command)
   )
     return message.channel
       .send({
@@ -203,7 +202,7 @@ module.exports = async (client, message) => {
       })
       .then((m) => setTimeout(() => m.delete(), 7000));
 
-  if (command && !client.conf.economy.enabled && command.category === "economy")
+  if (command && !client.conf.Economy.Enabled && command.category === "economy")
     return message.channel.send({
       embeds: [
         client.utils.errorEmbed(

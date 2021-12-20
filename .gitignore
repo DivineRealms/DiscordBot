@@ -108,4 +108,4 @@ data/enmap.sqlite-shm
 data/enmap.sqlite
 
 # Config
-settings/config.js
+settings/config.yml

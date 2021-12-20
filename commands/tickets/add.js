@@ -13,6 +13,17 @@ module.exports = {
 module.exports.run = async (client, message, args) => {
   const ticket = db.fetch(`tickets_${message.guild.id}_${message.channel.id}`);
 
+  if (!client.conf.Ticket_System.Enabled)
+    return message.channel.send({
+      embeds: [
+        client.utils.errorEmbed(
+          client,
+          message,
+          "Ticket System is not enabled."
+        ),
+      ],
+    });
+
   if (!ticket)
     return message.channel.send({
       embeds: [
@@ -27,11 +38,7 @@ module.exports.run = async (client, message, args) => {
   if (!message.mentions.users.first())
     return message.channel.send({
       embeds: [
-        client.utils.errorEmbed(
-          client,
-          message,
-          "You need to mention a user."
-        ),
+        client.utils.errorEmbed(client, message, "You need to mention a user."),
       ],
     });
 

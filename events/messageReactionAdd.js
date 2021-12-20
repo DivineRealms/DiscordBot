@@ -5,8 +5,8 @@ module.exports = async (client, reaction, user) => {
   if (reaction.message.partial) await reaction.message.fetch();
   const message = reaction.message;
   if (user.bot || !reaction.message.guild) return;
-  const starboard = client.conf.starBoard;
-  const schannel = client.channels.cache.get(starboard.StarBoard_Channel);
+  const starboard = client.conf.Starboard;
+  const schannel = client.channels.cache.get(starboard.Channel);
   const suggestion = client.settings.get(
     reaction.message.guild.id,
     `suggestions.${reaction.message.id}`
@@ -41,7 +41,7 @@ module.exports = async (client, reaction, user) => {
     if (
       schannel &&
       starboard.Enabled &&
-      reaction.emoji.name == starboard.StarBoard_Emoji
+      reaction.emoji.name == starboard.Emoji
     ) {
       const stars = db.fetch(
         `stars_${reaction.message.guild.id}_${reaction.message.id}`
@@ -53,7 +53,7 @@ module.exports = async (client, reaction, user) => {
           return db.delete(
             `stars_${reaction.message.guild.id}_${reaction.message.id}`
           );
-        board.content = `\`${starboard.StarBoard_Emoji}\` ${r.count}︲<#${reaction.message.channel.id}>`;
+        board.content = `\`${starboard.Emoji}\` ${r.count}︲<#${reaction.message.channel.id}>`;
         board.edit({ content: `${board}` });
       } else if (reaction.count >= starboard.Minimum_Reactions) {
         const embed = new Discord.MessageEmbed()
@@ -86,7 +86,7 @@ module.exports = async (client, reaction, user) => {
             );
         let msg = await schannel.send({
           embeds: [embed],
-          content: `\`${starboard.StarBoard_Emoji}\` ${r.count}︲<#${reaction.message.channel.id}>`,
+          content: `\`${starboard.Emoji}\` ${r.count}︲<#${reaction.message.channel.id}>`,
         });
         db.set(
           `stars_${reaction.message.guild.id}_${reaction.message.id}`,

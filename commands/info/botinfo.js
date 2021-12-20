@@ -20,18 +20,16 @@ module.exports.run = async (client, message, args) => {
 \<:ArrowRightGray:813815804768026705>Commands: **${
             [...client.commands.values()].length
           }**
-\<:ArrowRightGray:813815804768026705>Developers: ${client.conf.settings.BotOwnerDiscordID.map(
-            (x) => client.users.cache.get(x)
-          )
-            .join(", ")
-            .trim()}`,
+\<:ArrowRightGray:813815804768026705>Developers: <@237171563760320514> & <@823228305167351808>`,
           "#60b8ff"
         )
         .setAuthor(
           "Bot Info",
           `https://cdn.upload.systems/uploads/6uDK0XAN.png`
         )
-        .setThumbnail(client.user.displayAvatarURL({ size: 1024, dynamic: true })),
+        .setThumbnail(
+          client.user.displayAvatarURL({ size: 1024, dynamic: true })
+        ),
     ],
   });
 };

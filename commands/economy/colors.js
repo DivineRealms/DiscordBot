@@ -15,6 +15,13 @@ module.exports.run = async (client, message, args) => {
   let option = args[0],
     colors = db.fetch(`colors_${message.guild.id}_${message.author.id}`) || [];
 
+  if (!client.conf.Economy.Enabled)
+    return message.channel.send({
+      embeds: [
+        client.utils.errorEmbed(client, message, "Economy is not enabled."),
+      ],
+    });
+
   if (!option)
     return message.channel.send({
       embeds: [
@@ -66,7 +73,7 @@ module.exports.run = async (client, message, args) => {
         ],
       });
 
-    let apply = client.conf.colors.list.find(
+    let apply = client.conf.Colors.find(
       (c) => c.name.toLowerCase() == select.toLowerCase()
     );
 
@@ -81,12 +88,12 @@ module.exports.run = async (client, message, args) => {
         ],
       });
 
-    client.conf.colors.list.forEach((m) => {
+    client.conf.Colors.forEach((m) => {
       if (message.member.roles.cache.has(m.role))
         message.member.roles.remove(m.role);
     });
 
-    let color = client.conf.colors.list.find(
+    let color = client.conf.Colors.find(
       (n) => n.name.toLowerCase() == select.toLowerCase()
     );
 
@@ -119,7 +126,7 @@ module.exports.run = async (client, message, args) => {
       ],
     });
   } else if (option.toLowerCase() == "reset") {
-    client.conf.colors.list.forEach((m) => {
+    client.conf.Colors.forEach((m) => {
       if (message.member.roles.cache.has(m.role))
         message.member.roles.remove(m.role);
     });

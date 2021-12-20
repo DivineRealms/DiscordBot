@@ -9,9 +9,7 @@ module.exports = {
 };
 
 module.exports.run = async (client, message, args) => {
-  let logChannel = client.channels.cache.get(
-    client.conf.logging.Report_Channel_Logs
-  );
+  let logChannel = client.channels.cache.get(client.conf.Logging.Reports);
 
   let user =
     message.mentions.members.first() || client.users.cache.get(args[0]);

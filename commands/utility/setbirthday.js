@@ -12,6 +12,17 @@ module.exports = {
 };
 
 module.exports.run = async (client, message, args) => {
+  if (!client.conf.Birthday_System.Enabled)
+    return message.channel.send({
+      embeds: [
+        client.utils.errorEmbed(
+          client,
+          message,
+          "Birthday System is not enabled."
+        ),
+      ],
+    });
+
   const embed = client.embedBuilder(client, message, "", "", "#3db39e"),
     user = message.mentions.users.first(),
     birthd =

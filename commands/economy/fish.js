@@ -24,6 +24,13 @@ module.exports.run = async (client, message, args) => {
     ],
     amount = Math.floor(Math.random() * 200) + 1;
 
+  if (!client.conf.Economy.Enabled)
+    return message.channel.send({
+      embeds: [
+        client.utils.errorEmbed(client, message, "Economy is not enabled."),
+      ],
+    });
+    
   message.channel.send({
     embeds: [
       client

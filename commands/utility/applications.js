@@ -11,16 +11,26 @@ module.exports = {
 };
 
 module.exports.run = async (client, message, args) => {
-  const applications = client.conf.applicationSystem.applications.filter(
-    (s) =>
-      !s.Application_Channel || s.Application_Channel === message.channel.id
+  const applications = client.conf.Application_System.Applications.filter(
+    (s) => !s.Channel || s.Channel === message.channel.id
   );
+
+  if (!client.conf.Application_System.Enabled)
+    return message.channel.send({
+      embeds: [
+        client.utils.errorEmbed(
+          client,
+          message,
+          "Application System is not enabled."
+        ),
+      ],
+    });
+
   const apps = chunk(
-    applications.map(
-      (app, i) => `**Application ${i + 1}:** ${app.Application_Name}`
-    ),
+    applications.map((app, i) => `**Application ${i + 1}:** ${app.Name}`),
     5
   );
+
   const embed = client.embedBuilder(
     client,
     message,
@@ -33,12 +43,10 @@ module.exports.run = async (client, message, args) => {
   if (!applications.length)
     return message.channel.send({
       embeds: [
-        client.embedBuilder(
+        client.utils.errorEmbed(
           client,
           message,
-          "Error",
-          "I couldn't find any applications available in this channel!",
-          "error"
+          "I couldn't find any applications available in this channel!"
         ),
       ],
     });

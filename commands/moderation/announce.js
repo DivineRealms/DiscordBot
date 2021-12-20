@@ -13,7 +13,7 @@ module.exports.run = async (client, message, args) => {
   args = args.join(" ").split(/\s*\|\s*/);
   const [type, mention, title, description] = args;
 
-  if (!args[0])
+  if (args.length < 3)
     return message.channel.send({
       embeds: [
         client.utils.errorEmbed(

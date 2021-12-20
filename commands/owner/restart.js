@@ -9,7 +9,7 @@ module.exports = {
 };
 
 module.exports.run = async (client, message, args) => {
-  if (!client.conf.settings.BotOwnerDiscordID.includes(message.author.id))
+  if (!client.conf.Settings.Owner_Discord_ID.includes(message.author.id))
     return message.channel.send({
       embeds: [
         client.utils.errorEmbed(

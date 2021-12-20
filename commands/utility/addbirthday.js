@@ -14,6 +14,17 @@ module.exports = {
 module.exports.run = async (client, message, args) => {
   let birthday = db.fetch(`birthday_${message.guild.id}_${message.author.id}`);
 
+  if (!client.conf.Birthday_System.Enabled)
+    return message.channel.send({
+      embeds: [
+        client.utils.errorEmbed(
+          client,
+          message,
+          "Birthday System is not enabled."
+        ),
+      ],
+    });
+
   if (birthday)
     return message.channel.send({
       embeds: [
