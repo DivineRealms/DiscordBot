@@ -1,0 +1,232 @@
+# ============================================================
+#                Divine Realms - Discord.js Bot
+# ============================================================
+#
+#   [?] If you need any help, please join our discord server
+#      https://discord.gg/DkTfSQe or open an Issue on our
+#     project page https://github.com/DivineRealms/dr-bot.
+#
+#    [!] Please make sure to review all the options in this
+#          configuration file before asking for help.
+#
+# ============================================================
+
+# ============================================================
+# General settings for the bot.
+# ============================================================
+Settings:
+  # As our bot is selfhost only, specify your bot's token.
+  Token: ""
+
+  # Prefix used for commands.
+  # Example: .help
+  Prefix: "."
+
+  # Whether you can use commands when mentioning the bot.
+  # Example: @BotName help
+  Mention_Prefix: true
+
+  # Self explanatory, activity of the bot.
+  Bot_Activity:
+    # Strings that display in the bot's activity.
+    #
+    # Example for multiple activities:
+    # Activities:
+    #   - ".help"
+    #   - ".help | {count} Members"
+    #
+    # Available placeholders:
+    # 1. {count} - Displays Guild Membercount.
+    Activities:
+      - ".help | {count} Members"
+      # - "second activity..."
+
+    # Activity type. Please match the number of Activities with
+    # the number of Types.
+    #
+    # Available types:
+    # 1. WATCHING
+    # 2. LISTENING
+    # 3. PLAYING
+    # 4. STREAMING
+    # 5. COMPETING
+    Types:
+      - "WATCHING"
+      # - "LISTENING"
+
+  # Color shown in the default embeds.
+  Embed_Color: "#7ec0ff"
+
+  # ID of your Guild (Discord Server).
+  Guild_ID: ""
+
+  # ID(s) of Guild (Discord Server) Owner(s).
+  # You can add multiple ones.
+  Owner_Discord_ID:
+    - ""
+    #- ""
+
+  # Key from Minecraft-MP.
+  Vote_Key: ""
+
+  # Paste Key used for eval.
+  Paste_Key: "1bb1e73b3118402181f83fc5ab929a8f"
+
+Automod:
+  # Role(s) that bypass command cooldown.
+  # Disabled by default. To enable just add IDs to the list.
+  Bypass_Cooldown: []
+
+  # Role(s) that can use commands in every channel.
+  # Disabled by default. To enable just add IDs to the list.
+  Bypass_Command: []
+
+  # ID(s) of the commands channel.
+  Commands_Channel:
+    - ""
+
+  # Role(s) that have access to the moderator commands.
+  Moderators:
+    - ""
+
+Automation:
+  # Channel that displays your guild's member count.
+  Member_Count:
+    Enabled: false
+
+    # Voice Channel ID that will be updated with the member count.
+    Channel: ""
+    Message: "Members: {count}"
+
+  # Channel that display your guild's channel count.
+  Channel_Count:
+    Enabled: false
+
+    # Voice Channel ID that will be updated with the channel count.
+    Channel: ""
+    Message: "Channels: {count}"
+
+  # Invite link of your guild.
+  # Example: https://discord.gg/UqAm4B5
+  Invite_Link: ""
+
+  # Custom boosters
+  Boosts:
+    Enabled: false
+    Channel: ""
+
+    # Image URL or {member}.
+    Thumbnail: "{member}"
+
+Counting:
+  Enabled: false
+  Channel: ""
+  One_At_A_Time: false
+  Restart_On_Incorrect_Number: false
+  React:
+    Enabled: true
+    Reaction: "✅"
+
+Leveling:
+  Enabled: false
+  Ignore_XP_Channels: []
+  Level_Up:
+    Channel: ""
+    Roles:
+      - ID: 0
+        Level: 10
+        Role: ""
+      #- id: 1
+      #  level: 25
+      #  role: ""
+    Rank_Card:
+      Image: ""
+      Color: ""
+
+Colors:
+  - Name: "Blurple"
+    Role: ""
+  #- name: "ColorName"
+  #  role: "RoleID"
+
+Temp_Voice_Channel:
+  Enabled: false
+  Join_Channel: ""
+  Create_Under: ""
+  Channel_Prefix: "🔐 "
+
+Logging:
+  Enabled: false
+  Reports: ""
+  Tickets: ""
+  Suggestions: ""
+  Errors: ""
+  Bumps: ""
+
+Starboard:
+  Enabled: false
+  Channel: ""
+  Minimum_Reactions: "5"
+  Emoji: "⭐"
+
+Ticket_System:
+  Enabled: false
+  Category: ""
+  Name: "🗒-{username}-{number}"
+  Support_Roles:
+    - ""
+  Max_Tickets:
+    Moderators: "5"
+    Users: "3"
+
+Application_System:
+  Enabled: false
+  Applications:
+    - Enabled: false
+      Logs: ""
+      Name: ""
+      Channel: ""
+      Questions:
+        - "#1 Question"
+        - "#2 Question"
+        #- "..."
+    #- Enabled: false
+    #  Logs: ""
+    #  Name: ""
+    #  Channel: ""
+    #  Questions: []
+
+Welcome_System:
+  Enabled: false
+  Channel: ""
+  Type: "embed"
+
+Goodbye_System:
+  Enabled: false
+  Channel: ""
+  Type: "embed"
+
+Birthday_System:
+  Enabled: false
+  Channel: ""
+
+Economy:
+  Enabled: false
+  Shop_Items:
+    - Type: "color"
+      Name: "Blurple"
+      Description: "Blurple Color."
+      Price: "10000"
+    - Type: "role"
+      Role_ID: ""
+      Name: "VIP"
+      Description: "VIP Rank."
+      Price: "100000"
+
+# DO NOT TOUCH
+Guild_Settings:
+  Prefix: "."
+  Panels: []
+  Counting:
+    - Current: 1
+      Last: null

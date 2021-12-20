@@ -2,10 +2,11 @@ const { MessageEmbed } = require("discord.js");
 const { readdirSync } = require("fs");
 const moment = require("moment-timezone");
 const fs = require("fs");
+const yaml = require('js-yaml');
 const Enmap = require("enmap");
 
 module.exports = async (client) => {
-  client.conf = YAML.load(fs.readFileSync('./settings/config.yml', 'utf8'));
+  client.conf = yaml.load(fs.readFileSync('./settings/config.yml', 'utf8'));
 
   client.resolveMember = (str, user, title) =>
     str.replace(/\{(.+)\}/, (...e) =>
