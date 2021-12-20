@@ -5,7 +5,8 @@ const fs = require("fs");
 const Enmap = require("enmap");
 
 module.exports = async (client) => {
-  client.conf = yaml.load(fs.readFileSync('./settings/config.yml', 'utf8'));
+  client.conf = YAML.load(fs.readFileSync('./settings/config.yml', 'utf8'));
+
   client.resolveMember = (str, user, title) =>
     str.replace(/\{(.+)\}/, (...e) =>
       e[1] === "mention" && title ? user.toString() : user[e[1]]

@@ -21,7 +21,8 @@ Bot is developed by neon & NIDZA and comes with high number of features, rich Co
 **Before you Start make sure that you have Node 16.6+ Installed.**
 
 1. Clone Bot using `git clone https://github.com/DivineRealms/dr-bot/`
-2. Install Modules using `npm install`
-3. Fill in `config.js` file with token, guild id and other required informations.
-4. Create Invite Link on Discord Developer Portal & Invite Bot to Server
-5. Start Bot with `node index.js`
+2. Make sure to have the following packages installed on your instance: `pkg-config libpixman-1-dev libcairo2-dev libpangocairo-1.0-0 libpango-1.0-0 libpango1.0-dev libjpeg-turbo8-dev`
+3. Install Modules using `npm install`
+4. Fill in `config.js` file with token, guild id and other required informations.
+5. Create Invite Link on Discord Developer Portal & Invite Bot to Server
+6. Start Bot with `node index.js`
