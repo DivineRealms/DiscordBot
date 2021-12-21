@@ -116,7 +116,7 @@ module.exports = async (client, reaction, user) => {
 
   const num = Object.entries(tickets).length || 1;
   const ticketNumber = "0".repeat(4 - num.toString().length) + num;
-  const permissions = settings.Support_Team_Roles.map((r) => ({
+  const permissions = settings.Support_Roles.map((r) => ({
     id: r,
     allow: ["VIEW_CHANNEL"],
   }));
@@ -143,9 +143,15 @@ module.exports = async (client, reaction, user) => {
     content: user.toString(),
     embeds: [
       client
-        .embedBuilder(client, "", "", settings.Ticket_Message, "#b3e59f")
+        .embedBuilder(
+          client,
+          "",
+          "",
+          "<:ArrowRightGray:813815804768026705>A staff member will be with you shortly.",
+          "#b3e59f"
+        )
         .setAuthor(
-          settings.Ticket_Title,
+          "Thank you for creating a ticket",
           `https://cdn.upload.systems/uploads/4mFVRE7f.png`
         ),
     ],
