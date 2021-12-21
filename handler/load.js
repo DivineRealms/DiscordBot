@@ -22,7 +22,7 @@ module.exports = async (client) => {
     color = client.conf.Settings.Embed_Color;
   };
   const settings = { fetchAll: true, autoFetch: true, cloneLevel: "deep" };
-  client.defaultSettings = require("../settings/config").Guild_Settings;
+  client.defaultSettings = client.conf.Guild_Settings;
   client.settings = new Enmap({
     name: "settings",
     ...settings,
