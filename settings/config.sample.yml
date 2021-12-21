@@ -175,9 +175,6 @@ Ticket_System:
   Name: "🗒-{username}-{number}"
   Support_Roles:
     - ""
-  Max_Tickets:
-    Moderators: "5"
-    Users: "3"
 
 Application_System:
   Enabled: false
