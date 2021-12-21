@@ -100,9 +100,8 @@ module.exports = async (client, reaction, user) => {
   const panel = client.settings
     .get(reaction.message.guild.id, "panels")
     .includes(reaction.message.id);
-  const settings = client.conf.ticketSystem;
-  if (!panel || reaction.emoji.name !== client.conf.ticketSystem.Panel_Emoji)
-    return;
+  const settings = client.conf.Ticket_System;
+  if (!panel || reaction.emoji.name !== "✉️") return;
 
   const tickets =
     db

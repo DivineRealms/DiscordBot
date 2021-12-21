@@ -19,13 +19,6 @@ module.exports.run = async (client, message, args) => {
       `<:ArrowRightGray:813815804768026705>Command: **\`${message.px}buy [id]\`**.\n`,
     ];
 
-  if (!settings.Enabled)
-    return message.channel.send({
-      embeds: [
-        client.utils.errorEmbed(client, message, "Economy is not enabled."),
-      ],
-    });
-
   for (let i = 0; i < shop.length; i++) {
     let desc = shop[i].description.replace(
       "{role}",

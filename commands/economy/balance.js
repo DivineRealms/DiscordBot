@@ -17,14 +17,7 @@ module.exports.run = async (client, message, args) => {
       message.author,
     bank = db.fetch(`bank_${message.guild.id}_${user.id}`) || 0,
     balance = db.fetch(`money_${message.guild.id}_${user.id}`) || 0;
-
-  if (!client.conf.Economy.Enabled)
-    return message.channel.send({
-      embeds: [
-        client.utils.errorEmbed(client, message, "Economy is not enabled."),
-      ],
-    });
-
+    
   message.channel.send({
     embeds: [
       client

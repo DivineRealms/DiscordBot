@@ -15,13 +15,6 @@ module.exports.run = async (client, message, args) => {
     message.mentions.members.first() ||
     message.guild.members.cache.get(args[0]);
 
-  if (!client.conf.Economy.Enabled)
-    return message.channel.send({
-      embeds: [
-        client.utils.errorEmbed(client, message, "Economy is not enabled."),
-      ],
-    });
-
   if (!member)
     return message.channel.send({
       embeds: [

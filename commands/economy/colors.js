@@ -15,13 +15,6 @@ module.exports.run = async (client, message, args) => {
   let option = args[0],
     colors = db.fetch(`colors_${message.guild.id}_${message.author.id}`) || [];
 
-  if (!client.conf.Economy.Enabled)
-    return message.channel.send({
-      embeds: [
-        client.utils.errorEmbed(client, message, "Economy is not enabled."),
-      ],
-    });
-
   if (!option)
     return message.channel.send({
       embeds: [

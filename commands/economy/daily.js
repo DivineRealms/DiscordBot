@@ -15,13 +15,6 @@ module.exports.run = async (client, message, args) => {
     timeout = 86400000 - (Date.now() - cooldown),
     parsed = client.utils.formatTime(timeout);
 
-  if (!client.conf.Economy.Enabled)
-    return message.channel.send({
-      embeds: [
-        client.utils.errorEmbed(client, message, "Economy is not enabled."),
-      ],
-    });
-
   if (cooldown != null && timeout > 0)
     return message.channel.send({
       embeds: [

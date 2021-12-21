@@ -32,7 +32,7 @@ module.exports.run = async (client, message, args) => {
     );
 
   const msg = await message.channel.send({ embeds: [embed] });
-  await msg.react(settings.Panel_Emoji).catch(() => msg.react("✉️"));
+  await msg.react("✉️").catch(() => msg.react("✉️"));
 
   client.settings.push(message.guild.id, msg.id, "panels");
 };

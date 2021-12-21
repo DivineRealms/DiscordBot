@@ -14,13 +14,6 @@ module.exports = {
 module.exports.run = async (client, message, args) => {
   let bal = db.fetch(`money_${message.guild.id}_${message.author.id}`),
     chance = Math.floor(Math.random() * 100) + 1;
-
-  if (!client.conf.Economy.Enabled)
-    return message.channel.send({
-      embeds: [
-        client.utils.errorEmbed(client, message, "Economy is not enabled."),
-      ],
-    });
     
   if (!args[0] || (isNaN(args[0]) && args[0] !== "all"))
     return message.channel.send({
