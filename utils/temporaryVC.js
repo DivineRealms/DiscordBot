@@ -9,8 +9,8 @@ module.exports = function (client) {
   };
 
   client.on("voiceStateUpdate", (oldState, newState) => {
-    if (client.conf.tempvc.enabled == false) return;
-    let mkChannel = client.conf.tempvc.Join_Channel;
+    if (!client.conf.Temp_Voice_Channel.Enabled) return;
+    let mkChannel = client.conf.Temp_Voice_Channel.Join_Channel;
     if (!oldState.channelId && newState.channelId) {
       if (newState.channelId !== mkChannel) return;
       createTemporaryVC(newState);
@@ -61,12 +61,12 @@ module.exports = function (client) {
   });
 
   async function createTemporaryVC(user) {
-    let createCategory = client.conf.tempvc.Create_VCS_Under;
+    let createCategory = client.conf.Temp_Voice_Channel.Create_Under;
     if (!user.guild.channels.cache.get(createCategory) || !createCategory)
       return;
     await user.guild.channels
       .create(
-        `${client.conf.tempvc.Channel_Prefix}${user.member.user.username}`,
+        `${client.conf.Temp_Voice_Channel.Channel_Prefix}${user.member.user.username}`,
         {
           type: "GUILD_VOICE",
           parent: createCategory,
