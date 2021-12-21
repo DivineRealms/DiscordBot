@@ -20,17 +20,17 @@ module.exports.run = async (client, message, args) => {
     ];
 
   for (let i = 0; i < shop.length; i++) {
-    let desc = shop[i].description.replace(
+    let desc = shop[i].Description.replace(
       "{role}",
-      "<@&" + shop[i].roleID + ">"
+      "<@&" + shop[i].Role_ID + ">"
     );
 
     shopArray.push(
       format
         .replace("[ID]", i + 1)
-        .replace("[PRICE]", shop[i].price)
+        .replace("[PRICE]", shop[i].Price)
         .replace("[DESCRIPTION]", desc)
-        .replace("[NAME]", shop[i].name)
+        .replace("[NAME]", shop[i].Name)
     );
   }
 

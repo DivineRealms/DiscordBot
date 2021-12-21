@@ -28,7 +28,7 @@ module.exports.run = async (client, message, args) => {
     });
 
   if (item.type == "role") {
-    if (!balance || balance < item.price)
+    if (!balance || balance < item.Price)
       return message.channel.send({
         embeds: [
           client.utils.errorEmbed(
@@ -40,7 +40,7 @@ module.exports.run = async (client, message, args) => {
       });
 
     message.member.roles
-      .add([item.roleID, "734759761660084268"])
+      .add([item.Role_ID, "734759761660084268"])
       .then(() => {
         message.channel.send({
           embeds: [
@@ -49,7 +49,7 @@ module.exports.run = async (client, message, args) => {
                 client,
                 message,
                 "",
-                `You have successfully purchased role <@&${item.roleID}> for $${item.price}.`,
+                `You have successfully purchased role <@&${item.Role_ID}> for $${item.Price}.`,
                 "#3db39e"
               )
               .setAuthor(
@@ -60,7 +60,7 @@ module.exports.run = async (client, message, args) => {
         });
         db.subtract(
           `money_${message.guild.id}_${message.author.id}`,
-          item.price
+          item.Price
         );
       })
       .catch(() => {
@@ -74,7 +74,7 @@ module.exports.run = async (client, message, args) => {
     let colors =
       db.fetch(`colors_${message.guild.id}_${message.author.id}`) || [];
 
-    if (!balance || balance < item.price)
+    if (!balance || balance < item.Price)
       return message.channel.send({
         embeds: [
           client.utils.errorEmbed(
@@ -85,7 +85,7 @@ module.exports.run = async (client, message, args) => {
         ],
       });
 
-    if (colors.includes(item.name.toLowerCase()))
+    if (colors.includes(item.Name.toLowerCase()))
       return message.channel.send({
         embeds: [
           client.utils.errorEmbed(
@@ -98,10 +98,10 @@ module.exports.run = async (client, message, args) => {
 
     db.push(
       `colors_${message.guild.id}_${message.author.id}`,
-      item.name.toLowerCase()
+      item.Name.toLowerCase()
     );
 
-    db.subtract(`money_${message.guild.id}_${message.author.id}`, item.price);
+    db.subtract(`money_${message.guild.id}_${message.author.id}`, item.Price);
     message.channel.send({
       embeds: [
         client
@@ -109,7 +109,7 @@ module.exports.run = async (client, message, args) => {
             client,
             message,
             "",
-            `You have successfully purchased name color **${item.name}** for $${item.price}.`,
+            `You have successfully purchased name color **${item.Name}** for $${item.Price}.`,
             "#3db39e"
           )
           .setAuthor(
