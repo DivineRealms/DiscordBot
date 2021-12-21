@@ -1,7 +1,7 @@
 const db = require("quick.db");
 
 const manageLeveling = async (client, message) => {
-  const levelSettings = client.conf.leveling;
+  const levelSettings = client.conf.Leveling;
   if (!client.talkedRecently.has(message.author.id)) {
     client.talkedRecently.add(message.author.id);
     setTimeout(() => {
@@ -15,17 +15,13 @@ const manageLeveling = async (client, message) => {
 
     const nextLevel = parseInt(level) + 1;
     const xpNeeded = nextLevel * 2 * 250 + 250;
-    const xpChannel = client.channels.cache.get(
-      client.conf.leveling.level_Up_Channel
-    );
+    const xpChannel = client.channels.cache.get(levelSettings.Level_Up.Channel);
 
     if (xp + xpGive >= xpNeeded) {
       const embed = client
         .embedBuilder(client, "", "", "", "#b7e445")
         .setAuthor(
-          levelSettings.level_Up_Message
-            .replace("{user}", message.author.username)
-            .replace("{level}", level + 1),
+          `${message.author.username} has just reached Level ${level + 1}!`,
           `https://cdn.upload.systems/uploads/OJ9pgcy2.png`
         );
 
@@ -41,13 +37,13 @@ const manageLeveling = async (client, message) => {
         db.set(`xp_${message.guild.id}_${message.author.id}`, 0);
         db.add(`level_${message.guild.id}_${message.author.id}`, 1);
       }
-      const reward = levelSettings.level_Up_Roles.find(
+      const reward = levelSettings.Level_Up.Roles.find(
         ({ level: l }) => l == level + 1
       );
       if (reward) {
         message.member.roles.add(reward.role).catch(() => {});
         if (reward.id > 0) {
-          let removeReward = levelSettings.level_Up_Roles.find(
+          let removeReward = levelSettings.Level_Up.Roles.find(
             ({ id: i }) => i == parseInt(reward.id - 1)
           );
           message.member.roles.remove(removeReward.role);
@@ -61,6 +57,4 @@ const manageLeveling = async (client, message) => {
   }
 };
 
-module.exports = {
-  manageLeveling,
-};
+module.exports = { manageLeveling };
