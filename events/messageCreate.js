@@ -33,8 +33,8 @@ module.exports = async (client, message) => {
         let timeout = 7200000;
         let time = Date.now() + timeout;
 
-        db.set(`serverBump_${client.conf.Settings.guildID}`, time);
-        db.set(`lastBump_${client.conf.Settings.guildID}`, dbumper[0]);
+        db.set(`serverBump_${client.conf.Settings.Guild_ID}`, time);
+        db.set(`lastBump_${client.conf.Settings.Guild_ID}`, dbumper[0]);
 
         setTimeout(() => {
           let bumpAgain = client
