@@ -22,7 +22,7 @@ module.exports = (client, oldMember, newMember) => {
 
     if (added.includes("597888019663421440")) {
       const embed = client
-        .embedBuilder(client, "", "", "", "#ffdc5d")
+        .embedBuilder(client, "", "", `<:ArrowRightGray:813815804768026705>Welcome ${newMember.user.toString()} to **Divine Realms**.\n<:ArrowRightGray:813815804768026705>For more info, see <#818930313593487380>.`, "#ffdc5d")
         .setAuthor(
           `A new member appeared! (#${newMember.guild.memberCount})`,
           `https://cdn.upload.systems/uploads/hhgfsHXT.png`
