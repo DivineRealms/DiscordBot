@@ -122,12 +122,12 @@ module.exports = async (client, reaction, user) => {
   }));
 
   const channel = await reaction.message.guild.channels.create(
-    settings.Ticket_Name.replace("{number}", ticketNumber).replace(
+    settings.Name.replace("{number}", ticketNumber).replace(
       "{username}",
       user.username
     ),
     {
-      parent: settings.Ticket_Category,
+      parent: settings.Category,
       permissionOverwrites: [
         {
           id: reaction.message.guild.id,
