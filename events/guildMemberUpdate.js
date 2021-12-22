@@ -5,7 +5,8 @@ module.exports = async (client, oldMember, newMember) => {
 
   // Join
   if (
-    settings.welcomeSystem.welcomeType === "embed" &&
+    settings.Welcome_System.Enabled &&
+    settings.Welcome_System.Type === "embed" &&
     [...newMember.roles.cache.keys()].join("") !==
       [...oldMember.roles.cache.keys()].join("")
   ) {
@@ -15,41 +16,39 @@ module.exports = async (client, oldMember, newMember) => {
 
     const added = addedRoles.map((r) => r.id);
     const welcomeChannel = client.channels.cache.get(
-      settings.welcomeSystem.welcomeChannel
+      settings.Welcome_System.Channel
     );
 
     if (added.includes("597888019663421440")) {
-      const embed = client
-        .embedBuilder(
-          client,
-          "",
-          "",
-          settings.welcomeSystem.welcomeEmbed.description.replace(
-            "{member}",
-            newMember.user.toString()
-          ),
-          settings.welcomeSystem.welcomeEmbed.color
-        )
-        .setAuthor(
-          settings.welcomeSystem.welcomeEmbed.title
-            .replace("{username}", newMember.user.username)
-            .replace("{joinPosition}", `${newMember.guild.memberCount}`),
-          `https://cdn.upload.systems/uploads/hhgfsHXT.png`
-        )
-        .setThumbnail(
-          newMember.displayAvatarURL({ size: 1024, dynamic: true })
-        );
-
       if (welcomeChannel)
-        welcomeChannel.send({ embeds: [embed] }).then((msg) =>
-          db.set(`wlcmEmbed_${newMember.guild.id}_${newMember.id}`, {
-            msg: msg.id,
-            channel: msg.channel.id,
+        welcomeChannel
+          .send({
+            embeds: [
+              client
+                .embedBuilder(
+                  client,
+                  "",
+                  "",
+                  `<:ArrowRightGray:813815804768026705>Welcome ${newMember.user.toString()} to **Divine Realms**.\n<:ArrowRightGray:813815804768026705>For more info, see <#818930313593487380>.`,
+                  "#ffdc5d"
+                )
+                .setAuthor(
+                  `A new member appeared! (#${newMember.guild.memberCount})`,
+                  `https://cdn.upload.systems/uploads/hhgfsHXT.png`
+                )
+                .setThumbnail(
+                  newMember.displayAvatarURL({ size: 64, dynamic: true })
+                ),
+            ],
           })
-        );
+          .then((msg) =>
+            db.set(`wlcmEmbed_${newMember.guild.id}_${newMember.id}`, {
+              msg: msg.id,
+              channel: msg.channel.id,
+            })
+          );
     }
   }
-
 
   // Leave
   if (
