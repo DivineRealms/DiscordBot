@@ -1,6 +1,6 @@
 const db = require("quick.db");
 
-module.exports = (client, oldMember, newMember) => {
+module.exports = async (client, oldMember, newMember) => {
   const settings = client.conf;
 
   if (
@@ -16,13 +16,14 @@ module.exports = (client, oldMember, newMember) => {
     const removed = removedRoles.map((r) => r.id);
 
     if (removed.includes("597888019663421440")) {
-      let channel = client.channels.cache.get(settings.Goodbye_System.Channel)
-      let embedWelcome = db.fetch(`wlcmEmbed_${oldMember.guild.id}_${newMember.id}`);
+      let embedWelcome = db.fetch(
+        `wlcmEmbed_${oldMember.guild.id}_${newMember.id}`
+      );
 
       if (embedWelcome) {
         let wlcmCh = client.channels.cache.get(embedWelcome.channel),
           msgDelete = await wlcmCh.messages.fetch(embedWelcome.msg);
-      
+
         if (wlcmCh && msgDelete) msgDelete.delete();
       }
     }
