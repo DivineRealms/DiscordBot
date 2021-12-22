@@ -2,11 +2,9 @@ const db = require("quick.db");
 
 module.exports = (client, oldMember, newMember) => {
   const settings = client.conf;
-  let channel = client.channels.cache.get(settings.Automation.Boosts.Channel);
-
-  if (!settings.Welcome_System.Enabled) return;
 
   if (
+    settings.Welcome_System.Enabled &&
     settings.Welcome_System.Type === "embed" &&
     [...newMember.roles.cache.keys()].join("") !==
       [...oldMember.roles.cache.keys()].join("")
@@ -21,18 +19,27 @@ module.exports = (client, oldMember, newMember) => {
     );
 
     if (added.includes("597888019663421440")) {
-      const embed = client
-        .embedBuilder(client, "", "", `<:ArrowRightGray:813815804768026705>Welcome ${newMember.user.toString()} to **Divine Realms**.\n<:ArrowRightGray:813815804768026705>For more info, see <#818930313593487380>.`, "#ffdc5d")
-        .setAuthor(
-          `A new member appeared! (#${newMember.guild.memberCount})`,
-          `https://cdn.upload.systems/uploads/hhgfsHXT.png`
-        )
-        .setThumbnail(
-          newMember.displayAvatarURL({ size: 1024, dynamic: true })
-        );
-
-      if (welcomeChannel)
-        welcomeChannel.send({ embeds: [embed] }).then((msg) =>
+      welcomeChannel
+        .send({
+          embeds: [
+            client
+              .embedBuilder(
+                client,
+                "",
+                "",
+                `<:ArrowRightGray:813815804768026705>Welcome ${newMember.user.toString()} to **Divine Realms**.\n<:ArrowRightGray:813815804768026705>For more info, see <#818930313593487380>.`,
+                "#ffdc5d"
+              )
+              .setAuthor(
+                `A new member appeared! (#${newMember.guild.memberCount})`,
+                `https://cdn.upload.systems/uploads/hhgfsHXT.png`
+              )
+              .setThumbnail(
+                newMember.displayAvatarURL({ size: 64, dynamic: true })
+              ),
+          ],
+        })
+        .then((msg) =>
           db.set(`wlcmEmbed_${newMember.guild.id}_${newMember.id}`, {
             msg: msg.id,
             channel: msg.channel.id,
@@ -49,9 +56,12 @@ module.exports = (client, oldMember, newMember) => {
     newMember.premiumSince &&
     newMember.premiumSince !== oldMember.premiumSince
   ) {
-    const boosters = newMember.guild.premiumSubscriptionCount;
+    const boosters = newMember.guild.premiumSubscriptionCount,
+      boostChannel = client.channels.cache.get(
+        settings.Automation.Boosts.Channel
+      );
 
-    channel
+    boostChannel
       .send({
         embeds: [
           client
@@ -62,12 +72,12 @@ module.exports = (client, oldMember, newMember) => {
               `Thank you ${newMember.user.username} for boosting the server! We now have ${boosters} booster(s)!`
             )
             .setThumbnail(
-              settings.Automation.Boosts.Thumbnail === "{member}"
+              boostSettings.Thumbnail === "{member}"
                 ? newMember.user.displayAvatarURL({
                     dynamic: true,
                     format: "png",
                   })
-                : settings.Automation.Boosts.Thumbnail || null
+                : boostSettings.Thumbnail || null
             ),
         ],
       })

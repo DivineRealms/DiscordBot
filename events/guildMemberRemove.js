@@ -3,8 +3,8 @@ const db = require("quick.db");
 const Canvas = require("discord-canvas");
 
 module.exports = async (client, member) => {
-  const settings = client.conf.Goodbye_System,
-    log = client.channels.cache.get(settings.Channel),
+  const settings = client.conf,
+    channel = client.channels.cache.get(settings.Goodbye_System.Channel),
     embedWelcome = db.fetch(`wlcmEmbed_${member.guild.id}_${member.id}`);
 
   if (embedWelcome) {
@@ -14,12 +14,12 @@ module.exports = async (client, member) => {
     if (wlcmCh && msgDelete) msgDelete.delete();
   }
 
-  if (!settings.Enabled) return;
-
   let data = await db.all().filter((data) => data.ID.includes(member.id));
   data.forEach((data) => db.delete(data.ID));
 
-  if (settings.Type === "card") {
+  if (!settings.Goodbye_System.Enabled) return;
+
+  if (settings.Goodbye_System.Type === "card") {
     const image = await new Canvas.Goodbye()
       .setUsername(member.user.username)
       .setDiscriminator(member.user.discriminator)
@@ -37,27 +37,24 @@ module.exports = async (client, member) => {
       )
       .toAttachment();
 
-    if (log)
-      log.send({
-        files: [new MessageAttachment(image.toBuffer(), "goodbye-image.png")],
-      });
-  } else if (settings.Type === "embed") {
-    if (log)
-      log.send({
-        embeds: [
-          client.embedBuilder(
-            client,
-            "",
-            `${member.user.username} left!`,
-            `${member} just left the server, hope you enjoyed your stay!`,
-            "#ee6e84"
-          ),
-        ],
-      });
-  } else if (settings.Type === "message") {
-    if (log)
-      log.send(`${member} just left the server, hope you enjoyed your stay!`);
-  } else if (settings.Type === "dm")
+    channel.send({
+      files: [new MessageAttachment(image.toBuffer(), "goodbye-image.png")],
+    });
+  } else if (settings.Goodbye_System.Type === "embed") {
+    channel.send({
+      embeds: [
+        client.embedBuilder(
+          client,
+          "",
+          `${member.user.username} left!`,
+          `${member} just left the server, hope you enjoyed your stay!`,
+          "#ee6e84"
+        ),
+      ],
+    });
+  } else if (settings.Goodbye_System.Type === "message") {
+    channel.send(`${member} just left the server, hope you enjoyed your stay!`);
+  } else if (settings.Goodbye_System.Type === "dm")
     member.user.send(
       `${member} we're sad to see you go! We hope to see you soon.`
     );

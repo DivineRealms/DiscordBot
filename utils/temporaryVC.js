@@ -9,35 +9,13 @@ module.exports = function (client) {
   };
 
   client.on("voiceStateUpdate", (oldState, newState) => {
-    if (!client.conf.Temp_Voice_Channel.Enabled) return;
-    let mkChannel = client.conf.Temp_Voice_Channel.Join_Channel;
-    if (!oldState.channelId && newState.channelId) {
-      if (newState.channelId !== mkChannel) return;
-      createTemporaryVC(newState);
-    }
-    if (oldState.channelId && !newState.channelId) {
-      if (
-        temporaryVCMap.get(
-          `temporaryChannel_${oldState.guild.id}_${oldState.channelId}`
-        )
-      ) {
-        var vc = oldState.guild.channels.cache.get(
-          temporaryVCMap.get(
-            `temporaryChannel_${oldState.guild.id}_${oldState.channelId}`
-          )
-        );
-        if (vc.members.size < 1) {
-          temporaryVCMap.delete(
-            `temporaryChannel_${oldState.guild.id}_${oldState.channelId}`
-          );
-          return vc.delete();
-        } else {
-        }
+    if (client.conf.Temp_Voice_Channel.Enabled) {
+      let mkChannel = client.conf.Temp_Voice_Channel.Join_Channel;
+      if (!oldState.channelId && newState.channelId) {
+        if (newState.channelId !== mkChannel) return;
+        createTemporaryVC(newState);
       }
-    }
-    if (oldState.channelId && newState.channelId) {
-      if (oldState.channelId !== newState.channelId) {
-        if (newState.channelId === mkChannel) createTemporaryVC(oldState);
+      if (oldState.channelId && !newState.channelId) {
         if (
           temporaryVCMap.get(
             `temporaryChannel_${oldState.guild.id}_${oldState.channelId}`
@@ -54,6 +32,29 @@ module.exports = function (client) {
             );
             return vc.delete();
           } else {
+          }
+        }
+      }
+      if (oldState.channelId && newState.channelId) {
+        if (oldState.channelId !== newState.channelId) {
+          if (newState.channelId === mkChannel) createTemporaryVC(oldState);
+          if (
+            temporaryVCMap.get(
+              `temporaryChannel_${oldState.guild.id}_${oldState.channelId}`
+            )
+          ) {
+            var vc = oldState.guild.channels.cache.get(
+              temporaryVCMap.get(
+                `temporaryChannel_${oldState.guild.id}_${oldState.channelId}`
+              )
+            );
+            if (vc.members.size < 1) {
+              temporaryVCMap.delete(
+                `temporaryChannel_${oldState.guild.id}_${oldState.channelId}`
+              );
+              return vc.delete();
+            } else {
+            }
           }
         }
       }

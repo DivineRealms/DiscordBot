@@ -4,10 +4,10 @@ const db = require("quick.db");
 
 module.exports = async (client, member) => {
   const settings = client.conf.Welcome_System,
-    log = client.channels.cache.get(settings.Channel);
+    channel = client.channels.cache.get(settings.Channel);
 
   if (!settings.Enabled) return;
-  
+
   if (settings.Type === "card") {
     const img = await new Canvas.Welcome()
       .setUsername(member.user.username)
@@ -30,25 +30,23 @@ module.exports = async (client, member) => {
       img.toBuffer(),
       "welcome-image.png"
     );
-    if (log)
-      log.send({ files: [attachment] }).then((msg) =>
+    channel.send({ files: [attachment] }).then((msg) =>
+      db.set(`wlcmEmbed_${member.guild.id}_${member.id}`, {
+        msg: msg.id,
+        channel: msg.channel.id,
+      })
+    );
+  } else if (settings.Type == "message") {
+    channel
+      .send(
+        `Welcome ${member} to the server, You are our ${member.guild.memberCount} member!`
+      )
+      .then((msg) =>
         db.set(`wlcmEmbed_${member.guild.id}_${member.id}`, {
           msg: msg.id,
           channel: msg.channel.id,
         })
       );
-  } else if (settings.Type == "message") {
-    if (log)
-      log
-        .send(
-          `Welcome ${member} to the server, You are our ${member.guild.memberCount} member!`
-        )
-        .then((msg) =>
-          db.set(`wlcmEmbed_${member.guild.id}_${member.id}`, {
-            msg: msg.id,
-            channel: msg.channel.id,
-          })
-        );
   } else if (settings.Type == "dm") {
     member.user
       .send(
