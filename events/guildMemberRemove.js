@@ -7,14 +7,14 @@ module.exports = async (client, member) => {
     log = client.channels.cache.get(settings.Channel),
     embedWelcome = db.fetch(`wlcmEmbed_${member.guild.id}_${member.id}`);
 
-  if (!settings.Enabled) return;
-
   if (embedWelcome) {
     let wlcmCh = client.channels.cache.get(embedWelcome.channel),
       msgDelete = await wlcmCh.messages.fetch(embedWelcome.msg);
 
     if (wlcmCh && msgDelete) msgDelete.delete();
   }
+
+  if (!settings.Enabled) return;
 
   let data = await db.all().filter((data) => data.ID.includes(member.id));
   data.forEach((data) => db.delete(data.ID));
