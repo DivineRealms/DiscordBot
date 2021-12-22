@@ -9,42 +9,22 @@ module.exports = (client, oldMember, newMember) => {
     [...newMember.roles.cache.keys()].join("") !==
       [...oldMember.roles.cache.keys()].join("")
   ) {
-    const addedRoles = newMember.roles.cache.filter(
-      (r) => !oldMember.roles.cache.has(r.id)
+    const removedRoles = oldMember.roles.cache.filter(
+      (r) => !newMember.roles.cache.has(r.id)
     );
 
-    const added = addedRoles.map((r) => r.id);
-    const welcomeChannel = client.channels.cache.get(
-      settings.Welcome_System.Channel
-    );
+    const removed = removedRoles.map((r) => r.id);
 
-    if (added.includes("597888019663421440")) {
-      welcomeChannel
-        .send({
-          embeds: [
-            client
-              .embedBuilder(
-                client,
-                "",
-                "",
-                `<:ArrowRightGray:813815804768026705>Welcome ${newMember.user.toString()} to **Divine Realms**.\n<:ArrowRightGray:813815804768026705>For more info, see <#818930313593487380>.`,
-                "#ffdc5d"
-              )
-              .setAuthor(
-                `A new member appeared! (#${newMember.guild.memberCount})`,
-                `https://cdn.upload.systems/uploads/hhgfsHXT.png`
-              )
-              .setThumbnail(
-                newMember.displayAvatarURL({ size: 64, dynamic: true })
-              ),
-          ],
-        })
-        .then((msg) =>
-          db.set(`wlcmEmbed_${newMember.guild.id}_${newMember.id}`, {
-            msg: msg.id,
-            channel: msg.channel.id,
-          })
-        );
+    if (removed.includes("597888019663421440")) {
+      let channel = client.channels.cache.get(settings.Goodbye_System.Channel)
+      let embedWelcome = db.fetch(`wlcmEmbed_${oldMember.guild.id}_${newMember.id}`);
+
+      if (embedWelcome) {
+        let wlcmCh = client.channels.cache.get(embedWelcome.channel),
+          msgDelete = await wlcmCh.messages.fetch(embedWelcome.msg);
+      
+        if (wlcmCh && msgDelete) msgDelete.delete();
+      }
     }
   }
 
