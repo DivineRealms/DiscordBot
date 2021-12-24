@@ -45,15 +45,9 @@ module.exports.run = async (client, message, args) => {
         message.channel.send({
           embeds: [
             client
-              .embedBuilder(
-                client,
-                message,
-                "",
-                `You have successfully purchased role ${item.Name} for $${item.Price}.`,
-                "#3db39e"
-              )
+              .embedBuilder(client, message, "", "", "#3db39e")
               .setAuthor(
-                "Role Purchased",
+                `You have successfully purchased role ${item.Name} for $${item.Price}.`,
                 `https://cdn.upload.systems/uploads/6KOGFYJM.png`
               ),
           ],
@@ -105,15 +99,9 @@ module.exports.run = async (client, message, args) => {
     message.channel.send({
       embeds: [
         client
-          .embedBuilder(
-            client,
-            message,
-            "",
-            `You have successfully purchased name color ${item.Name} for $${item.Price}.`,
-            "#3db39e"
-          )
+          .embedBuilder(client, message, "", "", "#3db39e")
           .setAuthor(
-            "Color Purchased",
+            `You have successfully purchased name color ${item.Name} for $${item.Price}.`,
             `https://cdn.upload.systems/uploads/6KOGFYJM.png`
           ),
       ],
