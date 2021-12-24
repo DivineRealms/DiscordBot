@@ -27,7 +27,7 @@ module.exports.run = async (client, message, args) => {
       ],
     });
 
-  if (item.type == "role") {
+  if (item.Type == "role") {
     if (!balance || balance < item.Price)
       return message.channel.send({
         embeds: [
@@ -49,7 +49,7 @@ module.exports.run = async (client, message, args) => {
                 client,
                 message,
                 "",
-                `You have successfully purchased role <@&${item.Role_ID}> for $${item.Price}.`,
+                `You have successfully purchased role ${item.Name} for $${item.Price}.`,
                 "#3db39e"
               )
               .setAuthor(
@@ -70,7 +70,7 @@ module.exports.run = async (client, message, args) => {
           "Cannot add a role to that member."
         );
       });
-  } else if (item.type == "color") {
+  } else if (item.Type == "color") {
     let colors =
       db.fetch(`colors_${message.guild.id}_${message.author.id}`) || [];
 
@@ -109,7 +109,7 @@ module.exports.run = async (client, message, args) => {
             client,
             message,
             "",
-            `You have successfully purchased name color **${item.Name}** for $${item.Price}.`,
+            `You have successfully purchased name color ${item.Name} for $${item.Price}.`,
             "#3db39e"
           )
           .setAuthor(
