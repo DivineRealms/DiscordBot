@@ -7,7 +7,7 @@ module.exports = {
   description: "Choose your name color.",
   permissions: [],
   cooldown: 0,
-  aliases: [],
+  aliases: ["color"],
   usage: "color [list/use/reset] [color]",
 };
 
@@ -21,7 +21,7 @@ module.exports.run = async (client, message, args) => {
         client.utils.errorEmbed(
           client,
           message,
-          "You have entered invalid option, options: use, list, reset."
+          "Invalid argument, options: use, list, reset."
         ),
       ],
     });
@@ -40,16 +40,20 @@ module.exports.run = async (client, message, args) => {
 
     message.channel.send({
       embeds: [
-        client.embedBuilder(
-          client,
-          message,
-          "List of Colors",
-          `You have a total of ${
-            colors.length
-          } colors available\n\n<:ArrowRightGray:813815804768026705> **\`${colors.join(
-            "`, `"
-          )}\`**.`
-        ),
+        client
+          .embedBuilder(
+            client,
+            message,
+            "",
+            `<:ArrowRightGray:813815804768026705> **\`${colors.join(
+              "`, `"
+            )}\`**.`,
+            "#60b8ff"
+          )
+          .setAuthor(
+            `You have ${colors.length} colors available`,
+            `https://cdn.upload.systems/uploads/6uDK0XAN.png`
+          ),
       ],
     });
   } else if (option.toLowerCase() == "use") {
@@ -67,7 +71,7 @@ module.exports.run = async (client, message, args) => {
       });
 
     let apply = client.conf.Colors.find(
-      (c) => c.name.toLowerCase() == select.toLowerCase()
+      (c) => c.Name.toLowerCase() == select.toLowerCase()
     );
 
     if (!apply)
@@ -82,15 +86,15 @@ module.exports.run = async (client, message, args) => {
       });
 
     client.conf.Colors.forEach((m) => {
-      if (message.member.roles.cache.has(m.role))
-        message.member.roles.remove(m.role);
+      if (message.member.roles.cache.has(m.Role))
+        message.member.roles.remove(m.Role);
     });
 
     let color = client.conf.Colors.find(
-      (n) => n.name.toLowerCase() == select.toLowerCase()
+      (n) => n.Name.toLowerCase() == select.toLowerCase()
     );
 
-    if (message.member.roles.cache.has(color.role))
+    if (message.member.roles.cache.has(color.Role))
       return message.channel.send({
         embeds: [
           client.utils.errorEmbed(
@@ -101,41 +105,29 @@ module.exports.run = async (client, message, args) => {
         ],
       });
 
-    message.member.roles.add(color.role);
+    message.member.roles.add(color.Role);
     message.channel.send({
       embeds: [
         client
-          .embedBuilder(
-            client,
-            message,
-            "",
-            `Color Role <@&${color.role}> has been equiped.`,
-            "#3db39e"
-          )
+          .embedBuilder(client, message, "", "", "#3db39e")
           .setAuthor(
-            "Color Selected",
+            `Color Role ${color.Name} has been equiped.`,
             `https://cdn.upload.systems/uploads/6KOGFYJM.png`
           ),
       ],
     });
   } else if (option.toLowerCase() == "reset") {
     client.conf.Colors.forEach((m) => {
-      if (message.member.roles.cache.has(m.role))
-        message.member.roles.remove(m.role);
+      if (message.member.roles.cache.has(m.Role))
+        message.member.roles.remove(m.Role);
     });
 
     message.channel.send({
       embeds: [
         client
-          .embedBuilder(
-            client,
-            message,
-            "",
-            "Your Name Color has been reset.",
-            "#3db39e"
-          )
+          .embedBuilder(client, message, "", "", "#3db39e")
           .setAuthor(
-            "Color Selected",
+            "Your Name Color has been reset.",
             `https://cdn.upload.systems/uploads/6KOGFYJM.png`
           ),
       ],
