@@ -109,3 +109,4 @@ data/enmap.sqlite
 
 # Config
 settings/config.yml
+.vscode/settings.json
