@@ -20,6 +20,13 @@ module.exports = async (client, oldMember, newMember) => {
     );
 
     if (added.includes("597888019663421440")) {
+      let fetchedMessages = await message.guild.channels.cache.get("512570600682684436").messages.fetch({ limit: 50 });
+      fetchedMessages.forEach(async(msg) => {
+        if(msg.author.id == oldMember.id) {
+          await msg.delete();
+        }
+      });
+      
       if (welcomeChannel)
         welcomeChannel
           .send({

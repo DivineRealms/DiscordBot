@@ -15,7 +15,7 @@ const manageLeveling = async (client, message) => {
 
     const nextLevel = parseInt(level) + 1;
     const xpNeeded = nextLevel * 2 * 250 + 250;
-    const xpChannel = client.channels.cache.get(levelSettings.Level_Up.Channel);
+    // const xpChannel = client.channels.cache.get(levelSettings.Level_Up.Channel);
 
     if (xp + xpGive >= xpNeeded) {
       const embed = client
@@ -25,7 +25,7 @@ const manageLeveling = async (client, message) => {
           `https://cdn.upload.systems/uploads/OJ9pgcy2.png`
         );
 
-      if (xpChannel) xpChannel.send({ embeds: [embed] });
+      message.channel.send({ embeds: [embed] });
 
       if (xp + xpGive > xpNeeded) {
         db.set(
