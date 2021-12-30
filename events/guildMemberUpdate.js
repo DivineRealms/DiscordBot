@@ -22,7 +22,7 @@ module.exports = async (client, oldMember, newMember) => {
     if (added.includes("597888019663421440")) {
       let fetchedMessages = await oldMember.guild.channels.cache.get("512570600682684436").messages.fetch({ limit: 50 });
       fetchedMessages.forEach(async(msg) => {
-        if(msg.author.id == oldMember.id) {
+        if(msg.author.id == oldMember.id || msg.content.toLowerCase().includes(oldMember.id)) {
           await msg.delete();
         }
       });
@@ -71,6 +71,13 @@ module.exports = async (client, oldMember, newMember) => {
     const removed = removedRoles.map((r) => r.id);
 
     if (removed.includes("597888019663421440")) {
+      let fetchedMessages = await oldMember.guild.channels.cache.get("512570600682684436").messages.fetch({ limit: 50 });
+      fetchedMessages.forEach(async(msg) => {
+        if(msg.author.id == oldMember.id || msg.content.toLowerCase().includes(oldMember.id)) {
+          await msg.delete();
+        }
+      });
+      
       let embedWelcome = db.fetch(
         `wlcmEmbed_${oldMember.guild.id}_${newMember.id}`
       );
