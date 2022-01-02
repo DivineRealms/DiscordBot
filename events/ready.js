@@ -5,21 +5,8 @@ const bumpReminder = require("../utils/bumpRemind.js");
 const axios = require("axios");
 
 module.exports = async (client) => {
-  console.log(" ");
-  console.log(" ____  _       _            ____            _               ");
-  console.log("|  _ \\(_)_   _(_)_ __   ___|  _ \\ ___  __ _| |_ __ ___  ___ ");
-  console.log(
-    "| | | | \\ \\ / / | '_ \\ / _ \\ |_) / _ \\/ _` | | '_ ` _ \\/ __|"
-  );
-  console.log(
-    "| |_| | |\\ V /| | | | |  __/  _ <  __/ (_| | | | | | | \\__ \\"
-  );
-  console.log(
-    "|____/|_| \\_/ |_|_| |_|\\___|_| \\_\\___|\\__,_|_|_| |_| |_|___/"
-  );
-  console.log(" ");
-  console.log("             Bot has started and is online now");
-  console.log(" ");
+  let date = new Date();
+  console.log(`[${date.toLocaleDateString()} ${date.toLocaleTimeString()} INFO]: [DR] Bot has started and is online now`);
 
   const settings = client.conf.Settings.Bot_Activity;
 
