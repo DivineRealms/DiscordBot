@@ -104,7 +104,7 @@ module.exports = async (client) => {
     if (channel && birthEmbed.length > 0) channel.send({ embeds: [embed] });
   }
 
-  let bdayCron = new cron.CronJob("59 59 23 * * *", () => birthday(), {
+  let bdayCron = new cron.CronJob("59 59 11 * * *", () => birthday(), {
     timezone: "Europe/Belgrade",
   });
 
