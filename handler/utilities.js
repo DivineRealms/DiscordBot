@@ -25,15 +25,13 @@ module.exports.automod = async (client, message) => {
 
   if (client.conf.Counting.Enabled) {
     if (message.channel.id === client.conf.Counting.Channel) {
-      const { current, last } = client.settings.get(
-        message.guild.id,
-        "counting"
-      );
+      const current = db.fetch(`countingCurrent_${message.guild.id}`);
+      const last = db.fetch(`countingLast_${message.guild.id}`);
 
       if (message.content != current) {
         message.delete();
         if (current !== 1 && client.conf.Counting.Restart_On_Incorrect_Number)
-          client.settings.set(message.guild.id, 1, "counting.current");
+          db.set(`countingCurrent_${message.guild.id}`, 1);
         return message.channel
           .send({
             embeds: [
@@ -59,7 +57,7 @@ module.exports.automod = async (client, message) => {
       ) {
         message.delete();
         if (current !== 1 && client.conf.Counting.Restart_On_Incorrect_Number)
-          client.settings.set(message.guild.id, 1, "counting.current");
+          db.set(`countingCurrent_${message.guild.id}`, 1);
         return message.channel
           .send({
             embeds: [
@@ -81,8 +79,8 @@ module.exports.automod = async (client, message) => {
 
       if (client.conf.Counting.React.Enabled == true)
         message.react(client.conf.Counting.React.Reaction);
-      client.settings.inc(message.guild.id, "counting.current");
-      client.settings.set(message.guild.id, message.author.id, "counting.last");
+      db.add(`countingCurrent_${message.guild.id}`, 1);
+      db.set(`countingLast_${message.guild.id}`, `${message.author.id}`);
     }
   }
 };

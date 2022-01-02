@@ -7,10 +7,7 @@ module.exports = async (client, reaction, user) => {
   if (user.bot || !reaction.message.guild) return;
   const starboard = client.conf.Starboard;
   const schannel = client.channels.cache.get(starboard.Channel);
-  const suggestion = client.settings.get(
-    reaction.message.guild.id,
-    `suggestions.${reaction.message.id}`
-  );
+  const suggestion = db.fetch(`suggestion_${reaction.message.id}`);
 
   if (["✅", "❌"].includes(reaction.emoji.name) && suggestion) {
     const user2 = await client.users.fetch(suggestion.user);
@@ -30,10 +27,7 @@ module.exports = async (client, reaction, user) => {
 
     user2.send({ embeds: [embed] }).catch(console.error);
     reaction.message.channel.send({ embeds: [embed] });
-    client.settings.delete(
-      reaction.message.guild.id,
-      `suggestions.${reaction.message.id}`
-    );
+    db.delete(`suggestion_${reaction.message.id}`);
   }
 
   if (starboard.Enabled && reaction.message) {
@@ -96,10 +90,7 @@ module.exports = async (client, reaction, user) => {
     }
   }
 
-  client.settings.ensure(reaction.message.guild.id, client.defaultSettings);
-  const panel = client.settings
-    .get(reaction.message.guild.id, "panels")
-    .includes(reaction.message.id);
+  const panel = db.fetch(`panels_${reaction.message.guild.id}`).includes(reaction.message.id);
   const settings = client.conf.Ticket_System;
   if (!panel || reaction.emoji.name !== "✉️") return;
 

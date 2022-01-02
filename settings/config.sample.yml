@@ -223,7 +223,3 @@ Economy:
 # DO NOT TOUCH
 Guild_Settings:
   Prefix: "."
-  Panels: []
-  Counting:
-    - Current: 1
-      Last: null
