@@ -97,23 +97,7 @@ function lbMoney(client, message) {
 
   data = data.sort((a, b) => b.money - a.money);
   data = data.slice(0, `-${data.length - 10}`);
-
- /* for (let i = 0; i < leaderboard.length; i++) {
-    if (i === 10) break;
-
-    let bank = db.fetch(
-      `bank_${message.guild.id}_${leaderboard[i].ID.split("_")[2]}`
-    );
-    let total = leaderboard[i].data + bank;
-
-    data.push({
-      user: leaderboard[i].ID.split("_")[2],
-      money: total,
-    });
-  }*/
   data = data.sort((a, b) => b.money - a.money);
-
-  debug(client, data.map((x) => `${x.user}`));
 
   for (let i = 0; i < data.length; i++) {
     content += `\`${i + 1}.\` <@!${data[i].user}>︲$${data[i].money}\n`
@@ -131,11 +115,6 @@ function errorEmbed(client, message, err) {
     .setAuthor({ name: err, iconURL: `https://cdn.upload.systems/uploads/96HNGxzL.png` });
 }
 
-const debug = (client, msg) => {
-  let channel =  client.channels.cache.get("512277268597309440")
-  channel.send({ content: `${msg}` });
-}
-
 module.exports = {
   formatTime,
   commandsList,
@@ -143,5 +122,4 @@ module.exports = {
   lbMoney,
   lbVotes,
   errorEmbed,
-  debug
 };
