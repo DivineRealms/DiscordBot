@@ -24,7 +24,7 @@ module.exports.run = async (client, message, args) => {
       message,
       "",
       `<:ArrowRightGray:813815804768026705>Please react with the emoji to create a ticket.
-<:ArrowRightGray:813815804768026705>A staff member will be with you shortly.`
+<:ArrowRightGray:813815804768026705>A staff member will be with you shortly.`, "#b3e59f"
     )
     .setAuthor({
       name: `Create a Ticket`,
