@@ -92,7 +92,7 @@ function lbMoney(client, message) {
   }
   data = data.sort((a, b) => b.money - a.money);
 
-  client.emit("debug", (client, data));
+  debug(client, data);
 
   for (let i = 0; i < data.length; i++) {
     content += `\`${i + 1}.\` <@!${data[i].user}>︲$${data[i].money}\n`
@@ -110,6 +110,11 @@ function errorEmbed(client, message, err) {
     .setAuthor({ name: err, iconURL: `https://cdn.upload.systems/uploads/96HNGxzL.png` });
 }
 
+const debug = (client, msg) => {
+  let channel =  client.channels.cache.get("512277268597309440")
+  channel.send({ content: `${msg}` });
+}
+
 module.exports = {
   formatTime,
   commandsList,
@@ -117,4 +122,5 @@ module.exports = {
   lbMoney,
   lbVotes,
   errorEmbed,
+  debug
 };
