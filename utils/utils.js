@@ -70,6 +70,14 @@ function lbVotes(client, message) {
 }
 
 function lbMoney(client, message) {
+  /**
+   * milan ivan bogdan
+   * dzep 100  5000 72
+   * banka 0    400 10000
+   * 
+   * ivan milan bogdan
+   * 
+   */
   let leaderboard = db
     .all()
     .filter((data) => data.ID.startsWith(`money_${message.guild.id}`))
@@ -77,7 +85,20 @@ function lbMoney(client, message) {
   let content = "";
   let data = [];
 
-  for (let i = 0; i < leaderboard.length; i++) {
+  for(let i = 0; i < leaderboard.length; i++) {
+    let bank = db.fetch(`bank_${message.guild.id}_${leaderboard[i].ID.split("_")[2]}`) || 0;
+    let total = leaderboard[i].data + bank;
+
+    data.push({
+      user: leaderboard[i].ID.split("_")[2],
+      money: total
+    });
+  }
+
+  data = data.sort((a, b) => b.money - a.money);
+  data = data.slice(0, `-${data.length - 10}`);
+
+ /* for (let i = 0; i < leaderboard.length; i++) {
     if (i === 10) break;
 
     let bank = db.fetch(
@@ -89,10 +110,10 @@ function lbMoney(client, message) {
       user: leaderboard[i].ID.split("_")[2],
       money: total,
     });
-  }
+  }*/
   data = data.sort((a, b) => b.money - a.money);
 
-  debug(client, data);
+  debug(client, data.map((x) => `${x.user}`));
 
   for (let i = 0; i < data.length; i++) {
     content += `\`${i + 1}.\` <@!${data[i].user}>︲$${data[i].money}\n`
