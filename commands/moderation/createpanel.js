@@ -23,13 +23,13 @@ module.exports.run = async (client, message, args) => {
       client,
       message,
       "",
-      `<:ArrowRightGray:813815804768026705>A staff member will be with you shortly.`,
-      "#b3e59f"
+      `<:ArrowRightGray:813815804768026705>Please react with the emoji to create a ticket.
+<:ArrowRightGray:813815804768026705>A staff member will be with you shortly.`
     )
-    .setAuthor(
-      `Thank you for creating a ticket`,
-      `https://cdn.upload.systems/uploads/4mFVRE7f.png`
-    );
+    .setAuthor({
+      name: `Create a Ticket`,
+      iconURL: `https://cdn.upload.systems/uploads/4mFVRE7f.png`
+    });
 
   const msg = await message.channel.send({ embeds: [embed] });
   await msg.react("✉️").catch(() => msg.react("✉️"));
