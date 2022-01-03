@@ -23,10 +23,10 @@ module.exports.run = async (client, message, args) => {
       embeds: [
         client
           .embedBuilder(client, message, "", "")
-          .setAuthor(
-            "Calculator",
-            `https://cdn.upload.systems/uploads/LRa9Ebl5.png`
-          )
+          .setAuthor({
+            name: "Calculator",
+            iconURL: `https://cdn.upload.systems/uploads/LRa9Ebl5.png`
+          })
           .addField("📥︲Problem:", "```\n" + args.join(" ") + "```")
           .addField(
             "📤︲Solution:",

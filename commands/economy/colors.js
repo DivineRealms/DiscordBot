@@ -50,10 +50,10 @@ module.exports.run = async (client, message, args) => {
             )}\`**.`,
             "#60b8ff"
           )
-          .setAuthor(
-            `You have ${colors.length} colors available`,
-            `https://cdn.upload.systems/uploads/6uDK0XAN.png`
-          ),
+          .setAuthor({
+            name: `You have ${colors.length} colors available`,
+            iconURL: `https://cdn.upload.systems/uploads/6uDK0XAN.png`
+          }),
       ],
     });
   } else if (option.toLowerCase() == "use") {
@@ -110,10 +110,10 @@ module.exports.run = async (client, message, args) => {
       embeds: [
         client
           .embedBuilder(client, message, "", "", "#3db39e")
-          .setAuthor(
-            `Color Role ${color.Name} has been equiped.`,
-            `https://cdn.upload.systems/uploads/6KOGFYJM.png`
-          ),
+          .setAuthor({
+            name: `Color Role ${color.Name} has been equiped.`,
+            iconURL: `https://cdn.upload.systems/uploads/6KOGFYJM.png`
+          }),
       ],
     });
   } else if (option.toLowerCase() == "reset") {
@@ -126,10 +126,10 @@ module.exports.run = async (client, message, args) => {
       embeds: [
         client
           .embedBuilder(client, message, "", "", "#3db39e")
-          .setAuthor(
-            "Your Name Color has been reset.",
-            `https://cdn.upload.systems/uploads/6KOGFYJM.png`
-          ),
+          .setAuthor({
+            name: "Your Name Color has been reset.",
+            iconURL: `https://cdn.upload.systems/uploads/6KOGFYJM.png`
+          }),
       ],
     });
   }

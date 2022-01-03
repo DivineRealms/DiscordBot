@@ -51,13 +51,13 @@ module.exports = async (client, reaction, user) => {
         board.edit({ content: `${board}` });
       } else if (reaction.count >= starboard.Minimum_Reactions) {
         const embed = new Discord.MessageEmbed()
-          .setAuthor(
-            reaction.message.author.tag,
-            reaction.message.author.displayAvatarURL({
+          .setAuthor({
+            name: reaction.message.author.tag,
+            iconURL: reaction.message.author.displayAvatarURL({
               size: 1024,
               dynamic: true,
             })
-          )
+          })
           .setColor("#ffac33");
 
         if (reaction.message.content)
@@ -141,10 +141,10 @@ module.exports = async (client, reaction, user) => {
           "<:ArrowRightGray:813815804768026705>A staff member will be with you shortly.",
           "#b3e59f"
         )
-        .setAuthor(
-          "Thank you for creating a ticket",
-          `https://cdn.upload.systems/uploads/4mFVRE7f.png`
-        ),
+        .setAuthor({
+          name: "Thank you for creating a ticket",
+          iconURL: `https://cdn.upload.systems/uploads/4mFVRE7f.png`
+        }),
     ],
   });
 

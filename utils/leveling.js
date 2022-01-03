@@ -20,10 +20,10 @@ const manageLeveling = async (client, message) => {
     if (xp + xpGive >= xpNeeded) {
       const embed = client
         .embedBuilder(client, "", "", "", "#b7e445")
-        .setAuthor(
-          `${message.author.username} has just reached Level ${level + 1}!`,
-          `https://cdn.upload.systems/uploads/OJ9pgcy2.png`
-        );
+        .setAuthor({
+          name: `${message.author.username} has just reached Level ${level + 1}!`,
+          iconURL: `https://cdn.upload.systems/uploads/OJ9pgcy2.png`
+        });
 
       message.channel.send({ embeds: [embed] });
 

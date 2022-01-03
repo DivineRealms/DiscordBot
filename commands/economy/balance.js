@@ -30,10 +30,10 @@ module.exports.run = async (client, message, args) => {
 <:ArrowRightGray:813815804768026705> Total: **$${balance + bank}**`,
           "#47a047"
         )
-        .setAuthor(
-          user.username + "'s Balance",
-          `https://cdn.upload.systems/uploads/LrdB6F1N.png`
-        ),
+        .setAuthor({ 
+          name: user.username + "'s Balance",
+          iconURL: `https://cdn.upload.systems/uploads/LrdB6F1N.png`
+        }),
     ],
   });
 };

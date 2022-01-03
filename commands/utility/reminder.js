@@ -39,10 +39,10 @@ module.exports.run = async (client, message, args) => {
           )}\`** in ${client.utils.formatTime(parse(end))}.`,
           "#f1d333"
         )
-        .setAuthor(
-          "Reminder",
-          `https://cdn.upload.systems/uploads/PX2kS3Kp.png`
-        ),
+        .setAuthor({
+          name: "Reminder",
+          iconURL: `https://cdn.upload.systems/uploads/PX2kS3Kp.png`
+        }),
     ],
   });
 
@@ -58,10 +58,10 @@ module.exports.run = async (client, message, args) => {
               `<:ArrowRightGray:813815804768026705>${reason.join(" ")}.`,
               "#f1d333"
             )
-            .setAuthor(
-              "Reminder",
-              `https://cdn.upload.systems/uploads/PX2kS3Kp.png`
-            ),
+            .setAuthor({
+              name: "Reminder",
+              iconURL: `https://cdn.upload.systems/uploads/PX2kS3Kp.png`
+            }),
         ],
       })
       .catch(() => {});

@@ -46,10 +46,10 @@ module.exports.run = async (client, message, args) => {
           embeds: [
             client
               .embedBuilder(client, message, "", "", "#3db39e")
-              .setAuthor(
-                `You have successfully purchased role ${item.Name} for $${item.Price}.`,
-                `https://cdn.upload.systems/uploads/6KOGFYJM.png`
-              ),
+              .setAuthor({
+                text: `You have successfully purchased role ${item.Name} for $${item.Price}.`,
+                iconURL: `https://cdn.upload.systems/uploads/6KOGFYJM.png`
+              }),
           ],
         });
         db.subtract(
@@ -100,10 +100,10 @@ module.exports.run = async (client, message, args) => {
       embeds: [
         client
           .embedBuilder(client, message, "", "", "#3db39e")
-          .setAuthor(
-            `You have successfully purchased name color ${item.Name} for $${item.Price}.`,
-            `https://cdn.upload.systems/uploads/6KOGFYJM.png`
-          ),
+          .setAuthor({
+            name: `You have successfully purchased name color ${item.Name} for $${item.Price}.`,
+            iconURL: `https://cdn.upload.systems/uploads/6KOGFYJM.png`
+          }),
       ],
     });
   }

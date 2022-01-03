@@ -28,12 +28,12 @@ module.exports.run = async (client, message, args) => {
     embeds: [
       client
         .embedBuilder(client, message, "", "", "#3db39e")
-        .setAuthor(
-          `You have caught a ${
+        .setAuthor({
+          name: `You have caught a ${
             fish[Math.floor(Math.random() * fish.length)]
           } and earned $${amount}.`,
-          `https://cdn.upload.systems/uploads/6KOGFYJM.png`
-        ),
+          iconURL: `https://cdn.upload.systems/uploads/6KOGFYJM.png`
+        }),
     ],
   });
 

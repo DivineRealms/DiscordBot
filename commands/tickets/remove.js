@@ -67,12 +67,12 @@ module.exports.run = async (client, message, args) => {
     embeds: [
       client
         .embedBuilder(client, message, "", "", "#3db39e")
-        .setAuthor(
-          `${
+        .setAuthor({
+          name: `${
             message.mentions.users.first().username
           } has been removed from the ticket!`,
-          `https://cdn.upload.systems/uploads/4mFVRE7f.png`
-        ),
+          iconURL: `https://cdn.upload.systems/uploads/4mFVRE7f.png`
+        }),
     ],
   });
 };

@@ -24,10 +24,10 @@ module.exports.run = async (client, message, args) => {
     embeds: [
       client
         .embedBuilder(client, message, "", "", "#7bc2cc")
-        .setAuthor(
-          `I have set your AFK status to ${args[0] ? args.join(" ") : "AFK"}`,
-          `https://cdn.upload.systems/uploads/Za4oLQsR.png`
-        ),
+        .setAuthor({
+          name: `I have set your AFK status to ${args[0] ? args.join(" ") : "AFK"}`,
+          iconURL: `https://cdn.upload.systems/uploads/Za4oLQsR.png`
+        }),
     ],
   });
 };

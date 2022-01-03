@@ -70,10 +70,10 @@ module.exports.run = async (client, message, args) => {
     embeds: [
       client
         .embedBuilder(client, message, "", "", "#3db39e")
-        .setAuthor(
-          "Successfully set your birthday.",
-          `https://cdn.upload.systems/uploads/6KOGFYJM.png`
-        ),
+        .setAuthor({
+          name: "Successfully set your birthday.",
+          iconURL: `https://cdn.upload.systems/uploads/6KOGFYJM.png`
+        }),
     ],
   });
 

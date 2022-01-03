@@ -47,7 +47,7 @@ module.exports.run = async (client, message, args) => {
             .embedBuilder(client, message, "", "", "#3db39e")
             .addField("Amount:", `$${money}`, true)
             .addField("Result:", "You won!", true)
-            .setAuthor("Betting", `https://cdn.upload.systems/uploads/HJGA3pxp.png`),
+            .setAuthor({ name: "Betting", iconURL: `https://cdn.upload.systems/uploads/HJGA3pxp.png` }),
         ],
       });
 
@@ -59,7 +59,7 @@ module.exports.run = async (client, message, args) => {
             .embedBuilder(client, message, "", "", "RED")
             .addField("Amount:", `$${money}`, true)
             .addField("Result:", "You lost!", true)
-            .setAuthor("Betting", `https://cdn.upload.systems/uploads/HJGA3pxp.png`),
+            .setAuthor({ name: "Betting", iconURL: `https://cdn.upload.systems/uploads/HJGA3pxp.png` }),
         ],
       });
 
@@ -100,7 +100,7 @@ module.exports.run = async (client, message, args) => {
           .embedBuilder(client, message, "", "", "#3db39e")
           .addField("Amount:", `$${args[0]}`, true)
           .addField("Result:", `You won!`, true)
-          .setAuthor("Betting", `https://cdn.upload.systems/uploads/HJGA3pxp.png`),
+          .setAuthor({ name: "Betting", iconURL: `https://cdn.upload.systems/uploads/HJGA3pxp.png` }),
       ],
     });
 
@@ -112,7 +112,7 @@ module.exports.run = async (client, message, args) => {
           .embedBuilder(client, message, "", "", "RED")
           .addField("Amount:", `$${args[0]}`, true)
           .addField("Result:", `You lost!`, true)
-          .setAuthor("Betting", `https://cdn.upload.systems/uploads/HJGA3pxp.png`),
+          .setAuthor({ name: "Betting", iconURL: `https://cdn.upload.systems/uploads/HJGA3pxp.png` }),
       ],
     });
 

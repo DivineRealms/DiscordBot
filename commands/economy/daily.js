@@ -30,10 +30,10 @@ module.exports.run = async (client, message, args) => {
     embeds: [
       client
         .embedBuilder(client, message, "", "", "#3db39e")
-        .setAuthor(
-          "You have claimed your Daily Reward of $500.",
-          `https://cdn.upload.systems/uploads/6KOGFYJM.png`
-        ),
+        .setAuthor({
+          name: "You have claimed your Daily Reward of $500.",
+          iconURL: `https://cdn.upload.systems/uploads/6KOGFYJM.png`
+        }),
     ],
   });
 

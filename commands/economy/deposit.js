@@ -51,10 +51,10 @@ module.exports.run = async (client, message, args) => {
       embeds: [
         client
           .embedBuilder(client, message, "", "", "#3db39e")
-          .setAuthor(
-            `You have deposited $${bal} to the bank.`,
-            `https://cdn.upload.systems/uploads/6KOGFYJM.png`
-          ),
+          .setAuthor({
+            name: `You have deposited $${bal} to the bank.`,
+            iconURL: `https://cdn.upload.systems/uploads/6KOGFYJM.png`
+          }),
       ],
     });
 
@@ -89,10 +89,10 @@ module.exports.run = async (client, message, args) => {
     embeds: [
       client
         .embedBuilder(client, message, "", "", "#3db39e")
-        .setAuthor(
-          `You have deposited $${Number(args[0])} to the bank.`,
-          `https://cdn.upload.systems/uploads/6KOGFYJM.png`
-        ),
+        .setAuthor({
+          name: `You have deposited $${Number(args[0])} to the bank.`,
+          iconURL: `https://cdn.upload.systems/uploads/6KOGFYJM.png`
+        }),
     ],
   });
 

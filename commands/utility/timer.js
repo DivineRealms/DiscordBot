@@ -36,10 +36,10 @@ module.exports.run = async (client, message, args) => {
           )}**.`,
           "#ffc13f"
         )
-        .setAuthor(
-          "Active Timer",
-          `https://cdn.upload.systems/uploads/40vZa4wv.png`
-        ),
+        .setAuthor({
+          name: "Active Timer",
+          iconURL:  `https://cdn.upload.systems/uploads/40vZa4wv.png`
+        }),
     ],
   });
 
@@ -57,18 +57,18 @@ module.exports.run = async (client, message, args) => {
         )}**.`,
         "#ffc13f"
       )
-      .setAuthor(
-        "Active Timer",
-        `https://cdn.upload.systems/uploads/40vZa4wv.png`
-      );
+      .setAuthor({
+        name: "Active Timer",
+        iconURL: `https://cdn.upload.systems/uploads/40vZa4wv.png`
+      });
 
     if (Date.now() > end) {
       const done = client
         .embedBuilder(client, message, "", "", "#ffc13f")
-        .setAuthor(
-          "Timer has ended!",
-          `https://cdn.upload.systems/uploads/40vZa4wv.png`
-        );
+        .setAuthor({
+          name: "Timer has ended!",
+          iconURL: `https://cdn.upload.systems/uploads/40vZa4wv.png`
+        });
 
       clearInterval(timer);
       return msg.edit({ embeds: [done] });

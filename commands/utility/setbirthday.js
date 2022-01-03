@@ -58,10 +58,10 @@ module.exports.run = async (client, message, args) => {
   message.channel.send({
     embeds: [
       embed
-        .setAuthor(
-          "Successfully set your birthday.",
-          `https://cdn.upload.systems/uploads/6KOGFYJM.png`
-        )
+        .setAuthor({
+          name: "Successfully set your birthday.",
+          iconURL: `https://cdn.upload.systems/uploads/6KOGFYJM.png`
+        })
         .setDescription(
           `<:ArrowRightGray:813815804768026705>I have set ${user}'s birthday to ${args
             .slice(1)

@@ -45,10 +45,10 @@ module.exports = async (client, message) => {
               "<:ArrowRightGray:813815804768026705>Server can be bumped again, use **`!d bump`**.",
               "#1cc0f9"
             )
-            .setAuthor(
-              "Server Bump",
-              `https://cdn.upload.systems/uploads/pVry3Mav.png`
-            );
+            .setAuthor({
+              name: "Server Bump",
+              iconURL: `https://cdn.upload.systems/uploads/pVry3Mav.png`
+            });
 
           if (client.conf.Logging.Enabled)
             bumpChannel.send({
@@ -69,10 +69,10 @@ module.exports = async (client, message) => {
 <:ArrowRightGray:813815804768026705>You've received **$1000** as a reward.`,
             "#1cc0f9"
           )
-          .setAuthor(
-            "Server Bump",
-            `https://cdn.upload.systems/uploads/pVry3Mav.png`
-          );
+          .setAuthor({
+            name: "Server Bump",
+            iconURL: `https://cdn.upload.systems/uploads/pVry3Mav.png`
+          });
 
         db.add(`bumps_${message.guild.id}_${dbumper[0]}`, 1);
         db.add(`money_${message.guild.id}_${dbumper[0]}`, 1000);

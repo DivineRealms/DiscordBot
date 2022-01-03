@@ -39,10 +39,10 @@ module.exports.run = async (client, message, args) => {
       embeds: [
         client
           .embedBuilder(client, message, "", "", "#3db39e")
-          .setAuthor(
-            `Your report was submitted!`,
-            `https://cdn.upload.systems/uploads/6KOGFYJM.png`
-          ),
+          .setAuthor({
+            name: `Your report was submitted!`,
+            iconURL: `https://cdn.upload.systems/uploads/6KOGFYJM.png`
+          }),
       ],
     })
     .then((msg) => setTimeout(() => msg.delete(), 3000));
@@ -51,7 +51,7 @@ module.exports.run = async (client, message, args) => {
     .embedBuilder(client, message, "", "")
     .addField("Submitter:", `${message.author}`, false)
     .addField("Timestamp:", `<t:${Math.round(Date.now() / 1000)}:R>`, false)
-    .setAuthor("New Report", `https://cdn.upload.systems/uploads/iHhkS5zu.png`)
+    .setAuthor({ name: "New Report", iconURL: `https://cdn.upload.systems/uploads/iHhkS5zu.png` })
     .setThumbnail(
       message.author.displayAvatarURL({ size: 1024, dynamic: true })
     );

@@ -14,10 +14,10 @@ const bump = (client) => {
           "<:ArrowRightGray:813815804768026705>Server can be bumped again, use **`!d bump`**.",
           "#1cc0f9"
         )
-        .setAuthor(
-          "Server Bump",
-          `https://cdn.upload.systems/uploads/pVry3Mav.png`
-        );
+        .setAuthor({
+          name: "Server Bump",
+          iconURL: `https://cdn.upload.systems/uploads/pVry3Mav.png`
+        });
 
       db.delete(`serverBump_${client.conf.Settings.Guild_ID}`);
       if (bumpChannel)
