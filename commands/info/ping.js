@@ -13,7 +13,7 @@ module.exports = {
 module.exports.run = async (client, message, args) => {
   let embed = client
     .embedBuilder(client, message, "", "", "#60b8ff")
-    .setAuthor("Pinging...", `https://cdn.upload.systems/uploads/6uDK0XAN.png`);
+    .setAuthor({ name: "Pinging...", iconURL: `https://cdn.upload.systems/uploads/6uDK0XAN.png` });
 
   let msg = await message.channel.send({ embeds: [embed] });
 
@@ -30,10 +30,10 @@ module.exports.run = async (client, message, args) => {
           )}**`,
           "#60b8ff"
         )
-        .setAuthor(
-          "Pinging finished!",
-          `https://cdn.upload.systems/uploads/6uDK0XAN.png`
-        ),
+        .setAuthor({
+          name: "Pinging finished!",
+          iconURL: `https://cdn.upload.systems/uploads/6uDK0XAN.png`
+        }),
     ],
   });
 };

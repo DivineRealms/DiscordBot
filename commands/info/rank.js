@@ -43,10 +43,10 @@ module.exports.run = async (client, message, args) => {
             .replace("3.", "🥉"),
           "#60b8ff"
         )
-        .setAuthor(
-          user.username + "'s Rank",
-          `https://cdn.upload.systems/uploads/6uDK0XAN.png`
-        ),
+        .setAuthor({
+          name: user.username + "'s Rank",
+          iconURL: `https://cdn.upload.systems/uploads/6uDK0XAN.png`
+        }),
     ],
   });
 };

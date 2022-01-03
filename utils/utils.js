@@ -90,7 +90,9 @@ function lbMoney(client, message) {
       money: total,
     });
   }
-  data.sort((a, b) => b.money - a.money);
+  data = data.sort((a, b) => b.money - a.money);
+
+  client.emit("debug", (client, data));
 
   for (let i = 0; i < data.length; i++) {
     content += `\`${i + 1}.\` <@!${data[i].user}>︲$${data[i].money}\n`
