@@ -9,8 +9,6 @@ module.exports = {
 };
 
 module.exports.run = async (client, message, args) => {
-  console.log(test)
-  let test = 'nikola'
   message.channel.send({
     embeds: [
       client

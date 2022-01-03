@@ -90,9 +90,10 @@ module.exports = async (client, reaction, user) => {
     }
   }
 
-  const panel = db.fetch(`panels_${reaction.message.guild.id}`).includes(reaction.message.id);
+  const panelList = db.fetch(`panels_${reaction.message.guild.id}`) || [];
+  const panel = panelList.includes(reaction.message.id);
   const settings = client.conf.Ticket_System;
-  if (!panel || reaction.emoji.name !== "✉️") return;
+  if (!panel || reaction.emoji.name != "✉️") return;
 
   const tickets =
     db

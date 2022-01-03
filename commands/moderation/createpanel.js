@@ -34,5 +34,8 @@ module.exports.run = async (client, message, args) => {
   const msg = await message.channel.send({ embeds: [embed] });
   await msg.react("✉️").catch(() => msg.react("✉️"));
 
-  client.db.push(`panels_${message.guild.id}`, `${msg.id}`);
+  let panels = db.fetch(`panels_${message.guild.id}`) || [];
+  panels.unshift(`${msg.id}`)
+
+  client.db.set(`panels_${message.guild.id}`, panels);
 };
