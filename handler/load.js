@@ -37,7 +37,7 @@ module.exports = async (client) => {
   client.utils = require("../utils/utils.js");
   client.paginateSelect = require("../utils/paginateSelect.js");
 
- /* process.on('unhandledRejection', error => {
+  process.on('unhandledRejection', error => {
     let ignoreErrors = [
       `DiscordAPIError: Unknown Message`,
       `DiscordAPIError: Missing Permissions`,
@@ -88,8 +88,6 @@ module.exports = async (client) => {
     let channel = client.channels.cache.get("512277268597309440");
     channel.send({ embeds: [errEmbed ]});
   });
-
-*/
 
   for (const d of readdirSync("./commands/")) {
     client.categories.set(
