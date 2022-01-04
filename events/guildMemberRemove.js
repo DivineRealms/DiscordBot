@@ -1,6 +1,5 @@
 const { MessageAttachment } = require("discord.js");
 const db = require("quick.db");
-const Canvas = require("discord-canvas");
 
 module.exports = async (client, member) => {
   const settings = client.conf,
