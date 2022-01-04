@@ -59,6 +59,16 @@ module.exports.run = async (client, message, args) => {
   } else if (option.toLowerCase() == "use") {
     let select = args[1];
 
+    if(!select) return message.channel.send({
+      embeds: [
+        client.utils.errorEmbed(
+          client,
+          message,
+          "You must provide color to equip."
+        ),
+      ],
+    }); 
+
     if (!colors.includes(select.toLowerCase()))
       return message.channel.send({
         embeds: [
