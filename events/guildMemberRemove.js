@@ -7,6 +7,13 @@ module.exports = async (client, member) => {
     channel = client.channels.cache.get(settings.Goodbye_System.Channel),
     embedWelcome = db.fetch(`wlcmEmbed_${member.guild.id}_${member.id}`);
 
+  let fetchedMessages = await member.guild.channels.cache.get("512570600682684436").messages.fetch({ limit: 50 });
+  fetchedMessages.forEach(async(msg) => {
+    if(msg.author.id == member.id || msg.content.toLowerCase().includes(member.id)) {
+      await msg.delete();
+    }
+  });
+
   if (embedWelcome) {
     let wlcmCh = client.channels.cache.get(embedWelcome.channel),
       msgDelete = await wlcmCh.messages.fetch(embedWelcome.msg);
