@@ -64,7 +64,7 @@ module.exports.run = async (client, message, args) => {
         client.utils.errorEmbed(
           client,
           message,
-          "You must provide color to equip."
+          "You must provide color to use."
         ),
       ],
     }); 
