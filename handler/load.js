@@ -2,11 +2,11 @@ const { MessageEmbed } = require("discord.js");
 const { readdirSync } = require("fs");
 const moment = require("moment-timezone");
 const fs = require("fs");
-const yaml = require('js-yaml');
+const yaml = require("js-yaml");
 const Enmap = require("enmap");
 
 module.exports = async (client) => {
-  client.conf = yaml.load(fs.readFileSync('./settings/config.yml', 'utf8'));
+  client.conf = yaml.load(fs.readFileSync("./settings/config.yml", "utf8"));
 
   client.resolveMember = (str, user, title) =>
     str.replace(/\{(.+)\}/, (...e) =>
@@ -37,56 +37,60 @@ module.exports = async (client) => {
   client.utils = require("../utils/utils.js");
   client.paginateSelect = require("../utils/paginateSelect.js");
 
-  process.on('unhandledRejection', error => {
+  process.on("unhandledRejection", (error) => {
     let ignoreErrors = [
       `DiscordAPIError: Unknown Message`,
       `DiscordAPIError: Missing Permissions`,
       `DiscordAPIError: Missing Access`,
       `DiscordAPIError: Unknown Channel`,
       `DiscordAPIError: Cannot send messages to this user`,
-      "DiscordAPIError: Cannot execute action on a DM channel"
+      "DiscordAPIError: Cannot execute action on a DM channel",
     ];
     let list = [];
     for (const ignore of ignoreErrors) {
       if (error.stack.includes(ignore)) list.push(true);
-    };
+    }
     if (list.length !== 0) return null;
     let errEmbed = new MessageEmbed()
       .setTitle("Error Occurred")
-      .setDescription(`\`(${error.name})\`
-\`(${moment.utc().tz('Europe/Belgrade').format('HH:mm:ss, DD/MM/YYYY.')})\`
+      .setDescription(
+        `\`(${error.name})\`
+\`(${moment.utc().tz("Europe/Belgrade").format("HH:mm:ss, DD/MM/YYYY.")})\`
   
-\`\`\`xl\n${error.stack}\n\`\`\``)
+\`\`\`xl\n${error.stack}\n\`\`\``
+      )
       .setColor("RED");
 
     let channel = client.channels.cache.get("512277268597309440");
-    channel.send({ embeds: [errEmbed ]});
+    channel.send({ embeds: [errEmbed] });
   });
-  
-  process.on('uncaughtException', error => {
+
+  process.on("uncaughtException", (error) => {
     let ignoreErrors = [
       `DiscordAPIError: Unknown Message`,
       `DiscordAPIError: Missing Permissions`,
       `DiscordAPIError: Missing Access`,
       `DiscordAPIError: Unknown Channel`,
       `DiscordAPIError: Cannot send messages to this user`,
-      "DiscordAPIError: Cannot execute action on a DM channel"
+      "DiscordAPIError: Cannot execute action on a DM channel",
     ];
     let list = [];
     for (const ignore of ignoreErrors) {
       if (error.stack.includes(ignore)) list.push(true);
-    };
+    }
     if (list.length !== 0) return null;
     let errEmbed = new MessageEmbed()
-      .setTitle("Error Occurred")
-      .setDescription(`\`(${error.name})\`
-\`(${moment.utc().tz('Europe/Belgrade').format('HH:mm:ss, DD/MM/YYYY.')})\`
-  
-\`\`\`xl\n${error.stack}\n\`\`\``)
-      .setColor("RED");
+      .setAuthor({
+        name: "Error Occurred",
+        iconURL: `https://cdn.upload.systems/uploads/96HNGxzL.png`,
+      })
+      .setDescription(`\`\`\`xl\n${error.stack}\n\`\`\``)
+      .setColor("#e24c4b")
+      .setFooter({ text: `${error.name}` })
+      .setTimestamp();
 
     let channel = client.channels.cache.get("512277268597309440");
-    channel.send({ embeds: [errEmbed ]});
+    channel.send({ embeds: [errEmbed] });
   });
 
   for (const d of readdirSync("./commands/")) {

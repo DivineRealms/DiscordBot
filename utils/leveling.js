@@ -20,10 +20,10 @@ const manageLeveling = async (client, message) => {
     if (xp + xpGive >= xpNeeded) {
       const embed = client
         .embedBuilder(client, "", "", "", "#b7e445")
-        .setAuthor({
-          name: `${message.author.username} has just reached Level ${level + 1}!`,
-          iconURL: `https://cdn.upload.systems/uploads/OJ9pgcy2.png`
-        });
+        .setAuthor(
+          `${message.author.username} has just reached Level ${level + 1}!`,
+          `https://cdn.upload.systems/uploads/OJ9pgcy2.png`
+        );
 
       message.channel.send({ embeds: [embed] });
 
@@ -41,12 +41,12 @@ const manageLeveling = async (client, message) => {
         ({ level: l }) => l == level + 1
       );
       if (reward) {
-        message.member.roles.add(reward.role).catch(() => {});
-        if (reward.id > 0) {
+        message.member.roles.add(reward.Role).catch(() => {});
+        if (reward.ID > 0) {
           let removeReward = levelSettings.Level_Up.Roles.find(
             ({ id: i }) => i == parseInt(reward.id - 1)
           );
-          message.member.roles.remove(removeReward.role);
+          message.member.roles.remove(removeReward.Role);
         }
       }
     } else {
