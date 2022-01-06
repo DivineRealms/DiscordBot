@@ -64,10 +64,10 @@ module.exports.run = async (client, message, args) => {
       "#60b8ff"
     )
     .setThumbnail(member.user.displayAvatarURL({ size: 1024, dynamic: true }))
-    .setAuthor(
-      member.user.username + "'s Information",
-      `https://cdn.upload.systems/uploads/6uDK0XAN.png`
-    );
+    .setAuthor({
+      name: member.user.username + "'s Information",
+      iconURL: `https://cdn.upload.systems/uploads/6uDK0XAN.png`,
+    });
 
   message.channel.send({ embeds: [embed] });
 };

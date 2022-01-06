@@ -109,12 +109,10 @@ module.exports.run = async (client, message, args) => {
 
   message.channel.send({
     embeds: [
-      client
-        .embedBuilder(client, message, "", "", "#3db39e")
-        .setAuthor(
-          "This channel will be deleted in 10 seconds.",
-          `https://cdn.upload.systems/uploads/6KOGFYJM.png`
-        ),
+      client.embedBuilder(client, message, "", "", "#3db39e").setAuthor({
+        name: "This channel will be deleted in 10 seconds.",
+        iconURL: `https://cdn.upload.systems/uploads/6KOGFYJM.png`,
+      }),
     ],
   });
 

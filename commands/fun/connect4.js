@@ -48,11 +48,7 @@ module.exports.run = async (client, message, args, cmd) => {
   if (games.get(message.guild.id + message.mentions.users.first().id))
     return message.channel.send({
       embeds: [
-        client.utils.errorEmbed(
-          client,
-          message,
-          "They're already playing."
-        ),
+        client.utils.errorEmbed(client, message, "They're already playing."),
       ],
     });
 
@@ -103,9 +99,9 @@ module.exports.run = async (client, message, args, cmd) => {
       games.set(message.guild.id + message.author.id, true);
 
       const game = new Connect4([
-          new Player(":orange_circle:"),
-          new Player(":red_circle:"),
-        ]);
+        new Player(":orange_circle:"),
+        new Player(":red_circle:"),
+      ]);
       let currentPlayer = message.author.id;
 
       let embed = client
@@ -116,12 +112,12 @@ module.exports.run = async (client, message, args, cmd) => {
           board(game).join("\n").replace(/,/g, ""),
           "#ec3d93"
         )
-        .setAuthor(
-          `${message.author.username} vs. ${
+        .setAuthor({
+          name: `${message.author.username} vs. ${
             message.mentions.users.first().username
           }`,
-          `https://cdn.upload.systems/uploads/ZdKDK7Tx.png`
-        );
+          iconURL: `https://cdn.upload.systems/uploads/ZdKDK7Tx.png`,
+        });
 
       message.channel.send({ embeds: [embed] }).then((emb) => {
         let filter = (m) =>
@@ -170,19 +166,19 @@ module.exports.run = async (client, message, args, cmd) => {
             return;
 
           if (game.state.status == "0")
-            embed.setAuthor(
-              `The winner is ${
+            embed.setAuthor({
+              name: `The winner is ${
                 game.state.winner.color == game.players["0"].color
                   ? message.author.username
                   : message.mentions.users.first().username
               }!`,
-              `https://cdn.upload.systems/uploads/ZdKDK7Tx.png`
-            );
+              iconURL: `https://cdn.upload.systems/uploads/ZdKDK7Tx.png`,
+            });
           else if (game.state.status == "1")
-            embed.setAuthor(
-              `Looks like you tied!`,
-              `https://cdn.upload.systems/uploads/ZdKDK7Tx.png`
-            );
+            embed.setAuthor({
+              name: `Looks like you tied!`,
+              iconURL: `https://cdn.upload.systems/uploads/ZdKDK7Tx.png`,
+            });
           else
             client.utils.errorEmbed(
               client,

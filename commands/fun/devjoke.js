@@ -51,10 +51,10 @@ module.exports.run = async (client, message) => {
         .setThumbnail(
           `https://cdn.discordapp.com/attachments/735248366291648523/742124928165347428/hi.png`
         )
-        .setAuthor(
-          "Developer Joke",
-          `https://cdn.upload.systems/uploads/ZdKDK7Tx.png`
-        ),
+        .setAuthor({
+          name: "Developer Joke",
+          iconURL: `https://cdn.upload.systems/uploads/ZdKDK7Tx.png`,
+        }),
     ],
   });
 };

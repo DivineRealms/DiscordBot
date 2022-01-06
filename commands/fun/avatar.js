@@ -19,10 +19,10 @@ module.exports.run = async (client, message, args) => {
       client
         .embedBuilder(client, message, "", "", "#ec3d93")
         .setImage(user.displayAvatarURL({ dynamic: true }))
-        .setAuthor(
-          `${user.tag}'s Avatar`,
-          `https://cdn.upload.systems/uploads/ZdKDK7Tx.png`
-        ),
+        .setAuthor({
+          name: `${user.tag}'s Avatar`,
+          iconURL: `https://cdn.upload.systems/uploads/ZdKDK7Tx.png`,
+        }),
     ],
   });
 };

@@ -13,9 +13,9 @@ module.exports = {
 
 module.exports.run = async (client, message, args) => {
   const page = await fetch(
-      "https://randomwordgenerator.com/never-have-i-ever-question.php"
-    ).then((r) => r.text());
-    
+    "https://randomwordgenerator.com/never-have-i-ever-question.php"
+  ).then((r) => r.text());
+
   let nhie = load(page)(".support-sentence").text();
 
   message.channel.send({
@@ -28,10 +28,10 @@ module.exports.run = async (client, message, args) => {
           `<:ArrowRightGray:813815804768026705>${nhie.slice(13, nhie.length)}`,
           "#ec3d93"
         )
-        .setAuthor(
-          "Never have I ever",
-          `https://cdn.upload.systems/uploads/ZdKDK7Tx.png`
-        ),
+        .setAuthor({
+          name: "Never have I ever",
+          iconURL: `https://cdn.upload.systems/uploads/ZdKDK7Tx.png`,
+        }),
     ],
   });
 };

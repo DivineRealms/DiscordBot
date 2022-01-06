@@ -40,11 +40,11 @@ module.exports.run = async (client, message, args) => {
     embeds: [
       client
         .embedBuilder(client, message, "", "", "#60b8ff")
-        .setAuthor(
-          args[0],
-          `https://cdn.upload.systems/uploads/6uDK0XAN.png`,
-          def.urbanURL
-        )
+        .setAuthor({
+          name: args[0],
+          iconURL: `https://cdn.upload.systems/uploads/6uDK0XAN.png`,
+          url: def.urbanURL,
+        })
         .addField(`Definition`, `${def.definition}`.slice(0, 1000), false)
         .addField(
           `Definition in an example:`,

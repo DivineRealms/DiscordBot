@@ -60,12 +60,10 @@ module.exports.run = async (client, message, args) => {
   } else {
     message.channel.send({
       embeds: [
-        client
-          .embedBuilder(client, message, "", "", "#47a047")
-          .setAuthor(
-            `You successfully robbed ${member.user.username} gaining yourself $${amount}.`,
-            `https://cdn.upload.systems/uploads/LrdB6F1N.png`
-          ),
+        client.embedBuilder(client, message, "", "", "#47a047").setAuthor({
+          name: `You successfully robbed ${member.user.username} gaining yourself $${amount}.`,
+          iconURL: `https://cdn.upload.systems/uploads/LrdB6F1N.png`,
+        }),
       ],
     });
 

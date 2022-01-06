@@ -23,10 +23,10 @@ module.exports.run = async (client, message, args) => {
 \<:ArrowRightGray:813815804768026705>Developers: <@237171563760320514> & <@823228305167351808>`,
           "#60b8ff"
         )
-        .setAuthor(
-          "Bot Info",
-          `https://cdn.upload.systems/uploads/6uDK0XAN.png`
-        )
+        .setAuthor({
+          name: "Bot Info",
+          iconURL: `https://cdn.upload.systems/uploads/6uDK0XAN.png`,
+        })
         .setThumbnail(
           client.user.displayAvatarURL({ size: 1024, dynamic: true })
         ),

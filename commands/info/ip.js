@@ -12,16 +12,13 @@ module.exports.run = async (client, message, args) =>
   message.channel.send({
     embeds: [
       client
-        .embedBuilder(client, message, "", "", "#60b8ff")
+        .embedBuilder(client, message, "", "", "#81b051")
+        .setThumbnail(`https://cdn.upload.systems/uploads/YrOfFxGC.png`)
         .addField(
           "Minecraft Server IPs:",
           "`1️⃣` **`divinerealms.ga`**\n`2️⃣` **`divinemc.ga`**",
           true
         )
-        .addField("Version:", "**`1.17.1`**", true)
-        .setAuthor(
-          "Divine Realms",
-          `https://cdn.upload.systems/uploads/i5Mm2j9b.png`
-        ),
+        .addField("Version:", "**`1.17.1`**", true),
     ],
   });

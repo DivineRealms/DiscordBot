@@ -49,10 +49,10 @@ module.exports.run = async (client, message, args) => {
 
     let embed = client
       .embedBuilder(client, message, "", "", "GREEN")
-      .setAuthor(
-        "Code Evaluation",
-        `https://cdn.upload.systems/uploads/GVd0PBIt.png`
-      )
+      .setAuthor({
+        name: "Code Evaluation",
+        iconURL: `https://cdn.upload.systems/uploads/GVd0PBIt.png`,
+      })
       .addField("📥︲Input:", `\`\`\`${code}\`\`\``);
 
     if (evaled.length >= 1024) {

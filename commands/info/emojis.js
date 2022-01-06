@@ -35,10 +35,10 @@ module.exports.run = async (client, message, args) => {
     embeds: [
       client
         .embedBuilder(client, message, "", "", "#60b8ff")
-        .setAuthor(
-          `Emojis in ${message.guild.name}`,
-          `https://cdn.upload.systems/uploads/6uDK0XAN.png`
-        )
+        .setAuthor({
+          name: `Emojis in ${message.guild.name}`,
+          iconURL: `https://cdn.upload.systems/uploads/6uDK0XAN.png`,
+        })
         .addField(`Regular Emojis:`, `${RegularEmojis}`, false)
         .addField(`Animated Emojis:`, `${AnimeOnesLol}`, false)
         .addField(

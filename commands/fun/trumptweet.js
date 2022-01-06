@@ -42,10 +42,10 @@ module.exports.run = async (client, message, args) => {
       embeds: [
         client
           .embedBuilder(client, message, "", "", "#ec3d93")
-          .setAuthor(
-            "Trump Tweet",
-            `https://cdn.upload.systems/uploads/ZdKDK7Tx.png`
-          )
+          .setAuthor({
+            name: "Trump Tweet",
+            iconURL: `https://cdn.upload.systems/uploads/ZdKDK7Tx.png`,
+          })
           .setImage(img),
       ],
     });

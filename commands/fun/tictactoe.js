@@ -74,10 +74,7 @@ module.exports.run = async (client, message, args, cmd) => {
   let filter1 = (m) =>
       m.content.toLowerCase().includes("yes") &&
       m.author.id == message.mentions.users.first().id,
-    msg = await message.channel.awaitMessages({ filter1,
-      max: 1,
-      time: 8000,
-    });
+    msg = await message.channel.awaitMessages({ filter1, max: 1, time: 8000 });
 
   if (!msg.first())
     return message.channel.send({
@@ -103,12 +100,12 @@ module.exports.run = async (client, message, args, cmd) => {
 <:ArrowRightGray:813815804768026705>:seven:┃:eight:┃:nine:`,
       "#ec3d93"
     )
-    .setAuthor(
-      `${message.author.username} vs. ${
+    .setAuthor({
+      name: `${message.author.username} vs. ${
         message.mentions.users.first().username
       }`,
-      `https://cdn.upload.systems/uploads/ZdKDK7Tx.png`
-    );
+      iconURL: `https://cdn.upload.systems/uploads/ZdKDK7Tx.png`,
+    });
 
   message.channel.send({ embeds: [embed] }).then((emb) => {
     let filter = (m) =>
@@ -157,15 +154,15 @@ module.exports.run = async (client, message, args, cmd) => {
       )
         return;
       if (!ttt.getWinner(board) && ttt.allSquaresSet(board))
-        embed.setAuthor(
-          "Looks like nobody won, It's a tie!",
-          `https://cdn.upload.systems/uploads/ZdKDK7Tx.png`
-        );
+        embed.setAuthor({
+          name: "Looks like nobody won, It's a tie!",
+          iconURL: `https://cdn.upload.systems/uploads/ZdKDK7Tx.png`,
+        });
       else if (!ttt.getWinner(board))
-        embed.setAuthor(
-          "Time's Up! Looks like nobody won!",
-          `https://cdn.upload.systems/uploads/ZdKDK7Tx.png`
-        );
+        embed.setAuthor({
+          name: "Time's Up! Looks like nobody won!",
+          iconURL: `https://cdn.upload.systems/uploads/ZdKDK7Tx.png`,
+        });
 
       emb.edit({ embeds: [embed] });
 

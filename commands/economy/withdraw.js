@@ -38,12 +38,10 @@ module.exports.run = async (client, message, args) => {
 
     message.channel.send({
       embeds: [
-        client
-          .embedBuilder(client, message, "", "", "#3db39e")
-          .setAuthor(
-            `You have withdrawn $${bank} from the bank.`,
-            `https://cdn.upload.systems/uploads/6KOGFYJM.png`
-          ),
+        client.embedBuilder(client, message, "", "", "#3db39e").setAuthor({
+          name: `You have withdrawn $${bank} from the bank.`,
+          iconURL: `https://cdn.upload.systems/uploads/6KOGFYJM.png`,
+        }),
       ],
     });
 
@@ -75,12 +73,10 @@ module.exports.run = async (client, message, args) => {
 
   message.channel.send({
     embeds: [
-      client
-        .embedBuilder(client, message, "", "", "#3db39e")
-        .setAuthor(
-          `You have withdrawn $${Number(args[0])} from the bank.`,
-          `https://cdn.upload.systems/uploads/6KOGFYJM.png`
-        ),
+      client.embedBuilder(client, message, "", "", "#3db39e").setAuthor({
+        name: `You have withdrawn $${Number(args[0])} from the bank.`,
+        iconURL: `https://cdn.upload.systems/uploads/6KOGFYJM.png`,
+      }),
     ],
   });
 

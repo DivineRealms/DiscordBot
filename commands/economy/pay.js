@@ -52,12 +52,10 @@ module.exports.run = async (client, message, args) => {
 
   message.channel.send({
     embeds: [
-      client
-        .embedBuilder(client, message, "", "", "#3db39e")
-        .setAuthor(
-          `You have paid $${args[1]} to ${user.tag}.`,
-          `https://cdn.upload.systems/uploads/6KOGFYJM.png`
-        ),
+      client.embedBuilder(client, message, "", "", "#3db39e").setAuthor({
+        name: `You have paid $${args[1]} to ${user.tag}.`,
+        iconURL: `https://cdn.upload.systems/uploads/6KOGFYJM.png`,
+      }),
     ],
   });
 };

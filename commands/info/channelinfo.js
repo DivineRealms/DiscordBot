@@ -13,10 +13,10 @@ module.exports.run = async (client, message, args) => {
     embeds: [
       client
         .embedBuilder(client, message, "", "", "#60b8ff")
-        .setAuthor(
-          `${message.channel.name} (${message.channel.id})`,
-          `https://cdn.upload.systems/uploads/6uDK0XAN.png`
-        )
+        .setAuthor({
+          name: `${message.channel.name} (${message.channel.id})`,
+          iconURL: `https://cdn.upload.systems/uploads/6uDK0XAN.png`,
+        })
         .addField(
           "Information",
           `<:ArrowRightGray:813815804768026705>Channel Name: ${message.channel.name} 

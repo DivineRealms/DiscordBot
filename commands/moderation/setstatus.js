@@ -25,10 +25,10 @@ module.exports.run = async (client, message, args) => {
     embeds: [
       client
         .embedBuilder(client, message, "", "#f44336")
-        .setAuthor(
-          `Status has been changed to ${status}.`,
-          `https://cdn.upload.systems/uploads/6Xdg16Gh.png`
-        ),
+        .setAuthor({
+          name: `Status has been changed to ${status}.`,
+          iconURL: `https://cdn.upload.systems/uploads/6Xdg16Gh.png`,
+        }),
     ],
   });
 

@@ -36,10 +36,10 @@ module.exports.run = async (client, message, args) =>
           }**`,
           "#60b8ff"
         )
-        .setAuthor(
-          message.guild.name + "'s Information",
-          `https://cdn.upload.systems/uploads/6uDK0XAN.png`
-        )
+        .setAuthor({
+          name: message.guild.name + "'s Information",
+          iconURL: `https://cdn.upload.systems/uploads/6uDK0XAN.png`,
+        })
         .setThumbnail(message.guild.iconURL({ size: 1024, dynamic: true })),
     ],
   });

@@ -29,17 +29,18 @@ module.exports.run = async (client, message, args, cmd) => {
     if (number == 1) {
       return message.channel.send({
         embeds: [
-          client.embedBuilder(
-            client,
-            message,
-            "",
-            `<:ArrowRightGray:813815804768026705>It was a tie, we both had ${args[0]}`,
-            "#ec3d93"
-          )
-          .setAuthor(
-            "Rock Paper Scissors",
-            `https://cdn.upload.systems/uploads/ZdKDK7Tx.png`
-          )
+          client
+            .embedBuilder(
+              client,
+              message,
+              "",
+              `<:ArrowRightGray:813815804768026705>It was a tie, we both had ${args[0]}`,
+              "#ec3d93"
+            )
+            .setAuthor({
+              name: "Rock Paper Scissors",
+              iconURL: `https://cdn.upload.systems/uploads/ZdKDK7Tx.png`,
+            }),
         ],
       });
     }
@@ -48,17 +49,18 @@ module.exports.run = async (client, message, args, cmd) => {
       if (args[0].toLowerCase() == "rock") {
         return message.channel.send({
           embeds: [
-            client.embedBuilder(
-              client,
-              message,
-              "",
-              "<:ArrowRightGray:813815804768026705>I won! I had paper.",
-              "#ec3d93"
-            )
-            .setAuthor(
-              "Rock Paper Scissors",
-              `https://cdn.upload.systems/uploads/ZdKDK7Tx.png`
-            )
+            client
+              .embedBuilder(
+                client,
+                message,
+                "",
+                "<:ArrowRightGray:813815804768026705>I won! I had paper.",
+                "#ec3d93"
+              )
+              .setAuthor({
+                name: "Rock Paper Scissors",
+                iconURL: `https://cdn.upload.systems/uploads/ZdKDK7Tx.png`,
+              }),
           ],
         });
       }
@@ -66,17 +68,18 @@ module.exports.run = async (client, message, args, cmd) => {
       if (args[0].toLowerCase() == "paper") {
         return message.channel.send({
           embeds: [
-            client.embedBuilder(
-              client,
-              message,
-              "",
-              "<:ArrowRightGray:813815804768026705>I won! I had scissors.",
-              "#ec3d93"
-            )
-            .setAuthor(
-              "Rock Paper Scissors",
-              `https://cdn.upload.systems/uploads/ZdKDK7Tx.png`
-            )
+            client
+              .embedBuilder(
+                client,
+                message,
+                "",
+                "<:ArrowRightGray:813815804768026705>I won! I had scissors.",
+                "#ec3d93"
+              )
+              .setAuthor({
+                name: "Rock Paper Scissors",
+                iconURL: `https://cdn.upload.systems/uploads/ZdKDK7Tx.png`,
+              }),
           ],
         });
       }
@@ -84,17 +87,18 @@ module.exports.run = async (client, message, args, cmd) => {
       if (args[0].toLowerCase() == "scissors") {
         return message.channel.send({
           embeds: [
-            client.embedBuilder(
-              client,
-              message,
-              "",
-              "<:ArrowRightGray:813815804768026705>I won! I had rock.",
-              "#ec3d93"
-            )
-            .setAuthor(
-              "Rock Paper Scissors",
-              `https://cdn.upload.systems/uploads/ZdKDK7Tx.png`
-            )
+            client
+              .embedBuilder(
+                client,
+                message,
+                "",
+                "<:ArrowRightGray:813815804768026705>I won! I had rock.",
+                "#ec3d93"
+              )
+              .setAuthor({
+                name: "Rock Paper Scissors",
+                iconURL: `https://cdn.upload.systems/uploads/ZdKDK7Tx.png`,
+              }),
           ],
         });
       }
@@ -112,10 +116,10 @@ module.exports.run = async (client, message, args, cmd) => {
                 "<:ArrowRightGray:813815804768026705>You won, I had scissors.",
                 "#ec3d93"
               )
-              .setAuthor(
-                "Rock Paper Scissors",
-                `https://cdn.upload.systems/uploads/ZdKDK7Tx.png`
-              ),
+              .setAuthor({
+                name: "Rock Paper Scissors",
+                iconURL: `https://cdn.upload.systems/uploads/ZdKDK7Tx.png`,
+              }),
           ],
         });
       }
@@ -131,10 +135,10 @@ module.exports.run = async (client, message, args, cmd) => {
                 "<:ArrowRightGray:813815804768026705>You won, I had rock.",
                 "#ec3d93"
               )
-              .setAuthor(
-                "Rock Paper Scissors",
-                `https://cdn.upload.systems/uploads/ZdKDK7Tx.png`
-              ),
+              .setAuthor({
+                name: "Rock Paper Scissors",
+                iconURL: `https://cdn.upload.systems/uploads/ZdKDK7Tx.png`,
+              }),
           ],
         });
       }
@@ -150,10 +154,10 @@ module.exports.run = async (client, message, args, cmd) => {
                 "<:ArrowRightGray:813815804768026705>You won, I had paper.",
                 "#ec3d93"
               )
-              .setAuthor(
-                "Rock Paper Scissors",
-                `https://cdn.upload.systems/uploads/ZdKDK7Tx.png`
-              ),
+              .setAuthor({
+                name: "Rock Paper Scissors",
+                iconURL: `https://cdn.upload.systems/uploads/ZdKDK7Tx.png`,
+              }),
           ],
         });
       }

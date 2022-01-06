@@ -24,14 +24,12 @@ module.exports.run = async (client, message, args) => {
 
   message.channel.send({
     embeds: [
-      client
-        .embedBuilder(client, message, "", "", "#3db39e")
-        .setAuthor(
-          `You have worked as ${
-            jobs[Math.floor(Math.random() * jobs.length)]
-          } and earned $${amount}.`,
-          `https://cdn.upload.systems/uploads/6KOGFYJM.png`
-        ),
+      client.embedBuilder(client, message, "", "", "#3db39e").setAuthor({
+        name: `You have worked as ${
+          jobs[Math.floor(Math.random() * jobs.length)]
+        } and earned $${amount}.`,
+        iconURL: `https://cdn.upload.systems/uploads/6KOGFYJM.png`,
+      }),
     ],
   });
 

@@ -60,10 +60,10 @@ module.exports.run = async (client, message, args) => {
 <:ArrowRightGray:813815804768026705>Wind: **${current.winddisplay}**`,
               "#60b8ff"
             )
-            .setAuthor(
-              `Weather in ${current.observationpoint}`,
-              `https://cdn.upload.systems/uploads/6uDK0XAN.png`
-            )
+            .setAuthor({
+              name: `Weather in ${current.observationpoint}`,
+              iconURL: `https://cdn.upload.systems/uploads/6uDK0XAN.png`,
+            })
             .setThumbnail(current.imageUrl),
         ],
       });

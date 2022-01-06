@@ -39,11 +39,7 @@ module.exports.run = async (client, message, args) => {
   user.send({ content: text }).catch(() => {
     return message.channel.send({
       embeds: [
-        client.utils.errorEmbed(
-          client,
-          message,
-          "Their DMs are closed."
-        ),
+        client.utils.errorEmbed(client, message, "Their DMs are closed."),
       ],
     });
   });
@@ -52,10 +48,10 @@ module.exports.run = async (client, message, args) => {
     embeds: [
       client
         .embedBuilder(client, message, "", "", "#3db39e")
-        .setAuthor(
-          `Successfully sent a DM to ${user.username}.`,
-          `https://cdn.upload.systems/uploads/6KOGFYJM.png`
-        ),
+        .setAuthor({
+          name: `Successfully sent a DM to ${user.username}.`,
+          iconURL: `https://cdn.upload.systems/uploads/6KOGFYJM.png`,
+        }),
     ],
   });
 };

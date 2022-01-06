@@ -45,10 +45,10 @@ module.exports.run = async (client, message, args) => {
       embeds: [
         client
           .embedBuilder(client, message, "", "", "#3db39e")
-          .setAuthor(
-            "Command has been reloaded successfully.",
-            `https://cdn.upload.systems/uploads/6KOGFYJM.png`
-          ),
+          .setAuthor({
+            name: "Command has been reloaded successfully.",
+            iconURL: `https://cdn.upload.systems/uploads/6KOGFYJM.png`,
+          }),
       ],
     });
   } catch (err) {

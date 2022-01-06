@@ -84,7 +84,10 @@ module.exports.run = async (client, message, args) => {
                 ),
             menus[i].color
           )
-          .setAuthor(menus[i].label + " Commands", menus[i].avatar)
+          .setAuthor({
+            name: menus[i].label + " Commands",
+            iconURL: menus[i].avatar,
+          })
           .addField(
             "Tips:",
             `\`1️⃣\` Select a command category using the paginator below.\n\`2️⃣\` Use **\`${message.px}help commandName\`** to get the command's usage.`,
@@ -138,10 +141,10 @@ module.exports.run = async (client, message, args) => {
             }\`**`,
             "#7bc2cc"
           )
-          .setAuthor(
-            "Command Help",
-            `https://cdn.upload.systems/uploads/Za4oLQsR.png`
-          ),
+          .setAuthor({
+            name: "Command Help",
+            iconURL: `https://cdn.upload.systems/uploads/Za4oLQsR.png`,
+          }),
       ],
     });
   }

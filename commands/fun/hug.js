@@ -43,10 +43,10 @@ module.exports.run = async (client, message, args) => {
         client
           .embedBuilder(client, message, "", "", "#ec3d93")
           .setImage(randomGif)
-          .setAuthor(
-            `${message.author.username} just hugged ${mentionedMember.user.username}!`,
-            `https://cdn.upload.systems/uploads/ZdKDK7Tx.png`
-          ),
+          .setAuthor({
+            name: `${message.author.username} just hugged ${mentionedMember.user.username}!`,
+            iconURL: `https://cdn.upload.systems/uploads/ZdKDK7Tx.png`,
+          }),
       ],
     });
   }

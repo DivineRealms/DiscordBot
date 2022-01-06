@@ -24,18 +24,18 @@ module.exports.run = async (client, message, args) => {
       embeds: [
         client
           .embedBuilder(client, message, "", "", "#3db39e")
-          .setAuthor(
-            "Bot is restarting...",
-            `https://cdn.upload.systems/uploads/6KOGFYJM.png`
-          ),
+          .setAuthor({
+            name: "Bot is restarting...",
+            iconURL: `https://cdn.upload.systems/uploads/6KOGFYJM.png`,
+          }),
       ],
     }),
     restarted = client
       .embedBuilder(client, message, "", "", "#3db39e")
-      .setAuthor(
-        `Bot has been restarted by ${message.author.username}.`,
-        `https://cdn.upload.systems/uploads/6KOGFYJM.png`
-      );
+      .setAuthor({
+        name: `Bot has been restarted by ${message.author.username}.`,
+        iconURL: `https://cdn.upload.systems/uploads/6KOGFYJM.png`,
+      });
 
   await restarting.edit({ embeds: [restarted] }).then(() => {
     process.exit();

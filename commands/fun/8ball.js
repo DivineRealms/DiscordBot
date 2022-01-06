@@ -47,7 +47,10 @@ module.exports.run = async (client, message, args) => {
           responses[~~(Math.random() * responses.length)],
           false
         )
-        .setAuthor("8ball", `https://cdn.upload.systems/uploads/ZdKDK7Tx.png`),
+        .setAuthor({
+          name: "8ball",
+          iconURL: `https://cdn.upload.systems/uploads/ZdKDK7Tx.png`,
+        }),
     ],
   });
 };

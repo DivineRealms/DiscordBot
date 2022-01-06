@@ -86,10 +86,10 @@ module.exports.run = async (client, message, args) => {
           `<:ArrowRightGray:813815804768026705>Ticket has been successfully created in channel <#${channel.id}>.`,
           "#b3e59f"
         )
-        .setAuthor(
-          "Ticket Created",
-          `https://cdn.upload.systems/uploads/4mFVRE7f.png`
-        ),
+        .setAuthor({
+          name: "Ticket Created",
+          iconURL: `https://cdn.upload.systems/uploads/4mFVRE7f.png`,
+        }),
     ],
     components: [jumpRow],
   });
@@ -105,10 +105,10 @@ module.exports.run = async (client, message, args) => {
           `<:ArrowRightGray:813815804768026705>A staff member will be with you shortly.`,
           "#b3e59f"
         )
-        .setAuthor(
-          `Thank you for creating a ticket`,
-          `https://cdn.upload.systems/uploads/4mFVRE7f.png`
-        ),
+        .setAuthor({
+          name: `Thank you for creating a ticket`,
+          iconURL: `https://cdn.upload.systems/uploads/4mFVRE7f.png`,
+        }),
     ],
   });
 
@@ -123,10 +123,10 @@ module.exports.run = async (client, message, args) => {
             `Created by: ${message.author}`,
             "#b3e59f"
           )
-          .setAuthor(
-            "Ticket Created",
-            `https://cdn.upload.systems/uploads/4mFVRE7f.png`
-          ),
+          .setAuthor({
+            name: "Ticket Created",
+            iconURL: `https://cdn.upload.systems/uploads/4mFVRE7f.png`,
+          }),
       ],
     });
 

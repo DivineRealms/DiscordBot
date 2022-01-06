@@ -65,7 +65,10 @@ module.exports.run = async (client, message) => {
               ),
           `${leaderboards[i].color}`
         )
-        .setAuthor(`${leaderboards[i].label}`, leaderboards[i].avatar),
+        .setAuthor({
+          name: `${leaderboards[i].label}`,
+          iconURL: leaderboards[i].avatar,
+        }),
     });
   }
 

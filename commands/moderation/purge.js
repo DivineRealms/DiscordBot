@@ -49,10 +49,10 @@ module.exports.run = async (client, message, args) => {
         embeds: [
           client
             .embedBuilder(client, message, "", "", "#f44336")
-            .setAuthor(
-              `${message.author.username} has purged ${args[0]} mesages.`,
-              `https://cdn.upload.systems/uploads/6Xdg16Gh.png`
-            ),
+            .setAuthor({
+              name: `${message.author.username} has purged ${args[0]} mesages.`,
+              iconURL: `https://cdn.upload.systems/uploads/6Xdg16Gh.png`,
+            }),
         ],
       });
     })

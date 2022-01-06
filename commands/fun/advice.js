@@ -19,7 +19,10 @@ module.exports.run = async (client, message, args) => {
     embeds: [
       client
         .embedBuilder(client, message, "", res.slip.advice, "#ec3d93")
-        .setAuthor("Advice", `https://cdn.upload.systems/uploads/ZdKDK7Tx.png`),
+        .setAuthor({
+          name: "Advice",
+          iconURL: `https://cdn.upload.systems/uploads/ZdKDK7Tx.png`,
+        }),
     ],
   });
 };

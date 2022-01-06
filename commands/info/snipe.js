@@ -29,10 +29,10 @@ module.exports.run = async (client, message, args) => {
           `\`\`\`xl${snipe.content}\`\`\``,
           "#60b8ff"
         )
-        .setAuthor(
-          `Last deleted message was from: ${user.tag}`,
-          `https://cdn.upload.systems/uploads/6uDK0XAN.png`
-        ),
+        .setAuthor({
+          name: `Last deleted message was from: ${user.tag}`,
+          iconURL: `https://cdn.upload.systems/uploads/6uDK0XAN.png`,
+        }),
     ],
   });
 };

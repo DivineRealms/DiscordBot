@@ -51,10 +51,10 @@ module.exports.run = async (client, message, args) => {
       "#ec3d93"
     )
     .setImage(urls[0])
-    .setAuthor(
-      `GIF (1/${urls.length})`,
-      `https://cdn.upload.systems/uploads/ZdKDK7Tx.png`
-    );
+    .setAuthor({
+      name: `GIF (1/${urls.length})`,
+      iconURL: `https://cdn.upload.systems/uploads/ZdKDK7Tx.png`,
+    });
 
   message.channel.send({ embeds: [embed] }).then(async (emb) => {
     ["⏮️", "◀️", "▶️", "⏭️", "⏹️", "🔢"].forEach(
@@ -112,10 +112,10 @@ module.exports.run = async (client, message, args) => {
       if (current !== page)
         emb.edit({
           embeds: [
-            embed.setAuthor(
-              `GIF (${page}/${urls.length})`,
-              `https://cdn.upload.systems/uploads/ZdKDK7Tx.png`
-            ),
+            embed.setAuthor({
+              name: `GIF (${page}/${urls.length})`,
+              iconURL: `https://cdn.upload.systems/uploads/ZdKDK7Tx.png`,
+            }),
           ],
         });
     });

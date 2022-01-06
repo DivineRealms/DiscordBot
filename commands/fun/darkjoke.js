@@ -38,7 +38,10 @@ module.exports.run = async (client, message) => {
     embeds: [
       client
         .embedBuilder(client, message, "", `${response}`, "#ec3d93")
-        .setAuthor("Dark Joke", `https://cdn.upload.systems/uploads/ZdKDK7Tx.png`),
+        .setAuthor({
+          name: "Dark Joke",
+          iconURL: `https://cdn.upload.systems/uploads/ZdKDK7Tx.png`,
+        }),
     ],
   });
 };

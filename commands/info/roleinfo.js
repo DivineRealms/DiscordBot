@@ -36,10 +36,10 @@ module.exports.run = async (client, message) => {
 <:ArrowRightGray:813815804768026705>Hoisted: **${role.hoist}**`,
           "#60b8ff"
         )
-        .setAuthor(
-          `${role.name}'s Information`,
-          `https://cdn.upload.systems/uploads/6uDK0XAN.png`
-        ),
+        .setAuthor({
+          name: `${role.name}'s Information`,
+          iconURL: `https://cdn.upload.systems/uploads/6uDK0XAN.png`,
+        }),
     ],
   });
 };

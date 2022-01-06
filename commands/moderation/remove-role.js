@@ -66,10 +66,10 @@ module.exports.run = async (client, message, args) => {
     embeds: [
       client
         .embedBuilder(client, message, "", "", "#3db39e")
-        .setAuthor(
-          `Successfully removed role ${role} from ${member.username}.`,
-          `https://cdn.upload.systems/uploads/6KOGFYJM.png`
-        ),
+        .setAuthor({
+          name: `Successfully removed role ${role} from ${member.username}.`,
+          iconURL: `https://cdn.upload.systems/uploads/6KOGFYJM.png`,
+        }),
     ],
   });
 

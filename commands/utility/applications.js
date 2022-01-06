@@ -75,9 +75,9 @@ module.exports.run = async (client, message, args) => {
       if (current !== page)
         emb.edit({
           embeds: [
-            embed.setFooter(
-              `Pages ${page}/${apps.length} - This only contains applications allowed in this channel.`
-            ),
+            embed.setFooter({
+              text: `Pages ${page}/${apps.length} - This only contains applications allowed in this channel.`,
+            }),
           ],
         });
     });

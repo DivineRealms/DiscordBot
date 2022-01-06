@@ -28,10 +28,10 @@ module.exports.run = async (client, message, args) => {
         .embedBuilder(client, message, "", "", "#ec3d93")
         .setURL(`http://reddit.com/${item.permalink}`)
         .setImage(item.data.url)
-        .setAuthor(
-          "Random Reddit Meme",
-          `https://cdn.upload.systems/uploads/ZdKDK7Tx.png`
-        ),
+        .setAuthor({
+          name: "Random Reddit Meme",
+          iconURL: `https://cdn.upload.systems/uploads/ZdKDK7Tx.png`,
+        }),
     ],
   });
 };

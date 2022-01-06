@@ -59,24 +59,20 @@ module.exports.run = async (client, message, args) => {
       db.add(`bank_${message.guild.id}_${user.id}`, Number(args[3]));
       message.channel.send({
         embeds: [
-          client
-            .embedBuilder(client, message, "", "", "#3db39e")
-            .setAuthor(
-              `$${args[3]} has been added to ${user.username}'s bank`,
-              `https://cdn.upload.systems/uploads/6KOGFYJM.png`
-            ),
+          client.embedBuilder(client, message, "", "", "#3db39e").setAuthor({
+            name: `$${args[3]} has been added to ${user.username}'s bank`,
+            iconURL: `https://cdn.upload.systems/uploads/6KOGFYJM.png`,
+          }),
         ],
       });
     } else if (args[2].toLowerCase() == "wallet") {
       db.add(`money_${message.guild.id}_${user.id}`, Number(args[3]));
       message.channel.send({
         embeds: [
-          client
-            .embedBuilder(client, message, "", "", "#3db39e")
-            .setAuthor(
-              `$${args[3]} has been added to ${user.username}'s wallet`,
-              `https://cdn.upload.systems/uploads/6KOGFYJM.png`
-            ),
+          client.embedBuilder(client, message, "", "", "#3db39e").setAuthor({
+            name: `$${args[3]} has been added to ${user.username}'s wallet`,
+            iconURL: `https://cdn.upload.systems/uploads/6KOGFYJM.png`,
+          }),
         ],
       });
     }
@@ -85,24 +81,20 @@ module.exports.run = async (client, message, args) => {
       db.subtract(`bank_${message.guild.id}_${user.id}`, Number(args[3]));
       message.channel.send({
         embeds: [
-          client
-            .embedBuilder(client, message, "", "", "#3db39e")
-            .setAuthor(
-              `$${args[3]} has been removed from ${user.username}'s bank`,
-              `https://cdn.upload.systems/uploads/6KOGFYJM.png`
-            ),
+          client.embedBuilder(client, message, "", "", "#3db39e").setAuthor({
+            name: `$${args[3]} has been removed from ${user.username}'s bank`,
+            iconURL: `https://cdn.upload.systems/uploads/6KOGFYJM.png`,
+          }),
         ],
       });
     } else if (args[2].toLowerCase() == "wallet") {
       db.subtract(`money_${message.guild.id}_${user.id}`, Number(args[3]));
       message.channel.send({
         embeds: [
-          client
-            .embedBuilder(client, message, "", "", "#3db39e")
-            .setAuthor(
-              `$${args[3]} has been removed from ${user.username}'s wallet`,
-              `https://cdn.upload.systems/uploads/6KOGFYJM.png`
-            ),
+          client.embedBuilder(client, message, "", "", "#3db39e").setAuthor({
+            name: `$${args[3]} has been removed from ${user.username}'s wallet`,
+            iconURL: `https://cdn.upload.systems/uploads/6KOGFYJM.png`,
+          }),
         ],
       });
     }

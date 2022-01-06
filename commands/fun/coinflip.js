@@ -21,9 +21,9 @@ module.exports.run = async (client, message) =>
           }**.`,
           "#ec3d93"
         )
-        .setAuthor(
-          "Coinflip",
-          `https://cdn.upload.systems/uploads/ZdKDK7Tx.png`
-        ),
+        .setAuthor({
+          name: "Coinflip",
+          iconURL: `https://cdn.upload.systems/uploads/ZdKDK7Tx.png`,
+        }),
     ],
   });

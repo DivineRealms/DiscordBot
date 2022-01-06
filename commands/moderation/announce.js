@@ -26,10 +26,10 @@ module.exports.run = async (client, message, args) => {
 
   let embed = client
     .embedBuilder(client, message, "", description)
-    .setFooter(
-      `Announcement by ${message.author.tag}`,
-      message.author.displayAvatarURL({ size: 1024, dynamic: true })
-    )
+    .setFooter({
+      text: `Announcement by ${message.author.tag}`,
+      iconURL: message.author.displayAvatarURL({ size: 1024, dynamic: true }),
+    })
     .setTimestamp();
 
   args.splice(0, 4);
@@ -70,15 +70,27 @@ module.exports.run = async (client, message, args) => {
   if (upAliases.includes(type))
     embed
       .setColor("#7edd8a")
-      .setAuthor(title, `https://cdn.upload.systems/uploads/aKT2mjr0.png`);
+      .setAuthor({
+        name: title,
+        iconURL: `https://cdn.upload.systems/uploads/aKT2mjr0.png`,
+      });
   else if (mnAliases.includes(type))
     embed
       .setColor("#ffae63")
-      .setAuthor(title, `https://cdn.upload.systems/uploads/vRfWnVT5.png`);
+      .setAuthor({
+        name: title,
+        iconURL: `https://cdn.upload.systems/uploads/vRfWnVT5.png`,
+      });
   else if (suAliases.includes(type))
-    embed.setAuthor(title, `https://cdn.upload.systems/uploads/KSTCcy4V.png`);
+    embed.setAuthor({
+      name: title,
+      iconURL: `https://cdn.upload.systems/uploads/KSTCcy4V.png`,
+    });
   else
-    embed.setAuthor(title, `https://cdn.upload.systems/uploads/sYDS6yZI.png`);
+    embed.setAuthor({
+      name: title,
+      iconURL: `https://cdn.upload.systems/uploads/sYDS6yZI.png`,
+    });
 
   message.channel.send({ embeds: [embed] });
   setTimeout(() => message.delete(), 3000);

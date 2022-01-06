@@ -24,9 +24,9 @@ module.exports.run = async (client, message, args) =>
           }\`**.`,
           "#ec3d93"
         )
-        .setAuthor(
-          "Dices rolled!",
-          `https://cdn.upload.systems/uploads/ZdKDK7Tx.png`
-        ),
+        .setAuthor({
+          name: "Dices rolled!",
+          iconURL: `https://cdn.upload.systems/uploads/ZdKDK7Tx.png`,
+        }),
     ],
   });
