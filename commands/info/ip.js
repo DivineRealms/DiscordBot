@@ -17,8 +17,8 @@ module.exports.run = async (client, message, args) =>
         .addField(
           "Minecraft Server IPs:",
           "`1️⃣` **`divinerealms.ga`**\n`2️⃣` **`divinemc.ga`**",
-          true
+          false
         )
-        .addField("Version:", "**`1.17.1`**", true),
+        .addField("Version: **`1.17.1`**", "_ _", false),
     ],
   });
