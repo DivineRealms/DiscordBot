@@ -52,14 +52,14 @@ module.exports = async (client) => {
     }
     if (list.length !== 0) return null;
     let errEmbed = new MessageEmbed()
-      .setTitle("Error Occurred")
-      .setDescription(
-        `\`(${error.name})\`
-\`(${moment.utc().tz("Europe/Belgrade").format("HH:mm:ss, DD/MM/YYYY.")})\`
-  
-\`\`\`xl\n${error.stack}\n\`\`\``
-      )
-      .setColor("RED");
+      .setAuthor({
+        name: "Error Occurred",
+        iconURL: `https://cdn.upload.systems/uploads/96HNGxzL.png`,
+      })
+      .setDescription(`\`\`\`xl\n${error.stack}\n\`\`\``)
+      .setColor("#e24c4b")
+      .setFooter({ text: `${error.name}` })
+      .setTimestamp();
 
     let channel = client.channels.cache.get("512277268597309440");
     channel.send({ embeds: [errEmbed] });
