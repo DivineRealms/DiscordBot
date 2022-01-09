@@ -1,3 +1,4 @@
+const Discord = require("discord.js");
 const db = require("quick.db");
 
 module.exports = {
@@ -37,7 +38,7 @@ module.exports.run = async (client, message, args) => {
     money *= 15
     let embedGreen = new Discord.MessageEmbed()
       .setColor("YELLOW")
-      .setAuthor({ name: "Economy", iconURL: this.client.user.displayAvatarURL() })
+      .setAuthor({ name: "Economy", iconURL: client.user.displayAvatarURL() })
       .setFooter({ text: `${message.author.username}`, iconURL: message.author.displayAvatarURL({size: 1024, dynamic: true}) })
       .setTimestamp()
       .setDescription(
@@ -54,7 +55,7 @@ The Ball fell to the Number \`${randomNumber}\` and you won **$${money}**.`
     money = parseInt(money * 1.5);
     let embedRed = new Discord.MessageEmbed()
       .setColor("YELLOW")
-      .setAuthor({ name: "Economy", iconURL: this.client.user.displayAvatarURL() })
+      .setAuthor({ name: "Economy", iconURL: client.user.displayAvatarURL() })
       .setFooter({ text: `${message.author.username}`, iconURL: message.author.displayAvatarURL({size: 1024, dynamic: true}) })
       .setTimestamp()
       .setDescription(
@@ -71,7 +72,7 @@ The Ball fell to the Number \`${randomNumber}\` and you won **$${money}**.`
     money = parseInt(money * 2);
     let embedBlack = new Discord.MessageEmbed()
       .setColor("YELLOW")
-      .setAuthor({ name: "Economy", iconURL: this.client.user.displayAvatarURL() })
+      .setAuthor({ name: "Economy", iconURL: client.user.displayAvatarURL() })
       .setFooter({ text: `${message.author.username}`, iconURL: message.author.displayAvatarURL({size: 1024, dynamic: true}) })
       .setTimestamp()
       .setDescription(
@@ -90,7 +91,7 @@ The Ball fell to the Number \`${randomNumber}\` and you won **$${money}**.`
 
     let embedLost = new Discord.MessageEmbed()
       .setColor("RED")
-      .setAuthor({ name: "Economy", iconURL: this.client.user.displayAvatarURL() })
+      .setAuthor({ name: "Economy", iconURL: client.user.displayAvatarURL() })
       .setFooter({ text: `${message.author.username}`, iconURL: message.author.displayAvatarURL({size: 1024, dynamic: true}) })
       .setTimestamp()
       .setDescription(
