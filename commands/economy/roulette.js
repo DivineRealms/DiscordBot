@@ -6,7 +6,7 @@ module.exports = {
   category: "economy",
   description: "Play roulette.",
   permissions: [],
-  cooldown: 0,
+  cooldown: 15,
   aliases: ["rt"],
   usage: "roulette [black(b), red(r), green(g)] [amount]",
 };
