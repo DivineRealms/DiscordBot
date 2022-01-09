@@ -84,7 +84,7 @@ module.exports.run = async (client, message, args) => {
         client
           .embedBuilder(client, message, "", "", "#3db39e")
           .addField(
-            "Options",
+            "Options:",
             `Color: **\`Green\`**\nAmount: **\`$${oldMoney}\`**\nMultiplier: **\`15x\`**`,
             true
           )
@@ -108,7 +108,7 @@ module.exports.run = async (client, message, args) => {
         client
           .embedBuilder(client, message, "", "", "#3db39e")
           .addField(
-            "Options",
+            "Options:",
             `Color: **\`Red\`**\nAmount: **\`$${oldMoney}\`**\nMultiplier: **\`1.5x\`**`,
             true
           )
@@ -133,7 +133,7 @@ module.exports.run = async (client, message, args) => {
         client
           .embedBuilder(client, message, "", "", "#3db39e")
           .addField(
-            "Options",
+            "Options:",
             `Color: **\`Black\`**\nAmount: **\`$${oldMoney}\`**\nMultiplier: **\`2x\`**`,
             true
           )
@@ -158,7 +158,7 @@ module.exports.run = async (client, message, args) => {
         client
           .embedBuilder(client, message, "", "", "RED")
           .addField(
-            "Options",
+            "Options:",
             `Color: **\`${color}\`**\nAmount: **\`$${money}\`**`,
             true
           )
