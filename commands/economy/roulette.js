@@ -108,12 +108,12 @@ module.exports.run = async (client, message, args) => {
           .addField(
             "Options:",
             `Color: **\`Red\`**\nNumber: **\`${randomNumber}\`**\nMultiplier: **\`1.5x\`**`,
-            true
+            false
           )
           .addField(
             "Result:",
             `You won **$${money}**`,
-            true
+            false
           )
           .setAuthor({
             name: "Roulette",
