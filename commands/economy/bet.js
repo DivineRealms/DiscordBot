@@ -14,15 +14,11 @@ module.exports = {
 module.exports.run = async (client, message, args) => {
   let bal = db.fetch(`money_${message.guild.id}_${message.author.id}`),
     chance = Math.floor(Math.random() * 100) + 1;
-    
+
   if (!args[0] || (isNaN(args[0]) && args[0] !== "all"))
     return message.channel.send({
       embeds: [
-        client.utils.errorEmbed(
-          client,
-          message,
-          "Betting value not given."
-        ),
+        client.utils.errorEmbed(client, message, "Betting value not given."),
       ],
     });
 
@@ -43,11 +39,10 @@ module.exports.run = async (client, message, args) => {
     if (chance > 70) {
       message.channel.send({
         embeds: [
-          client
-            .embedBuilder(client, message, "", "", "#3db39e")
-            .addField("Amount:", `$${money}`, true)
-            .addField("Result:", "You won!", true)
-            .setAuthor({ name: "Betting", iconURL: `https://cdn.upload.systems/uploads/HJGA3pxp.png` }),
+          client.embedBuilder(client, message, "", "", "#3db39e").setAuthor({
+            name: `You won $${money}!`,
+            iconURL: `https://cdn.upload.systems/uploads/HJGA3pxp.png`,
+          }),
         ],
       });
 
@@ -55,11 +50,10 @@ module.exports.run = async (client, message, args) => {
     } else if (chance < 70) {
       message.channel.send({
         embeds: [
-          client
-            .embedBuilder(client, message, "", "", "RED")
-            .addField("Amount:", `$${money}`, true)
-            .addField("Result:", "You lost!", true)
-            .setAuthor({ name: "Betting", iconURL: `https://cdn.upload.systems/uploads/HJGA3pxp.png` }),
+          client.embedBuilder(client, message, "", "", "RED").setAuthor({
+            name: `You lost $${money}.`,
+            iconURL: `https://cdn.upload.systems/uploads/HJGA3pxp.png`,
+          }),
         ],
       });
 
@@ -96,11 +90,10 @@ module.exports.run = async (client, message, args) => {
   if (chance > 70) {
     message.channel.send({
       embeds: [
-        client
-          .embedBuilder(client, message, "", "", "#3db39e")
-          .addField("Amount:", `$${args[0]}`, true)
-          .addField("Result:", `You won!`, true)
-          .setAuthor({ name: "Betting", iconURL: `https://cdn.upload.systems/uploads/HJGA3pxp.png` }),
+        client.embedBuilder(client, message, "", "", "#3db39e").setAuthor({
+          name: `You won $${args[0]}!`,
+          iconURL: `https://cdn.upload.systems/uploads/HJGA3pxp.png`,
+        }),
       ],
     });
 
@@ -108,11 +101,10 @@ module.exports.run = async (client, message, args) => {
   } else if (chance < 70) {
     message.channel.send({
       embeds: [
-        client
-          .embedBuilder(client, message, "", "", "RED")
-          .addField("Amount:", `$${args[0]}`, true)
-          .addField("Result:", `You lost!`, true)
-          .setAuthor({ name: "Betting", iconURL: `https://cdn.upload.systems/uploads/HJGA3pxp.png` }),
+        client.embedBuilder(client, message, "", "", "RED").setAuthor({
+          name: `You lost ${args[0]}.`,
+          iconURL: `https://cdn.upload.systems/uploads/HJGA3pxp.png`,
+        }),
       ],
     });
 
