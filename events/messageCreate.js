@@ -8,15 +8,6 @@ const cooldownList = [];
 module.exports = async (client, message) => {
   if (message.channel.type == "DM") return;
 
-  if (
-    message.channel.id == "512570600682684436" &&
-    !message.member.permissions.has("MANAGE_GUILD")
-  ) {
-    setTimeout(() => {
-      message.delete();
-    }, 600 * 1000);
-  }
-
   if (message.author.id === "302050872383242240") {
     if (message.embeds[0].description.includes("Bump done")) {
       message.channel.messages.fetch().then((messages) => {
