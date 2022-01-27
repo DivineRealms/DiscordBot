@@ -29,16 +29,10 @@ module.exports = async (client, message) => {
 
         setTimeout(() => {
           let bumpAgain = client
-            .embedBuilder(
-              client,
-              message,
-              "",
-              "<:ArrowRightGray:813815804768026705>Server can be bumped again, use **`!d bump`**.",
-              "#1cc0f9"
-            )
+            .embedBuilder(client, message, "", "", "#1cc0f9")
             .setAuthor({
-              name: "Server Bump",
-              iconURL: `https://cdn.upload.systems/uploads/pVry3Mav.png`
+              name: "Server can be bumped again, use !d bump",
+              iconURL: `https://cdn.upload.systems/uploads/pVry3Mav.png`,
             });
 
           if (client.conf.Logging.Enabled)
@@ -52,17 +46,10 @@ module.exports = async (client, message) => {
         }, timeout);
 
         const bump = client
-          .embedBuilder(
-            client,
-            message,
-            "",
-            `<:ArrowRightGray:813815804768026705>Thank you <@!${dbumper[0]}> for bumping!
-<:ArrowRightGray:813815804768026705>You've received **$1000** as a reward.`,
-            "#1cc0f9"
-          )
+          .embedBuilder(client, message, "", "", "#1cc0f9")
           .setAuthor({
-            name: "Server Bump",
-            iconURL: `https://cdn.upload.systems/uploads/pVry3Mav.png`
+            name: "Thank you for bumping! You've received $1000 as a reward.",
+            iconURL: `https://cdn.upload.systems/uploads/pVry3Mav.png`,
           });
 
         db.add(`bumps_${message.guild.id}_${dbumper[0]}`, 1);

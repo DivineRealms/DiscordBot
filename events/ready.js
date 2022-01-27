@@ -6,7 +6,9 @@ const axios = require("axios");
 
 module.exports = async (client) => {
   let date = new Date();
-  console.log(`[${date.toLocaleDateString()} ${date.toLocaleTimeString()} INFO]: [DR] Bot has started and is online now`);
+  console.log(
+    `[${date.toLocaleDateString()} ${date.toLocaleTimeString()} INFO]: [DR] Bot has started and is online now`
+  );
 
   const settings = client.conf.Settings.Bot_Activity;
 
@@ -78,17 +80,30 @@ module.exports = async (client) => {
       .filter((b) => isToday(b.data))
       .map((s) => {
         let bUser = client.users.cache.get(s.ID.split("_")[2]) || "N/A";
-        return `> ${bUser}\n`;
+        return `${bUser}\n`;
       });
 
-    const embed = client.embedBuilder(
-      client,
-      null,
-      "Todays Birthdays!",
-      `Happy birthday to the following member(s)!\nMake sure to wish them a happy birthday in general!\n${birthEmbed}`
-    );
+    const embed = client
+      .embedBuilder(
+        client,
+        null,
+        "",
+        `<:ArrowRightGray:813815804768026705>**Happy Birthday** to the following member(s)!\n\n${birthEmbed}`
+      )
+      .setAuthor({
+        text: "It's someone's birthday!",
+        iconURL: `https://i.imgur.com/aFVnmaL.png`,
+      })
+      .setThumbnail(`https://i.imgur.com/dmu7XSb.png`);
 
-    if (channel && birthEmbed.length > 0) channel.send({ embeds: [embed] });
+    const reminder = client
+      .embedBuilder(client, null, "", "", "#2f3136")
+      .setAuthor({
+        text: 'Psst, use ".addbirthday Month Day Year" to set your birthday.',
+      });
+
+    if (channel && birthEmbed.length > 0)
+      channel.send({ embeds: [embed, reminder] });
   }
 
   let bdayCron = new cron.CronJob("59 59 11 * * *", () => birthday(), {
@@ -120,18 +135,10 @@ module.exports = async (client) => {
       if (generalCh)
         generalCh.send({
           embeds: [
-            client
-              .embedBuilder(
-                client,
-                "",
-                "",
-                "<:ArrowRightGray:813815804768026705>Click the buttons below to vote and help us climb the leaderboard.",
-                "#8ee26b"
-              )
-              .setAuthor({
-                name: "Support us by Voting!",
-                iconURL: `https://cdn.upload.systems/uploads/U5K71mCE.png`
-              }),
+            client.embedBuilder(client, "", "", "", "#8ee26b").setAuthor({
+              name: "Click the buttons below to vote and help us climb the leaderboard.",
+              iconURL: `https://cdn.upload.systems/uploads/U5K71mCE.png`,
+            }),
           ],
           components: [voteRow],
         });
