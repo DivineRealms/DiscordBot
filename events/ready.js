@@ -7,7 +7,7 @@ const axios = require("axios");
 module.exports = async (client) => {
   let date = new Date();
   console.log(
-    `[${date.toLocaleDateString()} ${date.toLocaleTimeString()} INFO]: [DR] Bot has started and is online now`
+    `\x1b[0;37m[${date.toLocaleDateString()} ${date.toLocaleTimeString()}] \x1b[1;36m[INFO] \x1b[0;0mBot has started and is online now.`
   );
 
   const settings = client.conf.Settings.Bot_Activity;
