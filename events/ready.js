@@ -91,7 +91,7 @@ module.exports = async (client) => {
         `<:ArrowRightGray:813815804768026705>**Happy Birthday** to the following member(s)!\n\n${birthEmbed}`
       )
       .setAuthor({
-        text: "It's someone's birthday!",
+        name: "It's someone's birthday!",
         iconURL: `https://i.imgur.com/aFVnmaL.png`,
       })
       .setThumbnail(`https://i.imgur.com/dmu7XSb.png`);
@@ -99,7 +99,7 @@ module.exports = async (client) => {
     const reminder = client
       .embedBuilder(client, null, "", "", "#2f3136")
       .setAuthor({
-        text: 'Psst, use ".addbirthday Month Day Year" to set your birthday.',
+        name: 'Psst, use ".addbirthday Month Day Year" to set your birthday.',
       });
 
     if (channel && birthEmbed.length > 0)
