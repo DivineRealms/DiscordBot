@@ -8,55 +8,46 @@ const cooldownList = [];
 module.exports = async (client, message) => {
   if (message.channel.type == "DM") return;
 
-  if (message.author.id === "302050872383242240") {
+  if (message.author.id === "302050872383242240" && message.type == "APPLICATION_COMMAND") {
     if (message.embeds[0].description.includes("Bump done")) {
-      message.channel.messages.fetch().then((messages) => {
-        let dbumper = messages
-          .filter((msg) => msg.content.toLowerCase().startsWith("!d bump"))
-          .map((msg) => msg.author.id);
+      let dbumper = message.interaction.user.id;
+      let bumpChannel = client.channels.cache.get(client.conf.Logging.Bumps);
 
-        let bumpChannel = client.channels.cache.get(client.conf.Logging.Bumps);
+      let timeout = 7200000;
+      let time = Date.now() + timeout;
 
-        let bumpMsg = messages
-          .filter((msg) => msg.content.toLowerCase().startsWith("!d bump"))
-          .map((msg) => msg);
+      db.set(`serverBump_${client.conf.Settings.Guild_ID}`, time);
+      db.set(`lastBump_${client.conf.Settings.Guild_ID}`, dbumper);
 
-        let timeout = 7200000;
-        let time = Date.now() + timeout;
-
-        db.set(`serverBump_${client.conf.Settings.Guild_ID}`, time);
-        db.set(`lastBump_${client.conf.Settings.Guild_ID}`, dbumper[0]);
-
-        setTimeout(() => {
-          let bumpAgain = client
-            .embedBuilder(client, message, "", "", "#1cc0f9")
-            .setAuthor({
-              name: "Server can be bumped again, use !d bump",
-              iconURL: `https://cdn.upload.systems/uploads/pVry3Mav.png`,
-            });
-
-          if (client.conf.Logging.Enabled)
-            bumpChannel.send({
-              content: `<@!${dbumper[0]}>`,
-              embeds: [bumpAgain],
-            });
-
-          db.delete(`serverBump_${client.conf.Settings.Guild_ID}`);
-          db.delete(`lastBump_${client.conf.Settings.Guild_ID}`);
-        }, timeout);
-
-        const bump = client
+      setTimeout(() => {
+        let bumpAgain = client
           .embedBuilder(client, message, "", "", "#1cc0f9")
           .setAuthor({
-            name: "Thank you for bumping! You've received $1000 as a reward.",
+            name: "Server can be bumped again, use !d bump",
             iconURL: `https://cdn.upload.systems/uploads/pVry3Mav.png`,
           });
 
-        db.add(`bumps_${message.guild.id}_${dbumper[0]}`, 1);
-        db.add(`money_${message.guild.id}_${dbumper[0]}`, 1000);
+        if (client.conf.Logging.Enabled)
+          bumpChannel.send({
+            content: `<@!${dbumper}>`,
+            embeds: [bumpAgain],
+          });
 
-        if (client.conf.Logging.Enabled) bumpMsg[0].reply({ embeds: [bump] });
-      });
+        db.delete(`serverBump_${client.conf.Settings.Guild_ID}`);
+        db.delete(`lastBump_${client.conf.Settings.Guild_ID}`);
+      }, timeout);
+
+      const bump = client
+        .embedBuilder(client, message, "", "", "#1cc0f9")
+        .setAuthor({
+          name: "Thank you for bumping! You've received $1000 as a reward.",
+          iconURL: `https://cdn.upload.systems/uploads/pVry3Mav.png`,
+        });
+
+      db.add(`bumps_${message.guild.id}_${dbumper}`, 1);
+      db.add(`money_${message.guild.id}_${dbumper}`, 1000);
+
+      if (client.conf.Logging.Enabled) message.reply({ embeds: [bump] });
     }
   }
 
