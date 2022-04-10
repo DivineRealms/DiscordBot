@@ -9,7 +9,7 @@ const bump = (client) => {
       let embed = client
         .embedBuilder(client, null, "", "", "#1cc0f9")
         .setAuthor({
-          name: "Server can be bumped again, use !d bump",
+          name: "Server can be bumped again, use /bump",
           iconURL: `https://cdn.upload.systems/uploads/pVry3Mav.png`,
         });
 

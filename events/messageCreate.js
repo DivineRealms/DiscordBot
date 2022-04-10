@@ -23,7 +23,7 @@ module.exports = async (client, message) => {
         let bumpAgain = client
           .embedBuilder(client, message, "", "", "#1cc0f9")
           .setAuthor({
-            name: "Server can be bumped again, use !d bump",
+            name: "Server can be bumped again, use /bump",
             iconURL: `https://cdn.upload.systems/uploads/pVry3Mav.png`,
           });
 
