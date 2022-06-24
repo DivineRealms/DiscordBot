@@ -38,59 +38,63 @@ module.exports = async (client) => {
   client.paginateSelect = require("../utils/paginateSelect.js");
 
   process.on("unhandledRejection", (error) => {
-    let ignoreErrors = [
-      `DiscordAPIError: Unknown Message`,
-      `DiscordAPIError: Missing Permissions`,
-      `DiscordAPIError: Missing Access`,
-      `DiscordAPIError: Unknown Channel`,
-      `DiscordAPIError: Cannot send messages to this user`,
-      "DiscordAPIError: Cannot execute action on a DM channel",
-    ];
-    let list = [];
-    for (const ignore of ignoreErrors) {
-      if (error.stack.includes(ignore)) list.push(true);
+    if(client.isReady()) {
+      let ignoreErrors = [
+        `DiscordAPIError: Unknown Message`,
+        `DiscordAPIError: Missing Permissions`,
+        `DiscordAPIError: Missing Access`,
+        `DiscordAPIError: Unknown Channel`,
+        `DiscordAPIError: Cannot send messages to this user`,
+        "DiscordAPIError: Cannot execute action on a DM channel",
+      ];
+      let list = [];
+      for (const ignore of ignoreErrors) {
+        if (error.stack.includes(ignore)) list.push(true);
+      }
+      if (list.length !== 0) return null;
+      let errEmbed = new MessageEmbed()
+        .setAuthor({
+          name: "Error Occurred",
+          iconURL: `https://cdn.upload.systems/uploads/96HNGxzL.png`,
+        })
+        .setDescription(`\`\`\`xl\n${error.stack}\n\`\`\``)
+        .setColor("#e24c4b")
+        .setFooter({ text: `${error.name}` })
+        .setTimestamp();
+  
+      let channel = client.channels.cache.get("512277268597309440");
+      if(channel) channel.send({ embeds: [errEmbed] });
     }
-    if (list.length !== 0) return null;
-    let errEmbed = new MessageEmbed()
-      .setAuthor({
-        name: "Error Occurred",
-        iconURL: `https://cdn.upload.systems/uploads/96HNGxzL.png`,
-      })
-      .setDescription(`\`\`\`xl\n${error.stack}\n\`\`\``)
-      .setColor("#e24c4b")
-      .setFooter({ text: `${error.name}` })
-      .setTimestamp();
-
-    let channel = client.channels.cache.get("512277268597309440");
-    channel.send({ embeds: [errEmbed] });
   });
 
   process.on("uncaughtException", (error) => {
-    let ignoreErrors = [
-      `DiscordAPIError: Unknown Message`,
-      `DiscordAPIError: Missing Permissions`,
-      `DiscordAPIError: Missing Access`,
-      `DiscordAPIError: Unknown Channel`,
-      `DiscordAPIError: Cannot send messages to this user`,
-      "DiscordAPIError: Cannot execute action on a DM channel",
-    ];
-    let list = [];
-    for (const ignore of ignoreErrors) {
-      if (error.stack.includes(ignore)) list.push(true);
+    if(client.isReady()) {
+      let ignoreErrors = [
+        `DiscordAPIError: Unknown Message`,
+        `DiscordAPIError: Missing Permissions`,
+        `DiscordAPIError: Missing Access`,
+        `DiscordAPIError: Unknown Channel`,
+        `DiscordAPIError: Cannot send messages to this user`,
+        "DiscordAPIError: Cannot execute action on a DM channel",
+      ];
+      let list = [];
+      for (const ignore of ignoreErrors) {
+        if (error.stack.includes(ignore)) list.push(true);
+      }
+      if (list.length !== 0) return null;
+      let errEmbed = new MessageEmbed()
+        .setAuthor({
+          name: "Error Occurred",
+          iconURL: `https://cdn.upload.systems/uploads/96HNGxzL.png`,
+        })
+        .setDescription(`\`\`\`xl\n${error.stack}\n\`\`\``)
+        .setColor("#e24c4b")
+        .setFooter({ text: `${error.name}` })
+        .setTimestamp();
+  
+      let channel = client.channels.cache.get("512277268597309440");
+      if(channel) channel.send({ embeds: [errEmbed] });
     }
-    if (list.length !== 0) return null;
-    let errEmbed = new MessageEmbed()
-      .setAuthor({
-        name: "Error Occurred",
-        iconURL: `https://cdn.upload.systems/uploads/96HNGxzL.png`,
-      })
-      .setDescription(`\`\`\`xl\n${error.stack}\n\`\`\``)
-      .setColor("#e24c4b")
-      .setFooter({ text: `${error.name}` })
-      .setTimestamp();
-
-    let channel = client.channels.cache.get("512277268597309440");
-    channel.send({ embeds: [errEmbed] });
   });
 
   for (const d of readdirSync("./commands/")) {
