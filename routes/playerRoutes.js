@@ -1,13 +1,36 @@
 const router = require("express").Router();
 const db = require("quick.db");
 
+router.get("/", async(req, res) => {
+  if(req.body.key != process.env.ACCESS_KEY) return res.status(401).json({
+    code: 401,
+    response: "You're not autorized"
+  });
+  if(!req.body.uuid) return res.status(400).json({
+    code: 400,
+    response: "Invalid Request, you didn't provide UUID in Body."
+  });
+  let playerData = db.fetch(`player_${req.body.uuid}`);
+
+  res.status(200).json({
+    code: 200,
+    response: playerData
+  })
+})
+
 router.post("/firstJoin", async(req, res) => {
   if(req.body.key != process.env.ACCESS_KEY) return res.status(401).json({
     code: 401,
     response: "You're not autorized"
   });
+  if(!req.body.uuid) return res.status(400).json({
+    code: 400,
+    response: "Invalid Request, you didn't provide UUID in Body."
+  });
   let newUser = db.set(`player_${req.body.uuid}`, {
     username: req.body.username,
+    uuid: req.body.uuid,
+    league: "",
     goals: 0,
     assists: 0,
     cleanSheets: 0,
@@ -20,19 +43,6 @@ router.post("/firstJoin", async(req, res) => {
     response: newUser
   });
 });
-
-router.get("/", async(req, res) => {
-  if(req.body.key != process.env.ACCESS_KEY) return res.status(401).json({
-    code: 401,
-    response: "You're not autorized"
-  });
-  let playerData = db.fetch(`player_${req.body.uuid}`);
-
-  res.status(200).json({
-    code: 200,
-    response: playerData
-  })
-})
 
 router.post("/goals/add", async(req, res) => {
   if(req.body.key != process.env.ACCESS_KEY) return res.status(401).json({

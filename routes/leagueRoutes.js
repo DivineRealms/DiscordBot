@@ -22,6 +22,7 @@ router.post("/players/add", async(req, res) => {
       response: "Player is already in this league"
     });
     db.set(`league_${uuid}_svb`, {
+      league: "svb",
       kolo: kolo || 0,
       season: season || 0,
       goals: 0,
@@ -41,6 +42,7 @@ router.post("/players/add", async(req, res) => {
       response: "Player is already in this league"
     });
     db.set(`league_${uuid}_js`, {
+      league: "js",
       kolo: kolo || 0,
       season: season || 0,
       goals: 0,
@@ -54,6 +56,31 @@ router.post("/players/add", async(req, res) => {
       response: "Player added to Juniors League"
     });
   }
+});
+
+router.post("/players/remove", async(req, res) => {
+  if(req.body.key != process.env.ACCESS_KEY) return res.status(401).json({
+    code: 401,
+    response: "You're not autorized"
+  });
+  if(!req.body.uuid || !req.body.league) return res.status(400).json({
+    code: 400,
+    response: "Invalid Request, you didn't provide UUID or League in Body."
+  });
+  const uuid = req.body.uuid;
+
+  let league = db.all().filter((x) => x.ID.startsWith(`league_${uuid}`)) || [];
+
+  if(league.length == 0) return res.status(500).json({
+    code: 500,
+    response: "Player is not in any league"
+  });
+
+  db.delete(league[0].ID);
+  res.status(200).json({
+    code: 200,
+    response: "Player removed from League"
+  });
 });
 
 router.get("/players/get", async(req, res) => {
@@ -163,8 +190,21 @@ router.get("/stats/allTime", async(req, res) => {
     code: 401,
     response: "You're not autorized"
   });
-  let js = db.all().filter((x) => x.ID.endsWith("_js"));
-  let svb = db.all().filter((x) => x.ID.endsWith("_svb"));
+  
+  let allTime = db.fetch(`league_allTime`);
+  if(allTime) {
+    res.status(200).json({
+      code: 200,
+      response: {
+        goals: allTime.goals, 
+        assists: allTime.assists,
+        cleanSheets: allTime.cleanSheets,
+        yellow: allTime.yellow,
+        red: allTime.red
+      }
+    });
+    return;
+  }
 
   let goals = 0, assists = 0, cleanSheets = 0, yellow = 0, red = 0;
   js.forEach((x) => {
@@ -182,8 +222,6 @@ router.get("/stats/allTime", async(req, res) => {
     yellow += parseInt(JSON.parse(x.data).yellow);
     red += parseInt(JSON.parse(x.data).red);
   });
-
-  // add to all time
 
   res.status(200).json({
     code: 200,
@@ -204,8 +242,17 @@ router.post("/season/reset", async(req, res) => {
   });
   let js = db.all().filter((x) => x.ID.endsWith("_js"));
   let svb = db.all().filter((x) => x.ID.endsWith("_svb"));
-
+  let goals = 0, assists = 0, cleanSheets = 0, yellow = 0, red = 0, kolo = 0, season = 0;
+  
   js.forEach((x) => {
+    goals += parseInt(JSON.parse(x.data).goals);
+    assists += parseInt(JSON.parse(x.data).assists);
+    cleanSheets += parseInt(JSON.parse(x.data).cleanSheets);
+    yellow += parseInt(JSON.parse(x.data).yellow);
+    red += parseInt(JSON.parse(x.data).red);
+    season = parseInt(JSON.parse(x.data).season);
+    kolo = parseInt(JSON.parse(x.data).kolo);
+
     let newData = JSON.parse(x.data);
     newData.goals = 0;
     newData.assists = 0;
@@ -217,6 +264,12 @@ router.post("/season/reset", async(req, res) => {
   });
 
   svb.forEach((x) => {
+    goals += parseInt(JSON.parse(x.data).goals);
+    assists += parseInt(JSON.parse(x.data).assists);
+    cleanSheets += parseInt(JSON.parse(x.data).cleanSheets);
+    yellow += parseInt(JSON.parse(x.data).yellow);
+    red += parseInt(JSON.parse(x.data).red);
+
     let newData = JSON.parse(x.data);
     newData.goals = 0;
     newData.assists = 0;
@@ -226,6 +279,14 @@ router.post("/season/reset", async(req, res) => {
     
     db.set(x.ID, newData);
   });
+
+  db.set(`league_allTime`, {
+    goals, 
+    assists,
+    cleanSheets,
+    yellow,
+    red
+  })
 
   res.status(200).json({
     code: 200,
