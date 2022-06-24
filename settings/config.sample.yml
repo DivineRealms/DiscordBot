@@ -16,15 +16,18 @@
 # ============================================================
 Settings:
   # As our bot is selfhost only, specify your bot's token.
-  Token: ""
+  Token: "OTg5ODg1MDM0NjAzMzgwNzU2.GsJuGN.QMHSj6KN2aw1IqfFu3wkMRWGAf2eQuv_EH4s0Q"
 
   # Prefix used for commands.
   # Example: .help
-  Prefix: "."
+  Prefix: "+"
 
   # Whether you can use commands when mentioning the bot.
   # Example: @BotName help
   Mention_Prefix: true
+
+  # Port for the Server
+  Port: 7070
 
   # Self explanatory, activity of the bot.
   Bot_Activity:
@@ -58,7 +61,7 @@ Settings:
   Embed_Color: "#7ec0ff"
 
   # ID of your Guild (Discord Server).
-  Guild_ID: ""
+  Guild_ID: "823820599528390657"
 
   # ID(s) of Guild (Discord Server) Owner(s).
   # You can add multiple ones.

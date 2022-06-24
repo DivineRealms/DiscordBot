@@ -4,6 +4,9 @@ const moment = require("moment-timezone");
 const fs = require("fs");
 const yaml = require("js-yaml");
 const Enmap = require("enmap");
+const express = require("express");
+const playerRoutes = require("../routes/playerRoutes.js");
+const leagueRoutes = require("../routes/leagueRoutes.js");
 
 module.exports = async (client) => {
   client.conf = yaml.load(fs.readFileSync("./settings/config.yml", "utf8"));
@@ -38,59 +41,63 @@ module.exports = async (client) => {
   client.paginateSelect = require("../utils/paginateSelect.js");
 
   process.on("unhandledRejection", (error) => {
-    let ignoreErrors = [
-      `DiscordAPIError: Unknown Message`,
-      `DiscordAPIError: Missing Permissions`,
-      `DiscordAPIError: Missing Access`,
-      `DiscordAPIError: Unknown Channel`,
-      `DiscordAPIError: Cannot send messages to this user`,
-      "DiscordAPIError: Cannot execute action on a DM channel",
-    ];
-    let list = [];
-    for (const ignore of ignoreErrors) {
-      if (error.stack.includes(ignore)) list.push(true);
+    if(client.isReady()) {
+      let ignoreErrors = [
+        `DiscordAPIError: Unknown Message`,
+        `DiscordAPIError: Missing Permissions`,
+        `DiscordAPIError: Missing Access`,
+        `DiscordAPIError: Unknown Channel`,
+        `DiscordAPIError: Cannot send messages to this user`,
+        "DiscordAPIError: Cannot execute action on a DM channel",
+      ];
+      let list = [];
+      for (const ignore of ignoreErrors) {
+        if (error.stack.includes(ignore)) list.push(true);
+      }
+      if (list.length !== 0) return null;
+      let errEmbed = new MessageEmbed()
+        .setAuthor({
+          name: "Error Occurred",
+          iconURL: `https://cdn.upload.systems/uploads/96HNGxzL.png`,
+        })
+        .setDescription(`\`\`\`xl\n${error.stack}\n\`\`\``)
+        .setColor("#e24c4b")
+        .setFooter({ text: `${error.name}` })
+        .setTimestamp();
+  
+      let channel = client.channels.cache.get("855857615317368833");
+      if(channel) channel.send({ embeds: [errEmbed] });
     }
-    if (list.length !== 0) return null;
-    let errEmbed = new MessageEmbed()
-      .setAuthor({
-        name: "Error Occurred",
-        iconURL: `https://cdn.upload.systems/uploads/96HNGxzL.png`,
-      })
-      .setDescription(`\`\`\`xl\n${error.stack}\n\`\`\``)
-      .setColor("#e24c4b")
-      .setFooter({ text: `${error.name}` })
-      .setTimestamp();
-
-    let channel = client.channels.cache.get("512277268597309440");
-    channel.send({ embeds: [errEmbed] });
   });
 
   process.on("uncaughtException", (error) => {
-    let ignoreErrors = [
-      `DiscordAPIError: Unknown Message`,
-      `DiscordAPIError: Missing Permissions`,
-      `DiscordAPIError: Missing Access`,
-      `DiscordAPIError: Unknown Channel`,
-      `DiscordAPIError: Cannot send messages to this user`,
-      "DiscordAPIError: Cannot execute action on a DM channel",
-    ];
-    let list = [];
-    for (const ignore of ignoreErrors) {
-      if (error.stack.includes(ignore)) list.push(true);
+    if(client.isReady()) {
+      let ignoreErrors = [
+        `DiscordAPIError: Unknown Message`,
+        `DiscordAPIError: Missing Permissions`,
+        `DiscordAPIError: Missing Access`,
+        `DiscordAPIError: Unknown Channel`,
+        `DiscordAPIError: Cannot send messages to this user`,
+        "DiscordAPIError: Cannot execute action on a DM channel",
+      ];
+      let list = [];
+      for (const ignore of ignoreErrors) {
+        if (error.stack.includes(ignore)) list.push(true);
+      }
+      if (list.length !== 0) return null;
+      let errEmbed = new MessageEmbed()
+        .setAuthor({
+          name: "Error Occurred",
+          iconURL: `https://cdn.upload.systems/uploads/96HNGxzL.png`,
+        })
+        .setDescription(`\`\`\`xl\n${error.stack}\n\`\`\``)
+        .setColor("#e24c4b")
+        .setFooter({ text: `${error.name}` })
+        .setTimestamp();
+  
+      let channel = client.channels.cache.get("855857615317368833");
+      if(channel) channel.send({ embeds: [errEmbed] });
     }
-    if (list.length !== 0) return null;
-    let errEmbed = new MessageEmbed()
-      .setAuthor({
-        name: "Error Occurred",
-        iconURL: `https://cdn.upload.systems/uploads/96HNGxzL.png`,
-      })
-      .setDescription(`\`\`\`xl\n${error.stack}\n\`\`\``)
-      .setColor("#e24c4b")
-      .setFooter({ text: `${error.name}` })
-      .setTimestamp();
-
-    let channel = client.channels.cache.get("512277268597309440");
-    channel.send({ embeds: [errEmbed] });
   });
 
   for (const d of readdirSync("./commands/")) {
@@ -110,6 +117,15 @@ module.exports = async (client) => {
       evt.split(".")[0],
       require(`../events/${evt}`).bind(null, client)
     );
+
+  // Express Server //
+
+  const app = express();
+  app.use(express.json());
+  app.use("/players", playerRoutes);
+  app.use("/leagues", leagueRoutes);
+  
+  app.listen(client.conf.Settings.Port || 7070, () => `[SERVER] Server has started on port ${client.conf.Settings.port || 7070}.`);
 
   client
     .login(client.conf.Settings.Token)
