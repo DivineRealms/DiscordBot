@@ -16,7 +16,7 @@
 # ============================================================
 Settings:
   # As our bot is selfhost only, specify your bot's token.
-  Token: "OTg5ODg1MDM0NjAzMzgwNzU2.GsJuGN.QMHSj6KN2aw1IqfFu3wkMRWGAf2eQuv_EH4s0Q"
+  Token: ""
 
   # Prefix used for commands.
   # Example: .help
