@@ -61,7 +61,7 @@ Settings:
   Embed_Color: "#7ec0ff"
 
   # ID of your Guild (Discord Server).
-  Guild_ID: "823820599528390657"
+  Guild_ID: ""
 
   # ID(s) of Guild (Discord Server) Owner(s).
   # You can add multiple ones.
