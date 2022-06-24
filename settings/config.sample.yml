@@ -20,7 +20,7 @@ Settings:
 
   # Prefix used for commands.
   # Example: .help
-  Prefix: "+"
+  Prefix: "."
 
   # Whether you can use commands when mentioning the bot.
   # Example: @BotName help

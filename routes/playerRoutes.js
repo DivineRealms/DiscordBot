@@ -2,6 +2,10 @@ const router = require("express").Router();
 const db = require("quick.db");
 
 router.post("/firstJoin", async(req, res) => {
+  if(req.body.key != process.env.ACCESS_KEY) return res.status(401).json({
+    code: 401,
+    response: "You're not autorized"
+  });
   let newUser = db.set(`player_${req.body.uuid}`, {
     username: req.body.username,
     goals: 0,
@@ -17,7 +21,24 @@ router.post("/firstJoin", async(req, res) => {
   });
 });
 
+router.get("/", async(req, res) => {
+  if(req.body.key != process.env.ACCESS_KEY) return res.status(401).json({
+    code: 401,
+    response: "You're not autorized"
+  });
+  let playerData = db.fetch(`player_${req.body.uuid}`);
+
+  res.status(200).json({
+    code: 200,
+    response: playerData
+  })
+})
+
 router.post("/goals/add", async(req, res) => {
+  if(req.body.key != process.env.ACCESS_KEY) return res.status(401).json({
+    code: 401,
+    response: "You're not autorized"
+  });
   if(!req.body.uuid || !req.body.goals) return res.status(400).json({
     code: 400,
     response: "Invalid Request, you didn't provide UUID or Goals in Body."
@@ -33,6 +54,10 @@ router.post("/goals/add", async(req, res) => {
 });
 
 router.post("/goals/remove", async(req, res) => {
+  if(req.body.key != process.env.ACCESS_KEY) return res.status(401).json({
+    code: 401,
+    response: "You're not autorized"
+  });
   if(!req.body.uuid || !req.body.goals) return res.status(400).json({
     code: 400,
     response: "Invalid Request, you didn't provide UUID or Goals in Body."
@@ -53,6 +78,10 @@ router.post("/goals/remove", async(req, res) => {
 });
 
 router.post("/goals/set", async(req, res) => {
+  if(req.body.key != process.env.ACCESS_KEY) return res.status(401).json({
+    code: 401,
+    response: "You're not autorized"
+  });
   if(!req.body.uuid || !req.body.goals) return res.status(400).json({
     code: 400,
     response: "Invalid Request, you didn't provide UUID or Goals in Body."
@@ -74,6 +103,10 @@ router.post("/goals/set", async(req, res) => {
 });
 
 router.post("/assists/add", async(req, res) => {
+  if(req.body.key != process.env.ACCESS_KEY) return res.status(401).json({
+    code: 401,
+    response: "You're not autorized"
+  });
   if(!req.body.uuid || !req.body.assists) return res.status(400).json({
     code: 400,
     response: "Invalid Request, you didn't provide UUID or Assists in Body."
@@ -89,6 +122,10 @@ router.post("/assists/add", async(req, res) => {
 });
 
 router.post("/assists/remove", async(req, res) => {
+  if(req.body.key != process.env.ACCESS_KEY) return res.status(401).json({
+    code: 401,
+    response: "You're not autorized"
+  });
   if(!req.body.uuid || !req.body.assists) return res.status(400).json({
     code: 400,
     response: "Invalid Request, you didn't provide UUID or Assists in Body."
@@ -109,6 +146,10 @@ router.post("/assists/remove", async(req, res) => {
 });
 
 router.post("/assists/set", async(req, res) => {
+  if(req.body.key != process.env.ACCESS_KEY) return res.status(401).json({
+    code: 401,
+    response: "You're not autorized"
+  });
   if(!req.body.uuid || !req.body.assists) return res.status(400).json({
     code: 400,
     response: "Invalid Request, you didn't provide UUID or Assists in Body."
@@ -130,6 +171,10 @@ router.post("/assists/set", async(req, res) => {
 });
 
 router.post("/cleanSheets/add", async(req, res) => {
+  if(req.body.key != process.env.ACCESS_KEY) return res.status(401).json({
+    code: 401,
+    response: "You're not autorized"
+  });
   if(!req.body.uuid || !req.body.cleanSheets) return res.status(400).json({
     code: 400,
     response: "Invalid Request, you didn't provide UUID or Clean Sheets in Body."
@@ -145,6 +190,10 @@ router.post("/cleanSheets/add", async(req, res) => {
 });
 
 router.post("/cleanSheets/remove", async(req, res) => {
+  if(req.body.key != process.env.ACCESS_KEY) return res.status(401).json({
+    code: 401,
+    response: "You're not autorized"
+  });
   if(!req.body.uuid || !req.body.cleanSheets) return res.status(400).json({
     code: 400,
     response: "Invalid Request, you didn't provide UUID or Clean Sheets in Body."
@@ -165,6 +214,10 @@ router.post("/cleanSheets/remove", async(req, res) => {
 });
 
 router.post("/cleanSheets/set", async(req, res) => {
+  if(req.body.key != process.env.ACCESS_KEY) return res.status(401).json({
+    code: 401,
+    response: "You're not autorized"
+  });
   if(!req.body.uuid || !req.body.cleanSheets) return res.status(400).json({
     code: 400,
     response: "Invalid Request, you didn't provide UUID or Clean Sheets in Body."
@@ -186,6 +239,10 @@ router.post("/cleanSheets/set", async(req, res) => {
 });
 
 router.post("/cards/yellow/add", async(req, res) => {
+  if(req.body.key != process.env.ACCESS_KEY) return res.status(401).json({
+    code: 401,
+    response: "You're not autorized"
+  });
   if(!req.body.uuid || !req.body.yellow) return res.status(400).json({
     code: 400,
     response: "Invalid Request, you didn't provide UUID or Yellow in Body."
@@ -201,6 +258,10 @@ router.post("/cards/yellow/add", async(req, res) => {
 });
 
 router.post("/cards/yellow/remove", async(req, res) => {
+  if(req.body.key != process.env.ACCESS_KEY) return res.status(401).json({
+    code: 401,
+    response: "You're not autorized"
+  });
   if(!req.body.uuid || !req.body.yellow) return res.status(400).json({
     code: 400,
     response: "Invalid Request, you didn't provide UUID or Yellow in Body."
@@ -221,6 +282,10 @@ router.post("/cards/yellow/remove", async(req, res) => {
 });
 
 router.post("/cards/yellow/set", async(req, res) => {
+  if(req.body.key != process.env.ACCESS_KEY) return res.status(401).json({
+    code: 401,
+    response: "You're not autorized"
+  });
   if(!req.body.uuid || !req.body.yellow) return res.status(400).json({
     code: 400,
     response: "Invalid Request, you didn't provide UUID or Yellow in Body."
@@ -242,6 +307,10 @@ router.post("/cards/yellow/set", async(req, res) => {
 });
 
 router.post("/cards/red/add", async(req, res) => {
+  if(req.body.key != process.env.ACCESS_KEY) return res.status(401).json({
+    code: 401,
+    response: "You're not autorized"
+  });
   if(!req.body.uuid || !req.body.red) return res.status(400).json({
     code: 400,
     response: "Invalid Request, you didn't provide UUID or Red in Body."
@@ -257,6 +326,10 @@ router.post("/cards/red/add", async(req, res) => {
 });
 
 router.post("/cards/red/remove", async(req, res) => {
+  if(req.body.key != process.env.ACCESS_KEY) return res.status(401).json({
+    code: 401,
+    response: "You're not autorized"
+  });
   if(!req.body.uuid || !req.body.red) return res.status(400).json({
     code: 400,
     response: "Invalid Request, you didn't provide UUID or Red in Body."
@@ -278,6 +351,10 @@ router.post("/cards/red/remove", async(req, res) => {
 
 
 router.post("/cards/red/set", async(req, res) => {
+  if(req.body.key != process.env.ACCESS_KEY) return res.status(401).json({
+    code: 401,
+    response: "You're not autorized"
+  });
   if(!req.body.uuid || !req.body.red) return res.status(400).json({
     code: 400,
     response: "Invalid Request, you didn't provide UUID or Red in Body."
