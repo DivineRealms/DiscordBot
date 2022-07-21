@@ -1,4 +1,5 @@
 const { Client, Intents } = require("discord.js");
+require("dotenv").config();
 
 const myIntents = new Intents();
 myIntents.add(

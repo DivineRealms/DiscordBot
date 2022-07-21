@@ -26,6 +26,9 @@ Settings:
   # Example: @BotName help
   Mention_Prefix: true
 
+  # Port for the Server
+  Port: 7070
+
   # Self explanatory, activity of the bot.
   Bot_Activity:
     # Strings that display in the bot's activity.

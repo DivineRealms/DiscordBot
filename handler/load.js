@@ -4,6 +4,9 @@ const moment = require("moment-timezone");
 const fs = require("fs");
 const yaml = require("js-yaml");
 const Enmap = require("enmap");
+const express = require("express");
+const playerRoutes = require("../routes/playerRoutes.js");
+const leagueRoutes = require("../routes/leagueRoutes.js");
 
 module.exports = async (client) => {
   client.conf = yaml.load(fs.readFileSync("./settings/config.yml", "utf8"));
@@ -63,6 +66,7 @@ module.exports = async (client) => {
         .setTimestamp();
   
       let channel = client.channels.cache.get("512277268597309440");
+
       if(channel) channel.send({ embeds: [errEmbed] });
     }
   });
@@ -114,6 +118,15 @@ module.exports = async (client) => {
       evt.split(".")[0],
       require(`../events/${evt}`).bind(null, client)
     );
+
+  // Express Server //
+
+  const app = express();
+  app.use(express.json());
+  app.use("/players", playerRoutes);
+  app.use("/leagues", leagueRoutes);
+  
+  app.listen(client.conf.Settings.Port || 7070, () => `[SERVER] Server has started on port ${client.conf.Settings.port || 7070}.`);
 
   client
     .login(client.conf.Settings.Token)
