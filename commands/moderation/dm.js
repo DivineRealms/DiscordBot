@@ -2,7 +2,7 @@ module.exports = {
   name: "dm",
   category: "moderation",
   description: "I will dm someone for you.",
-  permissions: ["MANAGE_GUILD"],
+  permissions: ["ManageGuild"],
   cooldown: 0,
   aliases: [`direct-message`],
   usage: "dm <Text>",

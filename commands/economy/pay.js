@@ -1,4 +1,5 @@
-const db = require("quick.db");
+const { QuickDB } = require("quick.db");
+const db = new QuickDB();
 
 module.exports = {
   name: "pay",
@@ -13,7 +14,7 @@ module.exports = {
 module.exports.run = async (client, message, args) => {
   const user =
       message.mentions.users.first() || client.users.cache.get(args[0]),
-    bal = db.fetch(`money_${message.guild.id}_${message.author.id}`);
+    bal = await db.get(`money_${message.guild.id}_${message.author.id}`);
 
   if (!user)
     return message.channel.send({
@@ -44,8 +45,8 @@ module.exports.run = async (client, message, args) => {
       ],
     });
 
-  db.add(`money_${message.guild.id}_${user.id}`, Number(args[1]));
-  db.subtract(
+  await db.add(`money_${message.guild.id}_${user.id}`, Number(args[1]));
+  await db.sub(
     `money_${message.guild.id}_${message.author.id}`,
     Number(args[1])
   );

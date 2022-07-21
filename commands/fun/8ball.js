@@ -41,12 +41,11 @@ module.exports.run = async (client, message, args) => {
     embeds: [
       client
         .embedBuilder(client, message, "", "", "#ec3d93")
-        .addField("Question:", args.join(" "), false)
-        .addField(
-          "Answer:",
-          responses[~~(Math.random() * responses.length)],
-          false
-        )
+        .addFields([{ name: "Question:", value: args.join(" "), inline: false }, {
+          name: "Answer:",
+          value: responses[~~(Math.random() * responses.length)],
+          inline: false
+        }])
         .setAuthor({
           name: "8ball",
           iconURL: `https://cdn.upload.systems/uploads/ZdKDK7Tx.png`,

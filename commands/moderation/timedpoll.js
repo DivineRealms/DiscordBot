@@ -4,7 +4,7 @@ module.exports = {
   name: "timedpoll",
   category: "moderation",
   description: "Creates a timed poll.",
-  permissions: ["MANAGE_CHANNELS"],
+  permissions: ["ManageChannels"],
   cooldown: 0,
   aliases: ["tp"],
   usage: "timedpoll <time> <question> | op1 | op2 | etc",
@@ -48,7 +48,7 @@ module.exports.run = async (client, message, args, cmd) => {
     );
 
   for (let i = 0; i < options.length && i < 10; i++)
-    embed.addField("\u200b", `${emoji[i]} ${options[i]}`);
+    embed.addFields({ name: "\u200b", value: `${emoji[i]} ${options[i]}` });
 
   const msg = await message.channel.send({ embeds: [embed] });
   for (let i = 0; i < options.length; i++) await msg.react(emoji[i]);

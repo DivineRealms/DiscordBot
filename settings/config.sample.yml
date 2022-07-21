@@ -48,14 +48,14 @@ Settings:
     # the number of Types.
     #
     # Available types:
-    # 1. WATCHING
-    # 2. LISTENING
-    # 3. PLAYING
-    # 4. STREAMING
-    # 5. COMPETING
+    # 1. Watching
+    # 2. Listening
+    # 3. Playing
+    # 4. Streaming
+    # 5. Competing
     Types:
-      - "WATCHING"
-      # - "LISTENING"
+      - "Watching"
+      # - "Listening"
 
   # Color shown in the default embeds.
   Embed_Color: "#7ec0ff"

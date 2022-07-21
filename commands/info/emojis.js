@@ -39,14 +39,15 @@ module.exports.run = async (client, message, args) => {
           name: `Emojis in ${message.guild.name}`,
           iconURL: `https://cdn.upload.systems/uploads/6uDK0XAN.png`,
         })
-        .addField(`Regular Emojis:`, `${RegularEmojis}`, false)
-        .addField(`Animated Emojis:`, `${AnimeOnesLol}`, false)
-        .addField(
-          `Emojis Displaying:`,
-          `${AnimeOnesLolDisplaying} ${TEHEMOJIS}`,
-          false
-        )
-        .addField(`Total Count Of Emojis:`, `${totalemojislol}`, false),
+        .addFields([ { name: `Regular Emojis:`, value: `${RegularEmojis}`, inline: false },
+        { name: `Animated Emojis:`, value: `${AnimeOnesLol}`, inline: false },
+        {
+          name: `Emojis Displaying:`,
+          value: `${AnimeOnesLolDisplaying} ${TEHEMOJIS}`,
+          inline: false
+        },
+        { name: `Total Count Of Emojis:`, value: `${totalemojislol}`, name: false }
+       ])
     ],
   });
 };

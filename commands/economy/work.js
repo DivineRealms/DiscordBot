@@ -1,4 +1,5 @@
-const db = require("quick.db");
+const { QuickDB } = require("quick.db");
+const db = new QuickDB();
 
 module.exports = {
   name: "work",
@@ -8,6 +9,7 @@ module.exports = {
   cooldown: 120,
   aliases: [],
   usage: "work",
+  slash: true
 };
 
 module.exports.run = async (client, message, args) => {
@@ -33,5 +35,5 @@ module.exports.run = async (client, message, args) => {
     ],
   });
 
-  db.add(`money_${message.guild.id}_${message.author.id}`, amount);
+  await db.add(`money_${message.guild.id}_${message.author.id}`, amount);
 };

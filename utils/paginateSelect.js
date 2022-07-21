@@ -1,4 +1,4 @@
-const { MessageActionRow, MessageSelectMenu } = require("discord.js");
+const { ActionRowBuilder, SelectMenuBuilder, ComponentType } = require("discord.js");
 
 module.exports = async (client, message, home, data) => {
   let optionList = [];
@@ -14,12 +14,12 @@ module.exports = async (client, message, home, data) => {
     optionList.push(obj);
   }
 
-  let sMenu = new MessageSelectMenu()
+  let sMenu = new SelectMenuBuilder()
     .setCustomId(data.id)
     .setPlaceholder(data.placeholder)
     .addOptions(optionList);
 
-  let row = new MessageActionRow().addComponents(sMenu);
+  let row = new ActionRowBuilder().addComponents(sMenu);
 
   const m = await message.channel.send({ embeds: [home], components: [row] });
 
@@ -29,7 +29,7 @@ module.exports = async (client, message, home, data) => {
 
   const collector = m.createMessageComponentCollector({
     filter,
-    componentType: "SELECT_MENU",
+    componentType: ComponentType.SelectMenu,
     time: 300000,
   });
   collector.on("collect", async (i) => {
@@ -42,13 +42,13 @@ module.exports = async (client, message, home, data) => {
     }
   });
   collector.on("end", async (collected, reason) => {
-    let disabledSel = new MessageSelectMenu()
+    let disabledSel = new SelectMenuBuilder()
       .setCustomId(data.id)
       .setDisabled(true)
       .setPlaceholder(data.placeholder)
       .addOptions(optionList);
 
-    let disabledRow = new MessageActionRow().addComponents(disabledSel);
+    let disabledRow = new ActionRowBuilder().addComponents(disabledSel);
 
     m.edit({ embeds: [home], components: [disabledRow] });
   });

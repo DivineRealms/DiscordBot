@@ -27,11 +27,10 @@ module.exports.run = async (client, message, args) => {
             name: "Calculator",
             iconURL: `https://cdn.upload.systems/uploads/LRa9Ebl5.png`
           })
-          .addField("📥︲Problem:", "```\n" + args.join(" ") + "```")
-          .addField(
-            "📤︲Solution:",
-            "```\n" + evaluate(args.join(" ")) + "```"
-          ),
+          .addFields([{ name: "📥︲Problem:", value: "```\n" + args.join(" ") + "```" }, {
+            name: "📤︲Solution:",
+            value: "```\n" + evaluate(args.join(" ")) + "```"
+          }]),
       ],
     });
   } catch (e) {

@@ -2,7 +2,7 @@ module.exports = {
   name: "createpanel",
   category: "moderation",
   description: "Creates the ticket panel message!",
-  permissions: ["MANAGE_GUILD"],
+  permissions: ["ManageGuild"],
   cooldown: 0,
   aliases: [`cpcreate`, `panelcreate`],
   usage: "createpanel",
@@ -34,8 +34,8 @@ module.exports.run = async (client, message, args) => {
   const msg = await message.channel.send({ embeds: [embed] });
   await msg.react("✉️").catch(() => msg.react("✉️"));
 
-  let panels = client.db.fetch(`panels_${message.guild.id}`) || [];
+  let panels = await client.db.get(`panels_${message.guild.id}`) || [];
   panels.unshift(`${msg.id}`)
 
-  client.db.set(`panels_${message.guild.id}`, panels);
+  await client.db.set(`panels_${message.guild.id}`, panels);
 };

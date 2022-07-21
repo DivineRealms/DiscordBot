@@ -1,4 +1,5 @@
-const db = require("quick.db");
+const { QuickDB } = require("quick.db");
+const db = new QuickDB();
 
 module.exports = {
   name: "daily",
@@ -8,10 +9,11 @@ module.exports = {
   cooldown: 0,
   aliases: [],
   usage: "daily",
+  slash: true
 };
 
 module.exports.run = async (client, message, args) => {
-  let cooldown = db.fetch(`daily_${message.guild.id}_${message.author.id}`),
+  let cooldown = await db.get(`daily_${message.guild.id}_${message.author.id}`),
     timeout = 86400000 - (Date.now() - cooldown),
     parsed = client.utils.formatTime(timeout);
 
@@ -37,6 +39,6 @@ module.exports.run = async (client, message, args) => {
     ],
   });
 
-  db.add(`money_${message.guild.id}_${message.author.id}`, 500);
-  db.set(`daily_${message.guild.id}_${message.author.id}`, Date.now());
+  await db.add(`money_${message.guild.id}_${message.author.id}`, 500);
+  await db.set(`daily_${message.guild.id}_${message.author.id}`, Date.now());
 };

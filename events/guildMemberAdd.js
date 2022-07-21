@@ -1,6 +1,7 @@
-const { MessageAttachment } = require("discord.js");
+const { AttachmentBuilder } = require("discord.js");
 const Canvas = require("discord-canvas");
-const db = require("quick.db");
+const { QuickDB } = require("quick.db");
+const db = new QuickDB();
 
 module.exports = async (client, member) => {
   const settings = client.conf.Welcome_System,
@@ -26,12 +27,12 @@ module.exports = async (client, member) => {
       )
       .toAttachment();
 
-    const attachment = new MessageAttachment(
+    const attachment = new AttachmentBuilder(
       img.toBuffer(),
-      "welcome-image.png"
+      { filename: "welcome-image.png" }
     );
-    channel.send({ files: [attachment] }).then((msg) =>
-      db.set(`wlcmEmbed_${member.guild.id}_${member.id}`, {
+    channel.send({ files: [attachment] }).then(async(msg) =>
+      await db.set(`wlcmEmbed_${member.guild.id}_${member.id}`, {
         msg: msg.id,
         channel: msg.channel.id,
       })
@@ -41,8 +42,8 @@ module.exports = async (client, member) => {
       .send(
         `Welcome ${member} to the server, You are our ${member.guild.memberCount} member!`
       )
-      .then((msg) =>
-        db.set(`wlcmEmbed_${member.guild.id}_${member.id}`, {
+      .then(async(msg) =>
+        await db.set(`wlcmEmbed_${member.guild.id}_${member.id}`, {
           msg: msg.id,
           channel: msg.channel.id,
         })

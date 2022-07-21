@@ -49,8 +49,8 @@ module.exports.run = async (client, message, args) => {
 
   let embed = client
     .embedBuilder(client, message, "", "")
-    .addField("Submitter:", `${message.author}`, false)
-    .addField("Timestamp:", `<t:${Math.round(Date.now() / 1000)}:R>`, false)
+    .addFields({ name: "Submitter:", value: `${message.author}`, inline: false })
+    .addFields({ name: "Timestamp:", value: `<t:${Math.round(Date.now() / 1000)}:R>`, inline: false })
     .setAuthor({ name: "New Report", iconURL: `https://cdn.upload.systems/uploads/iHhkS5zu.png` })
     .setThumbnail(
       message.author.displayAvatarURL({ size: 1024, dynamic: true })
@@ -58,14 +58,14 @@ module.exports.run = async (client, message, args) => {
 
   if (user) {
     embed
-      .addField("Reported:", `${user}`, false)
-      .addField("Reason:", `**\`${args.slice(1).join(" ")}\`**`, false);
+      .addFields({ name: "Reported:", value: `${user}`, inline: false })
+      .addFields({ name: "Reason:", value: `**\`${args.slice(1).join(" ")}\`**`, inline: false });
 
     logChannel.send({ embeds: [embed] });
   } else {
     logChannel.send({
       embeds: [
-        embed.addField("Report reason:", `**\`${args.join(" ")}\`**`, false),
+        embed.addFields({ name: "Report reason:", value: `**\`${args.join(" ")}\`**`, inline: false }),
       ],
     });
   }

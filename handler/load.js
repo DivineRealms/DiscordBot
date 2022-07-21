@@ -1,6 +1,5 @@
-const { MessageEmbed } = require("discord.js");
+const { EmbedBuilder } = require("discord.js");
 const { readdirSync } = require("fs");
-const moment = require("moment-timezone");
 const fs = require("fs");
 const yaml = require("js-yaml");
 const Enmap = require("enmap");
@@ -19,9 +18,11 @@ module.exports = async (client) => {
   client.categories = new Enmap();
   client.processes = new Enmap();
   client.commands = new Enmap();
+  client.slashCommands = new Enmap();
   client.snipes = new Enmap();
   client.afk = new Enmap();
-  client.embed = class Embed extends MessageEmbed {
+  client.slashArray = [];
+  client.embed = class Embed extends EmbedBuilder {
     color = client.conf.Settings.Embed_Color;
   };
   const settings = { fetchAll: true, autoFetch: true, cloneLevel: "deep" };
@@ -40,7 +41,7 @@ module.exports = async (client) => {
   client.utils = require("../utils/utils.js");
   client.paginateSelect = require("../utils/paginateSelect.js");
 
-  process.on("unhandledRejection", (error) => {
+  /* process.on("unhandledRejection", (error) => {
     if(client.isReady()) {
       let ignoreErrors = [
         `DiscordAPIError: Unknown Message`,
@@ -55,7 +56,7 @@ module.exports = async (client) => {
         if (error.stack.includes(ignore)) list.push(true);
       }
       if (list.length !== 0) return null;
-      let errEmbed = new MessageEmbed()
+      let errEmbed = new EmbedBuilder()
         .setAuthor({
           name: "Error Occurred",
           iconURL: `https://cdn.upload.systems/uploads/96HNGxzL.png`,
@@ -66,6 +67,8 @@ module.exports = async (client) => {
         .setTimestamp();
   
       let channel = client.channels.cache.get("512277268597309440");
+      console.log(error.stack)
+
 
       if(channel) channel.send({ embeds: [errEmbed] });
     }
@@ -86,7 +89,7 @@ module.exports = async (client) => {
         if (error.stack.includes(ignore)) list.push(true);
       }
       if (list.length !== 0) return null;
-      let errEmbed = new MessageEmbed()
+      let errEmbed = new EmbedBuilder()
         .setAuthor({
           name: "Error Occurred",
           iconURL: `https://cdn.upload.systems/uploads/96HNGxzL.png`,
@@ -95,22 +98,33 @@ module.exports = async (client) => {
         .setColor("#e24c4b")
         .setFooter({ text: `${error.name}` })
         .setTimestamp();
+
+      console.log(error.stack)
   
       let channel = client.channels.cache.get("512277268597309440");
       if(channel) channel.send({ embeds: [errEmbed] });
     }
-  });
+  }); */
 
   for (const d of readdirSync("./commands/")) {
     client.categories.set(
       d,
       readdirSync(`./commands/${d}`).map((s) => s.split(".")[0])
     );
-    for (const f of readdirSync(`./commands/${d}`))
-      client.commands.set(f.split(".")[0], {
-        ...require(`../commands/${d}/${f}`),
+    for (const f of readdirSync(`./commands/${d}`)) {
+      const commandData = require(`../commands/${d}/${f}`);
+      if(commandData.slash == true) {
+        client.slashCommands.set(commandData.name, {
+          ...commandData,
+          category: d,
+        });
+        client.slashArray.push(commandData);
+      }
+      client.commands.set(commandData.name, {
+        ...commandData,
         category: d,
       });
+    }
   }
 
   for (const evt of readdirSync("./events"))

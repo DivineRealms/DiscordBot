@@ -1,25 +1,27 @@
 const escapeRegex = (str) => str.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 const utils = require("../handler/utilities");
 const leveling = require("../utils/leveling.js");
-const db = require("quick.db");
+const { QuickDB } = require("quick.db");
+const db = new QuickDB();
+const { MessageType, ChannelType } = require("discord.js");
 
 const cooldownList = [];
 
 module.exports = async (client, message) => {
-  if (message.channel.type == "DM") return;
+  if (message.channel.type == ChannelType.DM) return;
 
-  if (message.author.id === "302050872383242240" && message.type == "APPLICATION_COMMAND") {
-    if (message.embeds[0].description.includes("Bump done")) {
+  if (message.author.id === "302050872383242240" && message.type == MessageType.ChatInputCommand) {
+    if (message.embeds[0].data.description.includes("Bump done")) {
       let dbumper = message.interaction.user.id;
       let bumpChannel = client.channels.cache.get(client.conf.Logging.Bumps);
 
       let timeout = 7200000;
       let time = Date.now() + timeout;
 
-      db.set(`serverBump_${client.conf.Settings.Guild_ID}`, time);
-      db.set(`lastBump_${client.conf.Settings.Guild_ID}`, dbumper);
+      await db.set(`serverBump_${client.conf.Settings.Guild_ID}`, time);
+      await db.set(`lastBump_${client.conf.Settings.Guild_ID}`, dbumper);
 
-      setTimeout(() => {
+      setTimeout(async() => {
         let bumpAgain = client
           .embedBuilder(client, message, "", "", "#1cc0f9")
           .setAuthor({
@@ -33,8 +35,8 @@ module.exports = async (client, message) => {
             embeds: [bumpAgain],
           });
 
-        db.delete(`serverBump_${client.conf.Settings.Guild_ID}`);
-        db.delete(`lastBump_${client.conf.Settings.Guild_ID}`);
+        await db.delete(`serverBump_${client.conf.Settings.Guild_ID}`);
+        await db.delete(`lastBump_${client.conf.Settings.Guild_ID}`);
       }, timeout);
 
       const bump = client
@@ -44,8 +46,8 @@ module.exports = async (client, message) => {
           iconURL: `https://cdn.upload.systems/uploads/pVry3Mav.png`,
         });
 
-      db.add(`bumps_${message.guild.id}_${dbumper}`, 1);
-      db.add(`money_${message.guild.id}_${dbumper}`, 1000);
+      await db.add(`bumps_${message.guild.id}_${dbumper}`, 1);
+      await db.add(`money_${message.guild.id}_${dbumper}`, 1000);
 
       if (client.conf.Logging.Enabled) message.reply({ embeds: [bump] });
     }
@@ -54,12 +56,12 @@ module.exports = async (client, message) => {
   if (!message.guild || message.author.bot) return;
   utils.automod(client, message);
 
-  let level = db.fetch(`level_${message.guild.id}_${message.author.id}`);
-  let xp = db.fetch(`xp_${message.guild.id}_${message.author.id}`);
+  let level = await db.get(`level_${message.guild.id}_${message.author.id}`);
+  let xp = await db.get(`xp_${message.guild.id}_${message.author.id}`);
 
   if (level == null || xp == null) {
-    db.add(`level_${message.guild.id}_${message.author.id}`, 1);
-    db.add(`xp_${message.guild.id}_${message.author.id}`, 1);
+    await db.add(`level_${message.guild.id}_${message.author.id}`, 1);
+    await db.add(`xp_${message.guild.id}_${message.author.id}`, 1);
   }
 
   if (client.afk.has(message.author.id)) {
@@ -156,7 +158,7 @@ module.exports = async (client, message) => {
 
   if (
     !client.conf.Automod.Commands_Channel.includes(message.channel.id) &&
-    !message.member.permissions.has("MANAGE_ROLES") &&
+    !message.member.permissions.has("ManageRolesROLES") &&
     !message.member.roles.cache.has(client.conf.Automod.Bypass_Command)
   )
     return message.channel

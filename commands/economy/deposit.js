@@ -1,4 +1,6 @@
-const db = require("quick.db");
+const { ApplicationCommandOptionType } = require("discord.js");
+const { QuickDB } = require("quick.db");
+const db = new QuickDB();
 
 module.exports = {
   name: "deposit",
@@ -8,10 +10,17 @@ module.exports = {
   cooldown: 0,
   aliases: ["d"],
   usage: "d <amount | all>",
+  slash: true,
+  options: [{
+    name: "amount",
+    description: "Amount you want to deposit or 'all'",
+    type: ApplicationCommandOptionType.String,
+    required: true
+  }]
 };
 
 module.exports.run = async (client, message, args) => {
-  let bal = db.fetch(`money_${message.guild.id}_${message.author.id}`);
+  let bal = await db.get(`money_${message.guild.id}_${message.author.id}`);
 
   if (!args[0] || (isNaN(args[0]) && args[0] !== "all"))
     return message.channel.send({
@@ -58,8 +67,8 @@ module.exports.run = async (client, message, args) => {
       ],
     });
 
-    db.subtract(`money_${message.guild.id}_${message.author.id}`, Number(bal));
-    db.add(`bank_${message.guild.id}_${message.author.id}`, Number(bal));
+    await db.sub(`money_${message.guild.id}_${message.author.id}`, Number(bal));
+    await db.add(`bank_${message.guild.id}_${message.author.id}`, Number(bal));
     return;
   }
 
@@ -96,10 +105,10 @@ module.exports.run = async (client, message, args) => {
     ],
   });
 
-  db.subtract(
+  await db.sub(
     `money_${message.guild.id}_${message.author.id}`,
     Number(args[0])
   );
 
-  db.add(`bank_${message.guild.id}_${message.author.id}`, Number(args[0]));
+  await db.add(`bank_${message.guild.id}_${message.author.id}`, Number(args[0]));
 };

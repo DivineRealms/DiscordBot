@@ -155,7 +155,7 @@ module.exports.run = async (client, message, args) => {
   );
 
   for (let i = 0; i < questions.length; i++) {
-    embed2.addField(`${questions[i]}`, `${answers[i]}`);
+    embed2.addFields({ name: `${questions[i]}`, value: `${answers[i]}` });
   }
 
   msg.channel.send({

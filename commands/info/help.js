@@ -88,11 +88,11 @@ module.exports.run = async (client, message, args) => {
             name: menus[i].label + " Commands",
             iconURL: menus[i].avatar,
           })
-          .addField(
-            "Tips:",
-            `\`1️⃣\` Select a command category using the paginator below.\n\`2️⃣\` Use **\`${message.px}help commandName\`** to get the command's usage.`,
-            false
-          ),
+          .addFields({
+            name: "Tips:",
+            value: `\`1️⃣\` Select a command category using the paginator below.\n\`2️⃣\` Use **\`${message.px}help commandName\`** to get the command's usage.`,
+            inline: false
+          }),
       });
     }
 

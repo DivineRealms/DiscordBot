@@ -1,11 +1,12 @@
 const datetime = require("date-and-time");
-const db = require("quick.db");
+const { QuickDB } = require("quick.db");
+const db = new QuickDB();
 
 module.exports = {
   name: "setbirthday",
   category: "utility",
   description: "Set a users birthday.",
-  permissions: ["MANAGE_ROLES"],
+  permissions: ["ManageRolesROLES"],
   cooldown: 0,
   aliases: [`setbday`],
   usage: "setbirthday @user Sep 4 2004",
@@ -72,7 +73,7 @@ module.exports.run = async (client, message, args) => {
     ],
   });
 
-  db.set(`birthday_${message.guild.id}_${user.id}`, args.slice(1).join(" "));
+  await db.set(`birthday_${message.guild.id}_${user.id}`, args.slice(1).join(" "));
 };
 
 const getAge = (b) => {

@@ -1,10 +1,11 @@
-const { MessageAttachment } = require("discord.js");
-const db = require("quick.db");
+const { AttachmentBuilder } = require("discord.js");
+const { QuickDB } = require("quick.db");
+const db = new QuickDB();
 
 module.exports = async (client, member) => {
   const settings = client.conf,
     channel = client.channels.cache.get(settings.Goodbye_System.Channel),
-    embedWelcome = db.fetch(`wlcmEmbed_${member.guild.id}_${member.id}`);
+    embedWelcome = await db.get(`wlcmEmbed_${member.guild.id}_${member.id}`);
 
   let fetchedMessages = await member.guild.channels.cache.get("512570600682684436").messages.fetch({ limit: 50 });
   fetchedMessages.forEach(async(msg) => {
@@ -20,8 +21,8 @@ module.exports = async (client, member) => {
     if (wlcmCh && msgDelete) msgDelete.delete();
   }
 
-  let data = await db.all().filter((data) => data.ID.includes(member.id));
-  data.forEach((data) => db.delete(data.ID));
+  let data = (await db.all()).filter((data) => data.ID.includes(member.id));
+  data.forEach(async(data) => await db.delete(data.ID));
 
   if (!settings.Goodbye_System.Enabled) return;
 
@@ -44,7 +45,7 @@ module.exports = async (client, member) => {
       .toAttachment();
 
     channel.send({
-      files: [new MessageAttachment(image.toBuffer(), "goodbye-image.png")],
+      files: [new AttachmentBuilder(image.toBuffer(), { filename: "goodbye-image.png" })],
     });
   } else if (settings.Goodbye_System.Type === "embed") {
     channel.send({

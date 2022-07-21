@@ -1,5 +1,6 @@
 const Discord = require("discord.js");
-const db = require("quick.db");
+const { QuickDB } = require("quick.db");
+const db = new QuickDB();
 
 function formatTime(ms) {
   let roundNumber = ms > 0 ? Math.floor : Math.ceil;
@@ -28,9 +29,9 @@ function commandsList(client, message, category) {
   return content;
 }
 
-function lbContent(client, message, lbType) {
-  let leaderboard = db
-    .all()
+// here
+async function lbContent(client, message, lbType) {
+  let leaderboard = (await db.all())
     .filter((data) => data.ID.startsWith(`${lbType}_${message.guild.id}`))
     .sort((a, b) => b.data - a.data);
   let content = "";
@@ -49,7 +50,7 @@ function lbContent(client, message, lbType) {
   return content;
 }
 
-function lbVotes(client, message) {
+async function lbVotes(client, message) {
   let leaderboard = db
     .fetch(`votes_${message.guild.id}`)
     .sort((a, b) => b.votes - a.votes);
@@ -69,24 +70,15 @@ function lbVotes(client, message) {
   return content;
 }
 
-function lbMoney(client, message) {
-  /**
-   * milan ivan bogdan
-   * dzep 100  5000 72
-   * banka 0    400 10000
-   * 
-   * ivan milan bogdan
-   * 
-   */
-  let leaderboard = db
-    .all()
+async function lbMoney(client, message) {
+  let leaderboard = (await db.all())
     .filter((data) => data.ID.startsWith(`money_${message.guild.id}`))
     .sort((a, b) => b.data - a.data);
   let content = "";
   let data = [];
 
   for(let i = 0; i < leaderboard.length; i++) {
-    let bank = db.fetch(`bank_${message.guild.id}_${leaderboard[i].ID.split("_")[2]}`) || 0;
+    let bank = await db.get(`bank_${message.guild.id}_${leaderboard[i].ID.split("_")[2]}`) || 0;
     let total = leaderboard[i].data + bank;
 
     data.push({

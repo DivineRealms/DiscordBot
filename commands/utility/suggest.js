@@ -1,4 +1,5 @@
-const db = require("quick.db");
+const { QuickDB } = require("quick.db");
+const db = new QuickDB();
 
 module.exports = {
   name: "suggest",
@@ -56,7 +57,7 @@ module.exports.run = async (client, message, args) => {
   await msg.react("👍");
   await msg.react("👎");
 
-  db.set(`suggestion_${msg.id}`, {
+  await db.set(`suggestion_${msg.id}`, {
     user: message.author,
     suggestion: args.join(" "),
   });

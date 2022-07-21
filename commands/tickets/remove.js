@@ -1,17 +1,18 @@
-const db = require("quick.db");
+const { QuickDB } = require("quick.db");
+const db = new QuickDB();
 
 module.exports = {
   name: "remove",
   category: "tickets",
   usage: "remove",
   description: "Remove a user from a ticket.",
-  permissions: ["MANAGE_CHANNELS"],
+  permissions: ["ManageChannels"],
   cooldown: 0,
   aliases: [],
 };
 
 module.exports.run = async (client, message, args) => {
-  const ticket = db.fetch(`tickets_${message.guild.id}_${message.channel.id}`);
+  const ticket = await db.get(`tickets_${message.guild.id}_${message.channel.id}`);
 
   if (!client.conf.Ticket_System.Enabled)
     return message.channel.send({

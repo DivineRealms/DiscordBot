@@ -2,7 +2,7 @@ module.exports = {
   name: "give-role",
   category: "moderation",
   description: "Lets you give a certain role to a member.",
-  permissions: ["MANAGE_ROLES"],
+  permissions: ["ManageRolesROLES"],
   cooldown: 0,
   aliases: ["giver", "giverole"],
   usage: "give-role <@User | ID> <@Role | ID | Name>",

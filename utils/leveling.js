@@ -1,4 +1,5 @@
-const db = require("quick.db");
+const { QuickDB } = require("quick.db");
+const db = new QuickDB();
 
 const manageLeveling = async (client, message) => {
   const levelSettings = client.conf.Leveling;
@@ -8,9 +9,9 @@ const manageLeveling = async (client, message) => {
       client.talkedRecently.delete(message.author.id);
     }, 35000);
 
-    const xp = db.fetch(`xp_${message.guild.id}_${message.author.id}`) || 0;
+    const xp = await db.get(`xp_${message.guild.id}_${message.author.id}`) || 0;
     const level =
-      db.fetch(`level_${message.guild.id}_${message.author.id}`) || 1;
+      await db.get(`level_${message.guild.id}_${message.author.id}`) || 1;
     const xpGive = Math.floor(Math.random() * (70 - 35 + 1) + 35);
 
     const nextLevel = parseInt(level) + 1;
@@ -28,14 +29,14 @@ const manageLeveling = async (client, message) => {
       message.channel.send({ embeds: [embed] });
 
       if (xp + xpGive > xpNeeded) {
-        db.set(
+        await db.set(
           `xp_${message.guild.id}_${message.author.id}`,
           xp - (xpNeeded - xpGive)
         );
-        db.add(`level_${message.guild.id}_${message.author.id}`, 1);
+        await db.add(`level_${message.guild.id}_${message.author.id}`, 1);
       } else {
-        db.set(`xp_${message.guild.id}_${message.author.id}`, 0);
-        db.add(`level_${message.guild.id}_${message.author.id}`, 1);
+        await db.set(`xp_${message.guild.id}_${message.author.id}`, 0);
+        await db.add(`level_${message.guild.id}_${message.author.id}`, 1);
       }
       const reward = levelSettings.Level_Up.Roles.find(
         ({ level: l }) => l == level + 1
@@ -51,7 +52,7 @@ const manageLeveling = async (client, message) => {
       }
     } else {
       if (!message.author.bot) {
-        db.add(`xp_${message.guild.id}_${message.author.id}`, xpGive);
+        await db.add(`xp_${message.guild.id}_${message.author.id}`, xpGive);
       }
     }
   }

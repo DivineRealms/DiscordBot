@@ -45,17 +45,16 @@ module.exports.run = async (client, message, args) => {
           iconURL: `https://cdn.upload.systems/uploads/6uDK0XAN.png`,
           url: def.urbanURL,
         })
-        .addField(`Definition`, `${def.definition}`.slice(0, 1000), false)
-        .addField(
-          `Definition in an example:`,
-          `${def.example || "none"}`.slice(0, 1000),
-          false
-        )
-        .addField(
-          `Author:`,
-          "<:ArrowRightGray:813815804768026705>" + def.author,
-          false
-        ),
+        .addFields([{ name: `Definition`, value: `${def.definition}`.slice(0, 1000), inline: false },
+        {
+          name: `Definition in an example:`,
+          value: `${def.example || "none"}`.slice(0, 1000),
+          inline: false
+        },{
+          name: `Author:`,
+          value: "<:ArrowRightGray:813815804768026705>" + def.author,
+          inline: false
+        }])
     ],
   });
 };

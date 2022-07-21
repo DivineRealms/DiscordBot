@@ -1,4 +1,5 @@
-const db = require("quick.db");
+const { QuickDB } = require("quick.db");
+const db = new QuickDB();
 const Discord = require("discord.js");
 
 module.exports = {
@@ -13,7 +14,7 @@ module.exports = {
 
 module.exports.run = async (client, message, args) => {
   let option = args[0],
-    colors = db.fetch(`colors_${message.guild.id}_${message.author.id}`) || [];
+    colors = await db.get(`colors_${message.guild.id}_${message.author.id}`) || [];
 
   if (!option)
     return message.channel.send({

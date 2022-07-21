@@ -1,4 +1,5 @@
-const db = require("quick.db");
+const { QuickDB } = require("quick.db");
+const db = new QuickDB();
 
 module.exports = {
   name: "withdraw",
@@ -8,10 +9,17 @@ module.exports = {
   cooldown: 0,
   aliases: ["wd", "w"],
   usage: "w <amount | all>",
+  slash: true,
+  options: [{
+    name: "amount",
+    description: "Amount you want to withdraw or 'all'",
+    type: Discord.ApplicationCommandOptionType.String,
+    required: true
+  }]
 };
 
 module.exports.run = async (client, message, args) => {
-  let bank = db.fetch(`bank_${message.guild.id}_${message.author.id}`);
+  let bank = await db.get(`bank_${message.guild.id}_${message.author.id}`);
 
   if (!args[0] || (isNaN(args[0]) && args[0] !== "all"))
     return message.channel.send({
@@ -45,8 +53,8 @@ module.exports.run = async (client, message, args) => {
       ],
     });
 
-    db.subtract(`bank_${message.guild.id}_${message.author.id}`, Number(bank));
-    db.add(`money_${message.guild.id}_${message.author.id}`, Number(bank));
+    await db.sub(`bank_${message.guild.id}_${message.author.id}`, Number(bank));
+    await db.add(`money_${message.guild.id}_${message.author.id}`, Number(bank));
     return;
   }
   if (args[0] > bank)
@@ -80,6 +88,6 @@ module.exports.run = async (client, message, args) => {
     ],
   });
 
-  db.add(`money_${message.guild.id}_${message.author.id}`, Number(args[0]));
-  db.subtract(`bank_${message.guild.id}_${message.author.id}`, Number(args[0]));
+  await db.add(`money_${message.guild.id}_${message.author.id}`, Number(args[0]));
+  await db.sub(`bank_${message.guild.id}_${message.author.id}`, Number(args[0]));
 };

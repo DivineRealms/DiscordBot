@@ -1,11 +1,12 @@
-const db = require("quick.db");
-const { MessageActionRow, MessageButton } = require("discord.js");
+const { QuickDB } = require("quick.db");
+const db = new QuickDB();
+const { ActionRowBuilder, ButtonBuilder, ButtonStyle } = require("discord.js");
 
 module.exports = {
   name: "create",
   category: "tickets",
   description: "Creates a ticket.",
-  permissions: ["MANAGE_CHANNELS"],
+  permissions: ["ManageChannels"],
   cooldown: 0,
   aliases: [`new`, `ticket`],
   usage: "create <@users>",
@@ -14,7 +15,7 @@ module.exports = {
 module.exports.run = async (client, message, args) => {
   const settings = client.conf.Ticket_System;
   const tickets =
-    db.all().filter((i) => i.ID.startsWith(`tickets_${message.guild.id}_`)) ||
+    (await db.all()).filter((i) => i.ID.startsWith(`tickets_${message.guild.id}_`)) ||
     [];
 
   const log = client.channels.cache.get(client.conf.Logging.Tickets);
@@ -46,34 +47,33 @@ module.exports.run = async (client, message, args) => {
 
   const permissions = settings.Support_Roles.map((r) => ({
       id: r,
-      allow: "VIEW_CHANNEL",
+      allow: "ViewChannel",
     })),
     users = message.mentions.users.map((s) => ({
       id: s.id,
-      allow: "VIEW_CHANNEL",
+      allow: "ViewChannel",
     })),
-    channel = await message.guild.channels.create(
-      `📋︲${message.author.username}-${ticketNumber}`,
-      {
+    channel = await message.guild.channels.create({
+        name: `📋︲${message.author.username}-${ticketNumber}`,
         parent: settings.Category,
         permissionOverwrites: [
           {
             id: message.guild.id,
-            deny: "VIEW_CHANNEL",
+            deny: "ViewChannel",
           },
-          { id: message.author.id, allow: "VIEW_CHANNEL" },
+          { id: message.author.id, allow: "ViewChannel" },
           ...permissions,
           ...users,
         ],
       }
     ),
-    jumpRow = new MessageActionRow().addComponents(
-      new MessageButton()
+    jumpRow = new ActionRowBuilder().addComponents(
+      new ButtonBuilder()
         .setURL(
           `https://discord.com/channels/${message.guild.id}/${channel.id}`
         )
         .setLabel("Go to the Ticket")
-        .setStyle("LINK")
+        .setStyle(ButtonStyle.Link)
     );
 
   message.channel.send({
@@ -130,5 +130,5 @@ module.exports.run = async (client, message, args) => {
       ],
     });
 
-  db.set(`tickets_${message.guild.id}_${channel.id}`, message.author.id);
+  await db.set(`tickets_${message.guild.id}_${channel.id}`, message.author.id);
 };

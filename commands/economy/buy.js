@@ -1,4 +1,6 @@
-const db = require("quick.db");
+const { ApplicationCommandOptionType } = require("discord.js");
+const { QuickDB } = require("quick.db");
+const db = new QuickDB();
 
 module.exports = {
   name: "buy",
@@ -8,13 +10,20 @@ module.exports = {
   cooldown: 0,
   aliases: [],
   usage: "buy <item number>",
+  slash: true,
+  options: [{
+    name: "item",
+    description: "ID of Item you want to buy",
+    type: ApplicationCommandOptionType.Number,
+    required: true
+  }]
 };
 
 module.exports.run = async (client, message, args) => {
   const settings = client.conf.Economy,
     shop = [...settings.Shop_Items],
     item = shop.find((s, i) => i + 1 == args[0]),
-    balance = db.fetch(`money_${message.guild.id}_${message.author.id}`);
+    balance = await db.get(`money_${message.guild.id}_${message.author.id}`);
 
   if (!item)
     return message.channel.send({
@@ -41,7 +50,7 @@ module.exports.run = async (client, message, args) => {
 
     message.member.roles
       .add([item.Role_ID, "734759761660084268"])
-      .then(() => {
+      .then(async() => {
         message.channel.send({
           embeds: [
             client
@@ -52,7 +61,7 @@ module.exports.run = async (client, message, args) => {
               }),
           ],
         });
-        db.subtract(
+        await db.sub(
           `money_${message.guild.id}_${message.author.id}`,
           item.Price
         );
@@ -66,7 +75,7 @@ module.exports.run = async (client, message, args) => {
       });
   } else if (item.Type == "color") {
     let colors =
-      db.fetch(`colors_${message.guild.id}_${message.author.id}`) || [];
+      await db.get(`colors_${message.guild.id}_${message.author.id}`) || [];
 
     if (!balance || balance < item.Price)
       return message.channel.send({
@@ -90,12 +99,12 @@ module.exports.run = async (client, message, args) => {
         ],
       });
 
-    db.push(
+    await db.push(
       `colors_${message.guild.id}_${message.author.id}`,
       item.Name.toLowerCase()
     );
 
-    db.subtract(`money_${message.guild.id}_${message.author.id}`, item.Price);
+    await db.sub(`money_${message.guild.id}_${message.author.id}`, item.Price);
     message.channel.send({
       embeds: [
         client

@@ -49,7 +49,8 @@ module.exports.run = async (client, message, args) => {
     fields.push({ title: args[i], description: args[i + 1] });
 
   for (let i = 0; i < fields.length; i++) {
-    embed.addField(fields[i].title, fields[i].description, false);
+    embed.addFields({ name: fields[i].title, value: fields[i].description, value: false });
+    // here
     if (!fields[i].title || !fields[i].description)
       return message.channel.send({
         embeds: [

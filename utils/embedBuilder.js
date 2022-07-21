@@ -1,7 +1,7 @@
 const Discord = require("discord.js");
 
 module.exports = (client, user, author, description, color) => {
-  let embed = new Discord.MessageEmbed();
+  let embed = new Discord.EmbedBuilder();
 
   if (author.length > 0) embed.setAuthor({ name: author });
   if (description.length > 0) embed.setDescription(description);

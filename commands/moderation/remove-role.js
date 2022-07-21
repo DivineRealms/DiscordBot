@@ -2,7 +2,7 @@ module.exports = {
   name: "remove-role",
   category: "moderation",
   description: "Lets you revoke a certain role from a member.",
-  permissions: ["MANAGE_ROLES"],
+  permissions: ["ManageRolesROLES"],
   cooldown: 0,
   aliases: ["remover", "removerole"],
   usage: "remove-role <@User | ID> <@Role | ID | Name>",

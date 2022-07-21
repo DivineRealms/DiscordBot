@@ -17,17 +17,16 @@ module.exports.run = async (client, message, args) => {
           name: `${message.channel.name} (${message.channel.id})`,
           iconURL: `https://cdn.upload.systems/uploads/6uDK0XAN.png`,
         })
-        .addField(
-          "Information",
-          `<:ArrowRightGray:813815804768026705>Channel Name: ${message.channel.name} 
+        .addFields([{
+          name: "Information",
+          value: `<:ArrowRightGray:813815804768026705>Channel Name: ${message.channel.name} 
 <:ArrowRightGray:813815804768026705>Channel ID: **${message.channel.id}**
 <:ArrowRightGray:813815804768026705>Channel Type: **${message.channel.type}**
 <:ArrowRightGray:813815804768026705>NSFW: **\`${message.channel.nsfw}\`**`,
-          false
-        )
-        .addField(
-          "More Informations:",
-          `<:ArrowRightGray:813815804768026705>Position: **${
+          inline: false
+        }, {
+          name: "More Informations:",
+          value: `<:ArrowRightGray:813815804768026705>Position: **${
             message.channel.position
           }**
 <:ArrowRightGray:813815804768026705>Last Message ID: **${
@@ -40,8 +39,8 @@ module.exports.run = async (client, message, args) => {
 <:ArrowRightGray:813815804768026705>Last Message Pinned: <t:${
             Math.round(message.channel.lastPinTimestamp / 1000) || "none"
           }:R>`,
-          false
-        ),
+          inline: false
+        }]),
     ],
   });
 };

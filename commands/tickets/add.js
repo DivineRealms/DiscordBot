@@ -1,17 +1,18 @@
-const db = require("quick.db");
+const { QuickDB } = require("quick.db");
+const db = new QuickDB();
 
 module.exports = {
   name: "add",
   category: "tickets",
   usage: "add",
   description: "Add users to the current ticket.",
-  permissions: ["MANAGE_CHANNELS"],
+  permissions: ["ManageChannels"],
   cooldown: 0,
   aliases: [],
 };
 
 module.exports.run = async (client, message, args) => {
-  const ticket = db.fetch(`tickets_${message.guild.id}_${message.channel.id}`);
+  const ticket = await db.get(`tickets_${message.guild.id}_${message.channel.id}`);
 
   if (!client.conf.Ticket_System.Enabled)
     return message.channel.send({
@@ -48,7 +49,7 @@ module.exports.run = async (client, message, args) => {
     if (
       message.channel.permissionOverwrites
         .get(message.mentions.users.first().id)
-        .allow.has("VIEW_CHANNEL")
+        .allow.has("ViewChannel")
     )
       return message.channel.send({
         embeds: [
@@ -61,7 +62,7 @@ module.exports.run = async (client, message, args) => {
       });
 
   message.channel.permissionOverwrites.edit(message.mentions.users.first(), {
-    VIEW_CHANNEL: true,
+    ViewChannel: true,
   });
 
   message.channel.send({

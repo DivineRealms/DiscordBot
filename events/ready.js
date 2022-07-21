@@ -1,6 +1,7 @@
-const { MessageActionRow, MessageButton } = require("discord.js");
+const { ActionRowBuilder, ButtonBuilder, ButtonStyle, ActivityType } = require("discord.js");
 const cron = require("cron");
-const db = require("quick.db");
+const { QuickDB } = require("quick.db");
+const db = new QuickDB();
 const bumpReminder = require("../utils/bumpRemind.js");
 const axios = require("axios");
 
@@ -12,11 +13,13 @@ module.exports = async (client) => {
 
   const settings = client.conf.Settings.Bot_Activity;
 
+  await client.application.commands.set(client.slashArray);
+
   let rand = Math.floor(Math.random() * settings.Activities.length);
   client.user.setActivity(
     settings.Activities[rand].replace("{count}", client.users.cache.size),
     {
-      type: settings.Types[rand],
+      type: ActivityType[settings.Types[rand]],
     }
   );
 
@@ -24,7 +27,7 @@ module.exports = async (client) => {
     let index = Math.floor(Math.random() * settings.Activities.length);
     client.user.setActivity(
       settings.Activities[index].replace("{count}", client.users.cache.size),
-      { type: settings.Types[index] }
+      { type: ActivityType[settings.Types[rand]] }
     );
   }, 180000);
 
@@ -56,7 +59,7 @@ module.exports = async (client) => {
       );
   }
 
-  function birthday() {
+  async function birthday() {
     const isToday = (d) =>
       d
         ? new Date().getDate() === new Date(d).getDate() &&
@@ -71,8 +74,7 @@ module.exports = async (client) => {
     )
       return;
 
-    let birthdays = db
-      .all()
+    let birthdays = (await db.all())
       .filter((i) => i.ID.startsWith(`birthday_${guild.id}_`))
       .sort((a, b) => b.data - a.data);
 
@@ -118,18 +120,18 @@ module.exports = async (client) => {
     "0 0 13,21 * * *",
     () => {
       let generalCh = client.channels.cache.get("512274978754920463");
-      const voteRow = new MessageActionRow().addComponents(
+      const voteRow = new ActionRowBuilder().addComponents(
         [
-          new MessageButton()
+          new ButtonBuilder()
             .setURL(`https://minecraft-mp.com/server/295045/vote/`)
             .setLabel("Vote for Divine Realms")
-            .setStyle("LINK"),
+            .setStyle(ButtonStyle.Link),
         ],
         [
-          new MessageButton()
+          new ButtonBuilder()
             .setURL(`https://minecraft-mp.com/server/296478/vote/`)
             .setLabel("Support HogRealms")
-            .setStyle("LINK"),
+            .setStyle(ButtonStyle.Link),
         ]
       );
       if (generalCh)
@@ -155,9 +157,9 @@ module.exports = async (client) => {
         .get(
           `https://minecraft-mp.com/api/?object=servers&element=voters&key=${client.conf.Settings.Vote_Key}&month=current&format=json?limit=10`
         )
-        .then((res) => {
-          db.set(`votes_${guild.id}`, res.data.voters);
-          db.set(`untilVote_${guild.id}`, Date.now());
+        .then(async(res) => {
+          await db.set(`votes_${guild.id}`, res.data.voters);
+          await db.set(`untilVote_${guild.id}`, Date.now());
         });
     },
     { timezone: "Europe/Belgrade" }

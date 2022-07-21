@@ -1,4 +1,5 @@
-const db = require("quick.db");
+const { QuickDB } = require("quick.db");
+const db = new QuickDB();
 
 module.exports = {
   name: "leaderboard",
@@ -11,7 +12,7 @@ module.exports = {
 };
 
 module.exports.run = async (client, message) => {
-  let until = db.fetch(`untilVote_${message.guild.id}`) || Date.now(),
+  let until = await db.get(`untilVote_${message.guild.id}`) || Date.now(),
     timeout = 7200000 - (Date.now() - until),
     parsed = client.utils.formatTime(timeout),
     data = [];

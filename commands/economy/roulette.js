@@ -1,5 +1,6 @@
 const Discord = require("discord.js");
-const db = require("quick.db");
+const { QuickDB } = require("quick.db");
+const db = new QuickDB();
 
 module.exports = {
   name: "roulette",
@@ -14,7 +15,7 @@ module.exports = {
 module.exports.run = async (client, message, args) => {
   let color = args[0];
   let money = args[1];
-  let balance = db.fetch(`money_${message.guild.id}_${message.author.id}`);
+  let balance = await db.get(`money_${message.guild.id}_${message.author.id}`);
 
   if (!color)
     return message.channel.send({
@@ -77,21 +78,20 @@ module.exports.run = async (client, message, args) => {
 
   if (randomNumber == 0 && color == 2) {
     money *= 15;
-    db.add(`money_${message.guild.id}_${message.author.id}`, money);
+    await db.add(`money_${message.guild.id}_${message.author.id}`, money);
     message.channel.send({
       embeds: [
         client
           .embedBuilder(client, message, "", "", "#3db39e")
-          .addField(
-            "Options:",
-            `Color: **\`Green\`**\nNumber: **\`${randomNumber}\`**\nMultiplier: **\`15x\`**`,
-            true
-          )
-          .addField(
-            "Result:",
-            `You won **$${money}**`,
-            true
-          )
+          .addFields([{
+            name: "Options:",
+            value: `Color: **\`Green\`**\nNumber: **\`${randomNumber}\`**\nMultiplier: **\`15x\`**`,
+            inline: true
+          }, {
+            name: "Result:",
+            value: `You won **$${money}**`,
+            inline: true
+          }])
           .setAuthor({
             name: "Roulette",
             iconURL: `https://cdn.upload.systems/uploads/HJGA3pxp.png`,
@@ -100,21 +100,20 @@ module.exports.run = async (client, message, args) => {
     });
   } else if (isOdd(randomNumber) && color == 1) {
     money = parseInt(money * 1.5);
-    db.add(`money_${message.guild.id}_${message.author.id}`, money);
+    await db.add(`money_${message.guild.id}_${message.author.id}`, money);
     message.channel.send({
       embeds: [
         client
           .embedBuilder(client, message, "", "", "#3db39e")
-          .addField(
-            "Options:",
-            `Color: **\`Red\`**\nNumber: **\`${randomNumber}\`**\nMultiplier: **\`1.5x\`**`,
-            false
-          )
-          .addField(
-            "Result:",
-            `You won **$${money}**`,
-            false
-          )
+          .addFields([{
+            name: "Options:",
+            value: `Color: **\`Red\`**\nNumber: **\`${randomNumber}\`**\nMultiplier: **\`1.5x\`**`,
+            inline: false
+          }, {
+            name: "Result:",
+            value: `You won **$${money}**`,
+            inline: false
+          }])
           .setAuthor({
             name: "Roulette",
             iconURL: `https://cdn.upload.systems/uploads/HJGA3pxp.png`,
@@ -124,21 +123,20 @@ module.exports.run = async (client, message, args) => {
   } else if (!isOdd(randomNumber) && color == 0) {
     // Black
     money = parseInt(money * 2);
-    db.add(`money_${message.guild.id}_${message.author.id}`, money);
+    await db.add(`money_${message.guild.id}_${message.author.id}`, money);
     message.channel.send({
       embeds: [
         client
           .embedBuilder(client, message, "", "", "#3db39e")
-          .addField(
-            "Options:",
-            `Color: **\`Black\`**\nNumber: **\`${randomNumber}\`**\nMultiplier: **\`2x\`**`,
-            false
-          )
-          .addField(
-            "Result:",
-            `You won **$${money}**`,
-            false
-          )
+          .addFields([{
+            name: "Options:",
+            value: `Color: **\`Black\`**\nNumber: **\`${randomNumber}\`**\nMultiplier: **\`2x\`**`,
+            inline: false
+          }, {
+            name: "Result:",
+            value: `You won **$${money}**`,
+            inline: false
+          }])
           .setAuthor({
             name: "Roulette",
             iconURL: `https://cdn.upload.systems/uploads/HJGA3pxp.png`,
@@ -149,17 +147,16 @@ module.exports.run = async (client, message, args) => {
     if (color == 0) color = "Black";
     else if (color == 1) color = "Red";
     else if (color == 2) color = "Green";
-    db.subtract(`money_${message.guild.id}_${message.author.id}`, money);
+    await db.sub(`money_${message.guild.id}_${message.author.id}`, money);
     message.channel.send({
       embeds: [
         client
           .embedBuilder(client, message, "", "", "RED")
-          .addField(
-            "Options:",
-            `Color: **\`${color}\`**\nNumber: **\`${randomNumber}\`**`,
-            false
-          )
-          .addField("Result:", `You lost **$${money}**`, false)
+          .addFields([{
+            name: "Options:",
+            value: `Color: **\`${color}\`**\nNumber: **\`${randomNumber}\`**`,
+            inline: false
+          }, { name: "Result:", value: `You lost **$${money}**`, inline: false }])
           .setAuthor({
             name: "Roulette",
             iconURL: `https://cdn.upload.systems/uploads/HJGA3pxp.png`,

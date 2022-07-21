@@ -1,4 +1,5 @@
-const db = require("quick.db");
+const { QuickDB } = require("quick.db");
+const db = new QuickDB();
 
 module.exports = {
   name: "rank",
@@ -16,11 +17,10 @@ module.exports.run = async (client, message, args) => {
     client.users.cache.get(args[0]) ||
     message.author;
 
-  let level = db.fetch(`level_${message.guild.id}_${user.id}`) || 1;
-  let xp = db.fetch(`xp_${message.guild.id}_${user.id}`) || 1;
+  let level = await db.get(`level_${message.guild.id}_${user.id}`) || 1;
+  let xp = await db.get(`xp_${message.guild.id}_${user.id}`) || 1;
   let xpNeeded = (parseInt(level) + 1) * 2 * 250 + 250;
-  let every = db
-    .all()
+  let every = (await db.all())
     .filter((i) => i.ID.startsWith(`level_${message.guild.id}_`))
     .sort((a, b) => b.data - a.data);
 

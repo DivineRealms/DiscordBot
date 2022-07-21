@@ -1,4 +1,5 @@
-const db = require("quick.db");
+const { QuickDB } = require("quick.db");
+const db = new QuickDB();
 
 module.exports = {
   name: "modifybal",
@@ -56,7 +57,7 @@ module.exports.run = async (client, message, args) => {
 
   if (args[1].toLowerCase() == "add") {
     if (args[2].toLowerCase() == "bank") {
-      db.add(`bank_${message.guild.id}_${user.id}`, Number(args[3]));
+      await db.add(`bank_${message.guild.id}_${user.id}`, Number(args[3]));
       message.channel.send({
         embeds: [
           client.embedBuilder(client, message, "", "", "#3db39e").setAuthor({
@@ -66,7 +67,7 @@ module.exports.run = async (client, message, args) => {
         ],
       });
     } else if (args[2].toLowerCase() == "wallet") {
-      db.add(`money_${message.guild.id}_${user.id}`, Number(args[3]));
+      await db.add(`money_${message.guild.id}_${user.id}`, Number(args[3]));
       message.channel.send({
         embeds: [
           client.embedBuilder(client, message, "", "", "#3db39e").setAuthor({
@@ -78,7 +79,7 @@ module.exports.run = async (client, message, args) => {
     }
   } else if (args[1].toLowerCase() == "remove") {
     if (args[2].toLowerCase() == "bank") {
-      db.subtract(`bank_${message.guild.id}_${user.id}`, Number(args[3]));
+      await db.sub(`bank_${message.guild.id}_${user.id}`, Number(args[3]));
       message.channel.send({
         embeds: [
           client.embedBuilder(client, message, "", "", "#3db39e").setAuthor({
@@ -88,7 +89,7 @@ module.exports.run = async (client, message, args) => {
         ],
       });
     } else if (args[2].toLowerCase() == "wallet") {
-      db.subtract(`money_${message.guild.id}_${user.id}`, Number(args[3]));
+      await db.sub(`money_${message.guild.id}_${user.id}`, Number(args[3]));
       message.channel.send({
         embeds: [
           client.embedBuilder(client, message, "", "", "#3db39e").setAuthor({

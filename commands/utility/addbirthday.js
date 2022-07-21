@@ -1,5 +1,6 @@
 const datetime = require("date-and-time");
-const db = require("quick.db");
+const { QuickDB } = require("quick.db");
+const db = new QuickDB();
 
 module.exports = {
   category: "utility",
@@ -12,7 +13,7 @@ module.exports = {
 };
 
 module.exports.run = async (client, message, args) => {
-  let birthday = db.fetch(`birthday_${message.guild.id}_${message.author.id}`);
+  let birthday = await db.get(`birthday_${message.guild.id}_${message.author.id}`);
 
   if (!client.conf.Birthday_System.Enabled)
     return message.channel.send({
@@ -77,7 +78,7 @@ module.exports.run = async (client, message, args) => {
     ],
   });
 
-  db.set(`birthday_${message.guild.id}_${message.author.id}`, args.join(" "));
+  await db.set(`birthday_${message.guild.id}_${message.author.id}`, args.join(" "));
 };
 
 const getAge = (b) => {

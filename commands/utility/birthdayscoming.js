@@ -1,4 +1,5 @@
-const db = require("quick.db");
+const { QuickDB } = require("quick.db");
+const db = new QuickDB();
 const paginateContent = require("../../utils/paginateContent.js");
 
 module.exports = {
@@ -44,8 +45,7 @@ module.exports.run = async (client, message, args) => {
         new Date().getDate() <= new Date(d).getDate()
       : false;
 
-  let birthdays = db
-    .all()
+  let birthdays = (await db.all())
     .filter((i) => i.ID.startsWith(`birthday_${message.guild.id}_`))
     .sort((a, b) => b.data - a.data);
 

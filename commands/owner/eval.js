@@ -53,7 +53,7 @@ module.exports.run = async (client, message, args) => {
         name: "Code Evaluation",
         iconURL: `https://cdn.upload.systems/uploads/GVd0PBIt.png`,
       })
-      .addField("📥︲Input:", `\`\`\`${code}\`\`\``);
+      .addFields({ name: "📥︲Input:", value: `\`\`\`${code}\`\`\`` });
 
     if (evaled.length >= 1024) {
       const body = {
@@ -69,11 +69,11 @@ module.exports.run = async (client, message, args) => {
 
       const json = await response.json();
 
-      embed.addField(
+      embed.addFields(
         "📤︲Output:",
         `\`\`\`xl\nhttps://api.upload.systems/pastes/${json.paste.id}/raw\`\`\``
       );
-    } else embed.addField("📤︲Output", `\`\`\`xl\n${evaled}\`\`\``);
+    } else embed.addFields({ name: "📤︲Output", value: `\`\`\`xl\n${evaled}\`\`\`` });
 
     message.channel.send({ embeds: [embed] });
   } catch (err) {
@@ -81,8 +81,7 @@ module.exports.run = async (client, message, args) => {
       embeds: [
         client.utils
           .errorEmbed(client, message, "Code Evaluation Failed")
-          .addField("📥︲Input:", `\`\`\`xl\n${code}\`\`\``)
-          .addField("📤︲Output:", `\`\`\`xl\n${err}\`\`\``),
+          .addFields([{ name: "📥︲Input:", value: `\`\`\`xl\n${code}\`\`\`` }, { name: "📤︲Output:", value: `\`\`\`xl\n${err}\`\`\`` }])
       ],
     });
   }

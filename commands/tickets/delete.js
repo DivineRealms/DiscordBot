@@ -4,20 +4,21 @@ const jsdom = require("jsdom");
 const { JSDOM } = jsdom;
 const dom = new JSDOM();
 const document = dom.window.document;
-const db = require("quick.db");
+const { QuickDB } = require("quick.db");
+const db = new QuickDB();
 
 module.exports = {
   name: "delete",
   category: "tickets",
   usage: "delete",
   description: "Deletes the ticket.",
-  permissions: ["MANAGE_CHANNELS"],
+  permissions: ["ManageChannels"],
   cooldown: 0,
   aliases: [`close`],
 };
 
 module.exports.run = async (client, message, args) => {
-  const ticket = db.fetch(`tickets_${message.guild.id}_${message.channel.id}`);
+  const ticket = await db.get(`tickets_${message.guild.id}_${message.channel.id}`);
   const log = client.channels.cache.get(client.conf.Logging.Tickets);
 
   if (!client.conf.Ticket_System.Enabled)
@@ -87,7 +88,7 @@ module.exports.run = async (client, message, args) => {
 
   const loggingembed = client
       .embedBuilder(client, message, "Ticket Logging System", "", "#b3e59f")
-      .addField(`Ticket Name:`, `${message.channel.name}`, false)
+      .addFields({ name: `Ticket Name:`, value: `${message.channel.name}`, inline: false })
       .setAuthor(
         "Ticket Logging System",
         `https://cdn.upload.systems/uploads/4mFVRE7f.png`
@@ -118,5 +119,5 @@ module.exports.run = async (client, message, args) => {
 
   await new Promise((r) => setTimeout(r, 10000));
   message.channel.delete();
-  db.delete(`tickets_${message.guild.id}_${message.channel.id}`);
+  await db.delete(`tickets_${message.guild.id}_${message.channel.id}`);
 };
