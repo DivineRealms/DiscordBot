@@ -38,6 +38,8 @@
         "relevant-urban": "^2.0.0",
         "smart-timeout": "^2.5.0",
         "tic-tac-toe-stateless-engine": "^1.0.0",
-        "weather-js": "^2.0.0"
+        "weather-js": "^2.0.0",
+        "discord-canvas": "latest",
+        "luxon": "latest"
     }
 }

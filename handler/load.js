@@ -65,7 +65,8 @@ module.exports = async (client) => {
         .setFooter({ text: `${error.name}` })
         .setTimestamp();
   
-      let channel = client.channels.cache.get("855857615317368833");
+      let channel = client.channels.cache.get("512277268597309440");
+
       if(channel) channel.send({ embeds: [errEmbed] });
     }
   });
@@ -95,7 +96,7 @@ module.exports = async (client) => {
         .setFooter({ text: `${error.name}` })
         .setTimestamp();
   
-      let channel = client.channels.cache.get("855857615317368833");
+      let channel = client.channels.cache.get("512277268597309440");
       if(channel) channel.send({ embeds: [errEmbed] });
     }
   });
