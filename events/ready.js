@@ -189,7 +189,7 @@ module.exports = async (client) => {
   let voteLeaderboardCron = new cron.CronJob(
     "0 0 */2 * * *",
     async() => {
-      await updateVotesLb(client, guild);
+      await client.utils.updateVotesLb(client, guild);
     },
     { timezone: "Europe/Belgrade" }
   );
