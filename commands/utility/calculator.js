@@ -42,11 +42,11 @@ module.exports.run = async (client, message, args) => {
       ],
     });
   } catch (e) {
-    client.utils.errorEmbed(client, message, "Please provide a problem.");
+    message.channel.send({ embeds: [client.utils.errorEmbed(client, message, "Please provide a problem.")]});
   }
 };
 
-module.exports.slashTrue = async (client, interaction) => {
+module.exports.slashRun = async (client, interaction) => {
   try {
     interaction.reply({
       embeds: [
@@ -63,6 +63,6 @@ module.exports.slashTrue = async (client, interaction) => {
       ],
     });
   } catch (e) {
-    client.utils.errorEmbed(client, interaction, "Please provide a expression.");
+    interaction.reply({ embeds: [client.utils.errorEmbed(client, interaction, "Please provide a expression.")] });
   }
 };

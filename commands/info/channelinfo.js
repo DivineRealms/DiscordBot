@@ -19,7 +19,7 @@ module.exports = {
 
 module.exports.run = async (client, message, args) => {
   const channel = message.mentions.channels.first() 
-  || message.guild.channels.cache.get(args[0]) || channel;
+  || message.guild.channels.cache.get(args[0]) || message.channel;
   message.channel.send({
     embeds: [
       client
@@ -57,7 +57,7 @@ module.exports.run = async (client, message, args) => {
 };
 
 module.exports.slashRun = async (client, interaction) => {
-  const channel = interaction.options.getChannel("channel");
+  const channel = interaction.options.getChannel("channel") || message.channel;
 
   interaction.reply({
     embeds: [

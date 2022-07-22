@@ -152,7 +152,7 @@ module.exports = async (client) => {
 
   let voteMonthEnd = new cron.CronJob(
     "30 0 0 1 * *", async() => {
-      await updateVotesLb(client, guild);
+      await client.utils.updateVotesLb(client, guild);
 
       const lastMonth = new Date();
       lastMonth.setMonth(lastMonth.getMonth() - 1);
