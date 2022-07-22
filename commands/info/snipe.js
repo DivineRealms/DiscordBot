@@ -19,7 +19,7 @@ module.exports.run = async (client, message, args) => {
       ],
     });
 
-  let user = await client.users.cache.get(snipe?.user)
+  let user = await message.guild.users.cache.get(snipe?.user)
 
   message.channel.send({
     embeds: [
@@ -42,8 +42,7 @@ ${snipe.content}
 };
 
 module.exports.slashRun = async (client, interaction) => {
-  let snipe = client.snipes.get(interaction.channel.id),
-    user = await client.users.fetch(snipe.user);
+  let snipe = client.snipes.get(interaction.channel.id);
 
   if (!snipe || !snipe.content)
     return interaction.reply({
@@ -51,6 +50,8 @@ module.exports.slashRun = async (client, interaction) => {
         client.utils.errorEmbed(client, interaction, "There's nothing to snipe."),
       ],
     });
+
+  const user = await message.guild.users.cache.get(snipe.user)
 
   interaction.reply({
     embeds: [
