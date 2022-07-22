@@ -9,7 +9,7 @@ module.exports = async (client, interaction) => {
 
   interaction.px = client.conf.Settings.Prefix;
 
-  if(interaction.type == InteractionType.ApplicationCommand) {
+  if(interaction.type == InteractionType.ApplicationCommand && interaction.guild) {
     const cmd = client.slashCommands.get(interaction.commandName);
     if (!cmd) return interaction.reply({ content: "> That slash command doesn't exist, contact bot developer.", ephemeral: true });
 

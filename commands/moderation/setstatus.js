@@ -4,7 +4,7 @@ module.exports = {
   name: "setstatus",
   category: "moderation",
   description: "Allows you to set the bots status.",
-  permissions: ["ADMINISTRATOR"],
+  permissions: ["Administrator"],
   cooldown: 0,
   aliases: [],
   usage: "setstatus <TEXT>",

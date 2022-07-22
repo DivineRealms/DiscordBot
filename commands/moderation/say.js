@@ -4,7 +4,7 @@ module.exports = {
   name: "say",
   category: "moderation",
   description: "Lets you speak as the bot and be a cool kid.",
-  permissions: ["ADMINISTRATOR"],
+  permissions: ["Administrator"],
   cooldown: 0,
   aliases: [`speak`],
   usage: "say <Message>",

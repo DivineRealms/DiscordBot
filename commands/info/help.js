@@ -159,7 +159,6 @@ module.exports.run = async (client, message, args) => {
   }
 };
 
-
 module.exports.slashRun = async (client, interaction) => {
   let cmd = interaction.options.getString("command"),
     data = [];

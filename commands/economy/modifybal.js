@@ -6,7 +6,7 @@ module.exports = {
   name: "modifybal",
   category: "economy",
   description: "Remove or add money to a user on the server.",
-  permissions: ["ADMINISTRATOR"],
+  permissions: ["Administrator"],
   cooldown: 0,
   aliases: ["modifyb"],
   usage: "modifybal [@User] <add | remove> <wallet | bank> <amount>",
