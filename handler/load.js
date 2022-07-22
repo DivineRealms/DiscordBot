@@ -1,12 +1,12 @@
-const { MessageEmbed } = require("discord.js");
+const { EmbedBuilder } = require("discord.js");
 const { readdirSync } = require("fs");
-const moment = require("moment-timezone");
 const fs = require("fs");
 const yaml = require("js-yaml");
 const Enmap = require("enmap");
 const express = require("express");
 const playerRoutes = require("../routes/playerRoutes.js");
 const leagueRoutes = require("../routes/leagueRoutes.js");
+const { QuickDB } = require("quick.db");
 
 module.exports = async (client) => {
   client.conf = yaml.load(fs.readFileSync("./settings/config.yml", "utf8"));
@@ -19,9 +19,11 @@ module.exports = async (client) => {
   client.categories = new Enmap();
   client.processes = new Enmap();
   client.commands = new Enmap();
+  client.slashCommands = new Enmap();
   client.snipes = new Enmap();
   client.afk = new Enmap();
-  client.embed = class Embed extends MessageEmbed {
+  client.slashArray = [];
+  client.embed = class Embed extends EmbedBuilder {
     color = client.conf.Settings.Embed_Color;
   };
   const settings = { fetchAll: true, autoFetch: true, cloneLevel: "deep" };
@@ -34,7 +36,7 @@ module.exports = async (client) => {
   const temporaryVC = require("../utils/temporaryVC.js");
   temporaryVC(client);
 
-  client.db = require("quick.db");
+  client.db = new QuickDB();
 
   client.embedBuilder = require("../utils/embedBuilder.js");
   client.utils = require("../utils/utils.js");
@@ -55,7 +57,7 @@ module.exports = async (client) => {
         if (error.stack.includes(ignore)) list.push(true);
       }
       if (list.length !== 0) return null;
-      let errEmbed = new MessageEmbed()
+      let errEmbed = new EmbedBuilder()
         .setAuthor({
           name: "Error Occurred",
           iconURL: `https://cdn.upload.systems/uploads/96HNGxzL.png`,
@@ -66,9 +68,9 @@ module.exports = async (client) => {
         .setTimestamp();
   
       let channel = client.channels.cache.get("512277268597309440");
-
       if(channel) channel.send({ embeds: [errEmbed] });
     }
+    console.log(error.stack)
   });
 
   process.on("uncaughtException", (error) => {
@@ -86,7 +88,7 @@ module.exports = async (client) => {
         if (error.stack.includes(ignore)) list.push(true);
       }
       if (list.length !== 0) return null;
-      let errEmbed = new MessageEmbed()
+      let errEmbed = new EmbedBuilder()
         .setAuthor({
           name: "Error Occurred",
           iconURL: `https://cdn.upload.systems/uploads/96HNGxzL.png`,
@@ -95,10 +97,14 @@ module.exports = async (client) => {
         .setColor("#e24c4b")
         .setFooter({ text: `${error.name}` })
         .setTimestamp();
-  
-      let channel = client.channels.cache.get("512277268597309440");
-      if(channel) channel.send({ embeds: [errEmbed] });
+
+        
+      if(client.isReady) {
+        let channel = client.channels.cache.get("512277268597309440");
+        if(channel) channel.send({ embeds: [errEmbed] });
+      }
     }
+    console.log(error.stack)
   });
 
   for (const d of readdirSync("./commands/")) {
@@ -106,11 +112,20 @@ module.exports = async (client) => {
       d,
       readdirSync(`./commands/${d}`).map((s) => s.split(".")[0])
     );
-    for (const f of readdirSync(`./commands/${d}`))
-      client.commands.set(f.split(".")[0], {
-        ...require(`../commands/${d}/${f}`),
+    for (const f of readdirSync(`./commands/${d}`)) {
+      const commandData = require(`../commands/${d}/${f}`);
+      if(commandData.slash == true) {
+        client.slashCommands.set(commandData.name, {
+          ...commandData,
+          category: d,
+        });
+        client.slashArray.push(commandData);
+      }
+      client.commands.set(commandData.name, {
+        ...commandData,
         category: d,
       });
+    }
   }
 
   for (const evt of readdirSync("./events"))

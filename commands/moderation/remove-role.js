@@ -1,11 +1,25 @@
+const { ApplicationCommandOptionType } = require("discord.js");
+
 module.exports = {
   name: "remove-role",
   category: "moderation",
   description: "Lets you revoke a certain role from a member.",
-  permissions: ["MANAGE_ROLES"],
+  permissions: ["ManageRoles"],
   cooldown: 0,
   aliases: ["remover", "removerole"],
   usage: "remove-role <@User | ID> <@Role | ID | Name>",
+  slash: true,
+  options: [{
+    name: "user",
+    description: "User which to remove role",
+    type: ApplicationCommandOptionType.User,
+    required: true
+  }, {
+    name: "role",
+    description: "Role to remove",
+    type: ApplicationCommandOptionType.Role,
+    required: true
+  }]
 };
 
 module.exports.run = async (client, message, args) => {
@@ -79,6 +93,67 @@ module.exports.run = async (client, message, args) => {
         client.utils.errorEmbed(
           client,
           message,
+          "Cannot remove a role from that user."
+        ),
+      ],
+    });
+  });
+};
+
+module.exports.slashRun = async (client, interaction) => {
+  const member = interaction.options.getMember("user");
+  const role = interaction.options.getRole("role");
+
+  if (member.roles.highest.position >= interaction.member.roles.highest.position)
+    return interaction.reply({
+      embeds: [
+        client.utils.errorEmbed(
+          client,
+          interaction,
+          "That Member has higher roles than you."
+        ),
+      ],
+    });
+
+  if (member.roles.highest.position >= interaction.guild.me.roles.highest.position)
+    return interaction.reply({
+      embeds: [
+        client.utils.errorEmbed(
+          client,
+          interaction,
+          "That Member has higher roles than me."
+        ),
+      ],
+    });
+
+  if (!member.roles.cache.has(role.id))
+    return interaction.reply({
+      embeds: [
+        client.utils.errorEmbed(
+          client,
+          interaction,
+          "That Member don't have that role."
+        ),
+      ],
+    });
+
+  interaction.reply({
+    embeds: [
+      client
+        .embedBuilder(client, interaction, "", "", "#3db39e")
+        .setAuthor({
+          name: `Successfully removed role ${role} from ${member.username}.`,
+          iconURL: `https://cdn.upload.systems/uploads/6KOGFYJM.png`,
+        }),
+    ],
+  });
+
+  return member.roles.remove(role).catch((err) => {
+    interaction.reply({
+      embeds: [
+        client.utils.errorEmbed(
+          client,
+          interaction,
           "Cannot remove a role from that user."
         ),
       ],

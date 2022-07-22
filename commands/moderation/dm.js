@@ -1,11 +1,25 @@
+const { ApplicationCommandOptionType } = require("discord.js");
+
 module.exports = {
   name: "dm",
   category: "moderation",
   description: "I will dm someone for you.",
-  permissions: ["MANAGE_GUILD"],
+  permissions: ["ManageGuild"],
   cooldown: 0,
   aliases: [`direct-message`],
-  usage: "dm <Text>",
+  usage: "dm <@User> <Text>",
+  slash: true,
+  options: [{
+    name: "user",
+    description: "User which to DM",
+    type: ApplicationCommandOptionType.User,
+    required: true
+  }, {
+    name: "message",
+    description: "Message to send",
+    type: ApplicationCommandOptionType.String,
+    required: true
+  }]
 };
 
 module.exports.run = async (client, message, args) => {
@@ -48,6 +62,30 @@ module.exports.run = async (client, message, args) => {
     embeds: [
       client
         .embedBuilder(client, message, "", "", "#3db39e")
+        .setAuthor({
+          name: `Successfully sent a DM to ${user.username}.`,
+          iconURL: `https://cdn.upload.systems/uploads/6KOGFYJM.png`,
+        }),
+    ],
+  });
+};
+
+module.exports.slashRun = async (client, interaction) => {
+  const user = interaction.options.getUser("user");
+  const text = interaction.options.getString("message");
+
+  user.send({ content: text }).catch(() => {
+    return interaction.reply({
+      embeds: [
+        client.utils.errorEmbed(client, interaction, "Their DMs are closed."),
+      ],
+    });
+  });
+
+  interaction.reply({
+    embeds: [
+      client
+        .embedBuilder(client, interaction, "", "", "#3db39e")
         .setAuthor({
           name: `Successfully sent a DM to ${user.username}.`,
           iconURL: `https://cdn.upload.systems/uploads/6KOGFYJM.png`,

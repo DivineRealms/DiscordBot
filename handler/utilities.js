@@ -1,4 +1,5 @@
-const db = require("quick.db");
+const { QuickDB } = require("quick.db");
+const db = new QuickDB();
 const ms = require("ms");
 
 module.exports.automod = async (client, message) => {
@@ -25,13 +26,13 @@ module.exports.automod = async (client, message) => {
 
   if (client.conf.Counting.Enabled) {
     if (message.channel.id === client.conf.Counting.Channel) {
-      const current = db.fetch(`countingCurrent_${message.guild.id}`);
-      const last = db.fetch(`countingLast_${message.guild.id}`);
+      const current = await db.get(`countingCurrent_${message.guild.id}`);
+      const last = await db.get(`countingLast_${message.guild.id}`);
 
       if (message.content != current) {
         message.delete();
         if (current !== 1 && client.conf.Counting.Restart_On_Incorrect_Number)
-          db.set(`countingCurrent_${message.guild.id}`, 1);
+          await db.set(`countingCurrent_${message.guild.id}`, 1);
         return message.channel
           .send({
             embeds: [
@@ -57,7 +58,7 @@ module.exports.automod = async (client, message) => {
       ) {
         message.delete();
         if (current !== 1 && client.conf.Counting.Restart_On_Incorrect_Number)
-          db.set(`countingCurrent_${message.guild.id}`, 1);
+          await db.set(`countingCurrent_${message.guild.id}`, 1);
         return message.channel
           .send({
             embeds: [
@@ -79,8 +80,8 @@ module.exports.automod = async (client, message) => {
 
       if (client.conf.Counting.React.Enabled == true)
         message.react(client.conf.Counting.React.Reaction);
-      db.add(`countingCurrent_${message.guild.id}`, 1);
-      db.set(`countingLast_${message.guild.id}`, `${message.author.id}`);
+      await db.add(`countingCurrent_${message.guild.id}`, 1);
+      await db.set(`countingLast_${message.guild.id}`, `${message.author.id}`);
     }
   }
 };

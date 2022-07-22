@@ -1,4 +1,5 @@
-const db = require("quick.db");
+const { QuickDB } = require("quick.db");
+const db = new QuickDB();
 const Discord = require("discord.js");
 
 module.exports = async (client, reaction, user) => {
@@ -13,13 +14,13 @@ module.exports = async (client, reaction, user) => {
       starboard.Enabled &&
       reaction.emoji.name == starboard.Emoji
     ) {
-      const stars = db.fetch(
+      const stars = await db.get(
         `stars_${reaction.message.guild.id}_${reaction.message.id}`
       );
       if (stars) {
         const board = await schannel.messages.fetch(stars).catch(() => {});
         if (!board)
-          return db.delete(
+          return await db.delete(
             `stars_${reaction.message.guild.id}_${reaction.message.id}`
           );
         let star = /([0-9]{1,3})/.exec(board.content);

@@ -1,6 +1,7 @@
-const { MessageActionRow, MessageButton } = require("discord.js");
+const { ActionRowBuilder, ButtonBuilder, ButtonStyle, ActivityType } = require("discord.js");
 const cron = require("cron");
-const db = require("quick.db");
+const { QuickDB } = require("quick.db");
+const db = new QuickDB();
 const bumpReminder = require("../utils/bumpRemind.js");
 const axios = require("axios");
 
@@ -12,11 +13,13 @@ module.exports = async (client) => {
 
   const settings = client.conf.Settings.Bot_Activity;
 
+  await client.application.commands.set(client.slashArray);
+
   let rand = Math.floor(Math.random() * settings.Activities.length);
   client.user.setActivity(
     settings.Activities[rand].replace("{count}", client.users.cache.size),
     {
-      type: settings.Types[rand],
+      type: ActivityType[settings.Types[rand]],
     }
   );
 
@@ -24,7 +27,7 @@ module.exports = async (client) => {
     let index = Math.floor(Math.random() * settings.Activities.length);
     client.user.setActivity(
       settings.Activities[index].replace("{count}", client.users.cache.size),
-      { type: settings.Types[index] }
+      { type: ActivityType[settings.Types[rand]] }
     );
   }, 180000);
 
@@ -56,7 +59,7 @@ module.exports = async (client) => {
       );
   }
 
-  function birthday() {
+  async function birthday() {
     const isToday = (d) =>
       d
         ? new Date().getDate() === new Date(d).getDate() &&
@@ -71,15 +74,14 @@ module.exports = async (client) => {
     )
       return;
 
-    let birthdays = db
-      .all()
-      .filter((i) => i.ID.startsWith(`birthday_${guild.id}_`))
-      .sort((a, b) => b.data - a.data);
+    let birthdays = (await db.all())
+      .filter((i) => i.id.startsWith(`birthday_${guild.id}_`))
+      .sort((a, b) => b.value - a.value);
 
     let birthEmbed = birthdays
-      .filter((b) => isToday(b.data))
+      .filter((b) => isToday(b.value))
       .map((s) => {
-        let bUser = client.users.cache.get(s.ID.split("_")[2]) || "N/A";
+        let bUser = client.users.cache.get(s.id.split("_")[2]) || "N/A";
         return `${bUser}\n`;
       });
 
@@ -118,18 +120,18 @@ module.exports = async (client) => {
     "0 0 13,21 * * *",
     () => {
       let generalCh = client.channels.cache.get("512274978754920463");
-      const voteRow = new MessageActionRow().addComponents(
+      const voteRow = new ActionRowBuilder().addComponents(
         [
-          new MessageButton()
+          new ButtonBuilder()
             .setURL(`https://minecraft-mp.com/server/295045/vote/`)
-            .setLabel("Vote for Divine Realms")
-            .setStyle("LINK"),
+            .setLabel("Divine Realms")
+            .setStyle(ButtonStyle.Link),
         ],
         [
-          new MessageButton()
+          new ButtonBuilder()
             .setURL(`https://minecraft-mp.com/server/296478/vote/`)
-            .setLabel("Support HogRealms")
-            .setStyle("LINK"),
+            .setLabel("HogRealms")
+            .setStyle(ButtonStyle.Link),
         ]
       );
       if (generalCh)
@@ -148,17 +150,46 @@ module.exports = async (client) => {
 
   voteCron.start();
 
+  let voteMonthEnd = new cron.CronJob(
+    "30 0 0 1 * *", async() => {
+      await updateVotesLb(client, guild);
+
+      const lastMonth = new Date();
+      lastMonth.setMonth(lastMonth.getMonth() - 1);
+
+      let leaderboard = await db
+        .get(`votes_${guild.id}`)
+        .sort((a, b) => b.votes - a.votes);
+      let content = "";
+    
+      for (let i = 0; i < leaderboard.length; i++) {
+        if (i == 10) break;
+    
+        content += `\`${i + 1}.\` **${leaderboard[i].nickname}**︲${
+          leaderboard[i].votes
+        }\n`
+          .replace("1.", "🥇")
+          .replace("2.", "🥈")
+          .replace("3.", "🥉");
+      }
+
+      const votesEmbed = new MessageEmbed()
+        .setAuthor({ name: `Statistika glasanja na kraju meseca`, iconURL: `https://cdn.upload.systems/uploads/sYDS6yZI.png` })
+        .setDescription(`Hvala svima koji su glasali za naš server.\n\n${content}`)
+        .setColor("#7ec0ff");
+
+      const lbChannel = client.channels.cache.get(client.conf.Votes_LB);
+      if(lbChannel) lbChannel.send({ embeds: [votesEmbed] })
+    },
+    { timezone: "Europe/Belgrade" }
+  );
+
+  voteMonthEnd.start();
+
   let voteLeaderboardCron = new cron.CronJob(
     "0 0 */2 * * *",
-    () => {
-      axios
-        .get(
-          `https://minecraft-mp.com/api/?object=servers&element=voters&key=${client.conf.Settings.Vote_Key}&month=current&format=json?limit=10`
-        )
-        .then((res) => {
-          db.set(`votes_${guild.id}`, res.data.voters);
-          db.set(`untilVote_${guild.id}`, Date.now());
-        });
+    async() => {
+      await updateVotesLb(client, guild);
     },
     { timezone: "Europe/Belgrade" }
   );

@@ -1,5 +1,7 @@
+const { ApplicationCommandOptionType } = require("discord.js");
 const datetime = require("date-and-time");
-const db = require("quick.db");
+const { QuickDB } = require("quick.db");
+const db = new QuickDB();
 
 module.exports = {
   category: "utility",
@@ -9,10 +11,17 @@ module.exports = {
   cooldown: 0,
   aliases: [`addbday`],
   usage: "addbirthday",
+  slash: true,
+  options: [{
+    name: "date",
+    description: "Date of your birthday",
+    type: ApplicationCommandOptionType.String,
+    required: true
+  }]
 };
 
 module.exports.run = async (client, message, args) => {
-  let birthday = db.fetch(`birthday_${message.guild.id}_${message.author.id}`);
+  let birthday = await db.get(`birthday_${message.guild.id}_${message.author.id}`);
 
   if (!client.conf.Birthday_System.Enabled)
     return message.channel.send({
@@ -77,7 +86,75 @@ module.exports.run = async (client, message, args) => {
     ],
   });
 
-  db.set(`birthday_${message.guild.id}_${message.author.id}`, args.join(" "));
+  await db.set(`birthday_${message.guild.id}_${message.author.id}`, args.join(" "));
+};
+
+module.exports.slashRun = async (client, interaction) => {
+  let birthday = await db.get(`birthday_${interaction.guild.id}_${interaction.author.id}`);
+
+  if (!client.conf.Birthday_System.Enabled)
+    return interaction.reply({
+      embeds: [
+        client.utils.errorEmbed(
+          client,
+          interaction,
+          "Birthday System is not enabled."
+        ),
+      ],
+    });
+
+  if (birthday)
+    return interaction.reply({
+      embeds: [
+        client.utils.errorEmbed(
+          client,
+          interaction,
+          "You have already set your birthday."
+        ),
+      ],
+    });
+
+  const birthd =
+    interaction.options.getString("date")
+    date = datetime.parse(birthd, "MMM D YYYY");
+
+  if (!date.getDay())
+    return interaction.reply({
+      embeds: [
+        client.utils.errorEmbed(
+          client,
+          interaction,
+          "Invalid format, example: Jan 21 2004."
+        ),
+      ],
+    });
+
+  const age = getAge(args.join(" "));
+  if (age <= 12)
+    return interaction.reply({
+      embeds: [
+        client.utils.errorEmbed(
+          client,
+          interaction,
+          `You can't enter a year greater than ${
+            new Date().getFullYear() - 12
+          }.`
+        ),
+      ],
+    });
+
+  interaction.reply({
+    embeds: [
+      client
+        .embedBuilder(client, interaction, "", "", "#3db39e")
+        .setAuthor({
+          name: "Successfully set your birthday.",
+          iconURL: `https://cdn.upload.systems/uploads/6KOGFYJM.png`
+        }),
+    ],
+  });
+
+  await db.set(`birthday_${interaction.guild.id}_${interaction.user.id}`, args.join(" "));
 };
 
 const getAge = (b) => {

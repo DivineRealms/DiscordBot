@@ -1,5 +1,6 @@
 const fetch = require("node-fetch");
 const urban = require(`relevant-urban`);
+const { ApplicationCommandOptionType } = require("discord.js");
 
 module.exports = {
   name: "urban",
@@ -9,6 +10,13 @@ module.exports = {
   cooldown: 0,
   aliases: ["ud"],
   usage: "urban <search>",
+  slash: true,
+  options: [{
+    name: "search",
+    description: "Term to search",
+    type: ApplicationCommandOptionType.String,
+    required: true
+  }]
 };
 
 module.exports.run = async (client, message, args) => {
@@ -45,17 +53,55 @@ module.exports.run = async (client, message, args) => {
           iconURL: `https://cdn.upload.systems/uploads/6uDK0XAN.png`,
           url: def.urbanURL,
         })
-        .addField(`Definition`, `${def.definition}`.slice(0, 1000), false)
-        .addField(
-          `Definition in an example:`,
-          `${def.example || "none"}`.slice(0, 1000),
-          false
-        )
-        .addField(
-          `Author:`,
-          "<:ArrowRightGray:813815804768026705>" + def.author,
-          false
+        .addFields([{ name: `Definition`, value: `${def.definition}`.slice(0, 1000), inline: false },
+        {
+          name: `Definition in an example:`,
+          value: `${def.example || "none"}`.slice(0, 1000),
+          inline: false
+        },{
+          name: `Author:`,
+          value: "<:ArrowRightGray:813815804768026705>" + def.author,
+          inline: false
+        }])
+    ],
+  });
+};
+
+
+module.exports.slashRun = async (client, interaction) => {
+  const search = interaction.options.getString("search")
+  let def = await urban(search).catch(() => {});
+
+  if (!def)
+    return interaction.reply({
+      embeds: [
+        client.utils.errorEmbed(
+          client,
+          interaction,
+          `No Results found for ${search}.`
         ),
+      ],
+    });
+
+  interaction.reply({
+    embeds: [
+      client
+        .embedBuilder(client, interaction, "", "", "#60b8ff")
+        .setAuthor({
+          name: search,
+          iconURL: `https://cdn.upload.systems/uploads/6uDK0XAN.png`,
+          url: def.urbanURL,
+        })
+        .addFields([{ name: `Definition`, value: `${def.definition}`.slice(0, 1000), inline: false },
+        {
+          name: `Definition in an example:`,
+          value: `${def.example || "none"}`.slice(0, 1000),
+          inline: false
+        },{
+          name: `Author:`,
+          value: "<:ArrowRightGray:813815804768026705>" + def.author,
+          inline: false
+        }])
     ],
   });
 };

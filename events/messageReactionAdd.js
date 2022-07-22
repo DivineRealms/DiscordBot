@@ -1,4 +1,5 @@
-const db = require("quick.db");
+const { QuickDB } = require("quick.db");
+const db = new QuickDB();
 const Discord = require("discord.js");
 
 module.exports = async (client, reaction, user) => {
@@ -7,7 +8,7 @@ module.exports = async (client, reaction, user) => {
   if (user.bot || !reaction.message.guild) return;
   const starboard = client.conf.Starboard;
   const schannel = client.channels.cache.get(starboard.Channel);
-  const suggestion = db.fetch(`suggestion_${reaction.message.id}`);
+  const suggestion = await db.get(`suggestion_${reaction.message.id}`);
 
   if (["✅", "❌"].includes(reaction.emoji.name) && suggestion) {
     const user2 = await client.users.fetch(suggestion.user);
@@ -21,13 +22,13 @@ module.exports = async (client, reaction, user) => {
         }\`\n\n**Status:**\n${
           reaction.emoji.name === "✅" ? "Approved" : "Denied"
         } by ${user}`,
-        reaction.emoji.name === "✅" ? "GREEN" : "RED"
+        reaction.emoji.name === "✅" ? "Green" : "Red"
       )
       .setThumbnail(user2.displayAvatarURL({ dynamic: true }));
 
     user2.send({ embeds: [embed] }).catch(console.error);
     reaction.message.channel.send({ embeds: [embed] });
-    db.delete(`suggestion_${reaction.message.id}`);
+    await db.delete(`suggestion_${reaction.message.id}`);
   }
 
   if (starboard.Enabled && reaction.message) {
@@ -37,20 +38,20 @@ module.exports = async (client, reaction, user) => {
       starboard.Enabled &&
       reaction.emoji.name == starboard.Emoji
     ) {
-      const stars = db.fetch(
+      const stars = await db.get(
         `stars_${reaction.message.guild.id}_${reaction.message.id}`
       );
 
       if (stars) {
         const board = await schannel.messages.fetch(stars).catch(() => {});
         if (!board)
-          return db.delete(
+          return await db.delete(
             `stars_${reaction.message.guild.id}_${reaction.message.id}`
           );
         board.content = `\`${starboard.Emoji}\` ${r.count}︲<#${reaction.message.channel.id}>`;
         board.edit({ content: `${board}` });
       } else if (reaction.count >= starboard.Minimum_Reactions) {
-        const embed = new Discord.MessageEmbed()
+        const embed = new Discord.EmbedBuilder()
           .setAuthor({
             name: reaction.message.author.tag,
             iconURL: reaction.message.author.displayAvatarURL({
@@ -82,7 +83,7 @@ module.exports = async (client, reaction, user) => {
           embeds: [embed],
           content: `\`${starboard.Emoji}\` ${r.count}︲<#${reaction.message.channel.id}>`,
         });
-        db.set(
+        await db.set(
           `stars_${reaction.message.guild.id}_${reaction.message.id}`,
           msg.id
         );
@@ -90,18 +91,17 @@ module.exports = async (client, reaction, user) => {
     }
   }
 
-  const panelList = db.fetch(`panels_${reaction.message.guild.id}`) || [];
+  const panelList = await db.get(`panels_${reaction.message.guild.id}`) || [];
   const panel = panelList.includes(reaction.message.id);
   const settings = client.conf.Ticket_System;
   if (!panel || reaction.emoji.name != "✉️") return;
 
   const tickets =
-    db
-      .all()
+    (await db.all())
       .filter((i) =>
-        i.ID.startsWith(`tickets_${reaction.message.guild.id}_`)
+        i.id.startsWith(`tickets_${reaction.message.guild.id}_`)
       ) || [];
-  if (tickets.find((u) => u.data.includes(user.id)))
+  if (tickets.find((u) => u.value.includes(user.id)))
     return reaction.users.remove(user.id);
 
   reaction.users.remove(user.id);
@@ -110,7 +110,7 @@ module.exports = async (client, reaction, user) => {
   const ticketNumber = "0".repeat(4 - num.toString().length) + num;
   const permissions = settings.Support_Roles.map((r) => ({
     id: r,
-    allow: ["VIEW_CHANNEL"],
+    allow: ["ViewChannel"],
   }));
 
   const channel = await reaction.message.guild.channels.create(
@@ -123,9 +123,9 @@ module.exports = async (client, reaction, user) => {
       permissionOverwrites: [
         {
           id: reaction.message.guild.id,
-          deny: "VIEW_CHANNEL",
+          deny: "ViewChannel",
         },
-        { id: user.id, allow: "VIEW_CHANNEL" },
+        { id: user.id, allow: "ViewChannel" },
         ...permissions,
       ],
     }
@@ -149,5 +149,5 @@ module.exports = async (client, reaction, user) => {
     ],
   });
 
-  db.set(`tickets_${reaction.message.guild.id}_${channel.id}`, user.id);
+  await db.set(`tickets_${reaction.message.guild.id}_${channel.id}`, user.id);
 };

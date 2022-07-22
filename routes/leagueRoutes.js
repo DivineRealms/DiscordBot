@@ -1,5 +1,6 @@
 const router = require("express").Router();
-const db = require("quick.db");
+const { QuickDB } = require("quick.db");
+const db = new QuickDB();
 
 router.post("/players/add", async(req, res) => {
   if(req.body.key != process.env.ACCESS_KEY) return res.status(401).json({
@@ -16,12 +17,12 @@ router.post("/players/add", async(req, res) => {
   const season = req.body.season;
 
   if(leagueType.toLowerCase() == "svb") {
-    let league = db.fetch(`league_${uuid}_svb`);
+    let league = await db.get(`league_${uuid}_svb`);
     if(league) return res.status(500).json({
       code: 500,
       response: "Player is already in this league"
     });
-    db.set(`league_${uuid}_svb`, {
+    await db.set(`league_${uuid}_svb`, {
       league: "svb",
       kolo: kolo || 0,
       season: season || 0,
@@ -36,12 +37,12 @@ router.post("/players/add", async(req, res) => {
       response: "Player added to SveBalkan League"
     });
   } else if(leagueType.toLowerCase() == "js") {
-    let league = db.fetch(`league_${uuid}_js`);
+    let league = await db.get(`league_${uuid}_js`);
     if(league) return res.status(500).json({
       code: 500,
       response: "Player is already in this league"
     });
-    db.set(`league_${uuid}_js`, {
+    await db.set(`league_${uuid}_js`, {
       league: "js",
       kolo: kolo || 0,
       season: season || 0,
@@ -69,14 +70,14 @@ router.post("/players/remove", async(req, res) => {
   });
   const uuid = req.body.uuid;
 
-  let league = db.all().filter((x) => x.ID.startsWith(`league_${uuid}`)) || [];
+  let league = (await db.all()).filter((x) => x.id.startsWith(`league_${uuid}`)) || [];
 
   if(league.length == 0) return res.status(500).json({
     code: 500,
     response: "Player is not in any league"
   });
 
-  db.delete(league[0].ID);
+  await db.delete(league[0].id);
   res.status(200).json({
     code: 200,
     response: "Player removed from League"
@@ -94,7 +95,7 @@ router.get("/players/get", async(req, res) => {
   });
 
   const uuid = req.body.uuid;
-  let league = db.all().filter((x) => x.ID.startsWith(`league_${uuid}`));
+  let league = (await db.all()).filter((x) => x.id.startsWith(`league_${uuid}`));
   if(league.length == 0) return res.status(404).json({
     code: 404,
     response: "Player isn't in any league."
@@ -102,7 +103,7 @@ router.get("/players/get", async(req, res) => {
 
   res.status(200).json({
     code: 200,
-    response: JSON.parse(league[0].data)
+    response: JSON.parse(league[0].value)
   })
 })
 
@@ -117,14 +118,14 @@ router.put("/players/update", async(req, res) => {
   });
   const uuid = req.body.uuid;
   const type = req.body.type || "add_remove";
-  let league = db.all().filter((x) => x.ID.startsWith(`league_${uuid}`));
+  let league = (await db.all()).filter((x) => x.id.startsWith(`league_${uuid}`));
   if(league.length == 0) return res.status(404).json({
     code: 404,
     response: "Player isn't in any league."    
   });
 
-  let leagueData = db.fetch(league[0].ID);
-  let playerData = db.fetch(`player_${uuid}`);
+  let leagueData = await db.get(league[0].id);
+  let playerData = await db.get(`player_${uuid}`);
 
   if(type?.toLowerCase() == "set") {
     if(req.body.goals) {
@@ -147,8 +148,8 @@ router.put("/players/update", async(req, res) => {
       playerData.red = req.body.red
       leagueData.red = req.body.red
     };
-    db.set(`player_${uuid}`, playerData);
-    db.set(league[0].ID, leagueData);
+    await db.set(`player_${uuid}`, playerData);
+    await db.set(league[0].id, leagueData);
     
     res.status(200).json({
       code: 200,
@@ -175,8 +176,8 @@ router.put("/players/update", async(req, res) => {
       playerData.red += req.body.red
       leagueData.red += req.body.red
     };
-    db.set(`player_${uuid}`, playerData);
-    db.set(league[0].ID, leagueData);
+    await db.set(`player_${uuid}`, playerData);
+    await db.set(league[0].id, leagueData);
 
     res.status(200).json({
       code: 200,
@@ -191,7 +192,7 @@ router.get("/stats/allTime", async(req, res) => {
     response: "You're not autorized"
   });
   
-  let allTime = db.fetch(`league_allTime`);
+  let allTime = await db.get(`league_allTime`);
   if(allTime) {
     res.status(200).json({
       code: 200,
@@ -208,19 +209,19 @@ router.get("/stats/allTime", async(req, res) => {
 
   let goals = 0, assists = 0, cleanSheets = 0, yellow = 0, red = 0;
   js.forEach((x) => {
-    goals += parseInt(JSON.parse(x.data).goals);
-    assists += parseInt(JSON.parse(x.data).assists);
-    cleanSheets += parseInt(JSON.parse(x.data).cleanSheets);
-    yellow += parseInt(JSON.parse(x.data).yellow);
-    red += parseInt(JSON.parse(x.data).red);
+    goals += parseInt(JSON.parse(x.value).goals);
+    assists += parseInt(JSON.parse(x.value).assists);
+    cleanSheets += parseInt(JSON.parse(x.value).cleanSheets);
+    yellow += parseInt(JSON.parse(x.value).yellow);
+    red += parseInt(JSON.parse(x.value).red);
   });
 
   svb.forEach((x) => {
-    goals += parseInt(JSON.parse(x.data).goals);
-    assists += parseInt(JSON.parse(x.data).assists);
-    cleanSheets += parseInt(JSON.parse(x.data).cleanSheets);
-    yellow += parseInt(JSON.parse(x.data).yellow);
-    red += parseInt(JSON.parse(x.data).red);
+    goals += parseInt(JSON.parse(x.value).goals);
+    assists += parseInt(JSON.parse(x.value).assists);
+    cleanSheets += parseInt(JSON.parse(x.value).cleanSheets);
+    yellow += parseInt(JSON.parse(x.value).yellow);
+    red += parseInt(JSON.parse(x.value).red);
   });
 
   res.status(200).json({
@@ -240,47 +241,47 @@ router.post("/season/reset", async(req, res) => {
     code: 401,
     response: "You're not autorized"
   });
-  let js = db.all().filter((x) => x.ID.endsWith("_js"));
-  let svb = db.all().filter((x) => x.ID.endsWith("_svb"));
+  let js = (await db.all()).filter((x) => x.id.endsWith("_js"));
+  let svb = (await db.all()).filter((x) => x.id.endsWith("_svb"));
   let goals = 0, assists = 0, cleanSheets = 0, yellow = 0, red = 0, kolo = 0, season = 0;
   
-  js.forEach((x) => {
-    goals += parseInt(JSON.parse(x.data).goals);
-    assists += parseInt(JSON.parse(x.data).assists);
-    cleanSheets += parseInt(JSON.parse(x.data).cleanSheets);
-    yellow += parseInt(JSON.parse(x.data).yellow);
-    red += parseInt(JSON.parse(x.data).red);
-    season = parseInt(JSON.parse(x.data).season);
-    kolo = parseInt(JSON.parse(x.data).kolo);
+  for(const x of js) {
+    goals += parseInt(JSON.parse(x.value).goals);
+    assists += parseInt(JSON.parse(x.value).assists);
+    cleanSheets += parseInt(JSON.parse(x.value).cleanSheets);
+    yellow += parseInt(JSON.parse(x.value).yellow);
+    red += parseInt(JSON.parse(x.value).red);
+    season = parseInt(JSON.parse(x.value).season);
+    kolo = parseInt(JSON.parse(x.value).kolo);
 
-    let newData = JSON.parse(x.data);
+    let newData = JSON.parse(x.value);
     newData.goals = 0;
     newData.assists = 0;
     newData.cleanSheets = 0;
     newData.yellow = 0;
     newData.red = 0;
 
-    db.set(x.ID, newData);
-  });
+    await db.set(x.id, newData);
+  }
 
-  svb.forEach((x) => {
-    goals += parseInt(JSON.parse(x.data).goals);
-    assists += parseInt(JSON.parse(x.data).assists);
-    cleanSheets += parseInt(JSON.parse(x.data).cleanSheets);
-    yellow += parseInt(JSON.parse(x.data).yellow);
-    red += parseInt(JSON.parse(x.data).red);
+  for(const x of svb) {
+    goals += parseInt(JSON.parse(x.value).goals);
+    assists += parseInt(JSON.parse(x.value).assists);
+    cleanSheets += parseInt(JSON.parse(x.value).cleanSheets);
+    yellow += parseInt(JSON.parse(x.value).yellow);
+    red += parseInt(JSON.parse(x.value).red);
 
-    let newData = JSON.parse(x.data);
+    let newData = JSON.parse(x.value);
     newData.goals = 0;
     newData.assists = 0;
     newData.cleanSheets = 0;
     newData.yellow = 0;
     newData.red = 0;
     
-    db.set(x.ID, newData);
-  });
+    await db.set(x.id, newData);
+  }
 
-  db.set(`league_allTime`, {
+  await db.set(`league_allTime`, {
     goals, 
     assists,
     cleanSheets,

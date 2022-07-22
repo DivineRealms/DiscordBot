@@ -8,6 +8,7 @@ module.exports = {
   cooldown: 0,
   aliases: ["pings", "bping"],
   usage: "ping",
+  slash: true
 };
 
 module.exports.run = async (client, message, args) => {
@@ -23,6 +24,35 @@ module.exports.run = async (client, message, args) => {
         .setDescription(
           `<:ArrowRightGray:813815804768026705>Latency: **${
             msg.createdTimestamp - message.createdTimestamp
+          }ms**
+<:ArrowRightGray:813815804768026705>API Latency: **${client.ws.ping}ms**
+<:ArrowRightGray:813815804768026705>Uptime: **${client.utils.formatTime(
+            client.uptime
+          )}**`,
+          "#60b8ff"
+        )
+        .setAuthor({
+          name: "Pinging finished!",
+          iconURL: `https://cdn.upload.systems/uploads/6uDK0XAN.png`
+        }),
+    ],
+  });
+};
+
+module.exports.slashRun = async (client, interaction) => {
+  await interaction.deferReply().catch(() => {});
+  let embed = client
+    .embedBuilder(client, interaction, "", "", "#60b8ff")
+    .setAuthor({ name: "Pinging...", iconURL: `https://cdn.upload.systems/uploads/6uDK0XAN.png` });
+
+  let msg = await interaction.followUp({ embeds: [embed], fethcReply: true });
+
+  msg.edit({
+    embeds: [
+      embed
+        .setDescription(
+          `<:ArrowRightGray:813815804768026705>Latency: **${
+            msg.createdTimestamp - interaction.createdTimestamp
           }ms**
 <:ArrowRightGray:813815804768026705>API Latency: **${client.ws.ping}ms**
 <:ArrowRightGray:813815804768026705>Uptime: **${client.utils.formatTime(

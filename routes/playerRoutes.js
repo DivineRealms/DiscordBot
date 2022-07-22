@@ -1,5 +1,6 @@
 const router = require("express").Router();
-const db = require("quick.db");
+const { QuickDB } = require("quick.db");
+const db = new QuickDB();
 
 router.get("/", async(req, res) => {
   if(req.body.key != process.env.ACCESS_KEY) return res.status(401).json({
@@ -10,7 +11,7 @@ router.get("/", async(req, res) => {
     code: 400,
     response: "Invalid Request, you didn't provide UUID in Body."
   });
-  let playerData = db.fetch(`player_${req.body.uuid}`);
+  let playerData = await db.get(`player_${req.body.uuid}`);
 
   res.status(200).json({
     code: 200,
@@ -27,7 +28,7 @@ router.post("/firstJoin", async(req, res) => {
     code: 400,
     response: "Invalid Request, you didn't provide UUID in Body."
   });
-  let newUser = db.set(`player_${req.body.uuid}`, {
+  let newUser = await db.set(`player_${req.body.uuid}`, {
     username: req.body.username,
     uuid: req.body.uuid,
     league: "",
@@ -53,9 +54,9 @@ router.post("/goals/add", async(req, res) => {
     code: 400,
     response: "Invalid Request, you didn't provide UUID or Goals in Body."
   });
-  let player = db.fetch(`player_${req.body.uuid}`);
+  let player = await db.get(`player_${req.body.uuid}`);
   player.goals = parseInt(player.goals + 1);
-  db.set(`player_${req.body.uuid}`, player);
+  await db.set(`player_${req.body.uuid}`, player);
 
   res.status(200).json({
     code: 200,
@@ -72,14 +73,14 @@ router.post("/goals/remove", async(req, res) => {
     code: 400,
     response: "Invalid Request, you didn't provide UUID or Goals in Body."
   });
-  let player = db.fetch(`player_${req.body.uuid}`);
+  let player = await db.get(`player_${req.body.uuid}`);
   if(player.goals - 1 < 1) return res.status(500).json({
     code: 500,
     response: "Player can't have less than 0 goals"
   });
   
   player.goals = parseInt(player.goals - 1);
-  db.set(`player_${req.body.uuid}`, player);
+  await db.set(`player_${req.body.uuid}`, player);
 
   res.status(200).json({
     code: 200,
@@ -96,7 +97,7 @@ router.post("/goals/set", async(req, res) => {
     code: 400,
     response: "Invalid Request, you didn't provide UUID or Goals in Body."
   });
-  let player = db.fetch(`player_${req.body.uuid}`);
+  let player = await db.get(`player_${req.body.uuid}`);
   if(`${req.body.goals}`.includes("-") && player.goals - parseInt(req.body.goals) < 1) return res.status(500).json({
     code: 500,
     response: "Player can't have less than 0 goals"
@@ -104,7 +105,7 @@ router.post("/goals/set", async(req, res) => {
 
   player.goals = parseInt(req.body.goals)
   
-  db.set(`player_${req.body.uuid}`, player);
+  await db.set(`player_${req.body.uuid}`, player);
 
   res.status(200).json({
     code: 200,
@@ -121,9 +122,9 @@ router.post("/assists/add", async(req, res) => {
     code: 400,
     response: "Invalid Request, you didn't provide UUID or Assists in Body."
   });
-  let player = db.fetch(`player_${req.body.uuid}`);
+  let player = await db.get(`player_${req.body.uuid}`);
   player.assists = parseInt(player.assists + 1);
-  db.set(`player_${req.body.uuid}`, player);
+  await db.set(`player_${req.body.uuid}`, player);
 
   res.status(200).json({
     code: 200,
@@ -140,14 +141,14 @@ router.post("/assists/remove", async(req, res) => {
     code: 400,
     response: "Invalid Request, you didn't provide UUID or Assists in Body."
   });
-  let player = db.fetch(`player_${req.body.uuid}`);
+  let player = await db.get(`player_${req.body.uuid}`);
   if(player.assists - 1 < 1) return res.status(500).json({
     code: 500,
     response: "Player can't have less than 0 assists"
   });
 
   player.assists = parseInt(player.assists - 1);
-  db.set(`player_${req.body.uuid}`, player);
+  await db.set(`player_${req.body.uuid}`, player);
 
   res.status(200).json({
     code: 200,
@@ -164,7 +165,7 @@ router.post("/assists/set", async(req, res) => {
     code: 400,
     response: "Invalid Request, you didn't provide UUID or Assists in Body."
   });
-  let player = db.fetch(`player_${req.body.uuid}`);
+  let player = await db.get(`player_${req.body.uuid}`);
   if(`${req.body.assists}`.includes("-") && player.assists - parseInt(req.body.assists) < 1) return res.status(500).json({
     code: 500,
     response: "Player can't have less than 0 assists"
@@ -172,7 +173,7 @@ router.post("/assists/set", async(req, res) => {
 
   player.assists = parseInt(req.body.assists)
   
-  db.set(`player_${req.body.uuid}`, player);
+  await db.set(`player_${req.body.uuid}`, player);
 
   res.status(200).json({
     code: 200,
@@ -189,9 +190,9 @@ router.post("/cleanSheets/add", async(req, res) => {
     code: 400,
     response: "Invalid Request, you didn't provide UUID or Clean Sheets in Body."
   });
-  let player = db.fetch(`player_${req.body.uuid}`);
+  let player = await db.get(`player_${req.body.uuid}`);
   player.cleanSheets = parseInt(player.cleanSheets + 1);
-  db.set(`player_${req.body.uuid}`, player);
+  await db.set(`player_${req.body.uuid}`, player);
 
   res.status(200).json({
     code: 200,
@@ -208,14 +209,14 @@ router.post("/cleanSheets/remove", async(req, res) => {
     code: 400,
     response: "Invalid Request, you didn't provide UUID or Clean Sheets in Body."
   });
-  let player = db.fetch(`player_${req.body.uuid}`);
+  let player = await db.get(`player_${req.body.uuid}`);
   if(player.cleanSheets - 1 < 1) return res.status(500).json({
     code: 500,
     response: "Player can't have less than 0 cleanSheets"
   });
 
   player.cleanSheets = parseInt(player.cleanSheets - 1);
-  db.set(`player_${req.body.uuid}`, player);
+  await db.set(`player_${req.body.uuid}`, player);
 
   res.status(200).json({
     code: 200,
@@ -232,7 +233,7 @@ router.post("/cleanSheets/set", async(req, res) => {
     code: 400,
     response: "Invalid Request, you didn't provide UUID or Clean Sheets in Body."
   });
-  let player = db.fetch(`player_${req.body.uuid}`);
+  let player = await db.get(`player_${req.body.uuid}`);
   if(`${req.body.cleanSheets}`.includes("-") && player.cleanSheets - parseInt(req.body.cleanSheets) < 1) return res.status(500).json({
     code: 500,
     response: "Player can't have less than 0 Clean Sheets"
@@ -240,7 +241,7 @@ router.post("/cleanSheets/set", async(req, res) => {
 
   player.cleanSheets = parseInt(req.body.cleanSheets)
   
-  db.set(`player_${req.body.uuid}`, player);
+  await db.set(`player_${req.body.uuid}`, player);
 
   res.status(200).json({
     code: 200,
@@ -257,9 +258,9 @@ router.post("/cards/yellow/add", async(req, res) => {
     code: 400,
     response: "Invalid Request, you didn't provide UUID or Yellow in Body."
   });
-  let player = db.fetch(`player_${req.body.uuid}`);
+  let player = await db.get(`player_${req.body.uuid}`);
   player.yellow = parseInt(player.yellow + 1);
-  db.set(`player_${req.body.uuid}`, player);
+  await db.set(`player_${req.body.uuid}`, player);
 
   res.status(200).json({
     code: 200,
@@ -276,14 +277,14 @@ router.post("/cards/yellow/remove", async(req, res) => {
     code: 400,
     response: "Invalid Request, you didn't provide UUID or Yellow in Body."
   });
-  let player = db.fetch(`player_${req.body.uuid}`);
+  let player = await db.get(`player_${req.body.uuid}`);
   if(player.yellow - 1 < 1) return res.status(500).json({
     code: 500,
     response: "Player can't have less than 0 yellow cards"
   });
 
   player.yellow = parseInt(player.yellow - 1);
-  db.set(`player_${req.body.uuid}`, player);
+  await db.set(`player_${req.body.uuid}`, player);
 
   res.status(200).json({
     code: 200,
@@ -300,7 +301,7 @@ router.post("/cards/yellow/set", async(req, res) => {
     code: 400,
     response: "Invalid Request, you didn't provide UUID or Yellow in Body."
   });
-  let player = db.fetch(`player_${req.body.uuid}`);
+  let player = await db.get(`player_${req.body.uuid}`);
   if(`${req.body.yellow}`.includes("-") && player.yellow - parseInt(req.body.yellow) < 1) return res.status(500).json({
     code: 500,
     response: "Player can't have less than 0 Clean Sheets"
@@ -308,7 +309,7 @@ router.post("/cards/yellow/set", async(req, res) => {
 
   player.yellow = parseInt(req.body.yellow)
   
-  db.set(`player_${req.body.uuid}`, player);
+  await db.set(`player_${req.body.uuid}`, player);
 
   res.status(200).json({
     code: 200,
@@ -325,9 +326,9 @@ router.post("/cards/red/add", async(req, res) => {
     code: 400,
     response: "Invalid Request, you didn't provide UUID or Red in Body."
   });
-  let player = db.fetch(`player_${req.body.uuid}`);
+  let player = await db.get(`player_${req.body.uuid}`);
   player.red = parseInt(player.red + 1);
-  db.set(`player_${req.body.uuid}`, player);
+  await db.set(`player_${req.body.uuid}`, player);
 
   res.status(200).json({
     code: 200,
@@ -344,14 +345,14 @@ router.post("/cards/red/remove", async(req, res) => {
     code: 400,
     response: "Invalid Request, you didn't provide UUID or Red in Body."
   });
-  let player = db.fetch(`player_${req.body.uuid}`);
+  let player = await db.get(`player_${req.body.uuid}`);
   if(player.red - 1 < 1) return res.status(500).json({
     code: 500,
     response: "Player can't have less than 0 red cards"
   });
 
   player.red = parseInt(player.red - 1);
-  db.set(`player_${req.body.uuid}`, player);
+  await db.set(`player_${req.body.uuid}`, player);
 
   res.status(200).json({
     code: 200,
@@ -369,7 +370,7 @@ router.post("/cards/red/set", async(req, res) => {
     code: 400,
     response: "Invalid Request, you didn't provide UUID or Red in Body."
   });
-  let player = db.fetch(`player_${req.body.uuid}`);
+  let player = await db.get(`player_${req.body.uuid}`);
   if(`${req.body.red}`.includes("-") && player.red - parseInt(req.body.red) < 1) return res.status(500).json({
     code: 500,
     response: "Player can't have less than 0 Clean Sheets"
@@ -377,7 +378,7 @@ router.post("/cards/red/set", async(req, res) => {
 
   player.red = parseInt(req.body.red);
   
-  db.set(`player_${req.body.uuid}`, player);
+  await db.set(`player_${req.body.uuid}`, player);
 
   res.status(200).json({
     code: 200,

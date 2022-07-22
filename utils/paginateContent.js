@@ -1,10 +1,8 @@
-const { MessageEmbed, MessageButton, MessageActionRow } = require("discord.js");
+const { ButtonBuilder, ActionRowBuilder, ButtonStyle, ComponentType, InteractionType } = require("discord.js");
 async function sliceContent(content, currentPage, perPage) {
   var page = content.slice(perPage * (currentPage - 1), perPage * currentPage);
 
   return page.map((q) => `${q}`).join("\n");
-  // return page.map((q) => `\`${quotes.indexOf(q) + 1}.\` ${q}`).join("\n");
-  // return page.map((q) => `\`${og.indexOf(q) + 1}.\` ${q}`).join("\n");
 }
 
 async function updatePage(
@@ -39,25 +37,33 @@ module.exports = async function paginate(
 
   let embed = client.embedBuilder(client, "", title, page);
 
-  const nextBttn = new MessageButton()
+  const nextBttn = new ButtonBuilder()
     .setEmoji("➡️")
     .setLabel("Next")
-    .setStyle("PRIMARY")
+    .setStyle(ButtonStyle.Primary)
     .setCustomId("nextPage");
-  const prevBttn = new MessageButton()
+  const prevBttn = new ButtonBuilder()
     .setEmoji("⬅️")
     .setLabel("Previous")
-    .setStyle("PRIMARY")
+    .setStyle(ButtonStyle.Primary)
     .setCustomId("prevPage");
 
-  let row = new MessageActionRow().addComponents([prevBttn, nextBttn]);
+  let row = new ActionRowBuilder().addComponents([prevBttn, nextBttn]);
 
   currentPage = firstPage;
-  let m = await message.channel.send({ embeds: [embed], components: [row] });
+  // let m = await message.channel.send({ embeds: [embed], components: [row] });
+  let m;
+
+  if(message.type == InteractionType.ApplicationCommand) {
+    await message.deferReply();
+    m = await message.followUp({ embeds: [embed], components: [row] });
+  } else {
+    m = await message.channel.send({ embeds: [embed], components: [row] });
+  }
   
   const collector = m.createMessageComponentCollector({
     filter,
-    componentType: "BUTTON",
+    componentType: ComponentType.Button,
     time: 300000,
   }); 
   
@@ -95,9 +101,9 @@ module.exports = async function paginate(
   });
 
   collector.on("end", async (collected, reason) => {
-    prevBttn.setDisabled(true).setStyle("SECONDARY");
-    nextBttn.setDisabled(true).setStyle("SECONDARY");
-    let disabledRow = new MessageActionRow().addComponents([
+    prevBttn.setDisabled(true).setStyle(ButtonStyle.Secondary);
+    nextBttn.setDisabled(true).setStyle(ButtonStyle.Secondary);
+    let disabledRow = new ActionRowBuilder().addComponents([
       prevBttn,
       nextBttn,
     ]);

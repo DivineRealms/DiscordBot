@@ -1,11 +1,20 @@
+const { ApplicationCommandOptionType } = require("discord.js");
+
 module.exports = {
   name: "say",
   category: "moderation",
   description: "Lets you speak as the bot and be a cool kid.",
-  permissions: ["ADMINISTRATOR"],
+  permissions: ["Administrator"],
   cooldown: 0,
   aliases: [`speak`],
   usage: "say <Message>",
+  slash: true,
+  options: [{
+    name: "message",
+    description: "Message to send",
+    type: ApplicationCommandOptionType.String,
+    required: true
+  }]
 };
 
 module.exports.run = async (client, message, args) => {
@@ -24,4 +33,9 @@ module.exports.run = async (client, message, args) => {
 
   setTimeout(() => message.delete(), 3000);
   message.channel.send({ content: say });
+};
+
+module.exports.slashRun = async (client, interaction) => {
+  setTimeout(() => message.delete(), 3000);
+  message.channel.send({ content: interaction.options.getString("message") });
 };

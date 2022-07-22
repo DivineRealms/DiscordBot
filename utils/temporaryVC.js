@@ -1,4 +1,5 @@
-const db = require("quick.db");
+const { QuickDB } = require("quick.db");
+const db = new QuickDB();
 const temporaryVCMap = new Map();
 
 module.exports = function (client) {
@@ -66,9 +67,8 @@ module.exports = function (client) {
     if (!user.guild.channels.cache.get(createCategory) || !createCategory)
       return;
     await user.guild.channels
-      .create(
-        `${client.conf.Temp_Voice_Channel.Channel_Prefix}${user.member.user.username}`,
-        {
+      .create({
+          name: `${client.conf.Temp_Voice_Channel.Channel_Prefix}${user.member.user.username}`,
           type: "GUILD_VOICE",
           parent: createCategory,
           userLimit: 5,
@@ -80,11 +80,11 @@ module.exports = function (client) {
         await vc.permissionOverwrites.set([
           {
             id: user.id,
-            allow: ["MANAGE_CHANNELS"],
+            allow: ["ManageChannels"],
           },
           {
             id: user.guild.id,
-            allow: ["SPEAK", "CONNECT"],
+            allow: ["Speak", "Connect"],
           },
         ]);
       });

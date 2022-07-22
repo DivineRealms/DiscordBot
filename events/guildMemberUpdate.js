@@ -1,4 +1,5 @@
-const db = require("quick.db");
+const { QuickDB } = require("quick.db");
+const db = new QuickDB();
 
 module.exports = async (client, oldMember, newMember) => {
   const settings = client.conf;
@@ -20,12 +21,12 @@ module.exports = async (client, oldMember, newMember) => {
     );
 
     if (added.includes("597888019663421440")) {
-      let fetchedMessages = await oldMember.guild.channels.cache.get("512570600682684436").messages.fetch({ limit: 50 });
+/*       let fetchedMessages = await oldMember.guild.channels.cache.get("512570600682684436").messages.fetch({ limit: 50 });
       fetchedMessages.forEach(async(msg) => {
         if(msg.author.id == oldMember.id || msg.content.toLowerCase().includes(oldMember.id)) {
           await msg.delete();
         }
-      });
+      }); */
       
       if (welcomeChannel)
         welcomeChannel
@@ -48,14 +49,16 @@ module.exports = async (client, oldMember, newMember) => {
                 ),
             ],
           })
-          .then((msg) =>
-            db.set(`wlcmEmbed_${newMember.guild.id}_${newMember.id}`, {
+          .then(async(msg) =>
+            await db.set(`wlcmEmbed_${newMember.guild.id}_${newMember.id}`, {
               msg: msg.id,
               channel: msg.channel.id,
             })
           );
     }
   }
+
+  if (oldMember.pending && !newMember.pending) await newMember.roles.add("597888019663421440");
 
   // Leave
   if (
@@ -71,14 +74,14 @@ module.exports = async (client, oldMember, newMember) => {
     const removed = removedRoles.map((r) => r.id);
 
     if (removed.includes("597888019663421440")) {
-      let fetchedMessages = await oldMember.guild.channels.cache.get("512570600682684436").messages.fetch({ limit: 50 });
+/*       let fetchedMessages = await oldMember.guild.channels.cache.get("512570600682684436").messages.fetch({ limit: 50 });
       fetchedMessages.forEach(async(msg) => {
         if(msg.author.id == oldMember.id || msg.content.toLowerCase().includes(oldMember.id)) {
           await msg.delete();
         }
-      });
+      }); */
       
-      let embedWelcome = db.fetch(
+      let embedWelcome = await db.get(
         `wlcmEmbed_${oldMember.guild.id}_${newMember.id}`
       );
 

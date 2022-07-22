@@ -1,3 +1,5 @@
+const { ApplicationCommandOptionType } = require("discord.js");
+
 module.exports = {
   name: "rps",
   category: "fun",
@@ -6,6 +8,22 @@ module.exports = {
   cooldown: 0,
   aliases: ["rock-paper-scissors"],
   usage: "rps [rock | paper | scissors]",
+  slash: true,
+  options: [{
+    name: "choice",
+    description: "RPS Choice",
+    type: ApplicationCommandOptionType.String,
+    choices: [{
+      name: "Rock",
+      value: "rock"
+    }, {
+      name: "Paper",
+      value: "paper"
+    }, {
+      name: "Scissors",
+      value: "scissors"
+    }]
+  }]
 };
 
 module.exports.run = async (client, message, args, cmd) => {
@@ -172,5 +190,148 @@ module.exports.run = async (client, message, args, cmd) => {
         ),
       ],
     });
+  }
+};
+
+
+module.exports.slashRun = async (client, interaction) => {
+  const option = interaction.options.getString("choice");
+  let number = Math.floor(Math.random() * 3);
+
+  if (number == 1) {
+    return interaction.reply({
+      embeds: [
+        client
+          .embedBuilder(
+            client,
+            interaction,
+            "",
+            `<:ArrowRightGray:813815804768026705>It was a tie, we both had ${option}`,
+            "#ec3d93"
+          )
+          .setAuthor({
+            name: "Rock Paper Scissors",
+            iconURL: `https://cdn.upload.systems/uploads/ZdKDK7Tx.png`,
+          }),
+      ],
+    });
+  }
+
+  if (number == 2) {
+    if (option == "rock") {
+      return interaction.reply({
+        embeds: [
+          client
+            .embedBuilder(
+              client,
+              interaction,
+              "",
+              "<:ArrowRightGray:813815804768026705>I won! I had paper.",
+              "#ec3d93"
+            )
+            .setAuthor({
+              name: "Rock Paper Scissors",
+              iconURL: `https://cdn.upload.systems/uploads/ZdKDK7Tx.png`,
+            }),
+        ],
+      });
+    }
+
+    if (option == "paper") {
+      return interaction.reply({
+        embeds: [
+          client
+            .embedBuilder(
+              client,
+              interaction,
+              "",
+              "<:ArrowRightGray:813815804768026705>I won! I had scissors.",
+              "#ec3d93"
+            )
+            .setAuthor({
+              name: "Rock Paper Scissors",
+              iconURL: `https://cdn.upload.systems/uploads/ZdKDK7Tx.png`,
+            }),
+        ],
+      });
+    }
+
+    if (option == "scissors") {
+      return interaction.reply({
+        embeds: [
+          client
+            .embedBuilder(
+              client,
+              interaction,
+              "",
+              "<:ArrowRightGray:813815804768026705>I won! I had rock.",
+              "#ec3d93"
+            )
+            .setAuthor({
+              name: "Rock Paper Scissors",
+              iconURL: `https://cdn.upload.systems/uploads/ZdKDK7Tx.png`,
+            }),
+        ],
+      });
+    }
+  }
+
+  if (number == 0) {
+    if (option == "rock") {
+      return interaction.reply({
+        embeds: [
+          client
+            .embedBuilder(
+              client,
+              interaction,
+              "",
+              "<:ArrowRightGray:813815804768026705>You won, I had scissors.",
+              "#ec3d93"
+            )
+            .setAuthor({
+              name: "Rock Paper Scissors",
+              iconURL: `https://cdn.upload.systems/uploads/ZdKDK7Tx.png`,
+            }),
+        ],
+      });
+    }
+
+    if (option == "paper") {
+      return interaction.reply({
+        embeds: [
+          client
+            .embedBuilder(
+              client,
+              interaction,
+              "",
+              "<:ArrowRightGray:813815804768026705>You won, I had rock.",
+              "#ec3d93"
+            )
+            .setAuthor({
+              name: "Rock Paper Scissors",
+              iconURL: `https://cdn.upload.systems/uploads/ZdKDK7Tx.png`,
+            }),
+        ],
+      });
+    }
+
+    if (option == "scissors") {
+      return interaction.reply({
+        embeds: [
+          client
+            .embedBuilder(
+              client,
+              interaction,
+              "",
+              "<:ArrowRightGray:813815804768026705>You won, I had paper.",
+              "#ec3d93"
+            )
+            .setAuthor({
+              name: "Rock Paper Scissors",
+              iconURL: `https://cdn.upload.systems/uploads/ZdKDK7Tx.png`,
+            }),
+        ],
+      });
+    }
   }
 };

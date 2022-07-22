@@ -1,4 +1,6 @@
-const db = require("quick.db");
+const { ApplicationCommandOptionType } = require("discord.js");
+const { QuickDB } = require("quick.db");
+const db = new QuickDB();
 
 module.exports = {
   name: "rob",
@@ -8,6 +10,13 @@ module.exports = {
   cooldown: 120,
   aliases: ["r0b"],
   usage: "rob <@User>",
+  slash: true,
+  options: [{
+    name: "user",
+    description: "User you want to rob",
+    type: ApplicationCommandOptionType.User,
+    required: true
+  }]
 };
 
 module.exports.run = async (client, message, args) => {
@@ -29,7 +38,7 @@ module.exports.run = async (client, message, args) => {
       ],
     });
 
-  const memberbal = db.fetch(`money_${message.guild.id}_${member.id}`);
+  const memberbal = await db.get(`money_${message.guild.id}_${member.id}`);
   let rob = ~~(Math.random() * 3);
   let amount = ~~(memberbal / 10);
 
@@ -55,8 +64,8 @@ module.exports.run = async (client, message, args) => {
       ],
     });
 
-    db.subtract(`money_${message.guild.id}_${message.author.id}`, amount);
-    db.add(`money_${message.guild.id}_${member.id}`, amount);
+    await db.sub(`money_${message.guild.id}_${message.author.id}`, amount);
+    await db.add(`money_${message.guild.id}_${member.id}`, amount);
   } else {
     message.channel.send({
       embeds: [
@@ -67,7 +76,61 @@ module.exports.run = async (client, message, args) => {
       ],
     });
 
-    db.subtract(`money_${message.guild.id}_${member.id}`, amount);
-    db.add(`money_${message.guild.id}_${message.author.id}`, amount);
+    await db.sub(`money_${message.guild.id}_${member.id}`, amount);
+    await db.add(`money_${message.guild.id}_${message.author.id}`, amount);
+  }
+};
+
+module.exports.slashRun = async (client, interaction) => {
+  const member =
+    interaction.options.getUser("user");
+
+  if (member.id === interaction.user.id)
+    return interaction.reply({
+      embeds: [
+        client.utils.errorEmbed(client, interaction, "You cannot rob yourself."),
+      ],
+    });
+
+  const memberbal = await db.get(`money_${interaction.guild.id}_${member.id}`);
+  let rob = ~~(Math.random() * 3);
+  let amount = ~~(memberbal / 10);
+
+  if (!memberbal || memberbal < 200)
+    return interaction.reply({
+      embeds: [
+        client.utils.errorEmbed(
+          client,
+          interaction,
+          "That Member doesn't have money."
+        ),
+      ],
+    });
+
+  if (rob) {
+    interaction.reply({
+      embeds: [
+        client.utils.errorEmbed(
+          client,
+          interaction,
+          `You attempted to rob ${member.username} but got caught! The fine is $${amount}.`
+        ),
+      ],
+    });
+
+    await db.sub(`money_${interaction.guild.id}_${interaction.user.id}`, amount);
+    await db.add(`money_${interaction.guild.id}_${member.id}`, amount);
+  } else {
+    interaction.reply({
+      embeds: [
+        client.embedBuilder(client, interaction, "", "", "#47a047").setAuthor({
+          name: `You successfully robbed ${member.username} gaining yourself $${amount}.`,
+          iconURL: `https://cdn.upload.systems/uploads/LrdB6F1N.png`,
+        }),
+      ],
+    });
+
+    await db.sub(`money_${interaction.guild.id}_${member.id}`, amount);
+    await db.add(`money_${interaction.guild.id}_${interaction.user.id}`, amount);
   }
 };

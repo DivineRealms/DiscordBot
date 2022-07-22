@@ -1,17 +1,26 @@
-const db = require("quick.db");
+const { ApplicationCommandOptionType } = require("discord.js");
+const { QuickDB } = require("quick.db");
+const db = new QuickDB();
 
 module.exports = {
   name: "remove",
   category: "tickets",
   usage: "remove",
   description: "Remove a user from a ticket.",
-  permissions: ["MANAGE_CHANNELS"],
+  permissions: ["ManageChannels"],
   cooldown: 0,
   aliases: [],
+  slash: true,
+  options: [{
+    name: "user",
+    description: "User to remove from",
+    type: ApplicationCommandOptionType.User,
+    required: true
+  }]
 };
 
 module.exports.run = async (client, message, args) => {
-  const ticket = db.fetch(`tickets_${message.guild.id}_${message.channel.id}`);
+  const ticket = await db.get(`tickets_${message.guild.id}_${message.channel.id}`);
 
   if (!client.conf.Ticket_System.Enabled)
     return message.channel.send({
@@ -47,7 +56,7 @@ module.exports.run = async (client, message, args) => {
     });
 
   if (
-    !message.channel.permissionOverwrites.has(message.mentions.users.first().id)
+    !message.channel.permissionOverwrites.cache.has(message.mentions.users.first().id)
   )
     return message.channel.send({
       embeds: [
@@ -70,6 +79,63 @@ module.exports.run = async (client, message, args) => {
         .setAuthor({
           name: `${
             message.mentions.users.first().username
+          } has been removed from the ticket!`,
+          iconURL: `https://cdn.upload.systems/uploads/4mFVRE7f.png`
+        }),
+    ],
+  });
+};
+
+module.exports.slashRun = async (client, interaction) => {
+  const user = interaction.options.getUser("user");
+  const ticket = await db.get(`tickets_${interaction.guild.id}_${interaction.channel.id}`);
+
+  if (!client.conf.Ticket_System.Enabled)
+    return interaction.reply({
+      embeds: [
+        client.utils.errorEmbed(
+          client,
+          interaction,
+          "Ticket System is not enabled."
+        ),
+      ],
+    });
+
+  if (!ticket)
+    return interaction.reply({
+      embeds: [
+        client.utils.errorEmbed(
+          client,
+          interaction,
+          "This command can only be used inside of tickets."
+        ),
+      ],
+    });
+
+  if (
+    !interaction.channel.permissionOverwrites.cache.has(user.id)
+  )
+    return interaction.reply({
+      embeds: [
+        client.utils.errorEmbed(
+          client,
+          interaction,
+          "That user isn't in this ticket."
+        ),
+      ],
+    });
+
+    interaction.channel.permissionOverwrites
+    .get(user.id)
+    .delete();
+
+  interaction.reply({
+    embeds: [
+      client
+        .embedBuilder(client, interaction, "", "", "#3db39e")
+        .setAuthor({
+          name: `${
+            user.username
           } has been removed from the ticket!`,
           iconURL: `https://cdn.upload.systems/uploads/4mFVRE7f.png`
         }),

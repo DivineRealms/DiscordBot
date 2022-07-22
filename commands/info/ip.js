@@ -6,6 +6,7 @@ module.exports = {
   cooldown: 0,
   aliases: ["mcip", "serverip"],
   usage: "ip",
+  slash: true
 };
 
 module.exports.run = async (client, message, args) =>
@@ -14,11 +15,24 @@ module.exports.run = async (client, message, args) =>
       client
         .embedBuilder(client, message, "", "", "#81b051")
         .setThumbnail(`https://cdn.upload.systems/uploads/YrOfFxGC.png`)
-        .addField(
-          "Minecraft Server IPs:",
-          "`1️⃣` **`divinerealms.ga`**\n`2️⃣` **`divinemc.ga`**",
-          false
-        )
-        .addField("Version: **`1.17.1`**", "_ _", false),
+        .addFields([{
+          name: "Minecraft Server IPs:",
+          value: "`1️⃣` **`divinerealms.ga`**\n`2️⃣` **`divinemc.ga`**",
+          inline: false
+        }, { name: "Version: **`1.17.1`**", value: "_ _", inline: false }])
+    ],
+  });
+
+module.exports.slashRun = async (client, interaction) =>
+  interaction.reply({
+    embeds: [
+      client
+        .embedBuilder(client, interaction, "", "", "#81b051")
+        .setThumbnail(`https://cdn.upload.systems/uploads/YrOfFxGC.png`)
+        .addFields([{
+          name: "Minecraft Server IPs:",
+          value: "`1️⃣` **`divinerealms.ga`**\n`2️⃣` **`divinemc.ga`**",
+          inline: false
+        }, { name: "Version: **`1.17.1`**", value: "_ _", inline: false }])
     ],
   });

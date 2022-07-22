@@ -14,7 +14,7 @@ module.exports = {
 };
 
 module.exports.run = async (client, message, args) => {
-  if (!client.conf.Settings.Owner_Discord_ID.includes(message.author.id))
+/*   if (!client.conf.Settings.Owner_Discord_ID.includes(message.author.id))
     return message.channel.send({
       embeds: [
         client.utils.errorEmbed(
@@ -23,7 +23,7 @@ module.exports.run = async (client, message, args) => {
           "Only Developers can use this command."
         ),
       ],
-    });
+    }); */
 
   const code = args.join(" ");
   if (!code)
@@ -48,12 +48,12 @@ module.exports.run = async (client, message, args) => {
     if (typeof evaled !== "string") evaled = require("util").inspect(evaled);
 
     let embed = client
-      .embedBuilder(client, message, "", "", "GREEN")
+      .embedBuilder(client, message, "", "", "Green")
       .setAuthor({
         name: "Code Evaluation",
         iconURL: `https://cdn.upload.systems/uploads/GVd0PBIt.png`,
       })
-      .addField("📥︲Input:", `\`\`\`${code}\`\`\``);
+      .addFields({ name: "📥︲Input:", value: `\`\`\`${code}\`\`\`` });
 
     if (evaled.length >= 1024) {
       const body = {
@@ -69,11 +69,11 @@ module.exports.run = async (client, message, args) => {
 
       const json = await response.json();
 
-      embed.addField(
+      embed.addFields(
         "📤︲Output:",
         `\`\`\`xl\nhttps://api.upload.systems/pastes/${json.paste.id}/raw\`\`\``
       );
-    } else embed.addField("📤︲Output", `\`\`\`xl\n${evaled}\`\`\``);
+    } else embed.addFields({ name: "📤︲Output", value: `\`\`\`xl\n${evaled}\`\`\`` });
 
     message.channel.send({ embeds: [embed] });
   } catch (err) {
@@ -81,8 +81,7 @@ module.exports.run = async (client, message, args) => {
       embeds: [
         client.utils
           .errorEmbed(client, message, "Code Evaluation Failed")
-          .addField("📥︲Input:", `\`\`\`xl\n${code}\`\`\``)
-          .addField("📤︲Output:", `\`\`\`xl\n${err}\`\`\``),
+          .addFields([{ name: "📥︲Input:", value: `\`\`\`xl\n${code}\`\`\`` }, { name: "📤︲Output:", value: `\`\`\`xl\n${err}\`\`\`` }])
       ],
     });
   }
