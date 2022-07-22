@@ -1,6 +1,6 @@
 {
     "name": "divine-realms",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "description": "",
     "main": "index.js",
     "scripts": {
@@ -21,20 +21,15 @@
         "enmap": "^5.3.1",
         "express": "latest",
         "figlet": "^1.5.0",
-        "formdata-polyfill": "^4.0.10",
         "js-yaml": "^4.1.0",
         "jsdom": "latest",
         "lodash": "^4.17.20",
         "mathjs": "^7.2.0",
         "moment": "^2.28.0",
-        "moment-timezone": "^0.5.34",
         "ms": "^2.1.2",
         "node-fetch": "^2.6.1",
-        "parse-ms": "^2.0.0",
-        "pm2": "^5.1.2",
         "quick.db": "^9.0.5",
         "relevant-urban": "^2.0.0",
-        "smart-timeout": "^2.5.0",
         "tic-tac-toe-stateless-engine": "^1.0.0",
         "weather-js": "^2.0.0",
         "luxon": "latest"

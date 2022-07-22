@@ -48,11 +48,11 @@ module.exports.run = async (client, message, args) => {
 
   const permissions = settings.Support_Roles.map((r) => ({
       id: r,
-      allow: "ViewChannel",
+      allow: ["ViewChannel"],
     })),
     users = message.mentions.users.map((s) => ({
       id: s.id,
-      allow: "ViewChannel",
+      allow: ["ViewChannel"],
     })),
     channel = await message.guild.channels.create({
         name: `📋︲${message.author.username}-${ticketNumber}`,
@@ -60,9 +60,9 @@ module.exports.run = async (client, message, args) => {
         permissionOverwrites: [
           {
             id: message.guild.id,
-            deny: "ViewChannel",
+            deny: ["ViewChannel"],
           },
-          { id: message.author.id, allow: "ViewChannel" },
+          { id: message.author.id, allow: ["ViewChannel"] },
           ...permissions,
           ...users,
         ],
@@ -169,23 +169,17 @@ module.exports.slashRun = async (client, interaction) => {
 
   const permissions = settings.Support_Roles.map((r) => ({
       id: r,
-      allow: "ViewChannel",
-    })),
-    users = interaction.mentions.users.map((s) => ({
-      id: s.id,
-      allow: "ViewChannel",
+      allow: ["ViewChannel"],
     })),
     channel = await interaction.guild.channels.create({
         name: `📋︲${interaction.user.username}-${ticketNumber}`,
         parent: settings.Category,
-        permissionOverwrites: [
-          {
-            id: interaction.guild.id,
-            deny: "ViewChannel",
-          },
-          { id: interaction.user.id, allow: "ViewChannel" },
+        permissionOverwrites: [{
+          id: interaction.guild.id,
+          deny: ["ViewChannel"],
+        },
+        { id: interaction.user.id, allow: ["ViewChannel"] },
           ...permissions,
-          ...users,
         ],
       }
     ),

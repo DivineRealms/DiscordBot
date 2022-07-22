@@ -1,4 +1,4 @@
-const { MessageAttachment, Collection } = require("discord.js");
+const { AttachmentBuilder, Collection } = require("discord.js");
 const fs = require("fs").promises;
 const jsdom = require("jsdom");
 const { JSDOM } = jsdom;
@@ -90,11 +90,13 @@ module.exports.run = async (client, message, args) => {
   const loggingembed = client
       .embedBuilder(client, message, "Ticket Logging System", "", "#b3e59f")
       .addFields({ name: `Ticket Name:`, value: `${message.channel.name}`, inline: false })
-      .setAuthor(
-        "Ticket Logging System",
-        `https://cdn.upload.systems/uploads/4mFVRE7f.png`
-      ),
-    attachment = new MessageAttachment(Buffer.from(data), "ticket.html");
+      .setAuthor({
+        name: "Ticket Logging System",
+        value: `https://cdn.upload.systems/uploads/4mFVRE7f.png`
+      }),
+    attachment = new AttachmentBuilder()
+      .setFile(Buffer.from(data))
+      .setName(`ticket-${message.channel.name.split("-")[1]}.html`);
 
   if (log) log.send({ embeds: [loggingembed], files: [attachment] });
 
@@ -196,11 +198,13 @@ module.exports.slashRun = async (client, interaction) => {
   const loggingembed = client
       .embedBuilder(client, interaction, "Ticket Logging System", "", "#b3e59f")
       .addFields({ name: `Ticket Name:`, value: `${interaction.channel.name}`, inline: false })
-      .setAuthor(
-        "Ticket Logging System",
-        `https://cdn.upload.systems/uploads/4mFVRE7f.png`
-      ),
-    attachment = new MessageAttachment(Buffer.from(data), "ticket.html");
+      .setAuthor({
+        name: "Ticket Logging System",
+        value: `https://cdn.upload.systems/uploads/4mFVRE7f.png`
+      }),
+    attachment = new AttachmentBuilder()
+      .setFile(Buffer.from(data))
+      .setName(`ticket-${message.channel.name.split("-")[1]}.html`);
 
   if (log) log.send({ embeds: [loggingembed], files: [attachment] });
 
