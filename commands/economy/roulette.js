@@ -173,7 +173,7 @@ module.exports.run = async (client, message, args) => {
     message.channel.send({
       embeds: [
         client
-          .embedBuilder(client, message, "", "", "RED")
+          .embedBuilder(client, message, "", "", "Red")
           .addFields([{
             name: "Options:",
             value: `Color: **\`${color}\`**\nNumber: **\`${randomNumber}\`**`,
@@ -327,7 +327,7 @@ module.exports.slashRun = async (client, interaction) => {
     interaction.reply({
       embeds: [
         client
-          .embedBuilder(client, interaction, "", "", "RED")
+          .embedBuilder(client, interaction, "", "", "Red")
           .addFields([{
             name: "Options:",
             value: `Color: **\`${color}\`**\nNumber: **\`${randomNumber}\`**`,

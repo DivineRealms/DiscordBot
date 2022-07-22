@@ -58,7 +58,7 @@ module.exports.run = async (client, message, args) => {
     } else if (chance < 70) {
       message.channel.send({
         embeds: [
-          client.embedBuilder(client, message, "", "", "RED").setAuthor({
+          client.embedBuilder(client, message, "", "", "Red").setAuthor({
             name: `You lost $${money}.`,
             iconURL: `https://cdn.upload.systems/uploads/HJGA3pxp.png`,
           }),
@@ -109,7 +109,7 @@ module.exports.run = async (client, message, args) => {
   } else if (chance < 70) {
     message.channel.send({
       embeds: [
-        client.embedBuilder(client, message, "", "", "RED").setAuthor({
+        client.embedBuilder(client, message, "", "", "Red").setAuthor({
           name: `You lost ${args[0]}.`,
           iconURL: `https://cdn.upload.systems/uploads/HJGA3pxp.png`,
         }),
@@ -160,7 +160,7 @@ module.exports.slashRun = async (client, interaction) => {
     } else if (chance < 70) {
       interaction.reply({
         embeds: [
-          client.embedBuilder(client, interaction, "", "", "RED").setAuthor({
+          client.embedBuilder(client, interaction, "", "", "Red").setAuthor({
             name: `You lost $${money}.`,
             iconURL: `https://cdn.upload.systems/uploads/HJGA3pxp.png`,
           }),
@@ -211,7 +211,7 @@ module.exports.slashRun = async (client, interaction) => {
   } else if (chance < 70) {
     interaction.reply({
       embeds: [
-        client.embedBuilder(client, interaction, "", "", "RED").setAuthor({
+        client.embedBuilder(client, interaction, "", "", "Red").setAuthor({
           name: `You lost ${amount}.`,
           iconURL: `https://cdn.upload.systems/uploads/HJGA3pxp.png`,
         }),

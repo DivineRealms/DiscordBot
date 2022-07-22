@@ -55,7 +55,7 @@ module.exports = async (client, message) => {
 
   if (message.channel.id == "529065596449456128" && message.member) {
     const regexLinks = new RegExp('(https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|www\.[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9]+\.[^\s]{2,}|www\.[a-zA-Z0-9]+\.[^\s]{2,})', 'g');
-    if (message.attachments.size == 0 && !message.content.match(regexLinks) && !message.member.permissions.has("MANAGE_MESSAGES"))
+    if (message.attachments.size == 0 && !message.content.match(regexLinks) && !message.member.permissions.has("ManageMessages"))
       await message.delete();
   }
 
@@ -95,6 +95,10 @@ module.exports = async (client, message) => {
       client.conf.Settings.Mention_Prefix ? `<@!?${client.user.id}>|` : ""
     }${escapeRegex(message.px)})\\s*`
   );
+
+  if(message.channel.id == "912855458795094057" && !prefixRegex.test(message.content) && message.member.permission.has("ManageMessages"))
+    await message.delete();
+
   if (!prefixRegex.test(message.content)) return;
 
   const [, matchedPrefix] = message.content.match(prefixRegex);

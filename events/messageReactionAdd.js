@@ -22,7 +22,7 @@ module.exports = async (client, reaction, user) => {
         }\`\n\n**Status:**\n${
           reaction.emoji.name === "✅" ? "Approved" : "Denied"
         } by ${user}`,
-        reaction.emoji.name === "✅" ? "GREEN" : "RED"
+        reaction.emoji.name === "✅" ? "Green" : "Red"
       )
       .setThumbnail(user2.displayAvatarURL({ dynamic: true }));
 
