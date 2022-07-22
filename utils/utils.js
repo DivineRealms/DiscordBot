@@ -51,8 +51,9 @@ async function lbContent(client, message, lbType) {
 }
 
 async function lbVotes(client, message) {
-  let leaderboard = await db.get(`votes_${message.guild.id}`)
-    .sort((a, b) => b.votes - a.votes);
+  let leaderboard = await db.get(`votes_${message.guild.id}`) || [];
+  leaderboard = leaderboard.sort((a, b) => b.votes - a.votes);
+  
   let content = "";
 
   for (let i = 0; i < leaderboard.length; i++) {
