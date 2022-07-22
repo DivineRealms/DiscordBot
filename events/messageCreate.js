@@ -96,7 +96,7 @@ module.exports = async (client, message) => {
     }${escapeRegex(message.px)})\\s*`
   );
 
-  if(message.channel.id == "912855458795094057" && !prefixRegex.test(message.content) && message.member.permissions.has("ManageMessages"))
+  if(message.channel.id == "912855458795094057" && !prefixRegex.test(message.content) && !message.member.permissions.has("ManageMessages"))
     await message.delete();
 
   if (!prefixRegex.test(message.content)) return;
