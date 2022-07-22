@@ -19,7 +19,7 @@ module.exports.run = async (client, message, args) =>
           name: "Minecraft Server IPs:",
           value: "`1️⃣` **`divinerealms.ga`**\n`2️⃣` **`divinemc.ga`**",
           inline: false
-        }, { name: "Version: **`1.17.1`**", value: "_ _", inline: false }])
+        }, { name: "Version: **`1.8 - 1.18.2`**", value: "_ _", inline: false }])
     ],
   });
 
@@ -33,6 +33,6 @@ module.exports.slashRun = async (client, interaction) =>
           name: "Minecraft Server IPs:",
           value: "`1️⃣` **`divinerealms.ga`**\n`2️⃣` **`divinemc.ga`**",
           inline: false
-        }, { name: "Version: **`1.17.1`**", value: "_ _", inline: false }])
+        }, { name: "Version: **`1.8 - 1.18.2`**", value: "_ _", inline: false }])
     ],
   });
