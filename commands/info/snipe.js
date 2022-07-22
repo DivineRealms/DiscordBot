@@ -19,7 +19,7 @@ module.exports.run = async (client, message, args) => {
       ],
     });
 
-  let user = await client.users.cahce.get(snipe?.user)
+  let user = await client.users.cache.get(snipe?.user)
 
   message.channel.send({
     embeds: [
@@ -39,7 +39,7 @@ module.exports.run = async (client, message, args) => {
   });
 };
 
-module.exports.slashRUn = async (client, interaction) => {
+module.exports.slashRun = async (client, interaction) => {
   let snipe = client.snipes.get(interaction.channel.id),
     user = await client.users.fetch(snipe.user);
 
