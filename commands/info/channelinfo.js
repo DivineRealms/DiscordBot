@@ -57,7 +57,7 @@ module.exports.run = async (client, message, args) => {
 };
 
 module.exports.slashRun = async (client, interaction) => {
-  const channel = interaction.options.getChannel("channel") || message.channel;
+  const channel = interaction.options.getChannel("channel") || interaction.channel;
 
   interaction.reply({
     embeds: [
