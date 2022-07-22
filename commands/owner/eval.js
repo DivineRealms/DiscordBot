@@ -14,7 +14,7 @@ module.exports = {
 };
 
 module.exports.run = async (client, message, args) => {
-/*   if (!client.conf.Settings.Owner_Discord_ID.includes(message.author.id))
+  if (!client.conf.Settings.Owner_Discord_ID.includes(message.author.id))
     return message.channel.send({
       embeds: [
         client.utils.errorEmbed(
@@ -23,7 +23,7 @@ module.exports.run = async (client, message, args) => {
           "Only Developers can use this command."
         ),
       ],
-    }); */
+    });
 
   const code = args.join(" ");
   if (!code)
