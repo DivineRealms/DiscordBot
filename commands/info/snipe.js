@@ -28,7 +28,9 @@ module.exports.run = async (client, message, args) => {
           client,
           message,
           "",
-          `\`\`\`xl${snipe.content}\`\`\``,
+          `\`\`\`xl
+${snipe.content}
+\`\`\``,
           "#60b8ff"
         )
         .setAuthor({
@@ -57,7 +59,9 @@ module.exports.slashRun = async (client, interaction) => {
           client,
           interaction,
           "",
-          `\`\`\`xl${snipe.content}\`\`\``,
+          `\`\`\`xl
+${snipe.content}
+\`\`\``,
           "#60b8ff"
         )
         .setAuthor({
