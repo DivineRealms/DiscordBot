@@ -19,7 +19,7 @@ module.exports.run = async (client, message, args) => {
       ],
     });
 
-  let user = await message.guild.users.cache.get(snipe?.user)
+  let user = message.guild.users.cache.get(snipe?.user)
 
   message.channel.send({
     embeds: [
@@ -51,7 +51,7 @@ module.exports.slashRun = async (client, interaction) => {
       ],
     });
 
-  const user = await message.guild.users.cache.get(snipe.user)
+  const user = interaction.guild.users.cache.get(snipe.user)
 
   interaction.reply({
     embeds: [
