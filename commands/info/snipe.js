@@ -10,8 +10,7 @@ module.exports = {
 };
 
 module.exports.run = async (client, message, args) => {
-  let snipe = client.snipes.get(message.channel.id),
-    user = await client.users.cahce.get(snipe?.user);
+  let snipe = client.snipes.get(message.channel.id);
 
   if (!snipe || !snipe.content)
     return message.channel.send({
@@ -19,6 +18,8 @@ module.exports.run = async (client, message, args) => {
         client.utils.errorEmbed(client, message, "There's nothing to snipe."),
       ],
     });
+
+  let user = await client.users.cahce.get(snipe?.user)
 
   message.channel.send({
     embeds: [

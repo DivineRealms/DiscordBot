@@ -6,6 +6,7 @@ const Enmap = require("enmap");
 const express = require("express");
 const playerRoutes = require("../routes/playerRoutes.js");
 const leagueRoutes = require("../routes/leagueRoutes.js");
+const { QuickDB } = require("quick.db");
 
 module.exports = async (client) => {
   client.conf = yaml.load(fs.readFileSync("./settings/config.yml", "utf8"));
@@ -35,13 +36,13 @@ module.exports = async (client) => {
   const temporaryVC = require("../utils/temporaryVC.js");
   temporaryVC(client);
 
-  client.db = require("quick.db");
+  client.db = new QuickDB();
 
   client.embedBuilder = require("../utils/embedBuilder.js");
   client.utils = require("../utils/utils.js");
   client.paginateSelect = require("../utils/paginateSelect.js");
 
-  /* process.on("unhandledRejection", (error) => {
+  process.on("unhandledRejection", (error) => {
     if(client.isReady()) {
       let ignoreErrors = [
         `DiscordAPIError: Unknown Message`,
@@ -67,11 +68,9 @@ module.exports = async (client) => {
         .setTimestamp();
   
       let channel = client.channels.cache.get("512277268597309440");
-      console.log(error.stack)
-
-
       if(channel) channel.send({ embeds: [errEmbed] });
     }
+    console.log(error.stack)
   });
 
   process.on("uncaughtException", (error) => {
@@ -99,12 +98,14 @@ module.exports = async (client) => {
         .setFooter({ text: `${error.name}` })
         .setTimestamp();
 
-      console.log(error.stack)
-  
-      let channel = client.channels.cache.get("512277268597309440");
-      if(channel) channel.send({ embeds: [errEmbed] });
+        
+      if(client.isReady) {
+        let channel = client.channels.cache.get("512277268597309440");
+        if(channel) channel.send({ embeds: [errEmbed] });
+      }
     }
-  }); */
+    console.log(error.stack)
+  });
 
   for (const d of readdirSync("./commands/")) {
     client.categories.set(

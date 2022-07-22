@@ -56,7 +56,7 @@ module.exports.run = async (client, message, args) => {
     });
 
   if (
-    !message.channel.permissionOverwrites.has(message.mentions.users.first().id)
+    !message.channel.permissionOverwrites.cache.has(message.mentions.users.first().id)
   )
     return message.channel.send({
       embeds: [
@@ -113,7 +113,7 @@ module.exports.slashRun = async (client, interaction) => {
     });
 
   if (
-    !interaction.channel.permissionOverwrites.has(user.id)
+    !interaction.channel.permissionOverwrites.cache.has(user.id)
   )
     return interaction.reply({
       embeds: [

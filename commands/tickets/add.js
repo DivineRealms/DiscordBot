@@ -52,7 +52,7 @@ module.exports.run = async (client, message, args) => {
     });
 
   if (
-    message.channel.permissionOverwrites.has(message.mentions.users.first().id)
+    message.channel.permissionOverwrites.cache.has(message.mentions.users.first().id)
   )
     if (
       message.channel.permissionOverwrites

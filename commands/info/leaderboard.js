@@ -56,11 +56,11 @@ module.exports.run = async (client, message) => {
           message,
           "",
           i == 0
-            ? client.utils.lbMoney(client, message)
+            ? await client.utils.lbMoney(client, message)
             : i == 3
             ? `Page updating in **\`${parsed}\`**.\n\n` +
-              client.utils.lbVotes(client, message)
-            : client.utils.lbContent(
+              await client.utils.lbVotes(client, message)
+            : await client.utils.lbContent(
                 client,
                 message,
                 leaderboards[i].label.toLowerCase()
@@ -131,11 +131,11 @@ module.exports.slashRun = async (client, interaction) => {
           interaction,
           "",
           i == 0
-            ? client.utils.lbMoney(client, interaction)
+            ? await client.utils.lbMoney(client, interaction)
             : i == 3
             ? `Page updating in **\`${parsed}\`**.\n\n` +
-              client.utils.lbVotes(client, interaction)
-            : client.utils.lbContent(
+              await client.utils.lbVotes(client, interaction)
+            : await client.utils.lbContent(
                 client,
                 interaction,
                 leaderboards[i].label.toLowerCase()

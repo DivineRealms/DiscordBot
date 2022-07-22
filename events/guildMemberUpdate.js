@@ -21,12 +21,12 @@ module.exports = async (client, oldMember, newMember) => {
     );
 
     if (added.includes("597888019663421440")) {
-      let fetchedMessages = await oldMember.guild.channels.cache.get("512570600682684436").messages.fetch({ limit: 50 });
+/*       let fetchedMessages = await oldMember.guild.channels.cache.get("512570600682684436").messages.fetch({ limit: 50 });
       fetchedMessages.forEach(async(msg) => {
         if(msg.author.id == oldMember.id || msg.content.toLowerCase().includes(oldMember.id)) {
           await msg.delete();
         }
-      });
+      }); */
       
       if (welcomeChannel)
         welcomeChannel
@@ -58,6 +58,8 @@ module.exports = async (client, oldMember, newMember) => {
     }
   }
 
+  if (oldMember.pending && !newMember.pending) await newMember.roles.add("597888019663421440");
+
   // Leave
   if (
     settings.Welcome_System.Enabled &&
@@ -72,12 +74,12 @@ module.exports = async (client, oldMember, newMember) => {
     const removed = removedRoles.map((r) => r.id);
 
     if (removed.includes("597888019663421440")) {
-      let fetchedMessages = await oldMember.guild.channels.cache.get("512570600682684436").messages.fetch({ limit: 50 });
+/*       let fetchedMessages = await oldMember.guild.channels.cache.get("512570600682684436").messages.fetch({ limit: 50 });
       fetchedMessages.forEach(async(msg) => {
         if(msg.author.id == oldMember.id || msg.content.toLowerCase().includes(oldMember.id)) {
           await msg.delete();
         }
-      });
+      }); */
       
       let embedWelcome = await db.get(
         `wlcmEmbed_${oldMember.guild.id}_${newMember.id}`

@@ -56,7 +56,7 @@ module.exports.run = async (client, message, args) => {
             client
               .embedBuilder(client, message, "", "", "#3db39e")
               .setAuthor({
-                text: `You have successfully purchased role ${item.Name} for $${item.Price}.`,
+                name: `You have successfully purchased role ${item.Name} for $${item.Price}.`,
                 iconURL: `https://cdn.upload.systems/uploads/6KOGFYJM.png`
               }),
           ],
@@ -155,7 +155,7 @@ module.exports.slashRun = async (client, interaction) => {
             client
               .embedBuilder(client, interaction, "", "", "#3db39e")
               .setAuthor({
-                text: `You have successfully purchased role ${item.Name} for $${item.Price}.`,
+                name: `You have successfully purchased role ${item.Name} for $${item.Price}.`,
                 iconURL: `https://cdn.upload.systems/uploads/6KOGFYJM.png`
               }),
           ],

@@ -1,6 +1,7 @@
 const Discord = require("discord.js");
 const { QuickDB } = require("quick.db");
 const db = new QuickDB();
+const axios = require("axios")
 
 function formatTime(ms) {
   let roundNumber = ms > 0 ? Math.floor : Math.ceil;
@@ -31,15 +32,15 @@ function commandsList(client, message, category) {
 
 async function lbContent(client, message, lbType) {
   let leaderboard = (await db.all())
-    .filter((data) => data.ID.startsWith(`${lbType}_${message.guild.id}`))
-    .sort((a, b) => b.data - a.data);
+    .filter((data) => data.id.startsWith(`${lbType}_${message.guild.id}`))
+    .sort((a, b) => b.value - a.value);
   let content = "";
 
   for (let i = 0; i < leaderboard.length; i++) {
     if (i === 10) break;
 
-    content += `\`${i + 1}.\` <@!${leaderboard[i].ID.split("_")[2]}>︲${
-      leaderboard[i].data
+    content += `\`${i + 1}.\` <@!${leaderboard[i].id.split("_")[2]}>︲${
+      leaderboard[i].value
     }\n`
       .replace("1.", "🥇")
       .replace("2.", "🥈")
@@ -50,8 +51,7 @@ async function lbContent(client, message, lbType) {
 }
 
 async function lbVotes(client, message) {
-  let leaderboard = await db
-    .fetch(`votes_${message.guild.id}`)
+  let leaderboard = await db.get(`votes_${message.guild.id}`)
     .sort((a, b) => b.votes - a.votes);
   let content = "";
 
@@ -71,17 +71,17 @@ async function lbVotes(client, message) {
 
 async function lbMoney(client, message) {
   let leaderboard = (await db.all())
-    .filter((data) => data.ID.startsWith(`money_${message.guild.id}`))
-    .sort((a, b) => b.data - a.data);
+    .filter((data) => data.id.startsWith(`money_${message.guild.id}`))
+    .sort((a, b) => b.value - a.value);
   let content = "";
   let data = [];
 
   for(let i = 0; i < leaderboard.length; i++) {
-    let bank = await db.fetch(`bank_${message.guild.id}_${leaderboard[i].ID.split("_")[2]}`) || 0;
-    let total = leaderboard[i].data + bank;
+    let bank = await db.get(`bank_${message.guild.id}_${leaderboard[i].id.split("_")[2]}`) || 0;
+    let total = leaderboard[i].value + bank;
 
     data.push({
-      user: leaderboard[i].ID.split("_")[2],
+      user: leaderboard[i].id.split("_")[2],
       money: total
     });
   }
@@ -111,7 +111,7 @@ const updateVotesLb = async(client, guild) => {
     .get(
       `https://minecraft-mp.com/api/?object=servers&element=voters&key=${client.conf.Settings.Vote_Key}&month=current&format=json?limit=10`
     )
-    .then((res) => {
+    .then(async(res) => {
       await db.set(`votes_${guild.id}`, res.data.voters);
       await db.set(`untilVote_${guild.id}`, Date.now());
   });

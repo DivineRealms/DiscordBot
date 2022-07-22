@@ -75,13 +75,13 @@ module.exports = async (client) => {
       return;
 
     let birthdays = (await db.all())
-      .filter((i) => i.ID.startsWith(`birthday_${guild.id}_`))
-      .sort((a, b) => b.data - a.data);
+      .filter((i) => i.id.startsWith(`birthday_${guild.id}_`))
+      .sort((a, b) => b.value - a.value);
 
     let birthEmbed = birthdays
-      .filter((b) => isToday(b.data))
+      .filter((b) => isToday(b.value))
       .map((s) => {
-        let bUser = client.users.cache.get(s.ID.split("_")[2]) || "N/A";
+        let bUser = client.users.cache.get(s.id.split("_")[2]) || "N/A";
         return `${bUser}\n`;
       });
 
@@ -124,13 +124,13 @@ module.exports = async (client) => {
         [
           new ButtonBuilder()
             .setURL(`https://minecraft-mp.com/server/295045/vote/`)
-            .setLabel("Vote for Divine Realms")
+            .setLabel("Divine Realms")
             .setStyle(ButtonStyle.Link),
         ],
         [
           new ButtonBuilder()
             .setURL(`https://minecraft-mp.com/server/296478/vote/`)
-            .setLabel("Support HogRealms")
+            .setLabel("HogRealms")
             .setStyle(ButtonStyle.Link),
         ]
       );
@@ -158,7 +158,7 @@ module.exports = async (client) => {
       lastMonth.setMonth(lastMonth.getMonth() - 1);
 
       let leaderboard = await db
-        .fetch(`votes_${guild.id}`)
+        .get(`votes_${guild.id}`)
         .sort((a, b) => b.votes - a.votes);
       let content = "";
     
@@ -188,7 +188,7 @@ module.exports = async (client) => {
 
   let voteLeaderboardCron = new cron.CronJob(
     "0 0 */2 * * *",
-    () => {
+    async() => {
       await updateVotesLb(client, guild);
     },
     { timezone: "Europe/Belgrade" }

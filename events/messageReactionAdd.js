@@ -99,9 +99,9 @@ module.exports = async (client, reaction, user) => {
   const tickets =
     (await db.all())
       .filter((i) =>
-        i.ID.startsWith(`tickets_${reaction.message.guild.id}_`)
+        i.id.startsWith(`tickets_${reaction.message.guild.id}_`)
       ) || [];
-  if (tickets.find((u) => u.data.includes(user.id)))
+  if (tickets.find((u) => u.value.includes(user.id)))
     return reaction.users.remove(user.id);
 
   reaction.users.remove(user.id);

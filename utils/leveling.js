@@ -43,7 +43,7 @@ const manageLeveling = async (client, message) => {
       );
       if (reward) {
         message.member.roles.add(reward.Role).catch(() => {});
-        if (reward.ID > 0) {
+        if (reward.id > 0) {
           let removeReward = levelSettings.Level_Up.Roles.find(
             ({ id: i }) => i == parseInt(reward.id - 1)
           );

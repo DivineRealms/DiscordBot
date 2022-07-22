@@ -33,7 +33,7 @@ module.exports.run = async (client, message, args) => {
       ],
     });
 
-  if (!bal || bal == 0)
+  if (!bal || bal < 1)
     return message.channel.send({
       embeds: [
         client.utils.errorEmbed(
@@ -114,7 +114,7 @@ module.exports.run = async (client, message, args) => {
 };
 
 module.exports.slashRun = async (client, interaction) => {
-  const amount = internaction.options.getString("amount");
+  const amount = interaction.options.getString("amount");
   let bal = await db.get(`money_${interaction.guild.id}_${interaction.user.id}`);
 
   if (!amount || (isNaN(amount) && amount !== "all"))
@@ -128,7 +128,7 @@ module.exports.slashRun = async (client, interaction) => {
       ],
     });
 
-  if (!bal || bal == 0)
+  if (!bal || bal < 1)
     return interaction.reply({
       embeds: [
         client.utils.errorEmbed(

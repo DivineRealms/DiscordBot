@@ -29,11 +29,11 @@ module.exports.run = async (client, message, args) => {
   let xp = await db.get(`xp_${message.guild.id}_${user.id}`) || 1;
   let xpNeeded = (parseInt(level) + 1) * 2 * 250 + 250;
   let every = (await db.all())
-    .filter((i) => i.ID.startsWith(`level_${message.guild.id}_`))
-    .sort((a, b) => b.data - a.data);
+    .filter((i) => i.id.startsWith(`level_${message.guild.id}_`))
+    .sort((a, b) => b.value - a.value);
 
   let rank =
-    every.map((x) => x.ID).indexOf(`level_${message.guild.id}_${user.id}`) +
+    every.map((x) => x.id).indexOf(`level_${message.guild.id}_${user.id}`) +
       1 || 1;
 
   message.channel.send({
@@ -67,11 +67,11 @@ module.exports.slashRun = async (client, interaction) => {
   let xp = await db.get(`xp_${interaction.guild.id}_${user.id}`) || 1;
   let xpNeeded = (parseInt(level) + 1) * 2 * 250 + 250;
   let every = (await db.all())
-    .filter((i) => i.ID.startsWith(`level_${interaction.guild.id}_`))
-    .sort((a, b) => b.data - a.data);
+    .filter((i) => i.id.startsWith(`level_${interaction.guild.id}_`))
+    .sort((a, b) => b.value - a.value);
 
   let rank =
-    every.map((x) => x.ID).indexOf(`level_${interaction.guild.id}_${user.id}`) +
+    every.map((x) => x.id).indexOf(`level_${interaction.guild.id}_${user.id}`) +
       1 || 1;
 
   interaction.reply({

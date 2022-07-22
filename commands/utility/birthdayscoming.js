@@ -47,14 +47,14 @@ module.exports.run = async (client, message, args) => {
       : false;
 
   let birthdays = (await db.all())
-    .filter((i) => i.ID.startsWith(`birthday_${message.guild.id}_`))
-    .sort((a, b) => b.data - a.data);
+    .filter((i) => i.id.startsWith(`birthday_${message.guild.id}_`))
+    .sort((a, b) => b.value - a.value);
 
   birthdays = birthdays
-    .filter((b) => isToday(b.data))
+    .filter((b) => isToday(b.value))
     .map((s) => {
-      let bUser = client.users.cache.get(s.ID.split("_")[2]) || "N/A";
-      return `> **${s.data.slice(1, -1).trim()}** - ${bUser}\n`;
+      let bUser = client.users.cache.get(s.id.split("_")[2]) || "N/A";
+      return `> **${s.value.slice(1, -1).trim()}** - ${bUser}\n`;
     });
 
   if (!birthdays.length)
@@ -112,14 +112,14 @@ module.exports.slashRun = async (client, interaction) => {
       : false;
 
   let birthdays = (await db.all())
-    .filter((i) => i.ID.startsWith(`birthday_${interaction.guild.id}_`))
-    .sort((a, b) => b.data - a.data);
+    .filter((i) => i.id.startsWith(`birthday_${interaction.guild.id}_`))
+    .sort((a, b) => b.value - a.value);
 
   birthdays = birthdays
-    .filter((b) => isToday(b.data))
+    .filter((b) => isToday(b.value))
     .map((s) => {
-      let bUser = client.users.cache.get(s.ID.split("_")[2]) || "N/A";
-      return `> **${s.data.slice(1, -1).trim()}** - ${bUser}\n`;
+      let bUser = client.users.cache.get(s.id.split("_")[2]) || "N/A";
+      return `> **${s.value.slice(1, -1).trim()}** - ${bUser}\n`;
     });
 
   if (!birthdays.length)

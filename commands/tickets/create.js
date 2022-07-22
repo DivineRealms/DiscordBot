@@ -16,7 +16,7 @@ module.exports = {
 module.exports.run = async (client, message, args) => {
   const settings = client.conf.Ticket_System;
   const tickets =
-    (await db.all()).filter((i) => i.ID.startsWith(`tickets_${message.guild.id}_`)) ||
+    (await db.all()).filter((i) => i.id.startsWith(`tickets_${message.guild.id}_`)) ||
     [];
 
   const log = client.channels.cache.get(client.conf.Logging.Tickets);
@@ -35,7 +35,7 @@ module.exports.run = async (client, message, args) => {
       ],
     });
 
-  if (tickets.find((u) => u.data.includes(message.author.id)))
+  if (tickets.find((u) => u.value.includes(message.author.id)))
     return message.channel.send({
       embeds: [
         client.utils.errorEmbed(
@@ -137,7 +137,7 @@ module.exports.run = async (client, message, args) => {
 module.exports.slashRun = async (client, interaction) => {
   const settings = client.conf.Ticket_System;
   const tickets =
-    (await db.all()).filter((i) => i.ID.startsWith(`tickets_${interaction.guild.id}_`)) ||
+    (await db.all()).filter((i) => i.id.startsWith(`tickets_${interaction.guild.id}_`)) ||
     [];
 
   const log = client.channels.cache.get(client.conf.Logging.Tickets);
@@ -156,7 +156,7 @@ module.exports.slashRun = async (client, interaction) => {
       ],
     });
 
-  if (tickets.find((u) => u.data.includes(interaction.user.id)))
+  if (tickets.find((u) => u.value.includes(interaction.user.id)))
     return interaction.reply({
       embeds: [
         client.utils.errorEmbed(

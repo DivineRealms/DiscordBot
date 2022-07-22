@@ -63,6 +63,9 @@ Settings:
   # ID of your Guild (Discord Server).
   Guild_ID: ""
 
+  # ID of Channel in which to send Top Voters of Month
+  Votes_LB: ""
+
   # ID(s) of Guild (Discord Server) Owner(s).
   # You can add multiple ones.
   Owner_Discord_ID:

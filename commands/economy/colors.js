@@ -177,7 +177,7 @@ module.exports.slashRun = async (client, interaction) => {
       embeds: [
         client.utils.errorEmbed(
           client,
-          message,
+          interaction,
           "Invalid argument, options: use, list, reset."
         ),
       ],
@@ -189,7 +189,7 @@ module.exports.slashRun = async (client, interaction) => {
         embeds: [
           client.utils.errorEmbed(
             client,
-            message,
+            interaction,
             "You don't have any colors."
           ),
         ],
@@ -200,7 +200,7 @@ module.exports.slashRun = async (client, interaction) => {
         client
           .embedBuilder(
             client,
-            message,
+            interaction,
             "",
             `<:ArrowRightGray:813815804768026705> **\`${colors.join(
               "`, `"
@@ -220,7 +220,7 @@ module.exports.slashRun = async (client, interaction) => {
       embeds: [
         client.utils.errorEmbed(
           client,
-          message,
+          interaction,
           "You must provide color to use."
         ),
       ],
@@ -231,7 +231,7 @@ module.exports.slashRun = async (client, interaction) => {
         embeds: [
           client.utils.errorEmbed(
             client,
-            message,
+            interaction,
             "You don't have that color in your inventory."
           ),
         ],
@@ -246,7 +246,7 @@ module.exports.slashRun = async (client, interaction) => {
         embeds: [
           client.utils.errorEmbed(
             client,
-            message,
+            interaction,
             "You have provided an invalid color."
           ),
         ],
@@ -266,7 +266,7 @@ module.exports.slashRun = async (client, interaction) => {
         embeds: [
           client.utils.errorEmbed(
             client,
-            message,
+            interaction,
             "You already have that color selected."
           ),
         ],
@@ -276,7 +276,7 @@ module.exports.slashRun = async (client, interaction) => {
     interaction.reply({
       embeds: [
         client
-          .embedBuilder(client, message, "", "", "#3db39e")
+          .embedBuilder(client, interaction, "", "", "#3db39e")
           .setAuthor({
             name: `Color Role ${color.Name} has been equiped.`,
             iconURL: `https://cdn.upload.systems/uploads/6KOGFYJM.png`
@@ -292,7 +292,7 @@ module.exports.slashRun = async (client, interaction) => {
     interaction.reply({
       embeds: [
         client
-          .embedBuilder(client, message, "", "", "#3db39e")
+          .embedBuilder(client, interaction, "", "", "#3db39e")
           .setAuthor({
             name: "Your Name Color has been reset.",
             iconURL: `https://cdn.upload.systems/uploads/6KOGFYJM.png`

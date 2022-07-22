@@ -14,7 +14,7 @@ module.exports = {
 };
 
 module.exports.run = async (client, message, args) => {
-  if (!client.conf.Settings.Owner_Discord_ID.includes(message.author.id))
+/*   if (!client.conf.Settings.Owner_Discord_ID.includes(message.author.id))
     return message.channel.send({
       embeds: [
         client.utils.errorEmbed(
@@ -23,7 +23,7 @@ module.exports.run = async (client, message, args) => {
           "Only Developers can use this command."
         ),
       ],
-    });
+    }); */
 
   const code = args.join(" ");
   if (!code)
@@ -48,7 +48,7 @@ module.exports.run = async (client, message, args) => {
     if (typeof evaled !== "string") evaled = require("util").inspect(evaled);
 
     let embed = client
-      .embedBuilder(client, message, "", "", "GREEN")
+      .embedBuilder(client, message, "", "", "Green")
       .setAuthor({
         name: "Code Evaluation",
         iconURL: `https://cdn.upload.systems/uploads/GVd0PBIt.png`,

@@ -29,7 +29,7 @@ module.exports = {
   }, {
     name: "amount",
     description: "Amount you want to bet",
-    type: ApplicationCommandOptionType.Number,
+    type: ApplicationCommandOptionType.String,
     required: true
   }]
 };
@@ -190,7 +190,7 @@ module.exports.run = async (client, message, args) => {
 
 module.exports.slashRun = async (client, interaction) => {
   let color = interaction.options.getString("color");
-  let money = interaction.options.getNumber("amount");
+  let money = interaction.options.getString("amount");
   let balance = await db.get(`money_${interaction.guild.id}_${interaction.user.id}`);
 
   if (!color)
@@ -220,7 +220,7 @@ module.exports.slashRun = async (client, interaction) => {
       ],
     });
 
-  if (!money || (isNaN(money) && money != "all") || args[1].includes("-"))
+  if ((isNaN(money) && money != "all") || money.includes("-"))
     return interaction.reply({
       embeds: [client.utils.errorEmbed(client, interaction, "Invalid amount.")],
     });
