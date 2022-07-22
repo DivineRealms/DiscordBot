@@ -150,17 +150,46 @@ module.exports = async (client) => {
 
   voteCron.start();
 
+  let voteMonthEnd = new cron.CronJob(
+    "30 0 0 1 * *", async() => {
+      await updateVotesLb(client, guild);
+
+      const lastMonth = new Date();
+      lastMonth.setMonth(lastMonth.getMonth() - 1);
+
+      let leaderboard = await db
+        .fetch(`votes_${guild.id}`)
+        .sort((a, b) => b.votes - a.votes);
+      let content = "";
+    
+      for (let i = 0; i < leaderboard.length; i++) {
+        if (i == 10) break;
+    
+        content += `\`${i + 1}.\` **${leaderboard[i].nickname}**︲${
+          leaderboard[i].votes
+        }\n`
+          .replace("1.", "🥇")
+          .replace("2.", "🥈")
+          .replace("3.", "🥉");
+      }
+
+      const votesEmbed = new MessageEmbed()
+        .setAuthor({ name: `Statistika glasanja na kraju meseca`, iconURL: `https://cdn.upload.systems/uploads/sYDS6yZI.png` })
+        .setDescription(`Hvala svima koji su glasali za naš server.\n\n${content}`)
+        .setColor("#7ec0ff");
+
+      const lbChannel = client.channels.cache.get(client.conf.Votes_LB);
+      if(lbChannel) lbChannel.send({ embeds: [votesEmbed] })
+    },
+    { timezone: "Europe/Belgrade" }
+  );
+
+  voteMonthEnd.start();
+
   let voteLeaderboardCron = new cron.CronJob(
     "0 0 */2 * * *",
     () => {
-      axios
-        .get(
-          `https://minecraft-mp.com/api/?object=servers&element=voters&key=${client.conf.Settings.Vote_Key}&month=current&format=json?limit=10`
-        )
-        .then(async(res) => {
-          await db.set(`votes_${guild.id}`, res.data.voters);
-          await db.set(`untilVote_${guild.id}`, Date.now());
-        });
+      await updateVotesLb(client, guild);
     },
     { timezone: "Europe/Belgrade" }
   );

@@ -1,3 +1,4 @@
+const { ApplicationCommandOptionType } = require("discord.js");
 const parse = require("ms");
 
 module.exports = {
@@ -8,6 +9,13 @@ module.exports = {
   cooldown: 0,
   aliases: [`time`],
   usage: "timer <Time>",
+  slash: true,
+  options: [{
+    name: "time",
+    description: "Time for timer",
+    type: ApplicationCommandOptionType.String,
+    required: true
+  }]
 };
 
 module.exports.run = async (client, message, args) => {
@@ -65,6 +73,73 @@ module.exports.run = async (client, message, args) => {
     if (Date.now() > end) {
       const done = client
         .embedBuilder(client, message, "", "", "#ffc13f")
+        .setAuthor({
+          name: "Timer has ended!",
+          iconURL: `https://cdn.upload.systems/uploads/40vZa4wv.png`
+        });
+
+      clearInterval(timer);
+      return msg.edit({ embeds: [done] });
+    } else msg.edit({ embeds: [embed2] });
+  }, 5000);
+};
+
+
+module.exports.slashRun = async (client, interaction) => {
+  const time = interaction.options.getString("time");
+  let errEmb = client.utils.errorEmbed(
+    client,
+    interaction,
+    "Please provide a valid time."
+  );
+
+  if (isNaN(parse(time))) return interaction.reply({ embeds: [errEmb] });
+
+  const end = Date.now() + parse(time);
+  const msg = await interaction.reply({
+    embeds: [
+      client
+        .embedBuilder(
+          client,
+          interaction,
+          "",
+          `<:ArrowRightGray:813815804768026705>Time: **${client.utils.formatTime(
+            end - Date.now(),
+            {
+              round: true,
+            }
+          )}**.`,
+          "#ffc13f"
+        )
+        .setAuthor({
+          name: "Active Timer",
+          iconURL:  `https://cdn.upload.systems/uploads/40vZa4wv.png`
+        }),
+    ], fetchReply: true
+  });
+
+  const timer = setInterval(() => {
+    const embed2 = client
+      .embedBuilder(
+        client,
+        interaction,
+        "",
+        `<:ArrowRightGray:813815804768026705>Time: **${client.utils.formatTime(
+          end - Date.now(),
+          {
+            round: true,
+          }
+        )}**.`,
+        "#ffc13f"
+      )
+      .setAuthor({
+        name: "Active Timer",
+        iconURL: `https://cdn.upload.systems/uploads/40vZa4wv.png`
+      });
+
+    if (Date.now() > end) {
+      const done = client
+        .embedBuilder(client, interaction, "", "", "#ffc13f")
         .setAuthor({
           name: "Timer has ended!",
           iconURL: `https://cdn.upload.systems/uploads/40vZa4wv.png`

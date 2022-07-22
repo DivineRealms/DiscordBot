@@ -1,4 +1,4 @@
-const { EmbedBuilder, ButtonBuilder, ActionRowBuilder, ButtonStyle, ComponentType } = require("discord.js");
+const { ButtonBuilder, ActionRowBuilder, ButtonStyle, ComponentType, InteractionType } = require("discord.js");
 async function sliceContent(content, currentPage, perPage) {
   var page = content.slice(perPage * (currentPage - 1), perPage * currentPage);
 
@@ -51,7 +51,15 @@ module.exports = async function paginate(
   let row = new ActionRowBuilder().addComponents([prevBttn, nextBttn]);
 
   currentPage = firstPage;
-  let m = await message.channel.send({ embeds: [embed], components: [row] });
+  // let m = await message.channel.send({ embeds: [embed], components: [row] });
+  let m;
+
+  if(message.type == InteractionType.ApplicationCommand) {
+    await message.deferReply();
+    m = await message.followUp({ embeds: [embed], components: [row] });
+  } else {
+    m = await message.channel.send({ embeds: [embed], components: [row] });
+  }
   
   const collector = m.createMessageComponentCollector({
     filter,

@@ -29,7 +29,6 @@ function commandsList(client, message, category) {
   return content;
 }
 
-// here
 async function lbContent(client, message, lbType) {
   let leaderboard = (await db.all())
     .filter((data) => data.ID.startsWith(`${lbType}_${message.guild.id}`))
@@ -51,7 +50,7 @@ async function lbContent(client, message, lbType) {
 }
 
 async function lbVotes(client, message) {
-  let leaderboard = db
+  let leaderboard = await db
     .fetch(`votes_${message.guild.id}`)
     .sort((a, b) => b.votes - a.votes);
   let content = "";
@@ -78,7 +77,7 @@ async function lbMoney(client, message) {
   let data = [];
 
   for(let i = 0; i < leaderboard.length; i++) {
-    let bank = await db.get(`bank_${message.guild.id}_${leaderboard[i].ID.split("_")[2]}`) || 0;
+    let bank = await db.fetch(`bank_${message.guild.id}_${leaderboard[i].ID.split("_")[2]}`) || 0;
     let total = leaderboard[i].data + bank;
 
     data.push({
@@ -107,6 +106,17 @@ function errorEmbed(client, message, err) {
     .setAuthor({ name: err, iconURL: `https://cdn.upload.systems/uploads/96HNGxzL.png` });
 }
 
+const updateVotesLb = async(client, guild) => {
+  await axios
+    .get(
+      `https://minecraft-mp.com/api/?object=servers&element=voters&key=${client.conf.Settings.Vote_Key}&month=current&format=json?limit=10`
+    )
+    .then((res) => {
+      await db.set(`votes_${guild.id}`, res.data.voters);
+      await db.set(`untilVote_${guild.id}`, Date.now());
+  });
+}
+
 module.exports = {
   formatTime,
   commandsList,
@@ -114,4 +124,5 @@ module.exports = {
   lbMoney,
   lbVotes,
   errorEmbed,
+  updateVotesLb,
 };

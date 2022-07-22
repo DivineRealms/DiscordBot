@@ -1,3 +1,5 @@
+const { ApplicationCommandOptionType } = require("discord.js");
+
 module.exports = {
   name: "embed",
   category: "moderation",
@@ -6,6 +8,18 @@ module.exports = {
   cooldown: 0,
   aliases: [],
   usage: "embed <Title> | <Description>",
+  slash: true,
+  options: [{
+    name: "title",
+    description: "Title for Embed",
+    type: ApplicationCommandOptionType.String,
+    required: true
+  }, {
+    name: "description",
+    description: "Description for Embed",
+    type: ApplicationCommandOptionType.String,
+    required: true
+  }]
 };
 
 module.exports.run = async (client, message, args) => {
@@ -35,5 +49,13 @@ module.exports.run = async (client, message, args) => {
 
   message.channel.send({
     embeds: [client.embedBuilder(client, message, title, description)],
+  });
+};
+
+module.exports.slashRun = async (client, interaction) => {
+  let [title, description] = interaction.options;
+
+  interaction.reply({
+    embeds: [client.embedBuilder(client, interaction, title, description)],
   });
 };

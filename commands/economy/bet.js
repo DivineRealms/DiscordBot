@@ -120,7 +120,7 @@ module.exports.run = async (client, message, args) => {
   }
 };
 
-module.exports.run = async (client, interaction, args) => {
+module.exports.slashRun = async (client, interaction) => {
   let bal = await db.get(`money_${interaction.guild.id}_${interaction.user.id}`),
     chance = Math.floor(Math.random() * 100) + 1,
     amount = interaction.options.getString("amount");

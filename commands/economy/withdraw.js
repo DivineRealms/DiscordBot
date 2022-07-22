@@ -1,5 +1,6 @@
 const { QuickDB } = require("quick.db");
 const db = new QuickDB();
+const { ApplicationCommandOptionType } = require("discord.js");
 
 module.exports = {
   name: "withdraw",
@@ -13,7 +14,7 @@ module.exports = {
   options: [{
     name: "amount",
     description: "Amount you want to withdraw or 'all'",
-    type: Discord.ApplicationCommandOptionType.String,
+    type: ApplicationCommandOptionType.String,
     required: true
   }]
 };
@@ -90,4 +91,79 @@ module.exports.run = async (client, message, args) => {
 
   await db.add(`money_${message.guild.id}_${message.author.id}`, Number(args[0]));
   await db.sub(`bank_${message.guild.id}_${message.author.id}`, Number(args[0]));
+};
+
+module.exports.slashRun = async (client, interaction) => {
+  let bank = await db.get(`bank_${interaction.guild.id}_${interaction.user.id}`);
+  const amount = interaction.options.getNumber("amount");
+
+  if (isNaN(amount) && amount !== "all")
+    return interaction.reply({
+      embeds: [
+        client.utils.errorEmbed(
+          client,
+          interaction,
+          "You must provide an amount to deposit."
+        ),
+      ],
+    });
+
+  if (amount === "all") {
+    if (!bank || bank == 0)
+      return interaction.reply({
+        embeds: [
+          client.utils.errorEmbed(
+            client,
+            interaction,
+            "You don't have money to withdraw."
+          ),
+        ],
+      });
+
+    interaction.reply({
+      embeds: [
+        client.embedBuilder(client, interaction, "", "", "#3db39e").setAuthor({
+          name: `You have withdrawn $${bank} from the bank.`,
+          iconURL: `https://cdn.upload.systems/uploads/6KOGFYJM.png`,
+        }),
+      ],
+    });
+
+    await db.sub(`bank_${interaction.guild.id}_${interaction.user.id}`, Number(bank));
+    await db.add(`money_${interaction.guild.id}_${interaction.user.id}`, Number(bank));
+    return;
+  }
+  if (amount > bank)
+    return interaction.reply({
+      embeds: [
+        client.utils.errorEmbed(
+          client,
+          interaction,
+          "You cannot withdraw that much."
+        ),
+      ],
+    });
+
+  if (amount < 1)
+    return interaction.reply({
+      embeds: [
+        client.utils.errorEmbed(
+          client,
+          interaction,
+          "You cannot withdraw less than $1."
+        ),
+      ],
+    });
+
+  interaction.reply({
+    embeds: [
+      client.embedBuilder(client, interaction, "", "", "#3db39e").setAuthor({
+        name: `You have withdrawn $${Number(amount)} from the bank.`,
+        iconURL: `https://cdn.upload.systems/uploads/6KOGFYJM.png`,
+      }),
+    ],
+  });
+
+  await db.add(`money_${interaction.guild.id}_${interaction.user.id}`, Number(amount));
+  await db.sub(`bank_${interaction.guild.id}_${interaction.user.id}`, Number(amount));
 };

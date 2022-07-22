@@ -158,7 +158,7 @@ module.exports = async (client, message) => {
 
   if (
     !client.conf.Automod.Commands_Channel.includes(message.channel.id) &&
-    !message.member.permissions.has("ManageRolesROLES") &&
+    !message.member.permissions.has("ManageRoles") &&
     !message.member.roles.cache.has(client.conf.Automod.Bypass_Command)
   )
     return message.channel

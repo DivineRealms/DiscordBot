@@ -1,4 +1,4 @@
-const { ActionRowBuilder, SelectMenuBuilder, ComponentType } = require("discord.js");
+const { ActionRowBuilder, SelectMenuBuilder, ComponentType, InteractionType } = require("discord.js");
 
 module.exports = async (client, message, home, data) => {
   let optionList = [];
@@ -21,10 +21,18 @@ module.exports = async (client, message, home, data) => {
 
   let row = new ActionRowBuilder().addComponents(sMenu);
 
-  const m = await message.channel.send({ embeds: [home], components: [row] });
+  // const m = await message.channel.send({ embeds: [home], components: [row] });
+  let m;
+
+  if(message.type == InteractionType.ApplicationCommand) {
+    await message.deferReply();
+    m = await message.followUp({ embeds: [home], components: [row], fetchReply: true });
+  } else {
+    m = await message.channel.send({ embeds: [home], components: [row] });
+  }
 
   const filter = (interaction) => {
-    return interaction.user.id == message.author.id;
+    return interaction.user.id == message.member.user.id;
   };
 
   const collector = m.createMessageComponentCollector({

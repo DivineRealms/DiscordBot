@@ -10,6 +10,7 @@ module.exports = {
   cooldown: 0,
   aliases: [`bdaylist`],
   usage: "birthdayscoming",
+  slash: true
 };
 
 module.exports.run = async (client, message, args) => {
@@ -73,6 +74,71 @@ module.exports.run = async (client, message, args) => {
     10,
     1,
     message,
+    `Birthdays Coming Up for ${dates[new Date().getMonth()]}!`
+  );
+};
+
+module.exports.slashRun = async (client, interaction) => {
+  if (!client.conf.Birthday_System.Enabled)
+    return interaction.reply({
+      embeds: [
+        client.utils.errorEmbed(
+          client,
+          interaction,
+          "Birthday System is not enabled."
+        ),
+      ],
+    });
+
+  const dates = [
+    "January",
+    "Februrary",
+    "March",
+    "April",
+    "May",
+    "June",
+    "July",
+    "August",
+    "September",
+    "October",
+    "November",
+    "December",
+  ];
+
+  const isToday = (d) =>
+    d
+      ? new Date().getMonth() === new Date(d).getMonth() &&
+        new Date().getDate() <= new Date(d).getDate()
+      : false;
+
+  let birthdays = (await db.all())
+    .filter((i) => i.ID.startsWith(`birthday_${interaction.guild.id}_`))
+    .sort((a, b) => b.data - a.data);
+
+  birthdays = birthdays
+    .filter((b) => isToday(b.data))
+    .map((s) => {
+      let bUser = client.users.cache.get(s.ID.split("_")[2]) || "N/A";
+      return `> **${s.data.slice(1, -1).trim()}** - ${bUser}\n`;
+    });
+
+  if (!birthdays.length)
+    return interaction.reply({
+      embeds: [
+        client.utils.errorEmbed(
+          client,
+          interaction,
+          "There aren't any upcoming birthdays."
+        ),
+      ],
+    });
+
+  paginateContent(
+    client,
+    birthdays,
+    10,
+    1,
+    interaction,
     `Birthdays Coming Up for ${dates[new Date().getMonth()]}!`
   );
 };

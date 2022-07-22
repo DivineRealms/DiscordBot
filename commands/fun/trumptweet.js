@@ -1,3 +1,4 @@
+const { ApplicationCommandOptionType } = require("discord.js");
 const fetch = require("node-fetch");
 
 module.exports = {
@@ -8,6 +9,13 @@ module.exports = {
   cooldown: 0,
   aliases: ["trumptwt"],
   usage: "trumptweet <Message>",
+  slash: true,
+  options: [{
+    name: "message",
+    description: "Message you want Trump to tweet",
+    type: ApplicationCommandOptionType.String,
+    required: true
+  }]
 };
 
 module.exports.run = async (client, message, args) => {
@@ -42,6 +50,35 @@ module.exports.run = async (client, message, args) => {
       embeds: [
         client
           .embedBuilder(client, message, "", "", "#ec3d93")
+          .setAuthor({
+            name: "Trump Tweet",
+            iconURL: `https://cdn.upload.systems/uploads/ZdKDK7Tx.png`,
+          })
+          .setImage(img),
+      ],
+    });
+  } finally {
+  }
+};
+
+module.exports.slashRun = async (client, interaction) => {
+  let tweet = interaction.options.getString("message");
+
+  if (tweet.length > 68) tweet = tweet.slice(0, 65) + "...";
+
+  try {
+    const res = await fetch(
+        Buffer.from(
+          "aHR0cHM6Ly9uZWtvYm90Lnh5ei9hcGkvaW1hZ2VnZW4/dHlwZT10cnVtcHR3ZWV0JnRleHQ9",
+          "base64"
+        ).toString() + tweet
+      ),
+      img = (await res.json()).message;
+
+    interaction.reply({
+      embeds: [
+        client
+          .embedBuilder(client, interaction, "", "", "#ec3d93")
           .setAuthor({
             name: "Trump Tweet",
             iconURL: `https://cdn.upload.systems/uploads/ZdKDK7Tx.png`,

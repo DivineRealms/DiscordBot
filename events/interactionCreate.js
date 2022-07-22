@@ -1,16 +1,13 @@
-const escapeRegex = (str) => str.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
-const utils = require("../handler/utilities");
-const leveling = require("../utils/leveling.js");
 const { QuickDB } = require("quick.db");
 const db = new QuickDB();
-const { MessageType, ChannelType, InteractionType } = require("discord.js");
-
-const cooldownList = [];
+const { InteractionType } = require("discord.js")
 
 module.exports = async (client, interaction) => {
   const message = interaction.message;
   const user = interaction.user;
   if(user.bot) return;
+
+  interaction.px = client.conf.Settings.Prefix;
 
   if(interaction.type == InteractionType.ApplicationCommand) {
     const cmd = client.slashCommands.get(interaction.commandName);
