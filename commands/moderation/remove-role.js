@@ -87,7 +87,7 @@ module.exports.run = async (client, message, args) => {
     ],
   });
 
-  return member.roles.remove(role).catch((err) => {
+  return member.roles.remove(role).catch((_err) => {
     message.channel.send({
       embeds: [
         client.utils.errorEmbed(
@@ -115,7 +115,7 @@ module.exports.slashRun = async (client, interaction) => {
       ],
     });
 
-  if (member.roles.highest.position >= interaction.guild.me.roles.highest.position)
+  if (member.roles.highest.position >= interaction.guild.members.me.roles.highest.position)
     return interaction.reply({
       embeds: [
         client.utils.errorEmbed(
@@ -148,7 +148,7 @@ module.exports.slashRun = async (client, interaction) => {
     ],
   });
 
-  return member.roles.remove(role).catch((err) => {
+  return member.roles.remove(role).catch((_err) => {
     interaction.reply({
       embeds: [
         client.utils.errorEmbed(

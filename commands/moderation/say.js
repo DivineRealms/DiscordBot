@@ -36,6 +36,6 @@ module.exports.run = async (client, message, args) => {
 };
 
 module.exports.slashRun = async (client, interaction) => {
-  setTimeout(() => message.delete(), 3000);
-  message.channel.send({ content: interaction.options.getString("message") });
+  interaction.reply({ content: "Command executed successfully!", ephemeral: true });
+  interaction.channel.send({ content: interaction.options.getString("message") });
 };
