@@ -36,10 +36,22 @@ module.exports.run = async (client, message, args) => {
       require.resolve(`../${command.category}/${args[0].toLowerCase()}.js`)
     ];
 
+    const commandData = require(`../${command.category}/${args[0].toLowerCase()}.js`);
+
     client.commands.set(args[0].toLowerCase(), {
       ...require(`../${command.category}/${args[0].toLowerCase()}.js`),
       category: command.category,
     });
+
+    client.slashCommands.set(args[0].toLowerCase(), {
+      ...require(`../${command.category}/${args[0].toLowerCase()}.js`),
+    });
+
+    client.slashArray.filter((x) => x.name != args[0].toLowerCase());
+    client.slashArray.push(commandData);
+
+    const cmdExists = client.application.commands.cache.find(x => x.name == args[0].toLowerCase())
+    client.application.commands.edit(cmdExists, commandData)
 
     message.channel.send({
       embeds: [

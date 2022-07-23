@@ -134,7 +134,6 @@ module.exports.slashRun = async (client, interaction) => {
           }),
       ],
     })
-    .then((msg) => setTimeout(() => msg.delete(), 3000));
 
     let embed = client
       .embedBuilder(client, interaction, "", "")

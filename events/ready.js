@@ -3,7 +3,6 @@ const cron = require("cron");
 const { QuickDB } = require("quick.db");
 const db = new QuickDB();
 const bumpReminder = require("../utils/bumpRemind.js");
-const axios = require("axios");
 
 module.exports = async (client) => {
   let date = new Date();
