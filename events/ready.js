@@ -120,18 +120,14 @@ module.exports = async (client) => {
     () => {
       let generalCh = client.channels.cache.get("512274978754920463");
       const voteRow = new ActionRowBuilder().addComponents(
-        [
-          new ButtonBuilder()
-            .setURL(`https://minecraft-mp.com/server/295045/vote/`)
-            .setLabel("Divine Realms")
-            .setStyle(ButtonStyle.Link),
-        ],
-        [
-          new ButtonBuilder()
-            .setURL(`https://minecraft-mp.com/server/296478/vote/`)
-            .setLabel("HogRealms")
-            .setStyle(ButtonStyle.Link),
-        ]
+        new ButtonBuilder()
+          .setURL(`https://minecraft-mp.com/server/295045/vote/`)
+          .setLabel("Divine Realms")
+          .setStyle(ButtonStyle.Link),
+        new ButtonBuilder()
+          .setURL(`https://minecraft-mp.com/server/296478/vote/`)
+          .setLabel("HogRealms")
+          .setStyle(ButtonStyle.Link),
       );
       if (generalCh)
         generalCh.send({
