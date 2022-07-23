@@ -1,0 +1,36 @@
+.text-light {
+  color: #d8dee9 !important;
+}
+
+.text-body {
+  color: #fff !important;
+}
+
+.MuiButtonBase-root {
+  color: red !important;
+}
+
+.col-12>.row {
+  background-color: #161616 !important;
+  color: #d8dee9 !important;
+}
+
+.row.mx-0.align-items-center.text-truncate.bg-lighter.text-capitalize.font-weight-bold {
+  background-color: #212121 !important;
+}
+
+[style*="#f4f4f4"] {
+  background-color: #212121 !important;
+}
+
+.border-lighter {
+  border-color: #212121 !important;  
+}
+
+.text-primary {
+  color: #fff !important;
+}
+
+.col-auto.mr-1.px-0.font-weight-bold>span {
+  color: #fff !important;
+}

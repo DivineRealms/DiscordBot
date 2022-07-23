@@ -47,7 +47,7 @@ module.exports.run = async (client, message, args) => {
     if (fs.existsSync(process.cwd() + "/assets/svebalkan.png"))
       await fs.unlinkSync(process.cwd() + "/assets/svebalkan.png");
 
-    await new Pageres({ filename: "svebalkan", selector: ".col-12>.row" })
+    await new Pageres({ script: `${process.cwd() + "/assets/tableScript.js"}`, css: `${process.cwd() + "/assets/tableStyle.css"}`, hide: ["ins", ".da-h-responsive", ".adsbygoogle"], filename: "svebalkan", selector: ".col-12.col-lg-7.col-xl-8.mb-3" })
       .src('https://challenge.place/c/62aa8b995f6adfd26e923544/stage/62cf0094c41566e3d56d36c3', ['2048x1024'])
       .dest(process.cwd() + "/assets")
       .run();
@@ -59,7 +59,7 @@ module.exports.run = async (client, message, args) => {
     if (fs.existsSync(process.cwd() + "/assets/fcfa-challenge.png"))
       await fs.unlinkSync(process.cwd() + "/assets/fcfa-challenge.png");
 
-    await new Pageres({ filename: "fcfa-challenge", selector: ".col-12>.row" })
+    await new Pageres({ script: `${process.cwd() + "/assets/tableScript.js"}`, css: `${process.cwd() + "/assets/tableStyle.css"}`, hide: ["ins", ".da-h-responsive", ".adsbygoogle"], filename: "fcfa-challenge", selector: ".col-12.col-lg-7.col-xl-8.mb-3" })
       .src('https://challenge.place/c/62aa8b995f6adfd26e923544/stage/62cf006dba35d7e39e7d1a56', ['2048x1024'])
       .dest(process.cwd() + "/assets")
       .run();
@@ -86,7 +86,7 @@ module.exports.slashRun = async (client, interaction) => {
     if (fs.existsSync(process.cwd() + "/assets/svebalkan.png"))
       await fs.unlinkSync(process.cwd() + "/assets/svebalkan.png");
 
-    await new Pageres({ filename: "svebalkan", selector: ".col-12>.row" })
+    await new Pageres({ script: `${process.cwd() + "/assets/tableScript.js"}`, css: `${process.cwd() + "/assets/tableStyle.css"}`, hide: ["ins", ".da-h-responsive", ".adsbygoogle"], filename: "svebalkan", selector: ".col-12.col-lg-7.col-xl-8.mb-3" })
       .src('https://challenge.place/c/62aa8b995f6adfd26e923544/stage/62cf0094c41566e3d56d36c3', ['2048x1024'])
       .dest(process.cwd() + "/assets")
       .run();
@@ -104,7 +104,7 @@ module.exports.slashRun = async (client, interaction) => {
     if (fs.existsSync(process.cwd() + "/assets/fcfa-challenge.png"))
       await fs.unlinkSync(process.cwd() + "/assets/fcfa-challenge.png");
 
-    await new Pageres({ filename: "fcfa-challenge", selector: ".col-12>.row" })
+    await new Pageres({ script: `${process.cwd() + "/assets/tableScript.js"}`, css: `${process.cwd() + "/assets/tableStyle.css"}`, hide: ["ins", ".da-h-responsive", ".adsbygoogle"], filename: "fcfa-challenge", selector: ".col-12.col-lg-7.col-xl-8.mb-3" })
       .src('https://challenge.place/c/62aa8b995f6adfd26e923544/stage/62cf006dba35d7e39e7d1a56', ['2048x1024'])
       .dest(process.cwd() + "/assets")
       .run();
