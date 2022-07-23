@@ -14,11 +14,6 @@ module.exports = {
     description: "User you want to report",
     type: ApplicationCommandOptionType.User,
     required: true
-  }, {
-    name: "reason",
-    description: "Reason for Report",
-    type: ApplicationCommandOptionType.String,
-    required: true
   }]
 };
 
@@ -39,7 +34,7 @@ module.exports.run = async (client, message, args) => {
       ],
     });
 
-  if (!args[0])
+  if (args.length < 2)
     return message.channel.send({
       embeds: [
         client.utils.errorEmbed(client, message, "Please provide a report."),
