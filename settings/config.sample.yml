@@ -226,6 +226,10 @@ Economy:
       Description: "VIP Rank."
       Price: "100000"
 
+Football:
+  Svebalkan: ""
+  FCFAChallenge: ""
+
 # DO NOT TOUCH
 Guild_Settings:
   Prefix: "."
