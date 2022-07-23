@@ -5,7 +5,7 @@ const fs = require("fs");
 module.exports = {
   name: "table",
   category: "info",
-  description: "View Challange.place table for League.",
+  description: "View challenge.place table for League.",
   permissions: ["ManageMessages"],
   cooldown: 0,
   aliases: [],
@@ -16,11 +16,11 @@ module.exports = {
     description: "Name of League for which to view table",
     type: ApplicationCommandOptionType.String,
     choices: [{
-      name: "Svebalkan",
-      value: "sb"
+      name: "Svebalkan League",
+      value: "svb"
     }, {
-      name: "FCFA Challenge",
-      value: "fcfac"
+      name: "FCFA Challenge League",
+      value: "fcl"
     }],
     required: true
   }]
@@ -35,7 +35,7 @@ module.exports.run = async (client, message, args) => {
         client.utils.errorEmbed(
           client,
           message,
-          "You need to enter league name: svebalkan (sb), fcfachallenge (fcfac/fcfa)"
+          "You need to enter league name: svebalkan (svb), fcfachallengeleague (fcl)"
         ),
       ],
     });
@@ -43,10 +43,9 @@ module.exports.run = async (client, message, args) => {
   const sbChannel = message.guild.channels.cache.get(client.conf.Football.Svebalkan);
   const fcfaChannel = message.guild.channels.cache.get(client.conf.Football.FCFAChallenge);
 
-  if(league.toLowerCase() == "svebalkan" || league.toLowerCase() == "sb") {
-    if (fs.existsSync(process.cwd() + "/assets/svebalkan.png")) {
+  if (league.toLowerCase() == "svebalkan" || league.toLowerCase() == "svb") {
+    if (fs.existsSync(process.cwd() + "/assets/svebalkan.png"))
       await fs.unlinkSync(process.cwd() + "/assets/svebalkan.png");
-    }
 
     await new Pageres({ filename: "svebalkan", selector: ".col-12>.row" })
       .src('https://challenge.place/c/62aa8b995f6adfd26e923544/stage/62cf0094c41566e3d56d36c3', ['2048x1024'])
@@ -56,10 +55,9 @@ module.exports.run = async (client, message, args) => {
     const image = new AttachmentBuilder(process.cwd() + '/assets/svebalkan.png');
   
     if(sbChannel) sbChannel.send({ files: [image] });
-  } else if(league.toLowerCase() == "fcfachallenge" || league.toLowerCase() == "fcfa" || league.toLowerCase() == "fcfac" || league.toLowerCase() == "fcfach") {
-    if (fs.existsSync(process.cwd() + "/assets/fcfa-challenge.png")) {
+  } else if (league.toLowerCase() == "fcfachallengeleague" || league.toLowerCase() == "fcl") {
+    if (fs.existsSync(process.cwd() + "/assets/fcfa-challenge.png"))
       await fs.unlinkSync(process.cwd() + "/assets/fcfa-challenge.png");
-    }
 
     await new Pageres({ filename: "fcfa-challenge", selector: ".col-12>.row" })
       .src('https://challenge.place/c/62aa8b995f6adfd26e923544/stage/62cf006dba35d7e39e7d1a56', ['2048x1024'])
@@ -78,12 +76,15 @@ module.exports.slashRun = async (client, interaction) => {
   const sbChannel = interaction.guild.channels.cache.get(client.conf.Football.Svebalkan);
   const fcfaChannel = interaction.guild.channels.cache.get(client.conf.Football.FCFAChallenge);
 
-  if(league.toLowerCase() == "svebalkan" || league.toLowerCase() == "sb") {
-    interaction.reply({ embeds: [client.embedBuilder(client, interaction, "Table Sent", `Svebalkan table have been sent successfully.`, "Green")], ephemeral: true })
+  if (league.toLowerCase() == "svebalkan" || league.toLowerCase() == "svb") {
+    interaction.reply({ embeds: [client.embedBuilder(client, interaction, "", "", "#f44336")
+      .setAuthor({ 
+        name: "Svebalkan League table has been sent.", 
+        iconURL: `https://cdn.upload.systems/uploads/6Xdg16Gh.png` 
+      })], ephemeral: true })
 
-    if (fs.existsSync(process.cwd() + "/assets/svebalkan.png")) {
+    if (fs.existsSync(process.cwd() + "/assets/svebalkan.png"))
       await fs.unlinkSync(process.cwd() + "/assets/svebalkan.png");
-    }
 
     await new Pageres({ filename: "svebalkan", selector: ".col-12>.row" })
       .src('https://challenge.place/c/62aa8b995f6adfd26e923544/stage/62cf0094c41566e3d56d36c3', ['2048x1024'])
@@ -92,13 +93,16 @@ module.exports.slashRun = async (client, interaction) => {
   
     const image = new AttachmentBuilder(process.cwd() + '/assets/svebalkan.png');
 
-    if(sbChannel) await sbChannel.send({ files: [image] })
-  } else if(league.toLowerCase() == "fcfachallenge" || league.toLowerCase() == "fcfa" || league.toLowerCase() == "fcfac" || league.toLowerCase() == "fcfach") {
-    interaction.reply({ embeds: [client.embedBuilder(client, interaction, "Table Sent", `FCFAChallenge table have been sent successfully.`, "Green")], ephemeral: true })
+    if (sbChannel) await sbChannel.send({ files: [image] })
+  } else if (league.toLowerCase() == "fcfachallengeleague" || league.toLowerCase() == "dcl") {
+    interaction.reply({ embeds: [client.embedBuilder(client, interaction, "", "", "#f44336")
+      .setAuthor({
+        name: "FCFA Challenge League table has been sent.",
+        iconURL: `https://cdn.upload.systems/uploads/6Xdg16Gh.png` 
+      })], ephemeral: true })
 
-    if (fs.existsSync(process.cwd() + "/assets/fcfa-challenge.png")) {
+    if (fs.existsSync(process.cwd() + "/assets/fcfa-challenge.png"))
       await fs.unlinkSync(process.cwd() + "/assets/fcfa-challenge.png");
-    }
 
     await new Pageres({ filename: "fcfa-challenge", selector: ".col-12>.row" })
       .src('https://challenge.place/c/62aa8b995f6adfd26e923544/stage/62cf006dba35d7e39e7d1a56', ['2048x1024'])
@@ -107,6 +111,6 @@ module.exports.slashRun = async (client, interaction) => {
   
     const image = new AttachmentBuilder(process.cwd() + '/assets/fcfa-challenge.png');
   
-    if(fcfaChannel) await fcfaChannel.send({ files: [image] });
+    if (fcfaChannel) await fcfaChannel.send({ files: [image] });
   }
 };

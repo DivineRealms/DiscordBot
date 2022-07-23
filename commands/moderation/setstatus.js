@@ -34,7 +34,7 @@ module.exports.run = async (client, message, args) => {
   message.channel.send({
     embeds: [
       client
-        .embedBuilder(client, message, "", "#f44336")
+        .embedBuilder(client, message, "", "", "#f44336")
         .setAuthor({
           name: `Status has been changed to ${status}.`,
           iconURL: `https://cdn.upload.systems/uploads/6Xdg16Gh.png`,

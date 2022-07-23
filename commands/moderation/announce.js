@@ -11,7 +11,8 @@ module.exports = {
 
 module.exports.run = async (client, message, args) => {
   args = args.join(" ").split(/\s*\|\s*/);
-  const [type, mention, title, description] = args;
+  const [type, mention, title, description] = args,
+   announcementChannel = message.guild.channels.cache.get(client.conf.Announcement_Channel);
 
   if (args.length < 3)
     return message.channel.send({
@@ -92,11 +93,11 @@ module.exports.run = async (client, message, args) => {
       iconURL: `https://cdn.upload.systems/uploads/sYDS6yZI.png`,
     });
 
-  message.channel.send({ embeds: [embed] });
+  announcementChannel.send({ embeds: [embed] });
   setTimeout(() => message.delete(), 3000);
 
   if (mentionAnswer.includes(mention))
-    message.channel
+    announcementChannel
       .send(`@everyone`)
       .then((msg) => setTimeout(() => msg.delete(), 3000));
   else return;
