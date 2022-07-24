@@ -86,10 +86,8 @@ module.exports = async (client, oldMember, newMember) => {
       );
 
       if (embedWelcome) {
-        let wlcmCh = client.channels.cache.get(embedWelcome.channel),
-          msgDelete = await wlcmCh.messages.fetch(embedWelcome.msg);
-
-        if (wlcmCh && msgDelete) msgDelete.delete();
+        let wlcmCh = client.channels.cache.get(embedWelcome.channel);
+        if (wlcmCh) await wlcmCh.messages.fetch(embedWelcome.msg).then((msg) => msg.delete());
       }
     }
   }
