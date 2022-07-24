@@ -14,7 +14,7 @@ module.exports = {
   options: [{
     name: "amount",
     description: "Amount you want to withdraw or 'all'",
-    type: ApplicationCommandOptionType.String,
+    type: ApplicationCommandOptionType.Number,
     required: true
   }]
 };
