@@ -119,7 +119,7 @@ module.exports.slashRun = async (client, interaction) => {
     
   interaction.showModal(suggModal);
   
-  const filter = (i) => i.customId == 'report_modal';
+  const filter = (i) => i.customId == 'report_modal' && i.user.id == interaction.user.id;
   interaction.awaitModalSubmit({ filter, time: 120_000 })
     .then(async(md) => {
     let reportValue = md.fields.getTextInputValue("report_text");

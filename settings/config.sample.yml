@@ -78,6 +78,16 @@ Settings:
   # Paste Key used for eval.
   Paste_Key: "1bb1e73b3118402181f83fc5ab929a8f"
 
+  # Channel for Announcements
+  Announcement_Channel: "876834561735143456"
+
+  # Settings regarding Football
+  Football:
+    # Svebalkan League Table Channel
+    Svebalkan: ""
+    # FCFA Challenge League Table Channel
+    FCFAChallenge: ""
+
 Automod:
   # Role(s) that bypass command cooldown.
   # Disabled by default. To enable just add IDs to the list.
@@ -225,10 +235,6 @@ Economy:
       Name: "VIP"
       Description: "VIP Rank."
       Price: "100000"
-
-Football:
-  Svebalkan: ""
-  FCFAChallenge: ""
 
 # DO NOT TOUCH
 Guild_Settings:
