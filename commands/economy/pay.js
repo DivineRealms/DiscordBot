@@ -80,7 +80,7 @@ module.exports.slashRun = async (client, interaction) => {
     amount = interaction.options.getNumber("amount"),
     bal = await db.get(`money_${interaction.guild.id}_${interaction.user.id}`);
 
-  if (isNaN(amount) || amount < 1 || amount.includes("-"))
+  if (isNaN(amount) || amount < 1 || amount.toString().includes("-"))
     return interaction.reply({
       embeds: [
         client.utils.errorEmbed(
