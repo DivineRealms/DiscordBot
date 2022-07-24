@@ -144,6 +144,6 @@ module.exports = async (client) => {
   app.listen(client.conf.Settings.Port || 7070, () => `[SERVER] Server has started on port ${client.conf.Settings.port || 7070}.`);
 
   client
-    .login(client.conf.Settings.Token)
+    .login(process.env.TOKEN)
     .catch(() => console.log("[Error] Invalid token provided in config"));
 };
