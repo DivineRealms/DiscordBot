@@ -69,7 +69,7 @@ module.exports = function (client) {
     await user.guild.channels
       .create({
           name: `${client.conf.Temp_Voice_Channel.Channel_Prefix}${user.member.user.username}`,
-          type: "GUILD_VOICE",
+          type: ChannelType.GuildVoice,
           parent: createCategory,
           userLimit: 5,
         }

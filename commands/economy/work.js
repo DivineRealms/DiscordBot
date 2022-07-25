@@ -4,7 +4,7 @@ const db = new QuickDB();
 module.exports = {
   name: "work",
   category: "economy",
-  description: "Check your balance on the server.",
+  description: "Earn money by working.",
   permissions: [],
   cooldown: 120,
   aliases: [],
