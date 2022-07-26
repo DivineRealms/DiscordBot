@@ -12,16 +12,20 @@ module.exports = {
   aliases: [`addbday`],
   usage: "addbirthday",
   slash: true,
-  options: [{
-    name: "date",
-    description: "Date of your birthday",
-    type: ApplicationCommandOptionType.String,
-    required: true
-  }]
+  options: [
+    {
+      name: "date",
+      description: "Date of your birthday",
+      type: ApplicationCommandOptionType.String,
+      required: true,
+    },
+  ],
 };
 
 module.exports.run = async (client, message, args) => {
-  let birthday = await db.get(`birthday_${message.guild.id}_${message.author.id}`);
+  let birthday = await db.get(
+    `birthday_${message.guild.id}_${message.author.id}`
+  );
 
   if (!client.conf.Birthday_System.Enabled)
     return message.channel.send({
@@ -77,20 +81,23 @@ module.exports.run = async (client, message, args) => {
 
   message.channel.send({
     embeds: [
-      client
-        .embedBuilder(client, message, "", "", "#3db39e")
-        .setAuthor({
-          name: "Successfully set your birthday.",
-          iconURL: `https://cdn.upload.systems/uploads/6KOGFYJM.png`
-        }),
+      client.embedBuilder(client, message, "", "", "#3db39e").setAuthor({
+        name: "Successfully set your birthday.",
+        iconURL: `https://cdn.upload.systems/uploads/6KOGFYJM.png`,
+      }),
     ],
   });
 
-  await db.set(`birthday_${message.guild.id}_${message.author.id}`, args.join(" "));
+  await db.set(
+    `birthday_${message.guild.id}_${message.author.id}`,
+    args.join(" ")
+  );
 };
 
 module.exports.slashRun = async (client, interaction) => {
-  let birthday = await db.get(`birthday_${interaction.guild.id}_${interaction.author.id}`);
+  let birthday = await db.get(
+    `birthday_${interaction.guild.id}_${interaction.author.id}`
+  );
 
   if (!client.conf.Birthday_System.Enabled)
     return interaction.reply({
@@ -101,6 +108,7 @@ module.exports.slashRun = async (client, interaction) => {
           "Birthday System is not enabled."
         ),
       ],
+      ephemeral: true,
     });
 
   if (birthday)
@@ -112,11 +120,11 @@ module.exports.slashRun = async (client, interaction) => {
           "You have already set your birthday."
         ),
       ],
+      ephemeral: true,
     });
 
-  const birthd =
-    interaction.options.getString("date")
-    date = datetime.parse(birthd, "MMM D YYYY");
+  const birthd = interaction.options.getString("date");
+  date = datetime.parse(birthd, "MMM D YYYY");
 
   if (!date.getDay())
     return interaction.reply({
@@ -127,6 +135,7 @@ module.exports.slashRun = async (client, interaction) => {
           "Invalid format, example: Jan 21 2004."
         ),
       ],
+      ephemeral: true,
     });
 
   const age = getAge(args.join(" "));
@@ -141,20 +150,22 @@ module.exports.slashRun = async (client, interaction) => {
           }.`
         ),
       ],
+      ephemeral: true,
     });
 
   interaction.reply({
     embeds: [
-      client
-        .embedBuilder(client, interaction, "", "", "#3db39e")
-        .setAuthor({
-          name: "Successfully set your birthday.",
-          iconURL: `https://cdn.upload.systems/uploads/6KOGFYJM.png`
-        }),
+      client.embedBuilder(client, interaction, "", "", "#3db39e").setAuthor({
+        name: "Successfully set your birthday.",
+        iconURL: `https://cdn.upload.systems/uploads/6KOGFYJM.png`,
+      }),
     ],
   });
 
-  await db.set(`birthday_${interaction.guild.id}_${interaction.user.id}`, args.join(" "));
+  await db.set(
+    `birthday_${interaction.guild.id}_${interaction.user.id}`,
+    args.join(" ")
+  );
 };
 
 const getAge = (b) => {

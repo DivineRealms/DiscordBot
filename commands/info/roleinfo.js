@@ -9,12 +9,14 @@ module.exports = {
   aliases: ["roleinformation", "ri"],
   usage: "roleinfo <@Role>",
   slash: true,
-  options: [{
-    name: "role",
-    description: "Role which info to see",
-    type: ApplicationCommandOptionType.Role,
-    required: true
-  }]
+  options: [
+    {
+      name: "role",
+      description: "Role which info to see",
+      type: ApplicationCommandOptionType.Role,
+      required: true,
+    },
+  ],
 };
 
 module.exports.run = async (client, message) => {
@@ -52,7 +54,7 @@ module.exports.run = async (client, message) => {
 };
 
 module.exports.slashRun = async (client, interaction) => {
-  let role = interaction.options.getRole("role")
+  let role = interaction.options.getRole("role");
 
   interaction.reply({
     embeds: [

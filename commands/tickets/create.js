@@ -10,14 +10,15 @@ module.exports = {
   cooldown: 0,
   aliases: [`new`, `ticket`],
   usage: "create",
-  slash: true
+  slash: true,
 };
 
 module.exports.run = async (client, message, args) => {
   const settings = client.conf.Ticket_System;
   const tickets =
-    (await db.all()).filter((i) => i.id.startsWith(`tickets_${message.guild.id}_`)) ||
-    [];
+    (await db.all()).filter((i) =>
+      i.id.startsWith(`tickets_${message.guild.id}_`)
+    ) || [];
 
   const log = client.channels.cache.get(client.conf.Logging.Tickets);
 
@@ -55,19 +56,18 @@ module.exports.run = async (client, message, args) => {
       allow: ["ViewChannel"],
     })),
     channel = await message.guild.channels.create({
-        name: `📋︲${message.author.username}-${ticketNumber}`,
-        parent: settings.Category,
-        permissionOverwrites: [
-          {
-            id: message.guild.id,
-            deny: ["ViewChannel"],
-          },
-          { id: message.author.id, allow: ["ViewChannel"] },
-          ...permissions,
-          ...users,
-        ],
-      }
-    ),
+      name: `📋︲${message.author.username}-${ticketNumber}`,
+      parent: settings.Category,
+      permissionOverwrites: [
+        {
+          id: message.guild.id,
+          deny: ["ViewChannel"],
+        },
+        { id: message.author.id, allow: ["ViewChannel"] },
+        ...permissions,
+        ...users,
+      ],
+    }),
     jumpRow = new ActionRowBuilder().addComponents(
       new ButtonBuilder()
         .setURL(
@@ -137,8 +137,9 @@ module.exports.run = async (client, message, args) => {
 module.exports.slashRun = async (client, interaction) => {
   const settings = client.conf.Ticket_System;
   const tickets =
-    (await db.all()).filter((i) => i.id.startsWith(`tickets_${interaction.guild.id}_`)) ||
-    [];
+    (await db.all()).filter((i) =>
+      i.id.startsWith(`tickets_${interaction.guild.id}_`)
+    ) || [];
 
   const log = client.channels.cache.get(client.conf.Logging.Tickets);
 
@@ -154,6 +155,7 @@ module.exports.slashRun = async (client, interaction) => {
           "Ticket System is not enabled."
         ),
       ],
+      ephemeral: true,
     });
 
   if (tickets.find((u) => u.value.includes(interaction.user.id)))
@@ -165,6 +167,7 @@ module.exports.slashRun = async (client, interaction) => {
           "You already have a ticket opened."
         ),
       ],
+      ephemeral: true,
     });
 
   const permissions = settings.Support_Roles.map((r) => ({
@@ -172,17 +175,17 @@ module.exports.slashRun = async (client, interaction) => {
       allow: ["ViewChannel"],
     })),
     channel = await interaction.guild.channels.create({
-        name: `📋︲${interaction.user.username}-${ticketNumber}`,
-        parent: settings.Category,
-        permissionOverwrites: [{
+      name: `📋︲${interaction.user.username}-${ticketNumber}`,
+      parent: settings.Category,
+      permissionOverwrites: [
+        {
           id: interaction.guild.id,
           deny: ["ViewChannel"],
         },
         { id: interaction.user.id, allow: ["ViewChannel"] },
-          ...permissions,
-        ],
-      }
-    ),
+        ...permissions,
+      ],
+    }),
     jumpRow = new ActionRowBuilder().addComponents(
       new ButtonBuilder()
         .setURL(
@@ -246,5 +249,8 @@ module.exports.slashRun = async (client, interaction) => {
       ],
     });
 
-  await db.set(`tickets_${interaction.guild.id}_${channel.id}`, interaction.user.id);
+  await db.set(
+    `tickets_${interaction.guild.id}_${channel.id}`,
+    interaction.user.id
+  );
 };

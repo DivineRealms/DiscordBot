@@ -11,32 +11,40 @@ module.exports = {
   aliases: ["color"],
   usage: "color [list/use/reset] [color]",
   slash: true,
-  options: [{
-    name: "action",
-    description: "Action you want to do",
-    type: ApplicationCommandOptionType.String,
-    choices: [{
-      name: "Use",
-      value: "use"
-    }, {
-      name: "List",
-      value: "list"
-    }, {
-      name: "Reset",
-      value: "reset"
-    }],
-    required: true
-  }, {
-    name: "color",
-    description: "Color you want to use",
-    type: ApplicationCommandOptionType.String,
-    required: false
-  }]
+  options: [
+    {
+      name: "action",
+      description: "Action you want to do",
+      type: ApplicationCommandOptionType.String,
+      choices: [
+        {
+          name: "Use",
+          value: "use",
+        },
+        {
+          name: "List",
+          value: "list",
+        },
+        {
+          name: "Reset",
+          value: "reset",
+        },
+      ],
+      required: true,
+    },
+    {
+      name: "color",
+      description: "Color you want to use",
+      type: ApplicationCommandOptionType.String,
+      required: false,
+    },
+  ],
 };
 
 module.exports.run = async (client, message, args) => {
   let option = args[0],
-    colors = await db.get(`colors_${message.guild.id}_${message.author.id}`) || [];
+    colors =
+      (await db.get(`colors_${message.guild.id}_${message.author.id}`)) || [];
 
   if (!option)
     return message.channel.send({
@@ -75,22 +83,23 @@ module.exports.run = async (client, message, args) => {
           )
           .setAuthor({
             name: `You have ${colors.length} colors available`,
-            iconURL: `https://cdn.upload.systems/uploads/6uDK0XAN.png`
+            iconURL: `https://cdn.upload.systems/uploads/6uDK0XAN.png`,
           }),
       ],
     });
   } else if (option.toLowerCase() == "use") {
     let select = args[1];
 
-    if(!select) return message.channel.send({
-      embeds: [
-        client.utils.errorEmbed(
-          client,
-          message,
-          "You must provide color to use."
-        ),
-      ],
-    }); 
+    if (!select)
+      return message.channel.send({
+        embeds: [
+          client.utils.errorEmbed(
+            client,
+            message,
+            "You must provide color to use."
+          ),
+        ],
+      });
 
     if (!colors.includes(select.toLowerCase()))
       return message.channel.send({
@@ -141,12 +150,10 @@ module.exports.run = async (client, message, args) => {
     message.member.roles.add(color.Role);
     message.channel.send({
       embeds: [
-        client
-          .embedBuilder(client, message, "", "", "#3db39e")
-          .setAuthor({
-            name: `Color Role ${color.Name} has been equiped.`,
-            iconURL: `https://cdn.upload.systems/uploads/6KOGFYJM.png`
-          }),
+        client.embedBuilder(client, message, "", "", "#3db39e").setAuthor({
+          name: `Color Role ${color.Name} has been equiped.`,
+          iconURL: `https://cdn.upload.systems/uploads/6KOGFYJM.png`,
+        }),
       ],
     });
   } else if (option.toLowerCase() == "reset") {
@@ -157,12 +164,10 @@ module.exports.run = async (client, message, args) => {
 
     message.channel.send({
       embeds: [
-        client
-          .embedBuilder(client, message, "", "", "#3db39e")
-          .setAuthor({
-            name: "Your Name Color has been reset.",
-            iconURL: `https://cdn.upload.systems/uploads/6KOGFYJM.png`
-          }),
+        client.embedBuilder(client, message, "", "", "#3db39e").setAuthor({
+          name: "Your Name Color has been reset.",
+          iconURL: `https://cdn.upload.systems/uploads/6KOGFYJM.png`,
+        }),
       ],
     });
   }
@@ -170,7 +175,9 @@ module.exports.run = async (client, message, args) => {
 
 module.exports.slashRun = async (client, interaction) => {
   let option = interaction.options.getString("action"),
-    colors = await db.get(`colors_${interaction.guild.id}_${interaction.user.id}`) || [];
+    colors =
+      (await db.get(`colors_${interaction.guild.id}_${interaction.user.id}`)) ||
+      [];
 
   if (!option)
     return interaction.reply({
@@ -181,6 +188,7 @@ module.exports.slashRun = async (client, interaction) => {
           "Invalid argument, options: use, list, reset."
         ),
       ],
+      ephemeral: true,
     });
 
   if (option == "list") {
@@ -193,6 +201,7 @@ module.exports.slashRun = async (client, interaction) => {
             "You don't have any colors."
           ),
         ],
+        ephemeral: true,
       });
 
     interaction.reply({
@@ -209,22 +218,24 @@ module.exports.slashRun = async (client, interaction) => {
           )
           .setAuthor({
             name: `You have ${colors.length} colors available`,
-            iconURL: `https://cdn.upload.systems/uploads/6uDK0XAN.png`
+            iconURL: `https://cdn.upload.systems/uploads/6uDK0XAN.png`,
           }),
       ],
     });
   } else if (option == "use") {
     let select = interaction.options.getString("color");
 
-    if(!select) return interaction.reply({
-      embeds: [
-        client.utils.errorEmbed(
-          client,
-          interaction,
-          "You must provide color to use."
-        ),
-      ],
-    }); 
+    if (!select)
+      return interaction.reply({
+        embeds: [
+          client.utils.errorEmbed(
+            client,
+            interaction,
+            "You must provide color to use."
+          ),
+        ],
+        ephemeral: true,
+      });
 
     if (!colors.includes(select.toLowerCase()))
       return interaction.reply({
@@ -235,6 +246,7 @@ module.exports.slashRun = async (client, interaction) => {
             "You don't have that color in your inventory."
           ),
         ],
+        ephemeral: true,
       });
 
     let apply = client.conf.Colors.find(
@@ -250,6 +262,7 @@ module.exports.slashRun = async (client, interaction) => {
             "You have provided an invalid color."
           ),
         ],
+        ephemeral: true,
       });
 
     client.conf.Colors.forEach((m) => {
@@ -270,17 +283,16 @@ module.exports.slashRun = async (client, interaction) => {
             "You already have that color selected."
           ),
         ],
+        ephemeral: true,
       });
 
     interaction.member.roles.add(color.Role);
     interaction.reply({
       embeds: [
-        client
-          .embedBuilder(client, interaction, "", "", "#3db39e")
-          .setAuthor({
-            name: `Color Role ${color.Name} has been equiped.`,
-            iconURL: `https://cdn.upload.systems/uploads/6KOGFYJM.png`
-          }),
+        client.embedBuilder(client, interaction, "", "", "#3db39e").setAuthor({
+          name: `Color Role ${color.Name} has been equiped.`,
+          iconURL: `https://cdn.upload.systems/uploads/6KOGFYJM.png`,
+        }),
       ],
     });
   } else if (option == "reset") {
@@ -291,12 +303,10 @@ module.exports.slashRun = async (client, interaction) => {
 
     interaction.reply({
       embeds: [
-        client
-          .embedBuilder(client, interaction, "", "", "#3db39e")
-          .setAuthor({
-            name: "Your Name Color has been reset.",
-            iconURL: `https://cdn.upload.systems/uploads/6KOGFYJM.png`
-          }),
+        client.embedBuilder(client, interaction, "", "", "#3db39e").setAuthor({
+          name: "Your Name Color has been reset.",
+          iconURL: `https://cdn.upload.systems/uploads/6KOGFYJM.png`,
+        }),
       ],
     });
   }

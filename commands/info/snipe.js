@@ -6,7 +6,7 @@ module.exports = {
   cooldown: 0,
   aliases: ["snip3"],
   usage: "snipe",
-  slash: true
+  slash: true,
 };
 
 module.exports.run = async (client, message, args) => {
@@ -19,7 +19,7 @@ module.exports.run = async (client, message, args) => {
       ],
     });
 
-    let user = await client.users.fetch(snipe.user)
+  let user = await client.users.fetch(snipe.user);
 
   message.channel.send({
     embeds: [
@@ -47,11 +47,16 @@ module.exports.slashRun = async (client, interaction) => {
   if (!snipe || !snipe.content)
     return interaction.reply({
       embeds: [
-        client.utils.errorEmbed(client, interaction, "There's nothing to snipe."),
+        client.utils.errorEmbed(
+          client,
+          interaction,
+          "There's nothing to snipe."
+        ),
       ],
+      ephemeral: true,
     });
 
-  let user = await client.users.fetch(snipe.user)
+  let user = await client.users.fetch(snipe.user);
 
   interaction.reply({
     embeds: [

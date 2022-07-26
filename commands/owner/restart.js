@@ -22,12 +22,10 @@ module.exports.run = async (client, message, args) => {
 
   const restarting = await message.channel.send({
       embeds: [
-        client
-          .embedBuilder(client, message, "", "", "#3db39e")
-          .setAuthor({
-            name: "Bot is restarting...",
-            iconURL: `https://cdn.upload.systems/uploads/6KOGFYJM.png`,
-          }),
+        client.embedBuilder(client, message, "", "", "#3db39e").setAuthor({
+          name: "Bot is restarting...",
+          iconURL: `https://cdn.upload.systems/uploads/6KOGFYJM.png`,
+        }),
       ],
     }),
     restarted = client

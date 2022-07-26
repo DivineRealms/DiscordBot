@@ -9,12 +9,14 @@ module.exports = {
   aliases: ["clear"],
   usage: "purge <count>",
   slash: true,
-  options: [{
-    name: "amount",
-    description: "Number of messages to purge",
-    type: ApplicationCommandOptionType.Number,
-    required: true
-  }]
+  options: [
+    {
+      name: "amount",
+      description: "Number of messages to purge",
+      type: ApplicationCommandOptionType.Number,
+      required: true,
+    },
+  ],
 };
 
 module.exports.run = async (client, message, args) => {
@@ -56,12 +58,10 @@ module.exports.run = async (client, message, args) => {
     .then((_messages) => {
       message.channel.send({
         embeds: [
-          client
-            .embedBuilder(client, message, "", "", "#f44336")
-            .setAuthor({
-              name: `${message.author.username} has purged ${args[0]} mesages.`,
-              iconURL: `https://cdn.upload.systems/uploads/6Xdg16Gh.png`,
-            }),
+          client.embedBuilder(client, message, "", "", "#f44336").setAuthor({
+            name: `${message.author.username} has purged ${args[0]} mesages.`,
+            iconURL: `https://cdn.upload.systems/uploads/6Xdg16Gh.png`,
+          }),
         ],
       });
     })
@@ -86,6 +86,7 @@ module.exports.slashRun = async (client, interaction) => {
           "You cannot purge more than 100 messages at once."
         ),
       ],
+      ephemeral: true,
     });
 
   if (amount < 1)
@@ -97,6 +98,7 @@ module.exports.slashRun = async (client, interaction) => {
           "You need to delete at least 1 message."
         ),
       ],
+      ephemeral: true,
     });
 
   interaction.channel

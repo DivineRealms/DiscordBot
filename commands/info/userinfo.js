@@ -10,12 +10,14 @@ module.exports = {
   aliases: ["whois", "uinfo"],
   usage: "userinfo <@User | ID>",
   slash: true,
-  options: [{
-    name: "user",
-    description: "User whoes info to see",
-    type: ApplicationCommandOptionType.User,
-    required: false
-  }]
+  options: [
+    {
+      name: "user",
+      description: "User whoes info to see",
+      type: ApplicationCommandOptionType.User,
+      required: false,
+    },
+  ],
 };
 
 module.exports.run = async (client, message, args) => {
@@ -46,11 +48,7 @@ module.exports.run = async (client, message, args) => {
   if (!member)
     return message.channel.send({
       embeds: [
-        client.utils.errorEmbed(
-          client,
-          message,
-          "You need to mention a user."
-        ),
+        client.utils.errorEmbed(client, message, "You need to mention a user."),
       ],
     });
 

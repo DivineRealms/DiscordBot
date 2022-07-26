@@ -9,17 +9,20 @@ module.exports = {
   aliases: [`direct-message`],
   usage: "dm <@User> <Text>",
   slash: true,
-  options: [{
-    name: "user",
-    description: "User which to DM",
-    type: ApplicationCommandOptionType.User,
-    required: true
-  }, {
-    name: "message",
-    description: "Message to send",
-    type: ApplicationCommandOptionType.String,
-    required: true
-  }]
+  options: [
+    {
+      name: "user",
+      description: "User which to DM",
+      type: ApplicationCommandOptionType.User,
+      required: true,
+    },
+    {
+      name: "message",
+      description: "Message to send",
+      type: ApplicationCommandOptionType.String,
+      required: true,
+    },
+  ],
 };
 
 module.exports.run = async (client, message, args) => {
@@ -60,12 +63,10 @@ module.exports.run = async (client, message, args) => {
 
   message.channel.send({
     embeds: [
-      client
-        .embedBuilder(client, message, "", "", "#3db39e")
-        .setAuthor({
-          name: `Successfully sent a DM to ${user.username}.`,
-          iconURL: `https://cdn.upload.systems/uploads/6KOGFYJM.png`,
-        }),
+      client.embedBuilder(client, message, "", "", "#3db39e").setAuthor({
+        name: `Successfully sent a DM to ${user.username}.`,
+        iconURL: `https://cdn.upload.systems/uploads/6KOGFYJM.png`,
+      }),
     ],
   });
 };
@@ -79,17 +80,16 @@ module.exports.slashRun = async (client, interaction) => {
       embeds: [
         client.utils.errorEmbed(client, interaction, "Their DMs are closed."),
       ],
+      ephemeral: true,
     });
   });
 
   interaction.reply({
     embeds: [
-      client
-        .embedBuilder(client, interaction, "", "", "#3db39e")
-        .setAuthor({
-          name: `Successfully sent a DM to ${user.username}.`,
-          iconURL: `https://cdn.upload.systems/uploads/6KOGFYJM.png`,
-        }),
+      client.embedBuilder(client, interaction, "", "", "#3db39e").setAuthor({
+        name: `Successfully sent a DM to ${user.username}.`,
+        iconURL: `https://cdn.upload.systems/uploads/6KOGFYJM.png`,
+      }),
     ],
   });
 };

@@ -11,27 +11,34 @@ module.exports = {
   aliases: ["rt"],
   usage: "roulette [black(b), red(r), green(g)] [amount]",
   slash: true,
-  options: [{
-    name: "color",
-    description: "Color you want to put on",
-    type: ApplicationCommandOptionType.String,
-    choices: [{
-      name: "black",
-      value: "b"
-    }, {
-      name: "red",
-      value: "r"
-    }, {
-      name: "green",
-      value: "g"
-    }],
-    required: true
-  }, {
-    name: "amount",
-    description: "Amount you want to bet",
-    type: ApplicationCommandOptionType.String,
-    required: true
-  }]
+  options: [
+    {
+      name: "color",
+      description: "Color you want to put on",
+      type: ApplicationCommandOptionType.String,
+      choices: [
+        {
+          name: "black",
+          value: "b",
+        },
+        {
+          name: "red",
+          value: "r",
+        },
+        {
+          name: "green",
+          value: "g",
+        },
+      ],
+      required: true,
+    },
+    {
+      name: "amount",
+      description: "Amount you want to bet",
+      type: ApplicationCommandOptionType.String,
+      required: true,
+    },
+  ],
 };
 
 module.exports.run = async (client, message, args) => {
@@ -105,15 +112,18 @@ module.exports.run = async (client, message, args) => {
       embeds: [
         client
           .embedBuilder(client, message, "", "", "#3db39e")
-          .addFields([{
-            name: "Options:",
-            value: `Color: **\`Green\`**\nNumber: **\`${randomNumber}\`**\nMultiplier: **\`15x\`**`,
-            inline: true
-          }, {
-            name: "Result:",
-            value: `You won **$${money}**`,
-            inline: true
-          }])
+          .addFields([
+            {
+              name: "Options:",
+              value: `Color: **\`Green\`**\nNumber: **\`${randomNumber}\`**\nMultiplier: **\`15x\`**`,
+              inline: true,
+            },
+            {
+              name: "Result:",
+              value: `You won **$${money}**`,
+              inline: true,
+            },
+          ])
           .setAuthor({
             name: "Roulette",
             iconURL: `https://cdn.upload.systems/uploads/HJGA3pxp.png`,
@@ -127,15 +137,18 @@ module.exports.run = async (client, message, args) => {
       embeds: [
         client
           .embedBuilder(client, message, "", "", "#3db39e")
-          .addFields([{
-            name: "Options:",
-            value: `Color: **\`Red\`**\nNumber: **\`${randomNumber}\`**\nMultiplier: **\`1.5x\`**`,
-            inline: false
-          }, {
-            name: "Result:",
-            value: `You won **$${money}**`,
-            inline: false
-          }])
+          .addFields([
+            {
+              name: "Options:",
+              value: `Color: **\`Red\`**\nNumber: **\`${randomNumber}\`**\nMultiplier: **\`1.5x\`**`,
+              inline: false,
+            },
+            {
+              name: "Result:",
+              value: `You won **$${money}**`,
+              inline: false,
+            },
+          ])
           .setAuthor({
             name: "Roulette",
             iconURL: `https://cdn.upload.systems/uploads/HJGA3pxp.png`,
@@ -150,15 +163,18 @@ module.exports.run = async (client, message, args) => {
       embeds: [
         client
           .embedBuilder(client, message, "", "", "#3db39e")
-          .addFields([{
-            name: "Options:",
-            value: `Color: **\`Black\`**\nNumber: **\`${randomNumber}\`**\nMultiplier: **\`2x\`**`,
-            inline: false
-          }, {
-            name: "Result:",
-            value: `You won **$${money}**`,
-            inline: false
-          }])
+          .addFields([
+            {
+              name: "Options:",
+              value: `Color: **\`Black\`**\nNumber: **\`${randomNumber}\`**\nMultiplier: **\`2x\`**`,
+              inline: false,
+            },
+            {
+              name: "Result:",
+              value: `You won **$${money}**`,
+              inline: false,
+            },
+          ])
           .setAuthor({
             name: "Roulette",
             iconURL: `https://cdn.upload.systems/uploads/HJGA3pxp.png`,
@@ -174,11 +190,14 @@ module.exports.run = async (client, message, args) => {
       embeds: [
         client
           .embedBuilder(client, message, "", "", "Red")
-          .addFields([{
-            name: "Options:",
-            value: `Color: **\`${color}\`**\nNumber: **\`${randomNumber}\`**`,
-            inline: false
-          }, { name: "Result:", value: `You lost **$${money}**`, inline: false }])
+          .addFields([
+            {
+              name: "Options:",
+              value: `Color: **\`${color}\`**\nNumber: **\`${randomNumber}\`**`,
+              inline: false,
+            },
+            { name: "Result:", value: `You lost **$${money}**`, inline: false },
+          ])
           .setAuthor({
             name: "Roulette",
             iconURL: `https://cdn.upload.systems/uploads/HJGA3pxp.png`,
@@ -191,7 +210,9 @@ module.exports.run = async (client, message, args) => {
 module.exports.slashRun = async (client, interaction) => {
   let color = interaction.options.getString("color");
   let money = interaction.options.getString("amount");
-  let balance = await db.get(`money_${interaction.guild.id}_${interaction.user.id}`);
+  let balance = await db.get(
+    `money_${interaction.guild.id}_${interaction.user.id}`
+  );
 
   if (!color)
     return interaction.reply({
@@ -202,6 +223,7 @@ module.exports.slashRun = async (client, interaction) => {
           `Invalid usage; see ${interaction.px}help roulette for correct usage.`
         ),
       ],
+      ephemeral: true,
     });
 
   if (color.toLowerCase() == "b" || color.toLowerCase() == "black") color = 0;
@@ -218,11 +240,13 @@ module.exports.slashRun = async (client, interaction) => {
           "Invalid color, available: black (b), red (r), green (g)."
         ),
       ],
+      ephemeral: true,
     });
 
   if ((isNaN(money) && money != "all") || money.includes("-"))
     return interaction.reply({
       embeds: [client.utils.errorEmbed(client, interaction, "Invalid amount.")],
+      ephemeral: true,
     });
 
   if (money == "all") money = Number(balance);
@@ -237,6 +261,7 @@ module.exports.slashRun = async (client, interaction) => {
           "You don't have enough money."
         ),
       ],
+      ephemeral: true,
     });
 
   if (money < 100 || money > 20000)
@@ -248,6 +273,7 @@ module.exports.slashRun = async (client, interaction) => {
           "Amount needs to be between $100-20.000."
         ),
       ],
+      ephemeral: true,
     });
 
   let randomNumber = Math.floor(Math.random() * 37);
@@ -259,15 +285,18 @@ module.exports.slashRun = async (client, interaction) => {
       embeds: [
         client
           .embedBuilder(client, interaction, "", "", "#3db39e")
-          .addFields([{
-            name: "Options:",
-            value: `Color: **\`Green\`**\nNumber: **\`${randomNumber}\`**\nMultiplier: **\`15x\`**`,
-            inline: true
-          }, {
-            name: "Result:",
-            value: `You won **$${money}**`,
-            inline: true
-          }])
+          .addFields([
+            {
+              name: "Options:",
+              value: `Color: **\`Green\`**\nNumber: **\`${randomNumber}\`**\nMultiplier: **\`15x\`**`,
+              inline: true,
+            },
+            {
+              name: "Result:",
+              value: `You won **$${money}**`,
+              inline: true,
+            },
+          ])
           .setAuthor({
             name: "Roulette",
             iconURL: `https://cdn.upload.systems/uploads/HJGA3pxp.png`,
@@ -281,15 +310,18 @@ module.exports.slashRun = async (client, interaction) => {
       embeds: [
         client
           .embedBuilder(client, interaction, "", "", "#3db39e")
-          .addFields([{
-            name: "Options:",
-            value: `Color: **\`Red\`**\nNumber: **\`${randomNumber}\`**\nMultiplier: **\`1.5x\`**`,
-            inline: false
-          }, {
-            name: "Result:",
-            value: `You won **$${money}**`,
-            inline: false
-          }])
+          .addFields([
+            {
+              name: "Options:",
+              value: `Color: **\`Red\`**\nNumber: **\`${randomNumber}\`**\nMultiplier: **\`1.5x\`**`,
+              inline: false,
+            },
+            {
+              name: "Result:",
+              value: `You won **$${money}**`,
+              inline: false,
+            },
+          ])
           .setAuthor({
             name: "Roulette",
             iconURL: `https://cdn.upload.systems/uploads/HJGA3pxp.png`,
@@ -304,15 +336,18 @@ module.exports.slashRun = async (client, interaction) => {
       embeds: [
         client
           .embedBuilder(client, interaction, "", "", "#3db39e")
-          .addFields([{
-            name: "Options:",
-            value: `Color: **\`Black\`**\nNumber: **\`${randomNumber}\`**\nMultiplier: **\`2x\`**`,
-            inline: false
-          }, {
-            name: "Result:",
-            value: `You won **$${money}**`,
-            inline: false
-          }])
+          .addFields([
+            {
+              name: "Options:",
+              value: `Color: **\`Black\`**\nNumber: **\`${randomNumber}\`**\nMultiplier: **\`2x\`**`,
+              inline: false,
+            },
+            {
+              name: "Result:",
+              value: `You won **$${money}**`,
+              inline: false,
+            },
+          ])
           .setAuthor({
             name: "Roulette",
             iconURL: `https://cdn.upload.systems/uploads/HJGA3pxp.png`,
@@ -328,11 +363,14 @@ module.exports.slashRun = async (client, interaction) => {
       embeds: [
         client
           .embedBuilder(client, interaction, "", "", "Red")
-          .addFields([{
-            name: "Options:",
-            value: `Color: **\`${color}\`**\nNumber: **\`${randomNumber}\`**`,
-            inline: false
-          }, { name: "Result:", value: `You lost **$${money}**`, inline: false }])
+          .addFields([
+            {
+              name: "Options:",
+              value: `Color: **\`${color}\`**\nNumber: **\`${randomNumber}\`**`,
+              inline: false,
+            },
+            { name: "Result:", value: `You lost **$${money}**`, inline: false },
+          ])
           .setAuthor({
             name: "Roulette",
             iconURL: `https://cdn.upload.systems/uploads/HJGA3pxp.png`,

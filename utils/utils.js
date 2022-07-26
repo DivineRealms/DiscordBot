@@ -1,7 +1,7 @@
 const Discord = require("discord.js");
 const { QuickDB } = require("quick.db");
 const db = new QuickDB();
-const axios = require("axios")
+const axios = require("axios");
 
 function formatTime(ms) {
   let roundNumber = ms > 0 ? Math.floor : Math.ceil;
@@ -51,9 +51,9 @@ async function lbContent(client, message, lbType) {
 }
 
 async function lbVotes(client, message) {
-  let leaderboard = await db.get(`votes_${message.guild.id}`) || [];
+  let leaderboard = (await db.get(`votes_${message.guild.id}`)) || [];
   leaderboard = leaderboard.sort((a, b) => b.votes - a.votes);
-  
+
   let content = "";
 
   for (let i = 0; i < leaderboard.length; i++) {
@@ -77,13 +77,16 @@ async function lbMoney(client, message) {
   let content = "";
   let data = [];
 
-  for(let i = 0; i < leaderboard.length; i++) {
-    let bank = await db.get(`bank_${message.guild.id}_${leaderboard[i].id.split("_")[2]}`) || 0;
+  for (let i = 0; i < leaderboard.length; i++) {
+    let bank =
+      (await db.get(
+        `bank_${message.guild.id}_${leaderboard[i].id.split("_")[2]}`
+      )) || 0;
     let total = leaderboard[i].value + bank;
 
     data.push({
       user: leaderboard[i].id.split("_")[2],
-      money: total
+      money: total,
     });
   }
 
@@ -104,19 +107,22 @@ async function lbMoney(client, message) {
 function errorEmbed(client, message, err) {
   return client
     .embedBuilder(client, message, err, "", "#e24c4b")
-    .setAuthor({ name: err, iconURL: `https://cdn.upload.systems/uploads/96HNGxzL.png` });
+    .setAuthor({
+      name: err,
+      iconURL: `https://cdn.upload.systems/uploads/96HNGxzL.png`,
+    });
 }
 
-const updateVotesLb = async(client, guild) => {
+const updateVotesLb = async (client, guild) => {
   await axios
     .get(
       `https://minecraft-mp.com/api/?object=servers&element=voters&key=${client.conf.Settings.Vote_Key}&month=current&format=json?limit=10`
     )
-    .then(async(res) => {
+    .then(async (res) => {
       await db.set(`votes_${guild.id}`, res.data.voters);
       await db.set(`untilVote_${guild.id}`, Date.now());
-  });
-}
+    });
+};
 
 module.exports = {
   formatTime,

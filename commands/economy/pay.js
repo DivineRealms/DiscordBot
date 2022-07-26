@@ -11,17 +11,20 @@ module.exports = {
   aliases: ["gv"],
   usage: "pay [@User] <amount>",
   slash: true,
-  options: [{
-    name: "user",
-    description: "User to who to pay",
-    type: ApplicationCommandOptionType.User,
-    required: true
-  }, {
-    name: "amount",
-    description: "Amount to pay",
-    type: ApplicationCommandOptionType.Number,
-    required: true
-  }]
+  options: [
+    {
+      name: "user",
+      description: "User to who to pay",
+      type: ApplicationCommandOptionType.User,
+      required: true,
+    },
+    {
+      name: "amount",
+      description: "Amount to pay",
+      type: ApplicationCommandOptionType.Number,
+      required: true,
+    },
+  ],
 };
 
 module.exports.run = async (client, message, args) => {
@@ -75,8 +78,7 @@ module.exports.run = async (client, message, args) => {
 };
 
 module.exports.slashRun = async (client, interaction) => {
-  const user =
-    interaction.options.getUser("user"),
+  const user = interaction.options.getUser("user"),
     amount = interaction.options.getNumber("amount"),
     bal = await db.get(`money_${interaction.guild.id}_${interaction.user.id}`);
 
@@ -89,6 +91,7 @@ module.exports.slashRun = async (client, interaction) => {
           "You have entered an invalid amount."
         ),
       ],
+      ephemeral: true,
     });
 
   if (bal < amount)
@@ -100,6 +103,7 @@ module.exports.slashRun = async (client, interaction) => {
           "You don't have enough money."
         ),
       ],
+      ephemeral: true,
     });
 
   await db.add(`money_${interaction.guild.id}_${user.id}`, Number(amount));

@@ -9,21 +9,27 @@ module.exports = {
   aliases: ["rock-paper-scissors"],
   usage: "rps [rock | paper | scissors]",
   slash: true,
-  options: [{
-    name: "choice",
-    description: "RPS Choice",
-    type: ApplicationCommandOptionType.String,
-    choices: [{
-      name: "Rock",
-      value: "rock"
-    }, {
-      name: "Paper",
-      value: "paper"
-    }, {
-      name: "Scissors",
-      value: "scissors"
-    }]
-  }]
+  options: [
+    {
+      name: "choice",
+      description: "RPS Choice",
+      type: ApplicationCommandOptionType.String,
+      choices: [
+        {
+          name: "Rock",
+          value: "rock",
+        },
+        {
+          name: "Paper",
+          value: "paper",
+        },
+        {
+          name: "Scissors",
+          value: "scissors",
+        },
+      ],
+    },
+  ],
 };
 
 module.exports.run = async (client, message, args, cmd) => {
@@ -192,7 +198,6 @@ module.exports.run = async (client, message, args, cmd) => {
     });
   }
 };
-
 
 module.exports.slashRun = async (client, interaction) => {
   const option = interaction.options.getString("choice");

@@ -10,12 +10,14 @@ module.exports = {
   aliases: ["weath", "temp"],
   usage: "weather <place>",
   slash: true,
-  options: [{
-    name: "place",
-    description: "Place which weather to see",
-    type: ApplicationCommandOptionType.String,
-    required: true
-  }]
+  options: [
+    {
+      name: "place",
+      description: "Place which weather to see",
+      type: ApplicationCommandOptionType.String,
+      required: true,
+    },
+  ],
 };
 
 module.exports.run = async (client, message, args) => {
@@ -87,6 +89,7 @@ module.exports.slashRun = async (client, interaction) => {
           embeds: [
             client.utils.errorEmbed(client, interaction, "Invalid Location."),
           ],
+          ephemeral: true,
         });
 
       if (result === undefined || result.length === 0)
@@ -98,6 +101,7 @@ module.exports.slashRun = async (client, interaction) => {
               "You have entered an Invalid Location."
             ),
           ],
+          ephemeral: true,
         });
 
       var current = result[0].current,

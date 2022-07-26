@@ -9,12 +9,14 @@ module.exports = {
   aliases: [],
   usage: "help",
   slash: true,
-  options: [{
-    name: "command",
-    description: "Command which info to see",
-    type: ApplicationCommandOptionType.String,
-    required: false
-  }]
+  options: [
+    {
+      name: "command",
+      description: "Command which info to see",
+      type: ApplicationCommandOptionType.String,
+      required: false,
+    },
+  ],
 };
 
 module.exports.run = async (client, message, args) => {
@@ -100,7 +102,7 @@ module.exports.run = async (client, message, args) => {
           .addFields({
             name: "Tips:",
             value: `\`1️⃣\` Select a command category using the paginator below.\n\`2️⃣\` Use **\`${message.px}help commandName\`** to get the command's usage.`,
-            inline: false
+            inline: false,
           }),
       });
     }
@@ -242,7 +244,7 @@ module.exports.slashRun = async (client, interaction) => {
           .addFields({
             name: "Tips:",
             value: `\`1️⃣\` Select a command category using the paginator below.\n\`2️⃣\` Use **\`${interaction.px}help commandName\`** to get the command's usage.`,
-            inline: false
+            inline: false,
           }),
       });
     }
@@ -274,6 +276,7 @@ module.exports.slashRun = async (client, interaction) => {
             `I couldnt find a command named ${args[0]}.`
           ),
         ],
+        ephemeral: true,
       });
 
     interaction.reply({

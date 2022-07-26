@@ -96,7 +96,7 @@ module.exports.slashRun = async (client, interaction) => {
           interaction,
           "Only Developers can use this command."
         ),
-      ],
+      ], ephemeral: true
     });
 
     let codeInput = new Discord.ActionRowBuilder()

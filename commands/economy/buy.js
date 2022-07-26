@@ -11,12 +11,14 @@ module.exports = {
   aliases: [],
   usage: "buy <item number>",
   slash: true,
-  options: [{
-    name: "item",
-    description: "ID of Item you want to buy",
-    type: ApplicationCommandOptionType.Number,
-    required: true
-  }]
+  options: [
+    {
+      name: "item",
+      description: "ID of Item you want to buy",
+      type: ApplicationCommandOptionType.Number,
+      required: true,
+    },
+  ],
 };
 
 module.exports.run = async (client, message, args) => {
@@ -50,15 +52,13 @@ module.exports.run = async (client, message, args) => {
 
     message.member.roles
       .add([item.Role_ID, "734759761660084268"])
-      .then(async() => {
+      .then(async () => {
         message.channel.send({
           embeds: [
-            client
-              .embedBuilder(client, message, "", "", "#3db39e")
-              .setAuthor({
-                name: `You have successfully purchased role ${item.Name} for $${item.Price}.`,
-                iconURL: `https://cdn.upload.systems/uploads/6KOGFYJM.png`
-              }),
+            client.embedBuilder(client, message, "", "", "#3db39e").setAuthor({
+              name: `You have successfully purchased role ${item.Name} for $${item.Price}.`,
+              iconURL: `https://cdn.upload.systems/uploads/6KOGFYJM.png`,
+            }),
           ],
         });
         await db.sub(
@@ -75,7 +75,7 @@ module.exports.run = async (client, message, args) => {
       });
   } else if (item.Type == "color") {
     let colors =
-      await db.get(`colors_${message.guild.id}_${message.author.id}`) || [];
+      (await db.get(`colors_${message.guild.id}_${message.author.id}`)) || [];
 
     if (!balance || balance < item.Price)
       return message.channel.send({
@@ -107,12 +107,10 @@ module.exports.run = async (client, message, args) => {
     await db.sub(`money_${message.guild.id}_${message.author.id}`, item.Price);
     message.channel.send({
       embeds: [
-        client
-          .embedBuilder(client, message, "", "", "#3db39e")
-          .setAuthor({
-            name: `You have successfully purchased name color ${item.Name} for $${item.Price}.`,
-            iconURL: `https://cdn.upload.systems/uploads/6KOGFYJM.png`
-          }),
+        client.embedBuilder(client, message, "", "", "#3db39e").setAuthor({
+          name: `You have successfully purchased name color ${item.Name} for $${item.Price}.`,
+          iconURL: `https://cdn.upload.systems/uploads/6KOGFYJM.png`,
+        }),
       ],
     });
   }
@@ -122,7 +120,9 @@ module.exports.slashRun = async (client, interaction) => {
   const settings = client.conf.Economy,
     shop = [...settings.Shop_Items],
     item = shop.find((s, i) => i + 1 == interaction.options.getNumber("item")),
-    balance = await db.get(`money_${interaction.guild.id}_${interaction.user.id}`);
+    balance = await db.get(
+      `money_${interaction.guild.id}_${interaction.user.id}`
+    );
 
   if (!item)
     return interaction.reply({
@@ -133,6 +133,7 @@ module.exports.slashRun = async (client, interaction) => {
           "You have entered an invalid shop id."
         ),
       ],
+      ephemeral: true,
     });
 
   if (item.Type == "role") {
@@ -145,18 +146,19 @@ module.exports.slashRun = async (client, interaction) => {
             "You don't have enough money."
           ),
         ],
+        ephemeral: true,
       });
 
     interaction.member.roles
       .add([item.Role_ID, "734759761660084268"])
-      .then(async() => {
+      .then(async () => {
         interaction.reply({
           embeds: [
             client
               .embedBuilder(client, interaction, "", "", "#3db39e")
               .setAuthor({
                 name: `You have successfully purchased role ${item.Name} for $${item.Price}.`,
-                iconURL: `https://cdn.upload.systems/uploads/6KOGFYJM.png`
+                iconURL: `https://cdn.upload.systems/uploads/6KOGFYJM.png`,
               }),
           ],
         });
@@ -174,7 +176,8 @@ module.exports.slashRun = async (client, interaction) => {
       });
   } else if (item.Type == "color") {
     let colors =
-      await db.get(`colors_${interaction.guild.id}_${interaction.user.id}`) || [];
+      (await db.get(`colors_${interaction.guild.id}_${interaction.user.id}`)) ||
+      [];
 
     if (!balance || balance < item.Price)
       return interaction.reply({
@@ -185,6 +188,7 @@ module.exports.slashRun = async (client, interaction) => {
             "You don't have enough money."
           ),
         ],
+        ephemeral: true,
       });
 
     if (colors.includes(item.Name.toLowerCase()))
@@ -196,6 +200,7 @@ module.exports.slashRun = async (client, interaction) => {
             "You already have that name color."
           ),
         ],
+        ephemeral: true,
       });
 
     await db.push(
@@ -203,15 +208,16 @@ module.exports.slashRun = async (client, interaction) => {
       item.Name.toLowerCase()
     );
 
-    await db.sub(`money_${interaction.guild.id}_${interaction.user.id}`, item.Price);
+    await db.sub(
+      `money_${interaction.guild.id}_${interaction.user.id}`,
+      item.Price
+    );
     interaction.reply({
       embeds: [
-        client
-          .embedBuilder(client, interaction, "", "", "#3db39e")
-          .setAuthor({
-            name: `You have successfully purchased name color ${item.Name} for $${item.Price}.`,
-            iconURL: `https://cdn.upload.systems/uploads/6KOGFYJM.png`
-          }),
+        client.embedBuilder(client, interaction, "", "", "#3db39e").setAuthor({
+          name: `You have successfully purchased name color ${item.Name} for $${item.Price}.`,
+          iconURL: `https://cdn.upload.systems/uploads/6KOGFYJM.png`,
+        }),
       ],
     });
   }

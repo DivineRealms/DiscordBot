@@ -15,11 +15,13 @@ module.exports = {
   permissions: ["ManageChannels"],
   cooldown: 0,
   aliases: [`close`],
-  slash: true
+  slash: true,
 };
 
 module.exports.run = async (client, message, args) => {
-  const ticket = await db.get(`tickets_${message.guild.id}_${message.channel.id}`);
+  const ticket = await db.get(
+    `tickets_${message.guild.id}_${message.channel.id}`
+  );
   const log = client.channels.cache.get(client.conf.Logging.Tickets);
 
   if (!client.conf.Ticket_System.Enabled)
@@ -89,10 +91,14 @@ module.exports.run = async (client, message, args) => {
 
   const loggingembed = client
       .embedBuilder(client, message, "Ticket Logging System", "", "#b3e59f")
-      .addFields({ name: `Ticket Name:`, value: `${message.channel.name}`, inline: false })
+      .addFields({
+        name: `Ticket Name:`,
+        value: `${message.channel.name}`,
+        inline: false,
+      })
       .setAuthor({
         name: "Ticket Logging System",
-        value: `https://cdn.upload.systems/uploads/4mFVRE7f.png`
+        value: `https://cdn.upload.systems/uploads/4mFVRE7f.png`,
       }),
     attachment = new AttachmentBuilder()
       .setFile(Buffer.from(data))
@@ -125,9 +131,10 @@ module.exports.run = async (client, message, args) => {
   await db.delete(`tickets_${message.guild.id}_${message.channel.id}`);
 };
 
-
 module.exports.slashRun = async (client, interaction) => {
-  const ticket = await db.get(`tickets_${interaction.guild.id}_${interaction.channel.id}`);
+  const ticket = await db.get(
+    `tickets_${interaction.guild.id}_${interaction.channel.id}`
+  );
   const log = client.channels.cache.get(client.conf.Logging.Tickets);
 
   if (!client.conf.Ticket_System.Enabled)
@@ -139,6 +146,7 @@ module.exports.slashRun = async (client, interaction) => {
           "Ticket System is not enabled."
         ),
       ],
+      ephemeral: true,
     });
 
   const channelMessages = await interaction.channel.messages
@@ -197,10 +205,14 @@ module.exports.slashRun = async (client, interaction) => {
 
   const loggingembed = client
       .embedBuilder(client, interaction, "Ticket Logging System", "", "#b3e59f")
-      .addFields({ name: `Ticket Name:`, value: `${interaction.channel.name}`, inline: false })
+      .addFields({
+        name: `Ticket Name:`,
+        value: `${interaction.channel.name}`,
+        inline: false,
+      })
       .setAuthor({
         name: "Ticket Logging System",
-        value: `https://cdn.upload.systems/uploads/4mFVRE7f.png`
+        value: `https://cdn.upload.systems/uploads/4mFVRE7f.png`,
       }),
     attachment = new AttachmentBuilder()
       .setFile(Buffer.from(data))
@@ -217,6 +229,7 @@ module.exports.slashRun = async (client, interaction) => {
           "This command can only be used inside of tickets."
         ),
       ],
+      ephemeral: true,
     });
 
   interaction.reply({

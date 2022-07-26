@@ -9,12 +9,14 @@ module.exports = {
   aliases: [],
   usage: "setstatus <TEXT>",
   slash: true,
-  options: [{
-    name: "text",
-    description: "Text for Custom Status",
-    type: ApplicationCommandOptionType.String,
-    required: true
-  }]
+  options: [
+    {
+      name: "text",
+      description: "Text for Custom Status",
+      type: ApplicationCommandOptionType.String,
+      required: true,
+    },
+  ],
 };
 
 module.exports.run = async (client, message, args) => {
@@ -33,26 +35,25 @@ module.exports.run = async (client, message, args) => {
 
   message.channel.send({
     embeds: [
-      client
-        .embedBuilder(client, message, "", "", "#f44336")
-        .setAuthor({
-          name: `Status has been changed to ${status}.`,
-          iconURL: `https://cdn.upload.systems/uploads/6Xdg16Gh.png`,
-        }),
+      client.embedBuilder(client, message, "", "", "#f44336").setAuthor({
+        name: `Status has been changed to ${status}.`,
+        iconURL: `https://cdn.upload.systems/uploads/6Xdg16Gh.png`,
+      }),
     ],
   });
 
   client.user.setActivity(status);
 };
+
 module.exports.slashRun = async (client, interaction) => {
   interaction.reply({
     embeds: [
-      client
-        .embedBuilder(client, interaction, "", "#f44336")
-        .setAuthor({
-          name: `Status has been changed to ${interaction.options.getString("text")}.`,
-          iconURL: `https://cdn.upload.systems/uploads/6Xdg16Gh.png`,
-        }),
+      client.embedBuilder(client, interaction, "", "#f44336").setAuthor({
+        name: `Status has been changed to ${interaction.options.getString(
+          "text"
+        )}.`,
+        iconURL: `https://cdn.upload.systems/uploads/6Xdg16Gh.png`,
+      }),
     ],
   });
 

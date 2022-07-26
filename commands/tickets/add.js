@@ -11,16 +11,20 @@ module.exports = {
   cooldown: 0,
   aliases: [],
   slash: true,
-  options: [{
-    name: "user",
-    description: "User to add to ticket",
-    type: ApplicationCommandOptionType.User,
-    required: true
-  }]
+  options: [
+    {
+      name: "user",
+      description: "User to add to ticket",
+      type: ApplicationCommandOptionType.User,
+      required: true,
+    },
+  ],
 };
 
 module.exports.run = async (client, message, args) => {
-  const ticket = await db.get(`tickets_${message.guild.id}_${message.channel.id}`);
+  const ticket = await db.get(
+    `tickets_${message.guild.id}_${message.channel.id}`
+  );
 
   if (!client.conf.Ticket_System.Enabled)
     return message.channel.send({
@@ -52,7 +56,9 @@ module.exports.run = async (client, message, args) => {
     });
 
   if (
-    message.channel.permissionOverwrites.cache.has(message.mentions.users.first().id)
+    message.channel.permissionOverwrites.cache.has(
+      message.mentions.users.first().id
+    )
   )
     if (
       message.channel.permissionOverwrites
@@ -75,20 +81,20 @@ module.exports.run = async (client, message, args) => {
 
   message.channel.send({
     embeds: [
-      client
-        .embedBuilder(client, message, "", "", "#3db39e")
-        .setAuthor({
-          name: `${
-            message.mentions.users.first().username
-          } has been added to the ticket.`,
-          iconURL: `https://cdn.upload.systems/uploads/4mFVRE7f.png`,
-        }),
+      client.embedBuilder(client, message, "", "", "#3db39e").setAuthor({
+        name: `${
+          message.mentions.users.first().username
+        } has been added to the ticket.`,
+        iconURL: `https://cdn.upload.systems/uploads/4mFVRE7f.png`,
+      }),
     ],
   });
 };
 
 module.exports.slashRun = async (client, interaction) => {
-  const ticket = await db.get(`tickets_${interaction.guild.id}_${interaction.channel.id}`);
+  const ticket = await db.get(
+    `tickets_${interaction.guild.id}_${interaction.channel.id}`
+  );
   const user = interaction.options.getUser("user");
 
   if (!client.conf.Ticket_System.Enabled)
@@ -100,6 +106,7 @@ module.exports.slashRun = async (client, interaction) => {
           "Ticket System is not enabled."
         ),
       ],
+      ephemeral: true,
     });
 
   if (!ticket)
@@ -111,15 +118,12 @@ module.exports.slashRun = async (client, interaction) => {
           "This command can only be used in Ticket Channel."
         ),
       ],
+      ephemeral: true,
     });
 
-  if (
-    message.channel.permissionOverwrites.cache.has(user.id)
-  )
+  if (message.channel.permissionOverwrites.cache.has(user.id))
     if (
-      message.channel.permissionOverwrites
-        .get(user.id)
-        .allow.has("ViewChannel")
+      message.channel.permissionOverwrites.get(user.id).allow.has("ViewChannel")
     )
       return interaction.reply({
         embeds: [
@@ -129,6 +133,7 @@ module.exports.slashRun = async (client, interaction) => {
             "They're already in the ticket."
           ),
         ],
+        ephemeral: true,
       });
 
   interaction.channel.permissionOverwrites.edit(user, {
@@ -137,14 +142,10 @@ module.exports.slashRun = async (client, interaction) => {
 
   interaction.reply({
     embeds: [
-      client
-        .embedBuilder(client, interaction, "", "", "#3db39e")
-        .setAuthor({
-          name: `${
-            user.username
-          } has been added to the ticket.`,
-          iconURL: `https://cdn.upload.systems/uploads/4mFVRE7f.png`,
-        }),
+      client.embedBuilder(client, interaction, "", "", "#3db39e").setAuthor({
+        name: `${user.username} has been added to the ticket.`,
+        iconURL: `https://cdn.upload.systems/uploads/4mFVRE7f.png`,
+      }),
     ],
   });
 };

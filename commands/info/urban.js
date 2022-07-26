@@ -11,12 +11,14 @@ module.exports = {
   aliases: ["ud"],
   usage: "urban <search>",
   slash: true,
-  options: [{
-    name: "search",
-    description: "Term to search",
-    type: ApplicationCommandOptionType.String,
-    required: true
-  }]
+  options: [
+    {
+      name: "search",
+      description: "Term to search",
+      type: ApplicationCommandOptionType.String,
+      required: true,
+    },
+  ],
 };
 
 module.exports.run = async (client, message, args) => {
@@ -53,23 +55,29 @@ module.exports.run = async (client, message, args) => {
           iconURL: `https://cdn.upload.systems/uploads/6uDK0XAN.png`,
           url: def.urbanURL,
         })
-        .addFields([{ name: `Definition`, value: `${def.definition}`.slice(0, 1000), inline: false },
-        {
-          name: `Definition in an example:`,
-          value: `${def.example || "none"}`.slice(0, 1000),
-          inline: false
-        },{
-          name: `Author:`,
-          value: "<:ArrowRightGray:813815804768026705>" + def.author,
-          inline: false
-        }])
+        .addFields([
+          {
+            name: `Definition`,
+            value: `${def.definition}`.slice(0, 1000),
+            inline: false,
+          },
+          {
+            name: `Definition in an example:`,
+            value: `${def.example || "none"}`.slice(0, 1000),
+            inline: false,
+          },
+          {
+            name: `Author:`,
+            value: "<:ArrowRightGray:813815804768026705>" + def.author,
+            inline: false,
+          },
+        ]),
     ],
   });
 };
 
-
 module.exports.slashRun = async (client, interaction) => {
-  const search = interaction.options.getString("search")
+  const search = interaction.options.getString("search");
   let def = await urban(search).catch(() => {});
 
   if (!def)
@@ -81,6 +89,7 @@ module.exports.slashRun = async (client, interaction) => {
           `No Results found for ${search}.`
         ),
       ],
+      ephemeral: true,
     });
 
   interaction.reply({
@@ -92,16 +101,23 @@ module.exports.slashRun = async (client, interaction) => {
           iconURL: `https://cdn.upload.systems/uploads/6uDK0XAN.png`,
           url: def.urbanURL,
         })
-        .addFields([{ name: `Definition`, value: `${def.definition}`.slice(0, 1000), inline: false },
-        {
-          name: `Definition in an example:`,
-          value: `${def.example || "none"}`.slice(0, 1000),
-          inline: false
-        },{
-          name: `Author:`,
-          value: "<:ArrowRightGray:813815804768026705>" + def.author,
-          inline: false
-        }])
+        .addFields([
+          {
+            name: `Definition`,
+            value: `${def.definition}`.slice(0, 1000),
+            inline: false,
+          },
+          {
+            name: `Definition in an example:`,
+            value: `${def.example || "none"}`.slice(0, 1000),
+            inline: false,
+          },
+          {
+            name: `Author:`,
+            value: "<:ArrowRightGray:813815804768026705>" + def.author,
+            inline: false,
+          },
+        ]),
     ],
   });
 };

@@ -9,12 +9,14 @@ module.exports = {
   aliases: ["hugs", "cuddles"],
   usage: "hug <@User>",
   slash: true,
-  options: [{
-    name: "user",
-    description: "User which you want to hug",
-    type: ApplicationCommandOptionType.User,
-    required: true
-  }]
+  options: [
+    {
+      name: "user",
+      description: "User which you want to hug",
+      type: ApplicationCommandOptionType.User,
+      required: true,
+    },
+  ],
 };
 
 module.exports.run = async (client, message, args) => {
@@ -65,19 +67,24 @@ module.exports.slashRun = async (client, interaction) => {
   const mentionedMember = interaction.options.getUser("user");
 
   const gifs = [
-    "https://media.giphy.com/media/bbxTrFmeoM7aU/giphy.gif",
-    "https://media.giphy.com/media/SEQrz1SMPl3mo/giphy.gif",
-    "https://media.giphy.com/media/1o1ik0za0oj0461zPR/giphy.gif",
-    "https://media.giphy.com/media/1o1ik0za0oj0461zPR/giphy.gif",
-  ],
-  randomNumber = Math.floor(Math.random() * gifs.length),
-  randomGif = gifs[randomNumber];
+      "https://media.giphy.com/media/bbxTrFmeoM7aU/giphy.gif",
+      "https://media.giphy.com/media/SEQrz1SMPl3mo/giphy.gif",
+      "https://media.giphy.com/media/1o1ik0za0oj0461zPR/giphy.gif",
+      "https://media.giphy.com/media/1o1ik0za0oj0461zPR/giphy.gif",
+    ],
+    randomNumber = Math.floor(Math.random() * gifs.length),
+    randomGif = gifs[randomNumber];
 
   if (mentionedMember.id === interaction.user.id)
     return interaction.reply({
       embeds: [
-        client.utils.errorEmbed(client, interaction, "You cannot hug yourself."),
+        client.utils.errorEmbed(
+          client,
+          interaction,
+          "You cannot hug yourself."
+        ),
       ],
+      ephemeral: true,
     });
 
   interaction.reply({

@@ -31,6 +31,8 @@ module.exports.run = async (client, message, args) => {
     });
 
   message.channel.send(
-    `You gave me the options of **\`${choices.join(" ")}\`**.\nI chose: ${choice}.`
+    `You gave me the options of **\`${choices.join(
+      " "
+    )}\`**.\nI chose: ${choice}.`
   );
 };

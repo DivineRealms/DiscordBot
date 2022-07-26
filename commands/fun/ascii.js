@@ -10,12 +10,14 @@ module.exports = {
   aliases: [`cooltext`],
   usage: "ascii <text>",
   slash: true,
-  options: [{
-    name: "text",
-    description: "Text which you want",
-    type: ApplicationCommandOptionType.String,
-    required: true
-  }]
+  options: [
+    {
+      name: "text",
+      description: "Text which you want",
+      type: ApplicationCommandOptionType.String,
+      required: true,
+    },
+  ],
 };
 
 module.exports.run = async (client, message, args) => {
@@ -49,6 +51,7 @@ module.exports.slashRun = async (client, interaction) => {
         embeds: [
           client.utils.errorEmbed(client, interaction, "Max 2000 charachters."),
         ],
+        ephemeral: true,
       });
 
     interaction.reply("```\n" + data + "```");

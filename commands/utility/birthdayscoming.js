@@ -10,7 +10,7 @@ module.exports = {
   cooldown: 0,
   aliases: [`bdaylist`],
   usage: "birthdayscoming",
-  slash: true
+  slash: true,
 };
 
 module.exports.run = async (client, message, args) => {
@@ -88,6 +88,7 @@ module.exports.slashRun = async (client, interaction) => {
           "Birthday System is not enabled."
         ),
       ],
+      ephemeral: true,
     });
 
   const dates = [
@@ -131,6 +132,7 @@ module.exports.slashRun = async (client, interaction) => {
           "There aren't any upcoming birthdays."
         ),
       ],
+      ephemeral: true,
     });
 
   paginateContent(

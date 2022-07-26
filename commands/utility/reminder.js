@@ -10,17 +10,20 @@ module.exports = {
   aliases: [`remindme`],
   usage: "reminder <Time> <Reason>",
   slash: true,
-  options: [{
-    name: "time",
-    description: "When to remind you",
-    type: ApplicationCommandOptionType.String,
-    required: true
-  }, {
-    name: "reason",
-    description: "About what to remind you",
-    type: ApplicationCommandOptionType.String,
-    required: true
-  }]
+  options: [
+    {
+      name: "time",
+      description: "When to remind you",
+      type: ApplicationCommandOptionType.String,
+      required: true,
+    },
+    {
+      name: "reason",
+      description: "About what to remind you",
+      type: ApplicationCommandOptionType.String,
+      required: true,
+    },
+  ],
 };
 
 module.exports.run = async (client, message, args) => {
@@ -54,7 +57,7 @@ module.exports.run = async (client, message, args) => {
         )
         .setAuthor({
           name: "Reminder",
-          iconURL: `https://cdn.upload.systems/uploads/PX2kS3Kp.png`
+          iconURL: `https://cdn.upload.systems/uploads/PX2kS3Kp.png`,
         }),
     ],
   });
@@ -73,7 +76,7 @@ module.exports.run = async (client, message, args) => {
             )
             .setAuthor({
               name: "Reminder",
-              iconURL: `https://cdn.upload.systems/uploads/PX2kS3Kp.png`
+              iconURL: `https://cdn.upload.systems/uploads/PX2kS3Kp.png`,
             }),
         ],
       })
@@ -88,8 +91,13 @@ module.exports.slashRun = async (client, interaction) => {
   if (isNaN(parse(time)))
     return interaction.reply({
       embeds: [
-        client.utils.errorEmbed(client, interaction, "You need to provide time."),
+        client.utils.errorEmbed(
+          client,
+          interaction,
+          "You need to provide time."
+        ),
       ],
+      ephemeral: true,
     });
 
   interaction.reply({
@@ -99,19 +107,21 @@ module.exports.slashRun = async (client, interaction) => {
           client,
           interaction,
           "",
-          `<:ArrowRightGray:813815804768026705>I'll remind you for **\`${reason}\`** in ${client.utils.formatTime(parse(time))}.`,
+          `<:ArrowRightGray:813815804768026705>I'll remind you for **\`${reason}\`** in ${client.utils.formatTime(
+            parse(time)
+          )}.`,
           "#f1d333"
         )
         .setAuthor({
           name: "Reminder",
-          iconURL: `https://cdn.upload.systems/uploads/PX2kS3Kp.png`
+          iconURL: `https://cdn.upload.systems/uploads/PX2kS3Kp.png`,
         }),
     ],
   });
 
   setTimeout(() => {
-    interaction
-      .channel.send({
+    interaction.channel
+      .send({
         content: interaction.user,
         embeds: [
           client
@@ -124,7 +134,7 @@ module.exports.slashRun = async (client, interaction) => {
             )
             .setAuthor({
               name: "Reminder",
-              iconURL: `https://cdn.upload.systems/uploads/PX2kS3Kp.png`
+              iconURL: `https://cdn.upload.systems/uploads/PX2kS3Kp.png`,
             }),
         ],
       })

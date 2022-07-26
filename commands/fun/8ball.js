@@ -9,12 +9,14 @@ module.exports = {
   aliases: ["question", "ball8"],
   usage: "8ball <Question>",
   slash: true,
-  options: [{
-    name: "question",
-    description: "Question you want to ask",
-    type: ApplicationCommandOptionType.String,
-    required: true
-  }]
+  options: [
+    {
+      name: "question",
+      description: "Question you want to ask",
+      type: ApplicationCommandOptionType.String,
+      required: true,
+    },
+  ],
 };
 
 module.exports.run = async (client, message, args) => {
@@ -50,11 +52,14 @@ module.exports.run = async (client, message, args) => {
     embeds: [
       client
         .embedBuilder(client, message, "", "", "#ec3d93")
-        .addFields([{ name: "Question:", value: args.join(" "), inline: false }, {
-          name: "Answer:",
-          value: responses[~~(Math.random() * responses.length)],
-          inline: false
-        }])
+        .addFields([
+          { name: "Question:", value: args.join(" "), inline: false },
+          {
+            name: "Answer:",
+            value: responses[~~(Math.random() * responses.length)],
+            inline: false,
+          },
+        ])
         .setAuthor({
           name: "8ball",
           iconURL: `https://cdn.upload.systems/uploads/ZdKDK7Tx.png`,
@@ -87,11 +92,14 @@ module.exports.slashRun = async (client, interaction) => {
     embeds: [
       client
         .embedBuilder(client, interaction, "", "", "#ec3d93")
-        .addFields([{ name: "Question:", value: question, inline: false }, {
-          name: "Answer:",
-          value: responses[~~(Math.random() * responses.length)],
-          inline: false
-        }])
+        .addFields([
+          { name: "Question:", value: question, inline: false },
+          {
+            name: "Answer:",
+            value: responses[~~(Math.random() * responses.length)],
+            inline: false,
+          },
+        ])
         .setAuthor({
           name: "8ball",
           iconURL: `https://cdn.upload.systems/uploads/ZdKDK7Tx.png`,

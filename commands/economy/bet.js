@@ -11,12 +11,14 @@ module.exports = {
   aliases: [],
   usage: "bet <amount | all>",
   slash: true,
-  options: [{
-    name: "amount",
-    description: "Amount you want to bet or 'all'",
-    type: Discord.ApplicationCommandOptionType.String,
-    required: true
-  }]
+  options: [
+    {
+      name: "amount",
+      description: "Amount you want to bet or 'all'",
+      type: Discord.ApplicationCommandOptionType.String,
+      required: true,
+    },
+  ],
 };
 
 module.exports.run = async (client, message, args) => {
@@ -121,15 +123,22 @@ module.exports.run = async (client, message, args) => {
 };
 
 module.exports.slashRun = async (client, interaction) => {
-  let bal = await db.get(`money_${interaction.guild.id}_${interaction.user.id}`),
+  let bal = await db.get(
+      `money_${interaction.guild.id}_${interaction.user.id}`
+    ),
     chance = Math.floor(Math.random() * 100) + 1,
     amount = interaction.options.getString("amount");
 
-  if ((isNaN(amount) && amount != "all"))
+  if (isNaN(amount) && amount != "all")
     return interaction.reply({
       embeds: [
-        client.utils.errorEmbed(client, interaction, "Betting value not given."),
+        client.utils.errorEmbed(
+          client,
+          interaction,
+          "Betting value not given."
+        ),
       ],
+      ephemeral: true,
     });
 
   if (!bal || bal == 0)
@@ -141,6 +150,7 @@ module.exports.slashRun = async (client, interaction) => {
           "You don't have enough money."
         ),
       ],
+      ephemeral: true,
     });
 
   if (amount == "all") {
@@ -149,14 +159,19 @@ module.exports.slashRun = async (client, interaction) => {
     if (chance > 70) {
       interaction.reply({
         embeds: [
-          client.embedBuilder(client, interaction, "", "", "#3db39e").setAuthor({
-            name: `You won $${money}!`,
-            iconURL: `https://cdn.upload.systems/uploads/HJGA3pxp.png`,
-          }),
+          client
+            .embedBuilder(client, interaction, "", "", "#3db39e")
+            .setAuthor({
+              name: `You won $${money}!`,
+              iconURL: `https://cdn.upload.systems/uploads/HJGA3pxp.png`,
+            }),
         ],
       });
 
-      await db.add(`money_${interaction.guild.id}_${interaction.user.id}`, money);
+      await db.add(
+        `money_${interaction.guild.id}_${interaction.user.id}`,
+        money
+      );
     } else if (chance < 70) {
       interaction.reply({
         embeds: [
@@ -167,7 +182,10 @@ module.exports.slashRun = async (client, interaction) => {
         ],
       });
 
-      await db.sub(`money_${interaction.guild.id}_${interaction.user.id}`, money);
+      await db.sub(
+        `money_${interaction.guild.id}_${interaction.user.id}`,
+        money
+      );
     }
 
     return;
@@ -182,6 +200,7 @@ module.exports.slashRun = async (client, interaction) => {
           "You don't have that much money."
         ),
       ],
+      ephemeral: true,
     });
 
   if (amount < 200)
@@ -193,6 +212,7 @@ module.exports.slashRun = async (client, interaction) => {
           "You cannot bet less than $200."
         ),
       ],
+      ephemeral: true,
     });
 
   let money = parseInt(amount);

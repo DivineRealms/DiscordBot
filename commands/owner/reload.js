@@ -36,7 +36,9 @@ module.exports.run = async (client, message, args) => {
       require.resolve(`../${command.category}/${args[0].toLowerCase()}.js`)
     ];
 
-    const commandData = require(`../${command.category}/${args[0].toLowerCase()}.js`);
+    const commandData = require(`../${
+      command.category
+    }/${args[0].toLowerCase()}.js`);
 
     client.commands.set(args[0].toLowerCase(), {
       ...require(`../${command.category}/${args[0].toLowerCase()}.js`),
@@ -50,17 +52,17 @@ module.exports.run = async (client, message, args) => {
     client.slashArray.filter((x) => x.name != args[0].toLowerCase());
     client.slashArray.push(commandData);
 
-    const cmdExists = client.application.commands.cache.find(x => x.name == args[0].toLowerCase())
-    client.application.commands.edit(cmdExists, commandData)
+    const cmdExists = client.application.commands.cache.find(
+      (x) => x.name == args[0].toLowerCase()
+    );
+    client.application.commands.edit(cmdExists, commandData);
 
     message.channel.send({
       embeds: [
-        client
-          .embedBuilder(client, message, "", "", "#3db39e")
-          .setAuthor({
-            name: "Command has been reloaded successfully.",
-            iconURL: `https://cdn.upload.systems/uploads/6KOGFYJM.png`,
-          }),
+        client.embedBuilder(client, message, "", "", "#3db39e").setAuthor({
+          name: "Command has been reloaded successfully.",
+          iconURL: `https://cdn.upload.systems/uploads/6KOGFYJM.png`,
+        }),
       ],
     });
   } catch (err) {

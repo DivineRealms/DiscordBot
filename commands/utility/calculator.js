@@ -10,12 +10,14 @@ module.exports = {
   aliases: ["solve", "math"],
   usage: "calculator <Problem>",
   slash: true,
-  options: [{
-    name: "expression",
-    description: "Solve math. expression",
-    type: ApplicationCommandOptionType.String,
-    required: true
-  }]
+  options: [
+    {
+      name: "expression",
+      description: "Solve math. expression",
+      type: ApplicationCommandOptionType.String,
+      required: true,
+    },
+  ],
 };
 
 module.exports.run = async (client, message, args) => {
@@ -33,16 +35,23 @@ module.exports.run = async (client, message, args) => {
           .embedBuilder(client, message, "", "")
           .setAuthor({
             name: "Calculator",
-            iconURL: `https://cdn.upload.systems/uploads/LRa9Ebl5.png`
+            iconURL: `https://cdn.upload.systems/uploads/LRa9Ebl5.png`,
           })
-          .addFields([{ name: "📥︲Problem:", value: "```\n" + args.join(" ") + "```" }, {
-            name: "📤︲Solution:",
-            value: "```\n" + evaluate(args.join(" ")) + "```"
-          }]),
+          .addFields([
+            { name: "📥︲Problem:", value: "```\n" + args.join(" ") + "```" },
+            {
+              name: "📤︲Solution:",
+              value: "```\n" + evaluate(args.join(" ")) + "```",
+            },
+          ]),
       ],
     });
   } catch (e) {
-    message.channel.send({ embeds: [client.utils.errorEmbed(client, message, "Please provide a problem.")]});
+    message.channel.send({
+      embeds: [
+        client.utils.errorEmbed(client, message, "Please provide a problem."),
+      ],
+    });
   }
 };
 
@@ -54,15 +63,34 @@ module.exports.slashRun = async (client, interaction) => {
           .embedBuilder(client, interaction, "", "")
           .setAuthor({
             name: "Calculator",
-            iconURL: `https://cdn.upload.systems/uploads/LRa9Ebl5.png`
+            iconURL: `https://cdn.upload.systems/uploads/LRa9Ebl5.png`,
           })
-          .addFields([{ name: "📥︲Problem:", value: "```\n" + interaction.options.getString("expression") + "```" }, {
-            name: "📤︲Solution:",
-            value: "```\n" + evaluate(interaction.options.getString("expression")) + "```"
-          }]),
+          .addFields([
+            {
+              name: "📥︲Problem:",
+              value:
+                "```\n" + interaction.options.getString("expression") + "```",
+            },
+            {
+              name: "📤︲Solution:",
+              value:
+                "```\n" +
+                evaluate(interaction.options.getString("expression")) +
+                "```",
+            },
+          ]),
       ],
     });
   } catch (e) {
-    interaction.reply({ embeds: [client.utils.errorEmbed(client, interaction, "Please provide a expression.")] });
+    interaction.reply({
+      embeds: [
+        client.utils.errorEmbed(
+          client,
+          interaction,
+          "Please provide a expression."
+        ),
+      ],
+      ephemeral: true,
+    });
   }
 };

@@ -11,12 +11,14 @@ module.exports = {
   aliases: ["r0b"],
   usage: "rob <@User>",
   slash: true,
-  options: [{
-    name: "user",
-    description: "User you want to rob",
-    type: ApplicationCommandOptionType.User,
-    required: true
-  }]
+  options: [
+    {
+      name: "user",
+      description: "User you want to rob",
+      type: ApplicationCommandOptionType.User,
+      required: true,
+    },
+  ],
 };
 
 module.exports.run = async (client, message, args) => {
@@ -82,14 +84,18 @@ module.exports.run = async (client, message, args) => {
 };
 
 module.exports.slashRun = async (client, interaction) => {
-  const member =
-    interaction.options.getUser("user");
+  const member = interaction.options.getUser("user");
 
   if (member.id === interaction.user.id)
     return interaction.reply({
       embeds: [
-        client.utils.errorEmbed(client, interaction, "You cannot rob yourself."),
+        client.utils.errorEmbed(
+          client,
+          interaction,
+          "You cannot rob yourself."
+        ),
       ],
+      ephemeral: true,
     });
 
   const memberbal = await db.get(`money_${interaction.guild.id}_${member.id}`);
@@ -105,6 +111,7 @@ module.exports.slashRun = async (client, interaction) => {
           "That Member doesn't have money."
         ),
       ],
+      ephemeral: true,
     });
 
   if (rob) {
@@ -116,9 +123,13 @@ module.exports.slashRun = async (client, interaction) => {
           `You attempted to rob ${member.username} but got caught! The fine is $${amount}.`
         ),
       ],
+      ephemeral: true,
     });
 
-    await db.sub(`money_${interaction.guild.id}_${interaction.user.id}`, amount);
+    await db.sub(
+      `money_${interaction.guild.id}_${interaction.user.id}`,
+      amount
+    );
     await db.add(`money_${interaction.guild.id}_${member.id}`, amount);
   } else {
     interaction.reply({
@@ -131,6 +142,9 @@ module.exports.slashRun = async (client, interaction) => {
     });
 
     await db.sub(`money_${interaction.guild.id}_${member.id}`, amount);
-    await db.add(`money_${interaction.guild.id}_${interaction.user.id}`, amount);
+    await db.add(
+      `money_${interaction.guild.id}_${interaction.user.id}`,
+      amount
+    );
   }
 };

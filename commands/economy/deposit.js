@@ -11,12 +11,14 @@ module.exports = {
   aliases: ["d"],
   usage: "d <amount | all>",
   slash: true,
-  options: [{
-    name: "amount",
-    description: "Amount you want to deposit or 'all'",
-    type: ApplicationCommandOptionType.String,
-    required: true
-  }]
+  options: [
+    {
+      name: "amount",
+      description: "Amount you want to deposit or 'all'",
+      type: ApplicationCommandOptionType.String,
+      required: true,
+    },
+  ],
 };
 
 module.exports.run = async (client, message, args) => {
@@ -58,12 +60,10 @@ module.exports.run = async (client, message, args) => {
 
     message.channel.send({
       embeds: [
-        client
-          .embedBuilder(client, message, "", "", "#3db39e")
-          .setAuthor({
-            name: `You have deposited $${bal} to the bank.`,
-            iconURL: `https://cdn.upload.systems/uploads/6KOGFYJM.png`
-          }),
+        client.embedBuilder(client, message, "", "", "#3db39e").setAuthor({
+          name: `You have deposited $${bal} to the bank.`,
+          iconURL: `https://cdn.upload.systems/uploads/6KOGFYJM.png`,
+        }),
       ],
     });
 
@@ -96,12 +96,10 @@ module.exports.run = async (client, message, args) => {
 
   message.channel.send({
     embeds: [
-      client
-        .embedBuilder(client, message, "", "", "#3db39e")
-        .setAuthor({
-          name: `You have deposited $${Number(args[0])} to the bank.`,
-          iconURL: `https://cdn.upload.systems/uploads/6KOGFYJM.png`
-        }),
+      client.embedBuilder(client, message, "", "", "#3db39e").setAuthor({
+        name: `You have deposited $${Number(args[0])} to the bank.`,
+        iconURL: `https://cdn.upload.systems/uploads/6KOGFYJM.png`,
+      }),
     ],
   });
 
@@ -110,12 +108,17 @@ module.exports.run = async (client, message, args) => {
     Number(args[0])
   );
 
-  await db.add(`bank_${message.guild.id}_${message.author.id}`, Number(args[0]));
+  await db.add(
+    `bank_${message.guild.id}_${message.author.id}`,
+    Number(args[0])
+  );
 };
 
 module.exports.slashRun = async (client, interaction) => {
   const amount = interaction.options.getString("amount");
-  let bal = await db.get(`money_${interaction.guild.id}_${interaction.user.id}`);
+  let bal = await db.get(
+    `money_${interaction.guild.id}_${interaction.user.id}`
+  );
 
   if (!amount || (isNaN(amount) && amount !== "all"))
     return interaction.reply({
@@ -126,6 +129,7 @@ module.exports.slashRun = async (client, interaction) => {
           "You need to enter an amount to deposit."
         ),
       ],
+      ephemeral: true,
     });
 
   if (!bal || bal < 1)
@@ -137,6 +141,7 @@ module.exports.slashRun = async (client, interaction) => {
           "You don't have enough money to deposit."
         ),
       ],
+      ephemeral: true,
     });
 
   if (amount === "all") {
@@ -149,21 +154,26 @@ module.exports.slashRun = async (client, interaction) => {
             "You don't have enough money to deposit."
           ),
         ],
+        ephemeral: true,
       });
 
     interaction.reply({
       embeds: [
-        client
-          .embedBuilder(client, interaction, "", "", "#3db39e")
-          .setAuthor({
-            name: `You have deposited $${bal} to the bank.`,
-            iconURL: `https://cdn.upload.systems/uploads/6KOGFYJM.png`
-          }),
+        client.embedBuilder(client, interaction, "", "", "#3db39e").setAuthor({
+          name: `You have deposited $${bal} to the bank.`,
+          iconURL: `https://cdn.upload.systems/uploads/6KOGFYJM.png`,
+        }),
       ],
     });
 
-    await db.sub(`money_${interaction.guild.id}_${interaction.user.id}`, Number(bal));
-    await db.add(`bank_${interaction.guild.id}_${interaction.user.id}`, Number(bal));
+    await db.sub(
+      `money_${interaction.guild.id}_${interaction.user.id}`,
+      Number(bal)
+    );
+    await db.add(
+      `bank_${interaction.guild.id}_${interaction.user.id}`,
+      Number(bal)
+    );
     return;
   }
 
@@ -176,6 +186,7 @@ module.exports.slashRun = async (client, interaction) => {
           "You don't have that much money."
         ),
       ],
+      ephemeral: true,
     });
 
   if (amount < 1)
@@ -187,16 +198,15 @@ module.exports.slashRun = async (client, interaction) => {
           "You cannot deposit less than $1."
         ),
       ],
+      ephemeral: true,
     });
 
   interaction.reply({
     embeds: [
-      client
-        .embedBuilder(client, interaction, "", "", "#3db39e")
-        .setAuthor({
-          name: `You have deposited $${Number(amount)} to the bank.`,
-          iconURL: `https://cdn.upload.systems/uploads/6KOGFYJM.png`
-        }),
+      client.embedBuilder(client, interaction, "", "", "#3db39e").setAuthor({
+        name: `You have deposited $${Number(amount)} to the bank.`,
+        iconURL: `https://cdn.upload.systems/uploads/6KOGFYJM.png`,
+      }),
     ],
   });
 
@@ -205,5 +215,8 @@ module.exports.slashRun = async (client, interaction) => {
     Number(amount)
   );
 
-  await db.add(`bank_${interaction.guild.id}_${interaction.user.id}`, Number(amount));
+  await db.add(
+    `bank_${interaction.guild.id}_${interaction.user.id}`,
+    Number(amount)
+  );
 };

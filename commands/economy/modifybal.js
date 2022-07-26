@@ -11,41 +11,52 @@ module.exports = {
   aliases: ["modifyb"],
   usage: "modifybal [@User] <add | remove> <wallet | bank> <amount>",
   slash: true,
-  options: [{
-    name: "user",
-    description: "User whoes balance to modify",
-    type: ApplicationCommandOptionType.User,
-    required: true
-  }, {
-    name: "action",
-    description: "Action you want to do",
-    type: ApplicationCommandOptionType.String,
-    choices: [{
-      name: "add",
-      value: "add"
-    }, {
-      name: "remove",
-      value: "remove"
-    }],
-    required: true
-  }, {
-    name: "type",
-    description: "Which money to edit, wallet or bank",
-    type: ApplicationCommandOptionType.String,
-    choices: [{
-      name: "wallet",
-      value: "wallet"
-    }, {
-      name: "bank",
-      value: "bank"
-    }],
-    required: true
-  }, {
-    name: "amount",
-    description: "Amount to modify",
-    type: ApplicationCommandOptionType.Number,
-    required: true
-  }]
+  options: [
+    {
+      name: "user",
+      description: "User whoes balance to modify",
+      type: ApplicationCommandOptionType.User,
+      required: true,
+    },
+    {
+      name: "action",
+      description: "Action you want to do",
+      type: ApplicationCommandOptionType.String,
+      choices: [
+        {
+          name: "add",
+          value: "add",
+        },
+        {
+          name: "remove",
+          value: "remove",
+        },
+      ],
+      required: true,
+    },
+    {
+      name: "type",
+      description: "Which money to edit, wallet or bank",
+      type: ApplicationCommandOptionType.String,
+      choices: [
+        {
+          name: "wallet",
+          value: "wallet",
+        },
+        {
+          name: "bank",
+          value: "bank",
+        },
+      ],
+      required: true,
+    },
+    {
+      name: "amount",
+      description: "Amount to modify",
+      type: ApplicationCommandOptionType.Number,
+      required: true,
+    },
+  ],
 };
 
 module.exports.run = async (client, message, args) => {
@@ -140,14 +151,10 @@ module.exports.run = async (client, message, args) => {
 };
 
 module.exports.slashRun = async (client, interaction) => {
-  const user =
-    interaction.options.getUser("user");
-  const action =
-    interaction.options.getString("action");
-  const type =
-    interaction.options.getString("type");
-  const amount =
-    interaction.options.getNumber("amount");
+  const user = interaction.options.getUser("user");
+  const action = interaction.options.getString("action");
+  const type = interaction.options.getString("type");
+  const amount = interaction.options.getNumber("amount");
 
   if (amount < 1)
     return interaction.reply({
@@ -158,6 +165,7 @@ module.exports.slashRun = async (client, interaction) => {
           "You need to enter an amount."
         ),
       ],
+      ephemeral: true,
     });
 
   if (action == "add") {
@@ -165,20 +173,24 @@ module.exports.slashRun = async (client, interaction) => {
       await db.add(`bank_${interaction.guild.id}_${user.id}`, Number(amount));
       interaction.reply({
         embeds: [
-          client.embedBuilder(client, interaction, "", "", "#3db39e").setAuthor({
-            name: `$${amount} has been added to ${user.username}'s bank`,
-            iconURL: `https://cdn.upload.systems/uploads/6KOGFYJM.png`,
-          }),
+          client
+            .embedBuilder(client, interaction, "", "", "#3db39e")
+            .setAuthor({
+              name: `$${amount} has been added to ${user.username}'s bank`,
+              iconURL: `https://cdn.upload.systems/uploads/6KOGFYJM.png`,
+            }),
         ],
       });
     } else if (type == "wallet") {
       await db.add(`money_${interaction.guild.id}_${user.id}`, Number(amount));
       interaction.reply({
         embeds: [
-          client.embedBuilder(client, interaction, "", "", "#3db39e").setAuthor({
-            name: `$${amount} has been added to ${user.username}'s wallet`,
-            iconURL: `https://cdn.upload.systems/uploads/6KOGFYJM.png`,
-          }),
+          client
+            .embedBuilder(client, interaction, "", "", "#3db39e")
+            .setAuthor({
+              name: `$${amount} has been added to ${user.username}'s wallet`,
+              iconURL: `https://cdn.upload.systems/uploads/6KOGFYJM.png`,
+            }),
         ],
       });
     }
@@ -187,20 +199,24 @@ module.exports.slashRun = async (client, interaction) => {
       await db.sub(`bank_${interaction.guild.id}_${user.id}`, Number(amount));
       interaction.reply({
         embeds: [
-          client.embedBuilder(client, interaction, "", "", "#3db39e").setAuthor({
-            name: `$${amount} has been removed from ${user.username}'s bank`,
-            iconURL: `https://cdn.upload.systems/uploads/6KOGFYJM.png`,
-          }),
+          client
+            .embedBuilder(client, interaction, "", "", "#3db39e")
+            .setAuthor({
+              name: `$${amount} has been removed from ${user.username}'s bank`,
+              iconURL: `https://cdn.upload.systems/uploads/6KOGFYJM.png`,
+            }),
         ],
       });
     } else if (type == "wallet") {
       await db.sub(`money_${interaction.guild.id}_${user.id}`, Number(amount));
       interaction.reply({
         embeds: [
-          client.embedBuilder(client, interaction, "", "", "#3db39e").setAuthor({
-            name: `$${amount} has been removed from ${user.username}'s wallet`,
-            iconURL: `https://cdn.upload.systems/uploads/6KOGFYJM.png`,
-          }),
+          client
+            .embedBuilder(client, interaction, "", "", "#3db39e")
+            .setAuthor({
+              name: `$${amount} has been removed from ${user.username}'s wallet`,
+              iconURL: `https://cdn.upload.systems/uploads/6KOGFYJM.png`,
+            }),
         ],
       });
     }

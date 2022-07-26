@@ -9,17 +9,20 @@ module.exports = {
   aliases: [],
   usage: "embed <Title> | <Description>",
   slash: true,
-  options: [{
-    name: "title",
-    description: "Title for Embed",
-    type: ApplicationCommandOptionType.String,
-    required: true
-  }, {
-    name: "description",
-    description: "Description for Embed",
-    type: ApplicationCommandOptionType.String,
-    required: true
-  }]
+  options: [
+    {
+      name: "title",
+      description: "Title for Embed",
+      type: ApplicationCommandOptionType.String,
+      required: true,
+    },
+    {
+      name: "description",
+      description: "Description for Embed",
+      type: ApplicationCommandOptionType.String,
+      required: true,
+    },
+  ],
 };
 
 module.exports.run = async (client, message, args) => {

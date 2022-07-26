@@ -57,7 +57,7 @@ module.exports = async (client, reaction, user) => {
             iconURL: reaction.message.author.displayAvatarURL({
               size: 1024,
               dynamic: true,
-            })
+            }),
           })
           .setColor("#ffac33");
 
@@ -91,16 +91,15 @@ module.exports = async (client, reaction, user) => {
     }
   }
 
-  const panelList = await db.get(`panels_${reaction.message.guild.id}`) || [];
+  const panelList = (await db.get(`panels_${reaction.message.guild.id}`)) || [];
   const panel = panelList.includes(reaction.message.id);
   const settings = client.conf.Ticket_System;
   if (!panel || reaction.emoji.name != "✉️") return;
 
   const tickets =
-    (await db.all())
-      .filter((i) =>
-        i.id.startsWith(`tickets_${reaction.message.guild.id}_`)
-      ) || [];
+    (await db.all()).filter((i) =>
+      i.id.startsWith(`tickets_${reaction.message.guild.id}_`)
+    ) || [];
   if (tickets.find((u) => u.value.includes(user.id)))
     return reaction.users.remove(user.id);
 
@@ -144,7 +143,7 @@ module.exports = async (client, reaction, user) => {
         )
         .setAuthor({
           name: "Thank you for creating a ticket",
-          iconURL: `https://cdn.upload.systems/uploads/4mFVRE7f.png`
+          iconURL: `https://cdn.upload.systems/uploads/4mFVRE7f.png`,
         }),
     ],
   });

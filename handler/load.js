@@ -43,7 +43,7 @@ module.exports = async (client) => {
   client.paginateSelect = require("../utils/paginateSelect.js");
 
   process.on("unhandledRejection", (error) => {
-    if(client.isReady()) {
+    if (client.isReady()) {
       let ignoreErrors = [
         `DiscordAPIError: Unknown Message`,
         `DiscordAPIError: Missing Permissions`,
@@ -66,15 +66,15 @@ module.exports = async (client) => {
         .setColor("#e24c4b")
         .setFooter({ text: `${error.name}` })
         .setTimestamp();
-  
+
       let channel = client.channels.cache.get("512277268597309440");
-      if(channel) channel.send({ embeds: [errEmbed] });
+      if (channel) channel.send({ embeds: [errEmbed] });
     }
-    console.log(error.stack)
+    console.log(error.stack);
   });
 
   process.on("uncaughtException", (error) => {
-    if(client.isReady()) {
+    if (client.isReady()) {
       let ignoreErrors = [
         `DiscordAPIError: Unknown Message`,
         `DiscordAPIError: Missing Permissions`,
@@ -98,13 +98,12 @@ module.exports = async (client) => {
         .setFooter({ text: `${error.name}` })
         .setTimestamp();
 
-        
-      if(client.isReady) {
+      if (client.isReady) {
         let channel = client.channels.cache.get("512277268597309440");
-        if(channel) channel.send({ embeds: [errEmbed] });
+        if (channel) channel.send({ embeds: [errEmbed] });
       }
     }
-    console.log(error.stack)
+    console.log(error.stack);
   });
 
   for (const d of readdirSync("./commands/")) {
@@ -114,7 +113,7 @@ module.exports = async (client) => {
     );
     for (const f of readdirSync(`./commands/${d}`)) {
       const commandData = require(`../commands/${d}/${f}`);
-      if(commandData.slash == true) {
+      if (commandData.slash == true) {
         client.slashCommands.set(commandData.name, {
           ...commandData,
           category: d,
@@ -140,8 +139,14 @@ module.exports = async (client) => {
   app.use(express.json());
   app.use("/players", playerRoutes);
   app.use("/leagues", leagueRoutes);
-  
-  app.listen(client.conf.Settings.Port || 7070, () => `[SERVER] Server has started on port ${client.conf.Settings.port || 7070}.`);
+
+  app.listen(
+    client.conf.Settings.Port || 7070,
+    () =>
+      `[SERVER] Server has started on port ${
+        client.conf.Settings.port || 7070
+      }.`
+  );
 
   client
     .login(process.env.TOKEN)

@@ -11,12 +11,14 @@ module.exports = {
   aliases: ["wd", "w"],
   usage: "w <amount | all>",
   slash: true,
-  options: [{
-    name: "amount",
-    description: "Amount you want to withdraw or 'all'",
-    type: ApplicationCommandOptionType.Number,
-    required: true
-  }]
+  options: [
+    {
+      name: "amount",
+      description: "Amount you want to withdraw or 'all'",
+      type: ApplicationCommandOptionType.Number,
+      required: true,
+    },
+  ],
 };
 
 module.exports.run = async (client, message, args) => {
@@ -55,7 +57,10 @@ module.exports.run = async (client, message, args) => {
     });
 
     await db.sub(`bank_${message.guild.id}_${message.author.id}`, Number(bank));
-    await db.add(`money_${message.guild.id}_${message.author.id}`, Number(bank));
+    await db.add(
+      `money_${message.guild.id}_${message.author.id}`,
+      Number(bank)
+    );
     return;
   }
   if (args[0] > bank)
@@ -89,12 +94,20 @@ module.exports.run = async (client, message, args) => {
     ],
   });
 
-  await db.add(`money_${message.guild.id}_${message.author.id}`, Number(args[0]));
-  await db.sub(`bank_${message.guild.id}_${message.author.id}`, Number(args[0]));
+  await db.add(
+    `money_${message.guild.id}_${message.author.id}`,
+    Number(args[0])
+  );
+  await db.sub(
+    `bank_${message.guild.id}_${message.author.id}`,
+    Number(args[0])
+  );
 };
 
 module.exports.slashRun = async (client, interaction) => {
-  let bank = await db.get(`bank_${interaction.guild.id}_${interaction.user.id}`);
+  let bank = await db.get(
+    `bank_${interaction.guild.id}_${interaction.user.id}`
+  );
   const amount = interaction.options.getNumber("amount");
 
   if (isNaN(amount) && amount !== "all")
@@ -106,6 +119,7 @@ module.exports.slashRun = async (client, interaction) => {
           "You must provide an amount to deposit."
         ),
       ],
+      ephemeral: true,
     });
 
   if (amount === "all") {
@@ -118,6 +132,7 @@ module.exports.slashRun = async (client, interaction) => {
             "You don't have money to withdraw."
           ),
         ],
+        ephemeral: true,
       });
 
     interaction.reply({
@@ -129,8 +144,14 @@ module.exports.slashRun = async (client, interaction) => {
       ],
     });
 
-    await db.sub(`bank_${interaction.guild.id}_${interaction.user.id}`, Number(bank));
-    await db.add(`money_${interaction.guild.id}_${interaction.user.id}`, Number(bank));
+    await db.sub(
+      `bank_${interaction.guild.id}_${interaction.user.id}`,
+      Number(bank)
+    );
+    await db.add(
+      `money_${interaction.guild.id}_${interaction.user.id}`,
+      Number(bank)
+    );
     return;
   }
   if (amount > bank)
@@ -142,6 +163,7 @@ module.exports.slashRun = async (client, interaction) => {
           "You cannot withdraw that much."
         ),
       ],
+      ephemeral: true,
     });
 
   if (amount < 1)
@@ -153,6 +175,7 @@ module.exports.slashRun = async (client, interaction) => {
           "You cannot withdraw less than $1."
         ),
       ],
+      ephemeral: true,
     });
 
   interaction.reply({
@@ -164,6 +187,12 @@ module.exports.slashRun = async (client, interaction) => {
     ],
   });
 
-  await db.add(`money_${interaction.guild.id}_${interaction.user.id}`, Number(amount));
-  await db.sub(`bank_${interaction.guild.id}_${interaction.user.id}`, Number(amount));
+  await db.add(
+    `money_${interaction.guild.id}_${interaction.user.id}`,
+    Number(amount)
+  );
+  await db.sub(
+    `bank_${interaction.guild.id}_${interaction.user.id}`,
+    Number(amount)
+  );
 };

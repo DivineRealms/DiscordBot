@@ -9,17 +9,20 @@ module.exports = {
   aliases: ["remover", "removerole"],
   usage: "remove-role <@User | ID> <@Role | ID | Name>",
   slash: true,
-  options: [{
-    name: "user",
-    description: "User which to remove role",
-    type: ApplicationCommandOptionType.User,
-    required: true
-  }, {
-    name: "role",
-    description: "Role to remove",
-    type: ApplicationCommandOptionType.Role,
-    required: true
-  }]
+  options: [
+    {
+      name: "user",
+      description: "User which to remove role",
+      type: ApplicationCommandOptionType.User,
+      required: true,
+    },
+    {
+      name: "role",
+      description: "Role to remove",
+      type: ApplicationCommandOptionType.Role,
+      required: true,
+    },
+  ],
 };
 
 module.exports.run = async (client, message, args) => {
@@ -78,12 +81,10 @@ module.exports.run = async (client, message, args) => {
 
   message.channel.send({
     embeds: [
-      client
-        .embedBuilder(client, message, "", "", "#3db39e")
-        .setAuthor({
-          name: `Successfully removed role ${role} from ${member.username}.`,
-          iconURL: `https://cdn.upload.systems/uploads/6KOGFYJM.png`,
-        }),
+      client.embedBuilder(client, message, "", "", "#3db39e").setAuthor({
+        name: `Successfully removed role ${role} from ${member.username}.`,
+        iconURL: `https://cdn.upload.systems/uploads/6KOGFYJM.png`,
+      }),
     ],
   });
 
@@ -104,7 +105,9 @@ module.exports.slashRun = async (client, interaction) => {
   const member = interaction.options.getMember("user");
   const role = interaction.options.getRole("role");
 
-  if (member.roles.highest.position >= interaction.member.roles.highest.position)
+  if (
+    member.roles.highest.position >= interaction.member.roles.highest.position
+  )
     return interaction.reply({
       embeds: [
         client.utils.errorEmbed(
@@ -113,9 +116,13 @@ module.exports.slashRun = async (client, interaction) => {
           "That Member has higher roles than you."
         ),
       ],
+      ephemeral: true,
     });
 
-  if (member.roles.highest.position >= interaction.guild.members.me.roles.highest.position)
+  if (
+    member.roles.highest.position >=
+    interaction.guild.members.me.roles.highest.position
+  )
     return interaction.reply({
       embeds: [
         client.utils.errorEmbed(
@@ -124,6 +131,7 @@ module.exports.slashRun = async (client, interaction) => {
           "That Member has higher roles than me."
         ),
       ],
+      ephemeral: true,
     });
 
   if (!member.roles.cache.has(role.id))
@@ -135,16 +143,15 @@ module.exports.slashRun = async (client, interaction) => {
           "That Member don't have that role."
         ),
       ],
+      ephemeral: true,
     });
 
   interaction.reply({
     embeds: [
-      client
-        .embedBuilder(client, interaction, "", "", "#3db39e")
-        .setAuthor({
-          name: `Successfully removed role ${role} from ${member.username}.`,
-          iconURL: `https://cdn.upload.systems/uploads/6KOGFYJM.png`,
-        }),
+      client.embedBuilder(client, interaction, "", "", "#3db39e").setAuthor({
+        name: `Successfully removed role ${role} from ${member.username}.`,
+        iconURL: `https://cdn.upload.systems/uploads/6KOGFYJM.png`,
+      }),
     ],
   });
 
@@ -157,6 +164,7 @@ module.exports.slashRun = async (client, interaction) => {
           "Cannot remove a role from that user."
         ),
       ],
+      ephemeral: true,
     });
   });
 };

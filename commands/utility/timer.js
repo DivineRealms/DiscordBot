@@ -10,12 +10,14 @@ module.exports = {
   aliases: [`time`],
   usage: "timer <Time>",
   slash: true,
-  options: [{
-    name: "time",
-    description: "Time for timer",
-    type: ApplicationCommandOptionType.String,
-    required: true
-  }]
+  options: [
+    {
+      name: "time",
+      description: "Time for timer",
+      type: ApplicationCommandOptionType.String,
+      required: true,
+    },
+  ],
 };
 
 module.exports.run = async (client, message, args) => {
@@ -46,7 +48,7 @@ module.exports.run = async (client, message, args) => {
         )
         .setAuthor({
           name: "Active Timer",
-          iconURL:  `https://cdn.upload.systems/uploads/40vZa4wv.png`
+          iconURL: `https://cdn.upload.systems/uploads/40vZa4wv.png`,
         }),
     ],
   });
@@ -67,7 +69,7 @@ module.exports.run = async (client, message, args) => {
       )
       .setAuthor({
         name: "Active Timer",
-        iconURL: `https://cdn.upload.systems/uploads/40vZa4wv.png`
+        iconURL: `https://cdn.upload.systems/uploads/40vZa4wv.png`,
       });
 
     if (Date.now() > end) {
@@ -75,7 +77,7 @@ module.exports.run = async (client, message, args) => {
         .embedBuilder(client, message, "", "", "#ffc13f")
         .setAuthor({
           name: "Timer has ended!",
-          iconURL: `https://cdn.upload.systems/uploads/40vZa4wv.png`
+          iconURL: `https://cdn.upload.systems/uploads/40vZa4wv.png`,
         });
 
       clearInterval(timer);
@@ -83,7 +85,6 @@ module.exports.run = async (client, message, args) => {
     } else msg.edit({ embeds: [embed2] });
   }, 5000);
 };
-
 
 module.exports.slashRun = async (client, interaction) => {
   const time = interaction.options.getString("time");
@@ -93,7 +94,8 @@ module.exports.slashRun = async (client, interaction) => {
     "Please provide a valid time."
   );
 
-  if (isNaN(parse(time))) return interaction.reply({ embeds: [errEmb] });
+  if (isNaN(parse(time)))
+    return interaction.reply({ embeds: [errEmb], ephemeral: true });
 
   const end = Date.now() + parse(time);
   const msg = await interaction.reply({
@@ -113,9 +115,10 @@ module.exports.slashRun = async (client, interaction) => {
         )
         .setAuthor({
           name: "Active Timer",
-          iconURL:  `https://cdn.upload.systems/uploads/40vZa4wv.png`
+          iconURL: `https://cdn.upload.systems/uploads/40vZa4wv.png`,
         }),
-    ], fetchReply: true
+    ],
+    fetchReply: true,
   });
 
   const timer = setInterval(() => {
@@ -134,7 +137,7 @@ module.exports.slashRun = async (client, interaction) => {
       )
       .setAuthor({
         name: "Active Timer",
-        iconURL: `https://cdn.upload.systems/uploads/40vZa4wv.png`
+        iconURL: `https://cdn.upload.systems/uploads/40vZa4wv.png`,
       });
 
     if (Date.now() > end) {
@@ -142,7 +145,7 @@ module.exports.slashRun = async (client, interaction) => {
         .embedBuilder(client, interaction, "", "", "#ffc13f")
         .setAuthor({
           name: "Timer has ended!",
-          iconURL: `https://cdn.upload.systems/uploads/40vZa4wv.png`
+          iconURL: `https://cdn.upload.systems/uploads/40vZa4wv.png`,
         });
 
       clearInterval(timer);

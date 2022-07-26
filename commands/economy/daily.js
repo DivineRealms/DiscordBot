@@ -9,7 +9,7 @@ module.exports = {
   cooldown: 0,
   aliases: [],
   usage: "daily",
-  slash: true
+  slash: true,
 };
 
 module.exports.run = async (client, message, args) => {
@@ -30,12 +30,10 @@ module.exports.run = async (client, message, args) => {
 
   message.channel.send({
     embeds: [
-      client
-        .embedBuilder(client, message, "", "", "#3db39e")
-        .setAuthor({
-          name: "You have claimed your Daily Reward of $500.",
-          iconURL: `https://cdn.upload.systems/uploads/6KOGFYJM.png`
-        }),
+      client.embedBuilder(client, message, "", "", "#3db39e").setAuthor({
+        name: "You have claimed your Daily Reward of $500.",
+        iconURL: `https://cdn.upload.systems/uploads/6KOGFYJM.png`,
+      }),
     ],
   });
 
@@ -44,7 +42,9 @@ module.exports.run = async (client, message, args) => {
 };
 
 module.exports.slashRun = async (client, interaction) => {
-  let cooldown = await db.get(`daily_${interaction.guild.id}_${interaction.user.id}`),
+  let cooldown = await db.get(
+      `daily_${interaction.guild.id}_${interaction.user.id}`
+    ),
     timeout = 86400000 - (Date.now() - cooldown),
     parsed = client.utils.formatTime(timeout);
 
@@ -57,19 +57,21 @@ module.exports.slashRun = async (client, interaction) => {
           `You're on cooldown, try again in ${parsed}.`
         ),
       ],
+      ephemeral: true,
     });
 
   interaction.reply({
     embeds: [
-      client
-        .embedBuilder(client, interaction, "", "", "#3db39e")
-        .setAuthor({
-          name: "You have claimed your Daily Reward of $500.",
-          iconURL: `https://cdn.upload.systems/uploads/6KOGFYJM.png`
-        }),
+      client.embedBuilder(client, interaction, "", "", "#3db39e").setAuthor({
+        name: "You have claimed your Daily Reward of $500.",
+        iconURL: `https://cdn.upload.systems/uploads/6KOGFYJM.png`,
+      }),
     ],
   });
 
   await db.add(`money_${interaction.guild.id}_${interaction.user.id}`, 500);
-  await db.set(`daily_${interaction.guild.id}_${interaction.user.id}`, Date.now());
+  await db.set(
+    `daily_${interaction.guild.id}_${interaction.user.id}`,
+    Date.now()
+  );
 };

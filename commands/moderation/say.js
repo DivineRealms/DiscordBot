@@ -9,12 +9,14 @@ module.exports = {
   aliases: [`speak`],
   usage: "say <Message>",
   slash: true,
-  options: [{
-    name: "message",
-    description: "Message to send",
-    type: ApplicationCommandOptionType.String,
-    required: true
-  }]
+  options: [
+    {
+      name: "message",
+      description: "Message to send",
+      type: ApplicationCommandOptionType.String,
+      required: true,
+    },
+  ],
 };
 
 module.exports.run = async (client, message, args) => {
@@ -36,6 +38,11 @@ module.exports.run = async (client, message, args) => {
 };
 
 module.exports.slashRun = async (client, interaction) => {
-  interaction.reply({ content: "Command executed successfully!", ephemeral: true });
-  interaction.channel.send({ content: interaction.options.getString("message") });
+  interaction.reply({
+    content: "Command executed successfully!",
+    ephemeral: true,
+  });
+  interaction.channel.send({
+    content: interaction.options.getString("message"),
+  });
 };

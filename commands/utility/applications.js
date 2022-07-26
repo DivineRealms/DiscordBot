@@ -8,7 +8,7 @@ module.exports = {
   cooldown: 0,
   aliases: [],
   usage: "applications",
-  slash: true
+  slash: true,
 };
 
 module.exports.run = async (client, message, args) => {
@@ -99,6 +99,7 @@ module.exports.slashRun = async (client, interaction) => {
           "Application System is not enabled."
         ),
       ],
+      ephemeral: true,
     });
 
   const apps = chunk(
@@ -124,6 +125,7 @@ module.exports.slashRun = async (client, interaction) => {
           "I couldn't find any applications available in this channel!"
         ),
       ],
+      ephemeral: true,
     });
 
   interaction.reply({ embeds: [embed] }).then(async (emb) => {

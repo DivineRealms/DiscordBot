@@ -11,12 +11,14 @@ module.exports = {
   aliases: [],
   usage: "gif <search>",
   slash: true,
-  options: [{
-    name: "search",
-    description: "GIF to Search",
-    type: ApplicationCommandOptionType.String,
-    required: true
-  }]
+  options: [
+    {
+      name: "search",
+      description: "GIF to Search",
+      type: ApplicationCommandOptionType.String,
+      required: true,
+    },
+  ],
 };
 
 module.exports.run = async (client, message, args) => {
@@ -150,6 +152,7 @@ module.exports.slashRun = async (client, interaction) => {
           "No search results found, did you check your spelling?"
         ),
       ],
+      ephemeral: true,
     });
 
   let embed = client

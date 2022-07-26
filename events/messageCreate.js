@@ -10,7 +10,10 @@ const cooldownList = [];
 module.exports = async (client, message) => {
   if (message.channel.type == ChannelType.DM) return;
 
-  if (message.author.id === "302050872383242240" && message.type == MessageType.ChatInputCommand) {
+  if (
+    message.author.id === "302050872383242240" &&
+    message.type == MessageType.ChatInputCommand
+  ) {
     if (message.embeds[0].data.description.includes("Bump done")) {
       let dbumper = message.interaction.user.id;
       let bumpChannel = client.channels.cache.get(client.conf.Logging.Bumps);
@@ -21,7 +24,7 @@ module.exports = async (client, message) => {
       await db.set(`serverBump_${client.conf.Settings.Guild_ID}`, time);
       await db.set(`lastBump_${client.conf.Settings.Guild_ID}`, dbumper);
 
-      setTimeout(async() => {
+      setTimeout(async () => {
         let bumpAgain = client
           .embedBuilder(client, message, "", "", "#1cc0f9")
           .setAuthor({
@@ -54,8 +57,15 @@ module.exports = async (client, message) => {
   }
 
   if (message.channel.id == "529065596449456128" && message.member) {
-    const regexLinks = new RegExp('(https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|www\.[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9]+\.[^\s]{2,}|www\.[a-zA-Z0-9]+\.[^\s]{2,})', 'g');
-    if (message.attachments.size == 0 && !message.content.match(regexLinks) && !message.member.permissions.has("ManageMessages"))
+    const regexLinks = new RegExp(
+      "(https?://(?:www.|(?!www))[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9].[^s]{2,}|www.[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9].[^s]{2,}|https?://(?:www.|(?!www))[a-zA-Z0-9]+.[^s]{2,}|www.[a-zA-Z0-9]+.[^s]{2,})",
+      "g"
+    );
+    if (
+      message.attachments.size == 0 &&
+      !message.content.match(regexLinks) &&
+      !message.member.permissions.has("ManageMessages")
+    )
       await message.delete();
   }
 
@@ -96,7 +106,11 @@ module.exports = async (client, message) => {
     }${escapeRegex(message.px)})\\s*`
   );
 
-  if(message.channel.id == "912855458795094057" && !prefixRegex.test(message.content) && !message.member.permissions.has("ManageMessages"))
+  if (
+    message.channel.id == "912855458795094057" &&
+    !prefixRegex.test(message.content) &&
+    !message.member.permissions.has("ManageMessages")
+  )
     await message.delete();
 
   if (!prefixRegex.test(message.content)) return;

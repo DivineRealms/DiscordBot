@@ -12,17 +12,20 @@ module.exports = {
   aliases: [`setbday`],
   usage: "setbirthday <@User> <Date>",
   slash: true,
-  options: [{
-    name: "user",
-    description: "User whoes birthday to set",
-    type: ApplicationCommandOptionType.User,
-    required: true
-  }, {
-    name: "date",
-    description: "Date of your birthday",
-    type: ApplicationCommandOptionType.String,
-    required: true
-  }]
+  options: [
+    {
+      name: "user",
+      description: "User whoes birthday to set",
+      type: ApplicationCommandOptionType.User,
+      required: true,
+    },
+    {
+      name: "date",
+      description: "Date of your birthday",
+      type: ApplicationCommandOptionType.String,
+      required: true,
+    },
+  ],
 };
 
 module.exports.run = async (client, message, args) => {
@@ -74,7 +77,7 @@ module.exports.run = async (client, message, args) => {
       embed
         .setAuthor({
           name: "Successfully set your birthday.",
-          iconURL: `https://cdn.upload.systems/uploads/6KOGFYJM.png`
+          iconURL: `https://cdn.upload.systems/uploads/6KOGFYJM.png`,
         })
         .setDescription(
           `<:ArrowRightGray:813815804768026705>I have set ${user}'s birthday to ${args
@@ -86,7 +89,10 @@ module.exports.run = async (client, message, args) => {
     ],
   });
 
-  await db.set(`birthday_${message.guild.id}_${user.id}`, args.slice(1).join(" "));
+  await db.set(
+    `birthday_${message.guild.id}_${user.id}`,
+    args.slice(1).join(" ")
+  );
 };
 
 module.exports.slashRun = async (client, interaction) => {
@@ -99,6 +105,7 @@ module.exports.slashRun = async (client, interaction) => {
           "Birthday System is not enabled."
         ),
       ],
+      ephemeral: true,
     });
 
   const embed = client.embedBuilder(client, interaction, "", "", "#3db39e"),
@@ -115,6 +122,7 @@ module.exports.slashRun = async (client, interaction) => {
           `Invalid usage, check ${interaction.px}help setbirthday`
         ),
       ],
+      ephemeral: true,
     });
 
   const age = getAge(args.slice(1).join(" "));
@@ -129,6 +137,7 @@ module.exports.slashRun = async (client, interaction) => {
           }!`
         ),
       ],
+      ephemeral: true,
     });
 
   interaction.reply({
@@ -136,17 +145,20 @@ module.exports.slashRun = async (client, interaction) => {
       embed
         .setAuthor({
           name: "Successfully set birthday.",
-          iconURL: `https://cdn.upload.systems/uploads/6KOGFYJM.png`
+          iconURL: `https://cdn.upload.systems/uploads/6KOGFYJM.png`,
         })
         .setDescription(
-          `<:ArrowRightGray:813815804768026705>I have set ${user}'s birthday to ${interaction.options.getString("date")}!\n<:ArrowRightGray:813815804768026705>They will be ${
-            age + 1
-          }.`
+          `<:ArrowRightGray:813815804768026705>I have set ${user}'s birthday to ${interaction.options.getString(
+            "date"
+          )}!\n<:ArrowRightGray:813815804768026705>They will be ${age + 1}.`
         ),
     ],
   });
 
-  await db.set(`birthday_${interaction.guild.id}_${user.id}`, args.slice(1).join(" "));
+  await db.set(
+    `birthday_${interaction.guild.id}_${user.id}`,
+    args.slice(1).join(" ")
+  );
 };
 
 const getAge = (b) => {

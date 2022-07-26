@@ -10,12 +10,14 @@ module.exports = {
   aliases: ["trumptwt"],
   usage: "trumptweet <Message>",
   slash: true,
-  options: [{
-    name: "message",
-    description: "Message you want Trump to tweet",
-    type: ApplicationCommandOptionType.String,
-    required: true
-  }]
+  options: [
+    {
+      name: "message",
+      description: "Message you want Trump to tweet",
+      type: ApplicationCommandOptionType.String,
+      required: true,
+    },
+  ],
 };
 
 module.exports.run = async (client, message, args) => {
