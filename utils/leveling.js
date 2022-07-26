@@ -9,9 +9,10 @@ const manageLeveling = async (client, message) => {
       client.talkedRecently.delete(message.author.id);
     }, 35000);
 
-    const xp = await db.get(`xp_${message.guild.id}_${message.author.id}`) || 0;
+    const xp =
+      (await db.get(`xp_${message.guild.id}_${message.author.id}`)) || 0;
     const level =
-      await db.get(`level_${message.guild.id}_${message.author.id}`) || 1;
+      (await db.get(`level_${message.guild.id}_${message.author.id}`)) || 1;
     const xpGive = Math.floor(Math.random() * (70 - 35 + 1) + 35);
 
     const nextLevel = parseInt(level) + 1;
@@ -22,7 +23,9 @@ const manageLeveling = async (client, message) => {
       const embed = client
         .embedBuilder(client, "", "", "", "#b7e445")
         .setAuthor({
-          name: `${message.author.username} has just reached Level ${level + 1}!`,
+          name: `${message.author.username} has just reached Level ${
+            level + 1
+          }!`,
           iconURL: `https://cdn.upload.systems/uploads/OJ9pgcy2.png`,
         });
 

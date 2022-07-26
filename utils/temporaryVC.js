@@ -69,12 +69,11 @@ module.exports = function (client) {
       return;
     await user.guild.channels
       .create({
-          name: `${client.conf.Temp_Voice_Channel.Channel_Prefix}${user.member.user.username}`,
-          type: ChannelType.GuildVoice,
-          parent: createCategory,
-          userLimit: 5,
-        }
-      )
+        name: `${client.conf.Temp_Voice_Channel.Channel_Prefix}${user.member.user.username}`,
+        type: ChannelType.GuildVoice,
+        parent: createCategory,
+        userLimit: 5,
+      })
       .then(async (vc) => {
         user.setChannel(vc);
         temporaryVCMap.set(`temporaryChannel_${vc.guild.id}_${vc.id}`, vc.id);

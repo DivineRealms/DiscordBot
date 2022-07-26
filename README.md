@@ -20,7 +20,7 @@ Bot is developed by neon & NIDZA and comes with high number of features, rich Co
 ## Installation & Setup
 **Before you Start make sure that you have Node 16.6+ Installed.**
 
-1. Clone Bot using `git clone https://github.com/DivineRealms/dr-bot/`
+1. Clone Bot using `git clone https://github.com/DivineRealms/DiscordBot/`
 2. Make sure to have the following packages installed on your instance: `pkg-config libpixman-1-dev libcairo2-dev libpangocairo-1.0-0 libpango-1.0-0 libpango1.0-dev libjpeg-turbo8-dev`
 3. Install Modules using `npm install`
 4. Fill in `config.yml` file with token, guild id and other required informations.

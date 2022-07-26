@@ -1,4 +1,10 @@
-const { ButtonBuilder, ActionRowBuilder, ButtonStyle, ComponentType, InteractionType } = require("discord.js");
+const {
+  ButtonBuilder,
+  ActionRowBuilder,
+  ButtonStyle,
+  ComponentType,
+  InteractionType,
+} = require("discord.js");
 async function sliceContent(content, currentPage, perPage) {
   var page = content.slice(perPage * (currentPage - 1), perPage * currentPage);
 
@@ -54,19 +60,19 @@ module.exports = async function paginate(
   // let m = await message.channel.send({ embeds: [embed], components: [row] });
   let m;
 
-  if(message.type == InteractionType.ApplicationCommand) {
+  if (message.type == InteractionType.ApplicationCommand) {
     await message.deferReply();
     m = await message.followUp({ embeds: [embed], components: [row] });
   } else {
     m = await message.channel.send({ embeds: [embed], components: [row] });
   }
-  
+
   const collector = m.createMessageComponentCollector({
     filter,
     componentType: ComponentType.Button,
     time: 300000,
-  }); 
-  
+  });
+
   collector.on("collect", async (interaction) => {
     switch (interaction.customId) {
       case "nextPage":
@@ -109,5 +115,4 @@ module.exports = async function paginate(
     ]);
     await m.edit({ embeds: [embed], components: [disabledRow] });
   });
-  
 };

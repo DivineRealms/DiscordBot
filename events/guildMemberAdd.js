@@ -12,11 +12,12 @@ module.exports = async (client, member) => {
       .send(
         `Welcome ${member} to the server, You are our ${member.guild.memberCount} member!`
       )
-      .then(async(msg) =>
-        await db.set(`wlcmEmbed_${member.guild.id}_${member.id}`, {
-          msg: msg.id,
-          channel: msg.channel.id,
-        })
+      .then(
+        async (msg) =>
+          await db.set(`wlcmEmbed_${member.guild.id}_${member.id}`, {
+            msg: msg.id,
+            channel: msg.channel.id,
+          })
       );
   } else if (settings.Type == "dm") {
     member.user

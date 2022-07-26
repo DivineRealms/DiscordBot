@@ -1,4 +1,9 @@
-const { ActionRowBuilder, SelectMenuBuilder, ComponentType, InteractionType } = require("discord.js");
+const {
+  ActionRowBuilder,
+  SelectMenuBuilder,
+  ComponentType,
+  InteractionType,
+} = require("discord.js");
 
 module.exports = async (client, message, home, data) => {
   let optionList = [];
@@ -24,9 +29,13 @@ module.exports = async (client, message, home, data) => {
   // const m = await message.channel.send({ embeds: [home], components: [row] });
   let m;
 
-  if(message.type == InteractionType.ApplicationCommand) {
+  if (message.type == InteractionType.ApplicationCommand) {
     await message.deferReply();
-    m = await message.followUp({ embeds: [home], components: [row], fetchReply: true });
+    m = await message.followUp({
+      embeds: [home],
+      components: [row],
+      fetchReply: true,
+    });
   } else {
     m = await message.channel.send({ embeds: [home], components: [row] });
   }

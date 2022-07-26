@@ -105,12 +105,10 @@ async function lbMoney(client, message) {
 }
 
 function errorEmbed(client, message, err) {
-  return client
-    .embedBuilder(client, message, err, "", "#e24c4b")
-    .setAuthor({
-      name: err,
-      iconURL: `https://cdn.upload.systems/uploads/96HNGxzL.png`,
-    });
+  return client.embedBuilder(client, message, err, "", "#e24c4b").setAuthor({
+    name: err,
+    iconURL: `https://cdn.upload.systems/uploads/96HNGxzL.png`,
+  });
 }
 
 const updateVotesLb = async (client, guild) => {

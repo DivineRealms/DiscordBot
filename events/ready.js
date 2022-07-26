@@ -1,4 +1,9 @@
-const { ActionRowBuilder, ButtonBuilder, ButtonStyle, ActivityType } = require("discord.js");
+const {
+  ActionRowBuilder,
+  ButtonBuilder,
+  ButtonStyle,
+  ActivityType,
+} = require("discord.js");
 const cron = require("cron");
 const { QuickDB } = require("quick.db");
 const db = new QuickDB();
@@ -127,7 +132,7 @@ module.exports = async (client) => {
         new ButtonBuilder()
           .setURL(`https://minecraft-mp.com/server/296478/vote/`)
           .setLabel("HogRealms")
-          .setStyle(ButtonStyle.Link),
+          .setStyle(ButtonStyle.Link)
       );
       if (generalCh)
         generalCh.send({
@@ -146,7 +151,8 @@ module.exports = async (client) => {
   voteCron.start();
 
   let voteMonthEnd = new cron.CronJob(
-    "30 0 0 1 * *", async() => {
+    "30 0 0 1 * *",
+    async () => {
       await client.utils.updateVotesLb(client, guild);
 
       const lastMonth = new Date();
@@ -156,10 +162,10 @@ module.exports = async (client) => {
         .get(`votes_${guild.id}`)
         .sort((a, b) => b.votes - a.votes);
       let content = "";
-    
+
       for (let i = 0; i < leaderboard.length; i++) {
         if (i == 10) break;
-    
+
         content += `\`${i + 1}.\` **${leaderboard[i].nickname}**︲${
           leaderboard[i].votes
         }\n`
@@ -169,12 +175,17 @@ module.exports = async (client) => {
       }
 
       const votesEmbed = new MessageEmbed()
-        .setAuthor({ name: `Statistika glasanja na kraju meseca`, iconURL: `https://cdn.upload.systems/uploads/sYDS6yZI.png` })
-        .setDescription(`Hvala svima koji su glasali za naš server.\n\n${content}`)
+        .setAuthor({
+          name: `Statistika glasanja na kraju meseca`,
+          iconURL: `https://cdn.upload.systems/uploads/sYDS6yZI.png`,
+        })
+        .setDescription(
+          `Hvala svima koji su glasali za naš server.\n\n${content}`
+        )
         .setColor("#7ec0ff");
 
       const lbChannel = client.channels.cache.get(client.conf.Votes_LB);
-      if(lbChannel) lbChannel.send({ embeds: [votesEmbed] })
+      if (lbChannel) lbChannel.send({ embeds: [votesEmbed] });
     },
     { timezone: "Europe/Belgrade" }
   );
@@ -183,7 +194,7 @@ module.exports = async (client) => {
 
   let voteLeaderboardCron = new cron.CronJob(
     "0 0 */2 * * *",
-    async() => {
+    async () => {
       await client.utils.updateVotesLb(client, guild);
     },
     { timezone: "Europe/Belgrade" }

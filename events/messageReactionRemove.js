@@ -24,9 +24,9 @@ module.exports = async (client, reaction, user) => {
             `stars_${reaction.message.guild.id}_${reaction.message.id}`
           );
         let star = /([0-9]{1,3})/.exec(board.content);
-        board.content = `\`${starboard.Emoji}\` ${
-          parseInt(star[1]) - 1
-        }︲<#${reaction.message.channel.id}>`;
+        board.content = `\`${starboard.Emoji}\` ${parseInt(star[1]) - 1}︲<#${
+          reaction.message.channel.id
+        }>`;
         board.edit({ content: `${board}` });
         if (parseInt(star[1]) - 1 <= 0) return board.delete();
       }

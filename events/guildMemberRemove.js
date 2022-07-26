@@ -9,11 +9,12 @@ module.exports = async (client, member) => {
 
   if (embedWelcome) {
     let wlcmCh = client.channels.cache.get(embedWelcome.channel);
-    if (wlcmCh) await wlcmCh.messages.fetch(embedWelcome.msg).then((msg) => msg.delete());
+    if (wlcmCh)
+      await wlcmCh.messages.fetch(embedWelcome.msg).then((msg) => msg.delete());
   }
 
   let data = (await db.all()).filter((data) => data.id.includes(member.id));
-  data.forEach(async(data) => await db.delete(data.id));
+  data.forEach(async (data) => await db.delete(data.id));
 
   if (!settings.Goodbye_System.Enabled) return;
 
