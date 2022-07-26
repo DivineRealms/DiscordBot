@@ -23,6 +23,7 @@ module.exports = async (client) => {
   client.snipes = new Enmap();
   client.afk = new Enmap();
   client.slashArray = [];
+  client.cmdCooldowns = [];
   client.embed = class Embed extends EmbedBuilder {
     color = client.conf.Settings.Embed_Color;
   };

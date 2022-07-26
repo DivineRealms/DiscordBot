@@ -5,8 +5,6 @@ const { QuickDB } = require("quick.db");
 const db = new QuickDB();
 const { MessageType, ChannelType } = require("discord.js");
 
-const cooldownList = [];
-
 module.exports = async (client, message) => {
   if (message.channel.type == ChannelType.DM) return;
 
@@ -144,7 +142,7 @@ module.exports = async (client, message) => {
         })
         .then((m) => setTimeout(() => m.delete(), 7000));
 
-    let findCooldown = cooldownList.find(
+    let findCooldown = client.cmdCooldowns.find(
       (c) => c.name == command && c.id == message.author.id
     );
 
@@ -171,10 +169,10 @@ module.exports = async (client, message) => {
           expiring: Date.now() + command.cooldown * 1000,
         };
 
-        cooldownList.push(cooldown);
+        client.cmdCooldowns.push(cooldown);
 
         setTimeout(() => {
-          cooldownList.splice(cooldownList.indexOf(cooldown), 1);
+          client.cmdCooldowns.splice(client.cmdCooldowns.indexOf(cooldown), 1);
         }, command.cooldown * 1000);
       }
     }

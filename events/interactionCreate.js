@@ -41,6 +41,40 @@ module.exports = async (client, interaction) => {
         ],
         ephemeral: true,
       });
+    let findCooldown = client.cmdCooldowns.find(
+      (c) => c.name == cmd && c.id == interaction.user.id
+    );
+  
+    if (
+      !client.conf.Automod.Bypass_Cooldown.some((r) =>
+        interaction.member.roles.cache.has(r)
+      )
+    ) {
+      if (findCooldown) {
+        let time = client.utils.formatTime(findCooldown.expiring - Date.now());
+        return interaction.reply({
+          embeds: [
+            client.utils.errorEmbed(
+              client,
+              interaction,
+              `You can use that command again in ${time}.`
+            ),
+          ], ephemeral: true
+        });
+      } else if (!findCooldown && cmd.cooldown > 0) {
+        let cooldown = {
+          id: interaction.user.id,
+          name: cmd,
+          expiring: Date.now() + cmd.cooldown * 1000,
+        };
+
+        client.cmdCooldowns.push(cooldown);
+
+        setTimeout(() => {
+          client.cmdCooldowns.splice(client.cmdCooldowns.indexOf(cooldown), 1);
+        }, cmd.cooldown * 1000);
+      }
+    }
 
     cmd.slashRun(client, interaction);
   }
