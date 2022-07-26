@@ -143,7 +143,7 @@ module.exports = async (client, message) => {
         .then((m) => setTimeout(() => m.delete(), 7000));
 
     let findCooldown = client.cmdCooldowns.find(
-      (c) => c.name == command && c.id == message.author.id
+      (c) => c.name == command.name && c.id == message.author.id
     );
 
     if (
@@ -165,7 +165,7 @@ module.exports = async (client, message) => {
       } else if (!findCooldown && command.cooldown > 0) {
         let cooldown = {
           id: message.author.id,
-          name: command,
+          name: command.name,
           expiring: Date.now() + command.cooldown * 1000,
         };
 

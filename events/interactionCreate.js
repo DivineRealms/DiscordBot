@@ -41,10 +41,11 @@ module.exports = async (client, interaction) => {
         ],
         ephemeral: true,
       });
+    
     let findCooldown = client.cmdCooldowns.find(
-      (c) => c.name == cmd && c.id == interaction.user.id
+      (c) => c.name == cmd.name && c.id == interaction.user.id
     );
-  
+
     if (
       !client.conf.Automod.Bypass_Cooldown.some((r) =>
         interaction.member.roles.cache.has(r)
@@ -62,9 +63,10 @@ module.exports = async (client, interaction) => {
           ], ephemeral: true
         });
       } else if (!findCooldown && cmd.cooldown > 0) {
+        console.log('kdksksks')
         let cooldown = {
           id: interaction.user.id,
-          name: cmd,
+          name: cmd.name,
           expiring: Date.now() + cmd.cooldown * 1000,
         };
 
