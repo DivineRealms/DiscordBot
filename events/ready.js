@@ -184,7 +184,7 @@ module.exports = async (client) => {
         )
         .setColor("#7ec0ff");
 
-      const lbChannel = client.channels.cache.get(client.conf.Votes_LB);
+      const lbChannel = client.channels.cache.get(client.conf.Settings.Votes_LB);
       if (lbChannel) lbChannel.send({ embeds: [votesEmbed] });
     },
     { timezone: "Europe/Belgrade" }
