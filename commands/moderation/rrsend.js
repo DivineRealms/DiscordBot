@@ -1,4 +1,9 @@
-const { ApplicationCommandOptionType, SelectMenuBuilder, ActionRowBuilder, EmbedBuilder } = require("discord.js");
+const {
+  ApplicationCommandOptionType,
+  SelectMenuBuilder,
+  ActionRowBuilder,
+  EmbedBuilder,
+} = require("discord.js");
 
 module.exports = {
   name: "rrsend",
@@ -15,7 +20,7 @@ module.exports = {
       description: "Reaction Role category which to send",
       type: ApplicationCommandOptionType.String,
       required: true,
-    }
+    },
   ],
 };
 
@@ -33,9 +38,11 @@ module.exports.run = async (client, message, args) => {
         ),
       ],
     });
-    
-  const findRoles = rolesList.find((x) => x.name.toLowerCase() == category.toLowerCase());
-  if(!findRoles) 
+
+  const findRoles = rolesList.find(
+    (x) => x.name.toLowerCase() == category.toLowerCase()
+  );
+  if (!findRoles)
     return message.channel.send({
       embeds: [
         client.utils.errorEmbed(
@@ -52,8 +59,7 @@ module.exports.run = async (client, message, args) => {
       label: x.label,
       value: x.id,
       emoji: x.emoji,
-      description: x.placeholder
-    })
+    });
   });
 
   const selectMenu = new SelectMenuBuilder()
@@ -63,16 +69,18 @@ module.exports.run = async (client, message, args) => {
     .setMinValues(0)
     .addOptions(options);
 
-  const selectRow = new ActionRowBuilder()
-    .addComponents(selectMenu);
+  const selectRow = new ActionRowBuilder().addComponents(selectMenu);
 
   const embed = new EmbedBuilder()
-    .setTitle(findRoles.title)
-    .setDescription(findRoles.description)
-    .setColor(findRoles.color)
+    .setAuthor({
+      name: findRoles.title,
+      iconURL: `https://cdn.upload.systems/uploads/rgGD8TcN.png`,
+    })
+    .setColor(findRoles.color);
 
   message.channel.send({
-    embeds: [embed], components: [selectRow]
+    embeds: [embed],
+    components: [selectRow],
   });
 };
 
@@ -88,11 +96,14 @@ module.exports.slashRun = async (client, interaction) => {
           interaction,
           "You didn't provide Reaction Role Category."
         ),
-      ], ephemeral: true
+      ],
+      ephemeral: true,
     });
-    
-  const findRoles = rolesList.find((x) => x.name.toLowerCase() == category.toLowerCase());
-  if(!findRoles) 
+
+  const findRoles = rolesList.find(
+    (x) => x.name.toLowerCase() == category.toLowerCase()
+  );
+  if (!findRoles)
     return interaction.reply({
       embeds: [
         client.utils.errorEmbed(
@@ -100,7 +111,8 @@ module.exports.slashRun = async (client, interaction) => {
           interaction,
           "You didn't provide Reaction Role Category."
         ),
-      ], ephemeral: true
+      ],
+      ephemeral: true,
     });
 
   const options = [];
@@ -109,8 +121,7 @@ module.exports.slashRun = async (client, interaction) => {
       label: x.label,
       value: x.id,
       emoji: x.emoji,
-      description: x.placeholder
-    })
+    });
   });
 
   const selectMenu = new SelectMenuBuilder()
@@ -120,13 +131,14 @@ module.exports.slashRun = async (client, interaction) => {
     .setMinValues(0)
     .addOptions(options);
 
-  const selectRow = new ActionRowBuilder()
-    .addComponents(selectMenu);
+  const selectRow = new ActionRowBuilder().addComponents(selectMenu);
 
   const embed = new EmbedBuilder()
-    .setTitle(findRoles.title)
-    .setDescription(findRoles.description)
-    .setColor(findRoles.color)
+    .setAuthor({
+      name: findRoles.title,
+      iconURL: `https://cdn.upload.systems/uploads/rgGD8TcN.png`,
+    })
+    .setColor(findRoles.color);
 
   interaction.reply({
     embeds: [
@@ -135,10 +147,12 @@ module.exports.slashRun = async (client, interaction) => {
         interaction,
         "Reaction Role menu have been sent successfully."
       ),
-    ], ephemeral: true
+    ],
+    ephemeral: true,
   });
 
   interaction.channel.send({
-    embeds: [embed], components: [selectRow]
+    embeds: [embed],
+    components: [selectRow],
   });
 };
