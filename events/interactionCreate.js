@@ -19,7 +19,9 @@ module.exports = async (client, interaction) => {
       );
 
       if(findMenu) {
-        // proverim je l empty allValues, ako jeste sklonim sve roles
+        if(!interaction.member.roles.cache.has("1002915912300638239"))
+          interaction.member.roles.add("1002915912300638239");
+        
         const allValues = interaction.values;
         const value = interaction.values[allValues.length - 1];
         const selectedRole = findMenu.roles.find((x) => x.id == value);
