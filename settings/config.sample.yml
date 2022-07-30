@@ -88,6 +88,20 @@ Settings:
     # FCFA Challenge League Table Channel
     FCFAChallenge: ""
 
+  # List of Reaction Roles
+  Reaction_Roles:
+    - name: "category_name"
+      title: "Embed Title"
+      color: "Green"
+      description: "Select one of these roles to get mentioned for different stuff."
+      roles:
+        # rename to label and description
+        - label: "Giveaway Mentions"
+          id: "gw_mention"
+          emoji: "🎁"
+          placeholder: "Select this Role to get notified of new Giveaways"
+          roles: []
+
 Automod:
   # Role(s) that bypass command cooldown.
   # Disabled by default. To enable just add IDs to the list.

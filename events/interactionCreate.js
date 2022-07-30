@@ -9,6 +9,66 @@ module.exports = async (client, interaction) => {
 
   interaction.px = client.conf.Settings.Prefix;
 
+  if(interaction.isSelectMenu()) {
+    if(interaction.customId.startsWith("reactionRoles_")) {
+      const category = interaction.customId.replace("reactionRoles_", "");
+      const findMenu = client.conf.Settings.Reaction_Roles.find((x) => x.name == category);
+
+      interaction.member = interaction.guild.members.cache.get(
+        interaction.user.id
+      );
+
+      if(findMenu) {
+        // proverim je l empty allValues, ako jeste sklonim sve roles
+        const allValues = interaction.values;
+        const value = interaction.values[allValues.length - 1];
+        const selectedRole = findMenu.roles.find((x) => x.id == value);
+
+        const allOptions = interaction.component.options.map((x) => x.value);
+        const selectedOptions = interaction.values;
+
+        allOptions.forEach((r) => {
+          const role = findMenu.roles.find((x) => x.id == r);
+          role.roles.forEach(async(a) => {
+            await interaction.member.roles.remove(a).catch(err => {})
+          })
+        });
+
+        setTimeout(() => {
+          selectedOptions.forEach((r) => {
+            const role = findMenu.roles.find((x) => x.id == r);
+            role.roles.forEach(async(a) => {
+              await interaction.member.roles.add(a).catch(err => {})
+            })
+          });
+        }, 1000)
+
+        if(selectedOptions.length == 0) {
+          return interaction.reply({
+            embeds: [
+              client.embedBuilder(client, interaction, "Reaction Roles", `All Reaction Roles have been removed from you.`, "#3db39e"),
+            ], ephemeral: true
+          });
+        }
+
+        if(selectedRole.roles.some((x) => interaction.member.roles.cache.has(x))) {
+          interaction.reply({
+            embeds: [
+              client.embedBuilder(client, interaction, "Reaction Roles", `Role(s) have been removed from you.`, "#3db39e")
+            ], ephemeral: true
+          });
+        } else {
+          interaction.reply({
+            embeds: [
+              client.embedBuilder(client, interaction, "Reaction Roles", `Role(s) have been added to you.`, "#3db39e"),
+            ], ephemeral: true
+          });
+        }
+
+      }
+    }
+  }
+
   if (
     interaction.type == InteractionType.ApplicationCommand &&
     interaction.guild
