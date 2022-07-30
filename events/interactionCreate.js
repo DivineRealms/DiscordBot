@@ -23,50 +23,18 @@ module.exports = async (client, interaction) => {
           interaction.member.roles.add("1002915912300638239");
         
         const allValues = interaction.values;
-        const value = interaction.values[allValues.length - 1];
-        const selectedRole = findMenu.roles.find((x) => x.id == value);
 
-        const allOptions = interaction.component.options.map((x) => x.value);
-        const selectedOptions = interaction.values;
+        allValues.forEach(async(s) => {
+          let getSelectedRole = findMenu.roles.find((x) => x.id == s);
+          if(interaction.member.roles.cache.has(getSelectedRole.role)) interaction.member.roles.remove(getSelectedRole.role);
+          else if(!interaction.member.roles.cache.has(getSelectedRole.role)) interaction.member.roles.add(getSelectedRole.role);
+        })
 
-        allOptions.forEach((r) => {
-          const role = findMenu.roles.find((x) => x.id == r);
-          role.roles.forEach(async(a) => {
-            await interaction.member.roles.remove(a).catch(err => {})
-          })
+        interaction.reply({
+          embeds: [
+            client.embedBuilder(client, interaction, "Reaction Roles", `Reaction Roles have been updated.`, "#3db39e"),
+          ], ephemeral: true
         });
-
-        setTimeout(() => {
-          selectedOptions.forEach((r) => {
-            const role = findMenu.roles.find((x) => x.id == r);
-            role.roles.forEach(async(a) => {
-              await interaction.member.roles.add(a).catch(err => {})
-            })
-          });
-        }, 1000)
-
-        if(selectedOptions.length == 0) {
-          return interaction.reply({
-            embeds: [
-              client.embedBuilder(client, interaction, "Reaction Roles", `All Reaction Roles have been removed from you.`, "#3db39e"),
-            ], ephemeral: true
-          });
-        }
-
-        if(selectedRole.roles.some((x) => interaction.member.roles.cache.has(x))) {
-          interaction.reply({
-            embeds: [
-              client.embedBuilder(client, interaction, "Reaction Roles", `Role(s) have been removed from you.`, "#3db39e")
-            ], ephemeral: true
-          });
-        } else {
-          interaction.reply({
-            embeds: [
-              client.embedBuilder(client, interaction, "Reaction Roles", `Role(s) have been added to you.`, "#3db39e"),
-            ], ephemeral: true
-          });
-        }
-
       }
     }
   }
