@@ -112,23 +112,21 @@ module.exports = async (client, reaction, user) => {
     allow: ["ViewChannel"],
   }));
 
-  const channel = await reaction.message.guild.channels.create(
-    settings.Name.replace("{number}", ticketNumber).replace(
+  const channel = await reaction.message.guild.channels.create({
+    name: settings.Name.replace("{number}", ticketNumber).replace(
       "{username}",
       user.username
     ),
-    {
-      parent: settings.Category,
-      permissionOverwrites: [
-        {
-          id: reaction.message.guild.id,
-          deny: "ViewChannel",
-        },
-        { id: user.id, allow: "ViewChannel" },
-        ...permissions,
-      ],
-    }
-  );
+    parent: settings.Category,
+    permissionOverwrites: [
+      {
+        id: reaction.message.guild.id,
+        deny: "ViewChannel",
+      },
+      { id: user.id, allow: "ViewChannel" },
+      ...permissions,
+    ],
+  });
 
   channel.send({
     content: user.toString(),
