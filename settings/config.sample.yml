@@ -100,7 +100,7 @@ Settings:
           id: "gw_mention"
           emoji: "🎁"
           placeholder: "Select this Role to get notified of new Giveaways"
-          roles: []
+          role: ""
 
 Automod:
   # Role(s) that bypass command cooldown.
