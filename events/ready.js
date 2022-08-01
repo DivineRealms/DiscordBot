@@ -3,6 +3,7 @@ const {
   ButtonBuilder,
   ButtonStyle,
   ActivityType,
+  EmbedBuilder
 } = require("discord.js");
 const cron = require("cron");
 const { QuickDB } = require("quick.db");
@@ -151,15 +152,15 @@ module.exports = async (client) => {
   voteCron.start();
 
   let voteMonthEnd = new cron.CronJob(
-    "30 0 0 1 * *",
+    "10 0 0 1 * *",
     async () => {
       await client.utils.updateVotesLb(client, guild);
 
       const lastMonth = new Date();
       lastMonth.setMonth(lastMonth.getMonth() - 1);
 
-      let leaderboard = await db
-        .get(`votes_${guild.id}`)
+      let leaderboard = (await db
+        .get(`votes_${guild.id}`))
         .sort((a, b) => b.votes - a.votes);
       let content = "";
 
@@ -174,7 +175,7 @@ module.exports = async (client) => {
           .replace("3.", "🥉");
       }
 
-      const votesEmbed = new MessageEmbed()
+      const votesEmbed = new EmbedBuilder()
         .setAuthor({
           name: `Statistika glasanja na kraju meseca`,
           iconURL: `https://cdn.upload.systems/uploads/sYDS6yZI.png`,
