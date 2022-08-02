@@ -68,98 +68,6 @@ module.exports = {
   ],
 };
 
-module.exports.run = async (client, message, args) => {
-  args = args.join(" ").split(/\s*\|\s*/);
-  const [type, mention, title, description] = args,
-    announcementChannel = message.guild.channels.cache.get(
-      client.conf.Settings.Announcement_Channel
-    );
-
-  if (args.length < 3)
-    return message.channel.send({
-      embeds: [
-        client.utils.errorEmbed(
-          client,
-          message,
-          `Invalid usage; see ${message.px}help announce for correct usage.`
-        ),
-      ],
-    });
-
-  let embed = client
-    .embedBuilder(client, message, "", description)
-    .setFooter({
-      text: `Announcement by ${message.author.tag}`,
-      iconURL: message.author.displayAvatarURL({ size: 1024, dynamic: true }),
-    })
-    .setTimestamp();
-
-  args.splice(0, 4);
-  if (args.length % 2 !== 0)
-    return message.channel.send({
-      embeds: [
-        client.utils.errorEmbed(
-          client,
-          message,
-          "You are missing a title or a description."
-        ),
-      ],
-    });
-
-  const fields = [];
-  for (let i = 0; i < args.length; i += 2)
-    fields.push({ title: args[i], description: args[i + 1] });
-
-  for (let i = 0; i < fields.length && fields.length <= 25; i++) {
-    embed.addFields({ name: fields[i].title, value: fields[i].description });
-    if (!fields[i].title || !fields[i].description)
-      return message.channel.send({
-        embeds: [
-          client.utils.errorEmbed(
-            client,
-            message,
-            "You need to provide both a title and a description."
-          ),
-        ],
-      });
-  }
-
-  let upAliases = ["update", "up", "1"],
-    mnAliases = ["maintenance", "main", "2"],
-    suAliases = ["survey", "3"],
-    mentionAnswer = ["yes", "1"];
-
-  if (upAliases.includes(type))
-    embed.setColor("#7edd8a").setAuthor({
-      name: title,
-      iconURL: `https://cdn.upload.systems/uploads/aKT2mjr0.png`,
-    });
-  else if (mnAliases.includes(type))
-    embed.setColor("#ffae63").setAuthor({
-      name: title,
-      iconURL: `https://cdn.upload.systems/uploads/vRfWnVT5.png`,
-    });
-  else if (suAliases.includes(type))
-    embed.setAuthor({
-      name: title,
-      iconURL: `https://cdn.upload.systems/uploads/KSTCcy4V.png`,
-    });
-  else
-    embed.setAuthor({
-      name: title,
-      iconURL: `https://cdn.upload.systems/uploads/sYDS6yZI.png`,
-    });
-
-  announcementChannel.send({ embeds: [embed] });
-  setTimeout(() => message.delete(), 3000);
-
-  if (mentionAnswer.includes(mention))
-    announcementChannel
-      .send(`@everyone`)
-      .then((msg) => setTimeout(() => msg.delete(), 3000));
-  else return;
-};
-
 module.exports.slashRun = async (client, interaction) => {
   const type = interaction.options.getString("type");
   const title = interaction.options.getString("title");
@@ -272,7 +180,7 @@ module.exports.slashRun = async (client, interaction) => {
               embeds: [
                 client.utils.errorEmbed(
                   client,
-                  message,
+                  interaction,
                   "You need to provide both a title and a description."
                 ),
               ],
@@ -283,38 +191,30 @@ module.exports.slashRun = async (client, interaction) => {
         md.reply({
           embeds: [
             client.embedBuilder(client, interaction, "", "", "#3db39e").setAuthor({
-              name: `Announcement have been sent!`,
+              name: `Announcement has been sent!`,
               iconURL: `https://cdn.upload.systems/uploads/6KOGFYJM.png`,
             }),
           ],
           ephemeral: true,
         });
 
-        announcementChannel.send({ embeds: [embed] });
+        if (mention) announcementChannel.send({ content: `🏓 ${mention}` });
 
-        if (mention) {
-          announcementChannel
-            .send({ content: `${mention}` })
-            .then((msg) => setTimeout(() => msg.delete(), 3000));
-        }
+        announcementChannel.send({ embeds: [embed] });
       } else {
         md.reply({
           embeds: [
             client.embedBuilder(client, interaction, "", "", "#3db39e").setAuthor({
-              name: `Announcement have been sent!`,
+              name: `Announcement has been sent!`,
               iconURL: `https://cdn.upload.systems/uploads/6KOGFYJM.png`,
             }),
           ],
           ephemeral: true,
         });
 
-        announcementChannel.send({ embeds: [embed] });
+        if (mention) announcementChannel.send({ content: `🏓 ${mention}` });
 
-        if (mention) {
-          announcementChannel
-            .send({ content: `${mention}` })
-            .then((msg) => setTimeout(() => msg.delete(), 3000));
-        }
+        announcementChannel.send({ embeds: [embed] });
       }
 
       /* if (type == "update")
@@ -353,10 +253,11 @@ module.exports.slashRun = async (client, interaction) => {
       console.log(err);
       interaction.followUp({
         embeds: [
-          client.embedBuilder(client, interaction, "", "", "Red").setAuthor({
-            name: "Time for entering announcement fields has passed without answer.",
-            iconURL: `https://cdn.upload.systems/uploads/iHhkS5zu.png`,
-          }),
+          client.utils.errorEmbed(
+            client,
+            interaction,
+            "Time for entering announcement fields has passed without answer."
+          ),
         ],
         ephemeral: true,
       });
