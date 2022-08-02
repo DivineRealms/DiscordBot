@@ -139,5 +139,5 @@ module.exports.slashRun = async (client, interaction) => {
         ],
       })
       .catch(() => {});
-  }, parse(end));
+  }, parse(time));
 };
