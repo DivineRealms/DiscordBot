@@ -59,20 +59,12 @@ module.exports = {
       type: ApplicationCommandOptionType.String,
       required: false,
     },
-    {
-      name: "mention",
-      description: "Role which to mention",
-      type: ApplicationCommandOptionType.Role,
-      required: false,
-    },
   ],
 };
 
 module.exports.slashRun = async (client, interaction) => {
   const type = interaction.options.getString("type");
   const title = interaction.options.getString("title");
-  const mention = interaction.options.getRole("mention");
-
   const image = interaction.options.getString("image");
   const thumbnail = interaction.options.getString("thumbnail");
 
@@ -198,8 +190,6 @@ module.exports.slashRun = async (client, interaction) => {
           ephemeral: true,
         });
 
-        if (mention) announcementChannel.send({ content: `🏓 ${mention}` });
-
         announcementChannel.send({ embeds: [embed] });
       } else {
         md.reply({
@@ -212,42 +202,8 @@ module.exports.slashRun = async (client, interaction) => {
           ephemeral: true,
         });
 
-        if (mention) announcementChannel.send({ content: `🏓 ${mention}` });
-
         announcementChannel.send({ embeds: [embed] });
-      }
-
-      /* if (type == "update")
-        embed.setColor("#7edd8a").setAuthor({
-          name: title,
-          iconURL: `https://cdn.upload.systems/uploads/aKT2mjr0.png`,
-        });
-      else if (type == "maintenance")
-        embed.setColor("#ffae63").setAuthor({
-          name: title,
-          iconURL: `https://cdn.upload.systems/uploads/vRfWnVT5.png`,
-        });
-      else if (type == "survey")
-        embed.setAuthor({
-          name: title,
-          iconURL: `https://cdn.upload.systems/uploads/KSTCcy4V.png`,
-        });
-      else
-        embed.setAuthor({
-          name: title,
-          iconURL: `https://cdn.upload.systems/uploads/sYDS6yZI.png`,
-        });
-
-      if (image) embed.setImage(image);
-      if (thumbnail) embed.setThumbnail(thumbnail);
-
-      announcementChannel.send({ embeds: [embed] });
-
-      if (mention) {
-        announcementChannel
-          .send({ content: `${mention}` })
-          .then((msg) => setTimeout(() => msg.delete(), 3000));
-      } */
+      } 
     })
     .catch((err) => {
       console.log(err);
