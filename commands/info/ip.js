@@ -16,8 +16,8 @@ module.exports.run = async (client, message, args) =>
         .embedBuilder(client, message, "", "", "#81b051")
         .setThumbnail(`https://cdn.upload.systems/uploads/YrOfFxGC.png`)
         .addFields([{
-          name: "Minecraft Server IPs:",
-          value: "`1️⃣` **`divinerealms.ga`**\n`2️⃣` **`divinemc.ga`**",
+          name: "Minecraft Server IP:",
+          value: "**`divinerealms.org`**",
           inline: false
         }, { name: "Version: **`1.8 - 1.18.2`**", value: "_ _", inline: false }])
     ],
@@ -30,8 +30,8 @@ module.exports.slashRun = async (client, interaction) =>
         .embedBuilder(client, interaction, "", "", "#81b051")
         .setThumbnail(`https://cdn.upload.systems/uploads/YrOfFxGC.png`)
         .addFields([{
-          name: "Minecraft Server IPs:",
-          value: "`1️⃣` **`divinerealms.ga`**\n`2️⃣` **`divinemc.ga`**",
+          name: "Minecraft Server IP:",
+          value: "**`divinerealms.org`**",
           inline: false
         }, { name: "Version: **`1.8 - 1.18.2`**", value: "_ _", inline: false }])
     ],
