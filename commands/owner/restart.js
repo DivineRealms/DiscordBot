@@ -22,20 +22,22 @@ module.exports.slashRun = async (client, interaction) => {
       ephemeral: true,
     });
 
-  const restarting = await interaction.channel.send({
-      embeds: [
-        client.embedBuilder(client, interaction, "", "", "#3db39e").setAuthor({
-          name: "Bot is restarting...",
-          iconURL: `https://cdn.upload.systems/uploads/6KOGFYJM.png`,
-        }),
-      ]
-    }),
-    restarted = client
-      .embedBuilder(client, interaction, "", "", "#3db39e")
-      .setAuthor({
+  interaction.reply({
+    embeds: [
+      client.embedBuilder(client, interaction, "", "", "#3db39e").setAuthor({
+        name: "Bot is restarting...",
+        iconURL: `https://cdn.upload.systems/uploads/6KOGFYJM.png`,
+      }),
+    ],
+    ephemeral: true,
+  });
+
+  await interaction.channel.send({
+    embeds: [
+      client.embedBuilder(client, interaction, "", "", "#3db39e").setAuthor({
         name: `Bot has been restarted by ${interaction.user.username}!`,
         iconURL: `https://cdn.upload.systems/uploads/6KOGFYJM.png`,
-      });
-
-  await restarting.edit({ embeds: [restarted] }).then(() => process.exit());
+      }),
+    ],
+  }).then(() => process.exit());
 };
