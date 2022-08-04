@@ -22,7 +22,7 @@ module.exports.slashRun = async (client, interaction) => {
       ephemeral: true,
     });
 
-  const restarting = await interaction.reply({
+  const restarting = await interaction.channel.send({
       embeds: [
         client.embedBuilder(client, interaction, "", "", "#3db39e").setAuthor({
           name: "Bot is restarting...",
@@ -33,7 +33,7 @@ module.exports.slashRun = async (client, interaction) => {
     restarted = client
       .embedBuilder(client, interaction, "", "", "#3db39e")
       .setAuthor({
-        name: "Bot has been restarted!",
+        name: "Bot has been restarted by ${interaction.user.username}!",
         iconURL: `https://cdn.upload.systems/uploads/6KOGFYJM.png`,
       });
 
