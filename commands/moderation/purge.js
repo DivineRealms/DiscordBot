@@ -56,10 +56,10 @@ module.exports.run = async (client, message, args) => {
   message.channel
     .bulkDelete(args[0], true)
     .then((_messages) => {
-      message.channel.send({
+      message.reply({
         embeds: [
           client.embedBuilder(client, message, "", "", "#f44336").setAuthor({
-            name: `${message.author.username} has purged ${args[0]} mesages.`,
+            name: `You have purged ${args[0]} mesages.`,
             iconURL: `https://cdn.upload.systems/uploads/6Xdg16Gh.png`,
           }),
         ],
@@ -109,10 +109,11 @@ module.exports.slashRun = async (client, interaction) => {
           client
             .embedBuilder(client, interaction, "", "", "#f44336")
             .setAuthor({
-              name: `${interaction.user.username} has purged ${amount} mesages.`,
+              name: `You have purged ${amount} mesages.`,
               iconURL: `https://cdn.upload.systems/uploads/6Xdg16Gh.png`,
             }),
         ],
+        ephemeral: true,
       });
     })
     .catch(() =>

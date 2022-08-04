@@ -6,22 +6,26 @@ module.exports = {
   cooldown: 0,
   aliases: ["mcip", "serverip"],
   usage: "ip",
-  slash: true
+  slash: true,
 };
 
-module.exports.run = async (client, message, args) =>
-  message.channel.send({
+module.exports.run = async (client, message, args) => {
+  message.reply({
     embeds: [
       client
         .embedBuilder(client, message, "", "", "#81b051")
         .setThumbnail(`https://cdn.upload.systems/uploads/YrOfFxGC.png`)
-        .addFields([{
-          name: "Minecraft Server IP:",
-          value: "**`divinerealms.org`**",
-          inline: false
-        }, { name: "Version: **`1.8 - 1.18.2`**", value: "_ _", inline: false }])
+        .addFields([
+          {
+            name: "Minecraft Server IP:",
+            value: "**`divinerealms.org`**",
+            inline: false,
+          },
+          { name: "Version: **`1.8 - 1.18.2`**", value: "_ _", inline: false },
+        ]),
     ],
   });
+};
 
 module.exports.slashRun = async (client, interaction) =>
   interaction.reply({
@@ -29,10 +33,14 @@ module.exports.slashRun = async (client, interaction) =>
       client
         .embedBuilder(client, interaction, "", "", "#81b051")
         .setThumbnail(`https://cdn.upload.systems/uploads/YrOfFxGC.png`)
-        .addFields([{
-          name: "Minecraft Server IP:",
-          value: "**`divinerealms.org`**",
-          inline: false
-        }, { name: "Version: **`1.8 - 1.18.2`**", value: "_ _", inline: false }])
+        .addFields([
+          {
+            name: "Minecraft Server IP:",
+            value: "**`divinerealms.org`**",
+            inline: false,
+          },
+          { name: "Version: **`1.8 - 1.18.2`**", value: "_ _", inline: false },
+        ]),
     ],
+    ephemeral: true,
   });
