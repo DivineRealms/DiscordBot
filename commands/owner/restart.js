@@ -33,7 +33,7 @@ module.exports.slashRun = async (client, interaction) => {
     restarted = client
       .embedBuilder(client, interaction, "", "", "#3db39e")
       .setAuthor({
-        name: "Bot has been restarted by ${interaction.user.username}!",
+        name: `Bot has been restarted by ${interaction.user.username}!`,
         iconURL: `https://cdn.upload.systems/uploads/6KOGFYJM.png`,
       });
 
