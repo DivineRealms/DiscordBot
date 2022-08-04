@@ -28,8 +28,7 @@ module.exports.slashRun = async (client, interaction) => {
           name: "Bot is restarting...",
           iconURL: `https://cdn.upload.systems/uploads/6KOGFYJM.png`,
         }),
-      ],
-      ephemeral: true,
+      ]
     }),
     restarted = client
       .embedBuilder(client, interaction, "", "", "#3db39e")
