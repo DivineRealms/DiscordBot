@@ -6,36 +6,39 @@ module.exports = {
   cooldown: 0,
   aliases: ["bootup"],
   usage: "restart",
+  slash: true,
 };
 
-module.exports.run = async (client, message, args) => {
-  if (!client.conf.Settings.Owner_Discord_ID.includes(message.author.id))
-    return message.channel.send({
+module.exports.slashRun = async (client, interaction) => {
+  if (
+    !interaction.conf.Settings.Owner_Discord_ID.includes(interaction.author.id)
+  )
+    return interaction.reply({
       embeds: [
         client.utils.errorEmbed(
           client,
-          message,
-          "Only Developers can use this command."
+          interaction,
+          "Only developers can use this command."
         ),
       ],
+      ephemeral: true,
     });
 
-  const restarting = await message.channel.send({
+  const restarting = await interaction.reply({
       embeds: [
-        client.embedBuilder(client, message, "", "", "#3db39e").setAuthor({
+        client.embedBuilder(client, interaction, "", "", "#3db39e").setAuthor({
           name: "Bot is restarting...",
           iconURL: `https://cdn.upload.systems/uploads/6KOGFYJM.png`,
         }),
       ],
+      ephemeral: true,
     }),
     restarted = client
-      .embedBuilder(client, message, "", "", "#3db39e")
+      .embedBuilder(client, interaction, "", "", "#3db39e")
       .setAuthor({
-        name: `Bot has been restarted by ${message.author.username}.`,
+        name: "Bot has been restarted!",
         iconURL: `https://cdn.upload.systems/uploads/6KOGFYJM.png`,
       });
 
-  await restarting.edit({ embeds: [restarted] }).then(() => {
-    process.exit();
-  });
+  await restarting.edit({ embeds: [restarted] }).then(() => process.exit());
 };

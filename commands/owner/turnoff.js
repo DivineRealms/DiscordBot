@@ -6,11 +6,12 @@ module.exports = {
   cooldown: 0,
   aliases: ["selfdestruct", "shutdown"],
   usage: "turnoff",
+  slash: true,
 };
 
-module.exports.run = async (client, message, args) => {
-  if (!client.conf.Settings.Owner_Discord_ID.includes(message.author.id))
-    return message.channel.send({
+module.exports.slashRun = async (client, interaction) => {
+  if (!client.conf.Settings.Owner_Discord_ID.includes(interaction.author.id))
+    return interaction.reply({
       embeds: [
         client.utils.errorEmbed(
           client,
@@ -18,10 +19,11 @@ module.exports.run = async (client, message, args) => {
           "Only Developers can use this command."
         ),
       ],
+      ephemeral: true,
     });
 
-  message.channel
-    .send({
+  interaction
+    .reply({
       embeds: [
         client.embedBuilder(client, message, "", "", "#3db39e").setAuthor({
           name: "Bot has been turned off.",
@@ -29,7 +31,5 @@ module.exports.run = async (client, message, args) => {
         }),
       ],
     })
-    .then(() => {
-      client.destroy();
-    });
+    .then(() => client.destroy());
 };
