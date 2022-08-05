@@ -51,7 +51,7 @@ module.exports.run = async (client, message, args) => {
     });
 
   const listOfRoles = findRoles.roles.map((x) => {
-    return `${x.emoji} **${x.label}**`;
+    return `> \`${x.emoji}\` **${x.label}**`;
   });
 
   const embed = new EmbedBuilder()
@@ -110,7 +110,7 @@ module.exports.slashRun = async (client, interaction) => {
     });
 
   const listOfRoles = findRoles.roles.map((x) => {
-    return `${x.emoji} **${x.label}**`;
+    return `> \`${x.emoji}\` **${x.label}**`;
   });
 
   const embed = new EmbedBuilder()
