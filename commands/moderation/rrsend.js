@@ -109,11 +109,16 @@ module.exports.slashRun = async (client, interaction) => {
       ephemeral: true,
     });
 
+  const listOfRoles = findRoles.roles.map((x) => {
+    return `${x.emoji} **${x.label}**`;
+  });
+
   const embed = new EmbedBuilder()
     .setAuthor({
       name: findRoles.title,
       iconURL: `https://cdn.upload.systems/uploads/rgGD8TcN.png`,
     })
+    .setDescription(`${listOfRoles.join("\n")}`)
     .setColor(findRoles.color);
 
   interaction.reply({
