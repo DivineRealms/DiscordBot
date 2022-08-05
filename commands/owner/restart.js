@@ -29,10 +29,9 @@ module.exports.slashRun = async (client, interaction) => {
         iconURL: `https://cdn.upload.systems/uploads/6KOGFYJM.png`,
       }),
     ],
-    ephemeral: true,
   });
 
-  await interaction.channel.send({
+  await interaction.followUp({
     embeds: [
       client.embedBuilder(client, interaction, "", "", "#3db39e").setAuthor({
         name: `Bot has been restarted by ${interaction.user.username}!`,
