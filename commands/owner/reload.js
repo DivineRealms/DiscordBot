@@ -32,7 +32,8 @@ module.exports.slashRun = async (client, interaction, args) => {
       ephemeral: true,
     });
 
-  const command = client.commands.get((args[0] || "").toLowerCase());
+  const command = client.commands.get((interaction.options.getString("command") || "").toLowerCase());
+  
   if (!command)
     return interaction.reply({
       embeds: [
@@ -46,27 +47,27 @@ module.exports.slashRun = async (client, interaction, args) => {
     });
   try {
     delete require.cache[
-      require.resolve(`../${command.category}/${args[0].toLowerCase()}.js`)
+      require.resolve(`../${command.category}/${interaction.options.getString("command").toLowerCase()}.js`)
     ];
 
     const commandData = require(`../${
       command.category
-    }/${args[0].toLowerCase()}.js`);
+    }/${interaction.options.getString("command").toLowerCase()}.js`);
 
-    client.commands.set(args[0].toLowerCase(), {
-      ...require(`../${command.category}/${args[0].toLowerCase()}.js`),
+    client.commands.set(interaction.options.getString("command").toLowerCase(), {
+      ...require(`../${command.category}/${interaction.options.getString("command").toLowerCase()}.js`),
       category: command.category,
     });
 
-    client.slashCommands.set(args[0].toLowerCase(), {
-      ...require(`../${command.category}/${args[0].toLowerCase()}.js`),
+    client.slashCommands.set(interaction.options.getString("command").toLowerCase(), {
+      ...require(`../${command.category}/${interaction.options.getString("command").toLowerCase()}.js`),
     });
 
-    client.slashArray.filter((x) => x.name != args[0].toLowerCase());
+    client.slashArray.filter((x) => x.name != interaction.options.getString("command").toLowerCase());
     client.slashArray.push(commandData);
 
     const cmdExists = client.application.commands.cache.find(
-      (x) => x.name == args[0].toLowerCase()
+      (x) => x.name == interaction.options.getString("command").toLowerCase()
     );
     client.application.commands.edit(cmdExists, commandData);
 

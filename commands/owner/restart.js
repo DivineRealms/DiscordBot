@@ -29,16 +29,18 @@ module.exports.slashRun = async (client, interaction) => {
         iconURL: `https://cdn.upload.systems/uploads/6KOGFYJM.png`,
       }),
     ],
+    ephemeral: true,
   });
 
   await interaction
     .followUp({
       embeds: [
         client.embedBuilder(client, interaction, "", "", "#3db39e").setAuthor({
-          name: `Bot has been restarted by ${interaction.user.username}!`,
+          name: `Bot has been restarted!`,
           iconURL: `https://cdn.upload.systems/uploads/6KOGFYJM.png`,
         }),
       ],
+      ephemeral: true,
     })
     .then(() => process.exit());
 };
