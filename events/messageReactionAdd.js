@@ -14,8 +14,8 @@ module.exports = async (client, reaction, user) => {
     if(findReaction) {
       for(let i = 0; i < findReaction.roles.length; i++) {
         if(findReaction.roles[i].emoji == reaction.emoji.name && data.message == reaction.message.id) {
-          if(!interaction.member.roles.cache.has("1002915912300638239"))
-            interaction.member.roles.add("1002915912300638239");
+          if(!reaction.message.guild.members.cache.get(user.id).roles.cache.has("1002915912300638239"))
+            reaction.message.guild.members.cache.get(user.id).roles.add("1002915912300638239");
           return reaction.message.guild.members.cache.get(user.id).roles.add(findReaction.roles[i].role);
         }
       }
