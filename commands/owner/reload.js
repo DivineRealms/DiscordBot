@@ -1,3 +1,5 @@
+const { ApplicationCommandOptionType } = require("discord.js");
+
 module.exports = {
   name: "reload",
   category: "owner",
@@ -6,30 +8,41 @@ module.exports = {
   cooldown: 0,
   aliases: ["refresh"],
   usage: "reload <Command>",
+  slash: true,
+  options: [
+    {
+      name: "command",
+      description: "Name of the command you want to reload.",
+      type: ApplicationCommandOptionType.String,
+      required: true,
+    },
+  ],
 };
 
-module.exports.run = async (client, message, args) => {
-  if (!client.conf.Settings.Owner_Discord_ID.includes(message.author.id))
-    return message.channel.send({
+module.exports.slashRun = async (client, interaction, args) => {
+  if (!client.conf.Settings.Owner_Discord_ID.includes(interaction.user.id))
+    return interaction.reply({
       embeds: [
         client.utils.errorEmbed(
           client,
-          message,
+          interaction,
           "Only Developers can use this command."
         ),
       ],
+      ephemeral: true,
     });
 
   const command = client.commands.get((args[0] || "").toLowerCase());
   if (!command)
-    return message.channel.send({
+    return interaction.reply({
       embeds: [
         client.utils.errorEmbed(
           client,
-          message,
+          interaction,
           `You need to provide a command to reload.`
         ),
       ],
+      ephemeral: true,
     });
   try {
     delete require.cache[
@@ -57,16 +70,20 @@ module.exports.run = async (client, message, args) => {
     );
     client.application.commands.edit(cmdExists, commandData);
 
-    message.channel.send({
+    interaction.reply({
       embeds: [
-        client.embedBuilder(client, message, "", "", "#3db39e").setAuthor({
+        client.embedBuilder(client, interaction, "", "", "#3db39e").setAuthor({
           name: "Command has been reloaded successfully.",
           iconURL: `https://cdn.upload.systems/uploads/6KOGFYJM.png`,
         }),
       ],
+      ephemeral: true,
     });
   } catch (err) {
-    message.channel.send({ content: "An error occurred" });
+    interaction.reply({
+      embeds: [client.errorEmbed(client, interaction, "An error occurred")],
+      ephemeral: true,
+    });
     console.log(err);
   }
 };
