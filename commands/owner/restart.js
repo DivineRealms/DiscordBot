@@ -28,15 +28,17 @@ module.exports.slashRun = async (client, interaction) => {
         name: "Bot is restarting...",
         iconURL: `https://cdn.upload.systems/uploads/6KOGFYJM.png`,
       }),
-    ], ephemeral: true
-  })
+    ],
+  });
 
-  await interaction.followUp({
-    embeds: [
-      client.embedBuilder(client, interaction, "", "", "#3db39e").setAuthor({
-        name: `Bot has been restarted by ${interaction.user.username}!`,
-        iconURL: `https://cdn.upload.systems/uploads/6KOGFYJM.png`,
-      }),
-    ], ephemeral: true
-  }).then(() => process.exit());
+  await interaction
+    .followUp({
+      embeds: [
+        client.embedBuilder(client, interaction, "", "", "#3db39e").setAuthor({
+          name: `Bot has been restarted by ${interaction.user.username}!`,
+          iconURL: `https://cdn.upload.systems/uploads/6KOGFYJM.png`,
+        }),
+      ],
+    })
+    .then(() => process.exit());
 };
