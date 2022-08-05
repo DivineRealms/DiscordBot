@@ -1,9 +1,9 @@
 const {
   ApplicationCommandOptionType,
-  SelectMenuBuilder,
-  ActionRowBuilder,
   EmbedBuilder,
 } = require("discord.js");
+const { QuickDB } = require("quick.db");
+const db = new QuickDB();
 
 module.exports = {
   name: "rrsend",
@@ -53,24 +53,6 @@ module.exports.run = async (client, message, args) => {
       ],
     });
 
-  const options = [];
-  findRoles.roles.forEach((x) => {
-    options.push({
-      label: x.label,
-      value: x.id,
-      emoji: x.emoji,
-    });
-  });
-
-  const selectMenu = new SelectMenuBuilder()
-    .setPlaceholder("Select roles you want to receive.")
-    .setCustomId(`reactionRoles_${findRoles.name}`)
-    .setMaxValues(options.length)
-    .setMinValues(0)
-    .addOptions(options);
-
-  const selectRow = new ActionRowBuilder().addComponents(selectMenu);
-
   const embed = new EmbedBuilder()
     .setAuthor({
       name: findRoles.title,
@@ -80,7 +62,15 @@ module.exports.run = async (client, message, args) => {
 
   message.channel.send({
     embeds: [embed],
-    components: [selectRow],
+  }).then(async(msg) => {
+    await db.push(`reactionRoles_${message.guild.id}`, {
+      id: findRoles.name,
+      message: msg.id
+    });
+
+    findRoles.roles.forEach(async(r) => {
+      await msg.react(r.emoji);
+    });
   });
 };
 
@@ -115,24 +105,6 @@ module.exports.slashRun = async (client, interaction) => {
       ephemeral: true,
     });
 
-  const options = [];
-  findRoles.roles.forEach((x) => {
-    options.push({
-      label: x.label,
-      value: x.id,
-      emoji: x.emoji,
-    });
-  });
-
-  const selectMenu = new SelectMenuBuilder()
-    .setPlaceholder("Select roles you want to receive.")
-    .setCustomId(`reactionRoles_${findRoles.name}`)
-    .setMaxValues(options.length)
-    .setMinValues(0)
-    .addOptions(options);
-
-  const selectRow = new ActionRowBuilder().addComponents(selectMenu);
-
   const embed = new EmbedBuilder()
     .setAuthor({
       name: findRoles.title,
@@ -151,8 +123,16 @@ module.exports.slashRun = async (client, interaction) => {
     ephemeral: true,
   });
 
-  interaction.channel.send({
+  await interaction.channel.send({
     embeds: [embed],
-    components: [selectRow],
+  }).then(async(msg) => {
+    await db.push(`reactionRoles_${interaction.guild.id}`, {
+      id: findRoles.name,
+      message: msg.id
+    });
+
+    findRoles.roles.forEach(async(r) => {
+      await msg.react(r.emoji);
+    });
   });
 };

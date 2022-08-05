@@ -9,36 +9,6 @@ module.exports = async (client, interaction) => {
 
   interaction.px = client.conf.Settings.Prefix;
 
-  if(interaction.isSelectMenu()) {
-    if(interaction.customId.startsWith("reactionRoles_")) {
-      const category = interaction.customId.replace("reactionRoles_", "");
-      const findMenu = client.conf.Settings.Reaction_Roles.find((x) => x.name == category);
-
-      interaction.member = interaction.guild.members.cache.get(
-        interaction.user.id
-      );
-
-      if(findMenu) {
-        if(!interaction.member.roles.cache.has("1002915912300638239"))
-          interaction.member.roles.add("1002915912300638239");
-        
-        const allValues = interaction.values;
-
-        allValues.forEach(async(s) => {
-          let getSelectedRole = findMenu.roles.find((x) => x.id == s);
-          if(interaction.member.roles.cache.has(getSelectedRole.role)) interaction.member.roles.remove(getSelectedRole.role);
-          else if(!interaction.member.roles.cache.has(getSelectedRole.role)) interaction.member.roles.add(getSelectedRole.role);
-        })
-
-        interaction.reply({
-          embeds: [
-            client.embedBuilder(client, interaction, "Reaction Roles", `Reaction Roles have been updated.`, "#3db39e"),
-          ], ephemeral: true
-        });
-      }
-    }
-  }
-
   if (
     interaction.type == InteractionType.ApplicationCommand &&
     interaction.guild

@@ -5,6 +5,20 @@ const Discord = require("discord.js");
 module.exports = async (client, reaction, user) => {
   if (reaction.message.partial) await reaction.message.fetch();
   if (user.bot || !reaction.message.guild) return;
+
+  let data = await db.get(`reactionRoles_${reaction.message.guild.id}`) || [];
+  data = data.find((d) => d.message == reaction.message.id);
+  if(data) {
+    let findReaction = client.conf.Settings.Reaction_Roles.find((r) => r.name == data.id) || undefined;
+    if(findReaction) {
+      for(let i = 0; i < findReaction.roles.length; i++) {
+        if(findReaction.roles[i].emoji == reaction.emoji.name && data.message == reaction.message.id) {
+          return reaction.message.guild.members.cache.get(user.id).roles.remove(findReaction.roles[i].role);
+        }
+      }
+    }
+  }
+
   const starboard = client.conf.Starboard;
   const schannel = client.channels.cache.get(starboard.Channel);
 
