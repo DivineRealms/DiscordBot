@@ -1,7 +1,4 @@
-const {
-  ApplicationCommandOptionType,
-  EmbedBuilder,
-} = require("discord.js");
+const { ApplicationCommandOptionType, EmbedBuilder } = require("discord.js");
 const { QuickDB } = require("quick.db");
 const db = new QuickDB();
 
@@ -60,18 +57,20 @@ module.exports.run = async (client, message, args) => {
     })
     .setColor(findRoles.color);
 
-  message.channel.send({
-    embeds: [embed],
-  }).then(async(msg) => {
-    await db.push(`reactionRoles_${message.guild.id}`, {
-      id: findRoles.name,
-      message: msg.id
-    });
+  message.channel
+    .send({
+      embeds: [embed],
+    })
+    .then(async (msg) => {
+      await db.push(`reactionRoles_${message.guild.id}`, {
+        id: findRoles.name,
+        message: msg.id,
+      });
 
-    findRoles.roles.forEach(async(r) => {
-      await msg.react(r.emoji);
+      findRoles.roles.forEach(async (r) => {
+        await msg.react(r.emoji);
+      });
     });
-  });
 };
 
 module.exports.slashRun = async (client, interaction) => {
@@ -123,16 +122,18 @@ module.exports.slashRun = async (client, interaction) => {
     ephemeral: true,
   });
 
-  await interaction.channel.send({
-    embeds: [embed],
-  }).then(async(msg) => {
-    await db.push(`reactionRoles_${interaction.guild.id}`, {
-      id: findRoles.name,
-      message: msg.id
-    });
+  await interaction.channel
+    .send({
+      embeds: [embed],
+    })
+    .then(async (msg) => {
+      await db.push(`reactionRoles_${interaction.guild.id}`, {
+        id: findRoles.name,
+        message: msg.id,
+      });
 
-    findRoles.roles.forEach(async(r) => {
-      await msg.react(r.emoji);
+      findRoles.roles.forEach(async (r) => {
+        await msg.react(r.emoji);
+      });
     });
-  });
 };

@@ -18,7 +18,7 @@ module.exports.run = async (client, message, args) => {
         .addFields([
           {
             name: "Minecraft Server IP:",
-            value: "**`divinerealms.org`**",
+            value: "**`divinerealms.org`**\n**`divinerealms.ga`**",
             inline: false,
           },
           { name: "Version: **`1.8 - 1.18.2`**", value: "_ _", inline: false },
@@ -36,11 +36,10 @@ module.exports.slashRun = async (client, interaction) =>
         .addFields([
           {
             name: "Minecraft Server IP:",
-            value: "**`divinerealms.org`**",
+            value: "**`divinerealms.org`**\n**`divinerealms.ga`**",
             inline: false,
           },
           { name: "Version: **`1.8 - 1.18.2`**", value: "_ _", inline: false },
         ]),
     ],
-    ephemeral: true,
   });

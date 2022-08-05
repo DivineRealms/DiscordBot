@@ -79,7 +79,7 @@ module.exports.slashRun = async (client, interaction) => {
       .setPlaceholder("Description for Announcement Embed")
       .setRequired(true)
       .setStyle(TextInputStyle.Paragraph)
-  )
+  );
 
   let fieldsInput = new ActionRowBuilder().addComponents(
     new TextInputBuilder()
@@ -145,7 +145,7 @@ module.exports.slashRun = async (client, interaction) => {
 
       embed.setDescription(descValue);
 
-      if(fieldsValue.length > 1) {
+      if (fieldsValue.length > 1) {
         if (fieldsValue.length % 2 !== 0)
           return md.reply({
             embeds: [
@@ -160,7 +160,10 @@ module.exports.slashRun = async (client, interaction) => {
 
         const fields = [];
         for (let i = 0; i < fieldsValue.length; i += 2)
-          fields.push({ title: fieldsValue[i], description: fieldsValue[i + 1] });
+          fields.push({
+            title: fieldsValue[i],
+            description: fieldsValue[i + 1],
+          });
 
         for (let i = 0; i < fields.length && fields.length <= 25; i++) {
           embed.addFields({
@@ -182,10 +185,12 @@ module.exports.slashRun = async (client, interaction) => {
 
         md.reply({
           embeds: [
-            client.embedBuilder(client, interaction, "", "", "#3db39e").setAuthor({
-              name: `Announcement has been sent!`,
-              iconURL: `https://cdn.upload.systems/uploads/6KOGFYJM.png`,
-            }),
+            client
+              .embedBuilder(client, interaction, "", "", "#3db39e")
+              .setAuthor({
+                name: `Announcement has been sent!`,
+                iconURL: `https://cdn.upload.systems/uploads/6KOGFYJM.png`,
+              }),
           ],
           ephemeral: true,
         });
@@ -194,16 +199,18 @@ module.exports.slashRun = async (client, interaction) => {
       } else {
         md.reply({
           embeds: [
-            client.embedBuilder(client, interaction, "", "", "#3db39e").setAuthor({
-              name: `Announcement has been sent!`,
-              iconURL: `https://cdn.upload.systems/uploads/6KOGFYJM.png`,
-            }),
+            client
+              .embedBuilder(client, interaction, "", "", "#3db39e")
+              .setAuthor({
+                name: `Announcement has been sent!`,
+                iconURL: `https://cdn.upload.systems/uploads/6KOGFYJM.png`,
+              }),
           ],
           ephemeral: true,
         });
 
         announcementChannel.send({ embeds: [embed] });
-      } 
+      }
     })
     .catch((err) => {
       console.log(err);
