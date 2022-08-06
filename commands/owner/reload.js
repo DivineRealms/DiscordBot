@@ -19,6 +19,8 @@ module.exports = {
   ],
 };
 
+module.exports.run = async (client, message, args) => {};
+
 module.exports.slashRun = async (client, interaction, args) => {
   if (!client.conf.Settings.Owner_Discord_ID.includes(interaction.user.id))
     return interaction.reply({
@@ -32,8 +34,10 @@ module.exports.slashRun = async (client, interaction, args) => {
       ephemeral: true,
     });
 
-  const command = client.commands.get((interaction.options.getString("command") || "").toLowerCase());
-  
+  const command = client.commands.get(
+    (interaction.options.getString("command") || "").toLowerCase()
+  );
+
   if (!command)
     return interaction.reply({
       embeds: [
@@ -47,23 +51,39 @@ module.exports.slashRun = async (client, interaction, args) => {
     });
   try {
     delete require.cache[
-      require.resolve(`../${command.category}/${interaction.options.getString("command").toLowerCase()}.js`)
+      require.resolve(
+        `../${command.category}/${interaction.options
+          .getString("command")
+          .toLowerCase()}.js`
+      )
     ];
 
-    const commandData = require(`../${
-      command.category
-    }/${interaction.options.getString("command").toLowerCase()}.js`);
+    const commandData = require(`../${command.category}/${interaction.options
+      .getString("command")
+      .toLowerCase()}.js`);
 
-    client.commands.set(interaction.options.getString("command").toLowerCase(), {
-      ...require(`../${command.category}/${interaction.options.getString("command").toLowerCase()}.js`),
-      category: command.category,
-    });
+    client.commands.set(
+      interaction.options.getString("command").toLowerCase(),
+      {
+        ...require(`../${command.category}/${interaction.options
+          .getString("command")
+          .toLowerCase()}.js`),
+        category: command.category,
+      }
+    );
 
-    client.slashCommands.set(interaction.options.getString("command").toLowerCase(), {
-      ...require(`../${command.category}/${interaction.options.getString("command").toLowerCase()}.js`),
-    });
+    client.slashCommands.set(
+      interaction.options.getString("command").toLowerCase(),
+      {
+        ...require(`../${command.category}/${interaction.options
+          .getString("command")
+          .toLowerCase()}.js`),
+      }
+    );
 
-    client.slashArray.filter((x) => x.name != interaction.options.getString("command").toLowerCase());
+    client.slashArray.filter(
+      (x) => x.name != interaction.options.getString("command").toLowerCase()
+    );
     client.slashArray.push(commandData);
 
     const cmdExists = client.application.commands.cache.find(
@@ -74,7 +94,9 @@ module.exports.slashRun = async (client, interaction, args) => {
     interaction.reply({
       embeds: [
         client.embedBuilder(client, interaction, "", "", "#3db39e").setAuthor({
-          name: "Command has been reloaded successfully.",
+          name: `Command ${interaction.options.getString(
+            "command"
+          )} has been reloaded successfully.`,
           iconURL: `https://cdn.upload.systems/uploads/6KOGFYJM.png`,
         }),
       ],

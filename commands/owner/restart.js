@@ -9,6 +9,8 @@ module.exports = {
   slash: true,
 };
 
+module.exports.run = async (client, message, args) => {};
+
 module.exports.slashRun = async (client, interaction) => {
   if (!client.conf.Settings.Owner_Discord_ID.includes(interaction.user.id))
     return interaction.reply({

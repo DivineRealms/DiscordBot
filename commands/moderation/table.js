@@ -5,7 +5,6 @@ const {
   ApplicationCommandOptionType,
 } = require("discord.js");
 const fs = require("fs");
-const fetch = require("node-fetch");
 
 module.exports = {
   name: "table",
@@ -36,6 +35,8 @@ module.exports = {
   ],
 };
 
+module.exports.run = async (client, message, args) => {};
+
 module.exports.slashRun = async (client, interaction) => {
   const league = interaction.options.getString("league");
 
@@ -43,7 +44,7 @@ module.exports.slashRun = async (client, interaction) => {
     interaction.reply({
       embeds: [
         client.embedBuilder(client, interaction, "", "", "#f44336").setAuthor({
-          name: "Svebalkan League table is being uploaded...",
+          name: "Svebalkan League table is being downloaded...",
           iconURL: `https://cdn.upload.systems/uploads/6Xdg16Gh.png`,
         }),
       ],
@@ -51,7 +52,7 @@ module.exports.slashRun = async (client, interaction) => {
     });
 
     if (fs.existsSync(process.cwd() + "/assets/svebalkan.png"))
-      await fs.unlinkSync(process.cwd() + "/assets/svebalkan.png");
+      fs.unlinkSync(process.cwd() + "/assets/svebalkan.png");
 
     await new Pageres({
       script: `${process.cwd() + "/assets/tableScript.js"}`,
@@ -72,12 +73,6 @@ module.exports.slashRun = async (client, interaction) => {
     );
 
     await interaction.editReply({
-      embeds: [
-        client.embedBuilder(client, interaction, "", "", "#f44336").setAuthor({
-          name: "Svebalkan League table has been sent.",
-          iconURL: `https://cdn.upload.systems/uploads/6Xdg16Gh.png`,
-        }),
-      ],
       files: [image],
       ephemeral: true,
     });
@@ -88,7 +83,7 @@ module.exports.slashRun = async (client, interaction) => {
     interaction.reply({
       embeds: [
         client.embedBuilder(client, interaction, "", "", "#f44336").setAuthor({
-          name: "FCFA Challenge League table has been sent.",
+          name: "FCFA Challenge League table is being downloaded...",
           iconURL: `https://cdn.upload.systems/uploads/6Xdg16Gh.png`,
         }),
       ],
@@ -96,7 +91,7 @@ module.exports.slashRun = async (client, interaction) => {
     });
 
     if (fs.existsSync(process.cwd() + "/assets/fcfa-challenge.png"))
-      await fs.unlinkSync(process.cwd() + "/assets/fcfa-challenge.png");
+      fs.unlinkSync(process.cwd() + "/assets/fcfa-challenge.png");
 
     await new Pageres({
       script: `${process.cwd() + "/assets/tableScript.js"}`,
@@ -117,12 +112,6 @@ module.exports.slashRun = async (client, interaction) => {
     );
 
     await interaction.editReply({
-      embeds: [
-        client.embedBuilder(client, interaction, "", "", "#f44336").setAuthor({
-          name: "FCFA Challenge League table has been sent.",
-          iconURL: `https://cdn.upload.systems/uploads/6Xdg16Gh.png`,
-        }),
-      ],
       files: [image],
       ephemeral: true,
     });
