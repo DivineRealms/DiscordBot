@@ -13,12 +13,12 @@ module.exports = async (client, member) => {
   console.log('*------------------------------------------*')
 
   if (newcomersChannel) {
-    await newcomersChannel
+    let newComMsg = await newcomersChannel
       .send({
         content: `${member.user.toString()} please accept the rules to proceed.`,
       });
     
-    await db.set(`newcomers_${member.guild.id}_${member.id}`, `${msg.id}`).then((x) => {
+    await db.set(`newcomers_${member.guild.id}_${member.id}`, `${newComMsg.id}`).then((x) => {
       console.log('postavljeno');
     });
     console.log('setovano')
