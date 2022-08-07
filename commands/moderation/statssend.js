@@ -82,7 +82,7 @@ module.exports.slashRun = async (client, interaction) => {
     })
     .setTimestamp();
 
-  if (type == "svebalkan")
+  if (league == "svebalkan")
     embed
       .setColor("#096feb")
       .setAuthor({
@@ -90,7 +90,7 @@ module.exports.slashRun = async (client, interaction) => {
         iconURL: `https://cdn.upload.systems/uploads/aKT2mjr0.png`,
       })
       .setThumbnail(`https://i.imgur.com/JAJ18E5.png?1`);
-  else if (type == "challenge")
+  else if (league == "challenge")
     embed
       .setColor("#00a100")
       .setAuthor({
@@ -98,7 +98,7 @@ module.exports.slashRun = async (client, interaction) => {
         iconURL: `https://cdn.upload.systems/uploads/vRfWnVT5.png`,
       })
       .setThumbnail(`https://i.imgur.com/WOLpIf2.png?1`);
-  else if (type == "cup")
+  else if (league == "cup")
     embed
       .setColor("#ef9f03")
       .setAuthor({
