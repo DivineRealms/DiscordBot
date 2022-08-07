@@ -80,32 +80,18 @@ module.exports.slashRun = async (client, interaction) => {
         dynamic: true,
       }),
     })
+    .setAuthor({
+      name: title,
+      iconURL: `https://cdn.upload.systems/uploads/i9khkd5N.png`,
+    })
     .setTimestamp();
 
   if (league == "svebalkan")
-    embed
-      .setColor("#096feb")
-      .setAuthor({
-        name: title,
-        iconURL: `https://cdn.upload.systems/uploads/aKT2mjr0.png`,
-      })
-      .setThumbnail(`https://i.imgur.com/JAJ18E5.png?1`);
+    embed.setColor("#096feb").setThumbnail(`https://i.imgur.com/JAJ18E5.png?1`);
   else if (league == "challenge")
-    embed
-      .setColor("#00a100")
-      .setAuthor({
-        name: title,
-        iconURL: `https://cdn.upload.systems/uploads/vRfWnVT5.png`,
-      })
-      .setThumbnail(`https://i.imgur.com/WOLpIf2.png?1`);
+    embed.setColor("#00a100").setThumbnail(`https://i.imgur.com/WOLpIf2.png?1`);
   else if (league == "cup")
-    embed
-      .setColor("#ef9f03")
-      .setAuthor({
-        name: title,
-        iconURL: `https://cdn.upload.systems/uploads/KSTCcy4V.png`,
-      })
-      .setThumbnail(`https://i.imgur.com/fZBoubi.png`);
+    embed.setColor("#ef9f03").setThumbnail(`https://i.imgur.com/fZBoubi.png`);
 
   interaction.showModal(statsModal);
 
