@@ -3,9 +3,24 @@ const db = new QuickDB();
 
 module.exports = async (client, member) => {
   const settings = client.conf.Welcome_System,
-    channel = client.channels.cache.get(settings.Channel);
+    channel = client.channels.cache.get(settings.Channel),
+    newcomersChannel = client.channels.cache.get(
+      client.conf.Settings.Newcomers_Channel
+    );
 
   if (!settings.Enabled) return;
+
+  if (newcomersChannel)
+    newcomersChannel
+      .send({
+        content: `${member.user.toString()} please accept the rules to proceed.`,
+      })
+      .then(
+        async (msg) =>
+          await db.set(`newcomers_${member.guild.id}_${member.id}`, {
+            msg: msg.id,
+          })
+      );
 
   if (settings.Type == "message") {
     channel

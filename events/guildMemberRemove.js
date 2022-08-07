@@ -5,7 +5,20 @@ const db = new QuickDB();
 module.exports = async (client, member) => {
   const settings = client.conf,
     channel = client.channels.cache.get(settings.Goodbye_System.Channel),
-    embedWelcome = await db.get(`wlcmEmbed_${member.guild.id}_${member.id}`);
+    embedWelcome = await db.get(`wlcmEmbed_${member.guild.id}_${member.id}`),
+    newcomersChannel = client.channels.cache.get(
+      settings.Settings.Newcomers_Channel
+    ),
+    newcomersId = await db.get(
+      `newcomers_${member.guild.id}_${member.id}`
+    );
+
+  if (newcomersId) {
+    if (newcomersChannel)
+      await newcomersChannel.messages
+        .fetch(newcomersId.msg)
+        .then((msg) => msg.delete());
+  }
 
   if (embedWelcome) {
     let wlcmCh = client.channels.cache.get(embedWelcome.channel);

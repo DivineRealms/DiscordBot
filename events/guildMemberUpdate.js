@@ -3,6 +3,11 @@ const db = new QuickDB();
 
 module.exports = async (client, oldMember, newMember) => {
   const settings = client.conf;
+  const autoroleId = settings.Automod.Autorole;
+
+  const newcomersChannel = client.channels.cache.get(
+    settings.Newcomers_Channel
+  );
 
   // Join
   if (
@@ -11,39 +16,24 @@ module.exports = async (client, oldMember, newMember) => {
     [...newMember.roles.cache.keys()].join("") !==
       [...oldMember.roles.cache.keys()].join("")
   ) {
-    const addedRoles = newMember.roles.cache.filter(
-      (r) => !oldMember.roles.cache.has(r.id)
-    );
-
-    const added = addedRoles.map((r) => r.id);
-    const autorole = added.includes(settings.Automod.Autorole);
     const welcomeChannel = client.channels.cache.get(
       settings.Welcome_System.Channel
     );
-    const newcommersChannel = client.channels.cache.get(
-      settings.Newcommers_Channel
+
+    const addedRoles = newMember.roles.cache.filter(
+      (r) => !oldMember.roles.cache.has(r.id)
     );
+    const added = addedRoles.map((r) => r.id);
+    const autorole = added.includes(settings.Automod.Autorole);
 
-    if (newcommersChannel)
-      welcomeChannel
-        .send({
-          content: `${newMember.user.toString()} please accept the rules to proceed.`,
-        })
-        .then(
-          async (msg) =>
-            await db.set(`newcommers_${newMember.guild.id}_${newMember.id}`, {
-              msg: msg.id,
-            })
-        );
+    if (settings.Automod.Autorole && autorole) {
+      let newcomersId = await db.get(
+        `newcomers_${newMember.guild.id}_${newMember.id}`
+      );
 
-    let newcommersId = await db.get(
-      `newcommers_${oldMember.guild.id}_${newMember.id}`
-    );
-
-    if (autorole && added.includes(autorole)) {
-      if (newcommersChannel)
-        await newcommersChannel.messages
-          .fetch(newcommersId.msg)
+      if (newcomersChannel)
+        await newcomersChannel.messages
+          .fetch(newcomersId.msg)
           .then((msg) => msg.delete());
 
       if (welcomeChannel)
@@ -77,8 +67,9 @@ module.exports = async (client, oldMember, newMember) => {
     }
   }
 
-  if (oldMember.pending && !newMember.pending)
-    await newMember.roles.add(autorole);
+  if (oldMember.pending && !newMember.pending) {
+    await newMember.roles.add(autoroleId);
+  }
 
   // Leave
   if (
@@ -93,7 +84,7 @@ module.exports = async (client, oldMember, newMember) => {
 
     const removed = removedRoles.map((r) => r.id);
 
-    if (removed.includes(autorole)) {
+    if (removed.includes(autoroleId)) {
       let embedWelcome = await db.get(
         `wlcmEmbed_${oldMember.guild.id}_${newMember.id}`
       );
