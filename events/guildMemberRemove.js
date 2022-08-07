@@ -14,12 +14,12 @@ module.exports = async (client, member) => {
     );
 
   if (newcomersId) {
-    console.log(newcomersId + " lgmaktnatknatntiknatikantiantaknta")
-    if (newcomersChannel)
-      await newcomersChannel.messages
-        .fetch({ message: newcomersId })
-        .then((msg) => msg.delete());
-    
+    if (newcomersChannel) {
+      let newComMsg = await newcomersChannel.messages
+        .fetch({ message: newcomersId });
+
+      if(newComMsg) await newComMsg.delete();
+    }
     await db.delete(`newcomers_${member.guild.id}_${member.id}`);
   }
 

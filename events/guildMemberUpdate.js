@@ -31,10 +31,12 @@ module.exports = async (client, oldMember, newMember) => {
         `newcomers_${newMember.guild.id}_${newMember.id}`
       );
 
-      if (newcomersChannel)
-        await newcomersChannel.messages
-          .fetch(newcomersId)
-          .then((msg) => msg.delete());
+      if (newcomersChannel) {
+        let newComMsg = await newcomersChannel.messages
+          .fetch(newcomersId);
+
+        if(newComMsg) await newComMsg.delete();
+      }
 
       if (welcomeChannel) {
         let wlcmRoleCh = await welcomeChannel
