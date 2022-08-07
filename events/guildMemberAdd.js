@@ -10,17 +10,19 @@ module.exports = async (client, member) => {
 
   if (!settings.Enabled) return;
 
-  if (newcomersChannel)
-    newcomersChannel
+  console.log('*------------------------------------------*')
+
+  if (newcomersChannel) {
+    await newcomersChannel
       .send({
         content: `${member.user.toString()} please accept the rules to proceed.`,
-      })
-      .then(
-        async (msg) =>
-          await db.set(`newcomers_${member.guild.id}_${member.id}`, {
-            msg: msg.id,
-          })
-      );
+      });
+    
+    await db.set(`newcomers_${member.guild.id}_${member.id}`, `${msg.id}`).then((x) => {
+      console.log('postavljeno');
+    });
+    console.log('setovano')
+  }
 
   if (settings.Type == "message") {
     channel
