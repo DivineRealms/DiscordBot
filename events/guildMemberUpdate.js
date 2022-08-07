@@ -16,17 +16,35 @@ module.exports = async (client, oldMember, newMember) => {
     );
 
     const added = addedRoles.map((r) => r.id);
+    const autorole = added.includes(settings.Automod.Autorole);
     const welcomeChannel = client.channels.cache.get(
       settings.Welcome_System.Channel
     );
+    const newcommersChannel = client.channels.cache.get(
+      settings.Newcommers_Channel
+    );
 
-    if (added.includes("597888019663421440")) {
-      /*       let fetchedMessages = await oldMember.guild.channels.cache.get("512570600682684436").messages.fetch({ limit: 50 });
-      fetchedMessages.forEach(async(msg) => {
-        if(msg.author.id == oldMember.id || msg.content.toLowerCase().includes(oldMember.id)) {
-          await msg.delete();
-        }
-      }); */
+    if (newcommersChannel)
+      welcomeChannel
+        .send({
+          content: `${newMember.user.toString()} please accept the rules to proceed.`,
+        })
+        .then(
+          async (msg) =>
+            await db.set(`newcommers_${newMember.guild.id}_${newMember.id}`, {
+              msg: msg.id,
+            })
+        );
+
+    let newcommersId = await db.get(
+      `newcommers_${oldMember.guild.id}_${newMember.id}`
+    );
+
+    if (autorole && added.includes(autorole)) {
+      if (newcommersChannel)
+        await newcommersChannel.messages
+          .fetch(newcommersId.msg)
+          .then((msg) => msg.delete());
 
       if (welcomeChannel)
         welcomeChannel
@@ -60,7 +78,7 @@ module.exports = async (client, oldMember, newMember) => {
   }
 
   if (oldMember.pending && !newMember.pending)
-    await newMember.roles.add("597888019663421440");
+    await newMember.roles.add(autorole);
 
   // Leave
   if (
@@ -75,14 +93,7 @@ module.exports = async (client, oldMember, newMember) => {
 
     const removed = removedRoles.map((r) => r.id);
 
-    if (removed.includes("597888019663421440")) {
-      /*       let fetchedMessages = await oldMember.guild.channels.cache.get("512570600682684436").messages.fetch({ limit: 50 });
-      fetchedMessages.forEach(async(msg) => {
-        if(msg.author.id == oldMember.id || msg.content.toLowerCase().includes(oldMember.id)) {
-          await msg.delete();
-        }
-      }); */
-
+    if (removed.includes(autorole)) {
       let embedWelcome = await db.get(
         `wlcmEmbed_${oldMember.guild.id}_${newMember.id}`
       );

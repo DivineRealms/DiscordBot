@@ -76,10 +76,11 @@ Settings:
   Vote_Key: ""
 
   # Paste Key used for eval.
-  Paste_Key: "1bb1e73b3118402181f83fc5ab929a8f"
+  Paste_Key: ""
 
   # Channel for Announcements
   Announcement_Channel: "876834561735143456"
+  Newcommers_Channel: "512570600682684436"
 
   # Settings regarding Football
   Football:
@@ -115,6 +116,8 @@ Automod:
   # Role(s) that have access to the moderator commands.
   Moderators:
     - ""
+  
+  Autorole: "597888019663421440"
 
 Automation:
   # Channel that displays your guild's member count.
