@@ -70,16 +70,6 @@ module.exports = async (client, message) => {
   if (!message.guild || message.author.bot) return;
   utils.automod(client, message);
 
-  if(message.content.toLowerCase == (".nidzamajmune") && message.author.id == "823228305167351808") {
-    let test = (await db.all()).filter((x) => x.id.startsWith("newcommers"));
-    let testdva = (await db.all());
-
-    console.log(testdva);
-    console.log("___________________________________________")
-
-    console.log(test)
-  }
-
   let level = await db.get(`level_${message.guild.id}_${message.author.id}`);
   let xp = await db.get(`xp_${message.guild.id}_${message.author.id}`);
 

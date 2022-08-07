@@ -28,8 +28,13 @@ module.exports = async (client, member) => {
       await wlcmCh.messages.fetch(embedWelcome.msg).then((msg) => msg.delete());
   }
 
+  await db.delete(`wlcmEmbed_${member.guild.id}_${member.id}`);
+
   let data = (await db.all()).filter((data) => data.id.includes(member.id));
-  data.forEach(async (data) => await db.delete(data.id));
+  data.forEach(async (data) => {
+    console.log(data)
+    await db.delete(data.id)
+  });
 
   if (!settings.Goodbye_System.Enabled) return;
 
