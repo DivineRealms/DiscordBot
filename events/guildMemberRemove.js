@@ -14,7 +14,6 @@ module.exports = async (client, member) => {
     );
 
   if (newcomersId) {
-    console.log(newcomersId - ' -NEWCOMERS')
     if (newcomersChannel)
       await newcomersChannel.messages
         .fetch({ message: newcomersId })
@@ -25,11 +24,13 @@ module.exports = async (client, member) => {
 
   if (embedWelcome) {
     let wlcmCh = client.channels.cache.get(embedWelcome.channel);
+    console.log(embedWelcome.msg)
     if (wlcmCh)
-      await wlcmCh.messages.fetch(embedWelcome.msg).then((msg) => msg.delete());
+      await wlcmCh.messages.fetch({ message: embedWelcome.msg }).then((msg) => msg.delete());
+    
+    await db.delete(`wlcmEmbed_${member.guild.id}_${member.id}`);
   }
 
-  await db.delete(`wlcmEmbed_${member.guild.id}_${member.id}`);
 
   let data = (await db.all()).filter((data) => data.id.includes(member.id));
   data.forEach(async (data) => {
