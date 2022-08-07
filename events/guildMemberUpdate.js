@@ -6,7 +6,7 @@ module.exports = async (client, oldMember, newMember) => {
   const autoroleId = settings.Automod.Autorole;
 
   const newcomersChannel = client.channels.cache.get(
-    settings.Newcomers_Channel
+    settings.Settings.Newcomers_Channel
   );
 
   // Join
