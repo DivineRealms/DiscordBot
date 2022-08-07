@@ -14,6 +14,7 @@ module.exports = async (client, member) => {
     );
 
   if (newcomersId) {
+    console.log(newcomersId + " lgmaktnatknatntiknatikantiantaknta")
     if (newcomersChannel)
       await newcomersChannel.messages
         .fetch({ message: newcomersId })
