@@ -62,6 +62,8 @@ module.exports = {
   ],
 };
 
+module.exports.run = async (client, message, args) => {};
+
 module.exports.slashRun = async (client, interaction) => {
   const type = interaction.options.getString("type");
   const title = interaction.options.getString("title");

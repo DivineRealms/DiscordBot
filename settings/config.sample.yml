@@ -83,10 +83,7 @@ Settings:
 
   # Settings regarding Football
   Football:
-    # Svebalkan League Table Channel
-    Svebalkan: ""
-    # FCFA Challenge League Table Channel
-    FCFAChallenge: ""
+    Statistics_Channel: ""
 
   # List of Reaction Roles
   Reaction_Roles:
