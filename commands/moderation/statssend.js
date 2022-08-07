@@ -10,7 +10,7 @@ module.exports = {
   name: "statssend",
   category: "moderation",
   description: "Allows you to send football league statistics.",
-  permissions: [],
+  permissions: ["ManageMessages"],
   cooldown: 0,
   aliases: ["statisticssend"],
   usage: "statssend <Title> | <Field Title> | <Field Description> | ...",

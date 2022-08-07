@@ -10,7 +10,7 @@ module.exports = {
   name: "announce",
   category: "moderation",
   description: "Allows you to send an announcement on your behalf.",
-  permissions: [],
+  permissions: ["ManageGuild"],
   cooldown: 0,
   aliases: ["an", "announcement"],
   usage:
