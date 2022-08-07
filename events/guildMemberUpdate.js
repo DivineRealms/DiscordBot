@@ -33,7 +33,7 @@ module.exports = async (client, oldMember, newMember) => {
 
       if (newcomersChannel)
         await newcomersChannel.messages
-          .fetch(newcomersId.msg)
+          .fetch(newcomersId)
           .then((msg) => msg.delete());
 
       if (welcomeChannel)
