@@ -5,38 +5,21 @@ const db = new QuickDB();
 module.exports = async (client, member) => {
   const settings = client.conf,
     channel = client.channels.cache.get(settings.Goodbye_System.Channel),
-    embedWelcome = await db.get(`wlcmEmbed_${member.guild.id}_${member.id}`),
-    newcomersChannel = client.channels.cache.get(
-      settings.Settings.Newcomers_Channel
-    ),
-    newcomersId = await db.get(
-      `newcomers_${member.guild.id}_${member.id}`
-    );
-
-  if (newcomersId) {
-    if (newcomersChannel) {
-      let newComMsg = await newcomersChannel.messages
-        .fetch({ message: newcomersId });
-
-      if(newComMsg) await newComMsg.delete();
-    }
-    await db.delete(`newcomers_${member.guild.id}_${member.id}`);
-  }
+    embedWelcome = await db.get(`wlcmEmbed_${member.guild.id}_${member.id}`);
 
   if (embedWelcome) {
     let wlcmCh = client.channels.cache.get(embedWelcome.channel);
-    console.log(embedWelcome.msg)
     if (wlcmCh)
-      await wlcmCh.messages.fetch({ message: embedWelcome.msg }).then((msg) => msg.delete());
-    
+      await wlcmCh.messages
+        .fetch({ message: embedWelcome.msg })
+        .then((msg) => msg.delete());
+
     await db.delete(`wlcmEmbed_${member.guild.id}_${member.id}`);
   }
 
-
   let data = (await db.all()).filter((data) => data.id.includes(member.id));
   data.forEach(async (data) => {
-    console.log(data)
-    await db.delete(data.id)
+    await db.delete(data.id);
   });
 
   if (!settings.Goodbye_System.Enabled) return;
