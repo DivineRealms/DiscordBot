@@ -36,8 +36,8 @@ module.exports = async (client, oldMember, newMember) => {
           .fetch(newcomersId)
           .then((msg) => msg.delete());
 
-      if (welcomeChannel)
-        welcomeChannel
+      if (welcomeChannel) {
+        let wlcmRoleCh = await welcomeChannel
           .send({
             embeds: [
               client
@@ -56,14 +56,13 @@ module.exports = async (client, oldMember, newMember) => {
                   newMember.displayAvatarURL({ size: 64, dynamic: true })
                 ),
             ],
-          })
-          .then(
-            async (msg) =>
-              await db.set(`wlcmEmbed_${newMember.guild.id}_${newMember.id}`, {
-                msg: msg.id,
-                channel: msg.channel.id,
-              })
-          );
+          });
+        
+        await db.set(`wlcmEmbed_${newMember.guild.id}_${newMember.id}`, {
+          msg: wlcmRoleCh.id,
+          channel: wlcmRoleCh.channel.id,
+        })
+      }
     }
   }
 
