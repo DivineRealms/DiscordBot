@@ -6,18 +6,16 @@ module.exports = async (client, member) => {
   const settings = client.conf,
     channel = client.channels.cache.get(settings.Goodbye_System.Channel),
     embedWelcome = await db.get(`wlcmEmbed_${member.guild.id}_${member.id}`),
-    newcomersId = await db.get(
-      `newcomers_${member.guild.id}_${member.id}`
-    ),
+    newcomersId = await db.get(`newcomers_${member.guild.id}_${member.id}`),
     newcomersChannel = client.channels.cache.get(
       settings.Settings.Newcomers_Channel
     );
 
   if (newcomersId) {
-    if (newcomersChannel) {
-      await newcomersChannel.fetch(newcomersId.msg).then((msg) => msg.delete());
-      await db.delete(`newcomers_${member.guild.id}_${member.id}`);
-    }
+    if (newcomersChannel)
+      await newcomersChannel.messages
+        .fetch({ message: newcomersId.msg })
+        .then((msg) => msg.delete());
   }
 
   if (embedWelcome) {

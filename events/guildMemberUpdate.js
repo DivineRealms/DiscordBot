@@ -93,7 +93,9 @@ module.exports = async (client, oldMember, newMember) => {
 
       if (newcomersId) {
         if (newcomersChannel) {
-          await newcomersChannel.fetch(newcomersId.msg).then((msg) => msg.delete());
+          await newcomersChannel.messages
+            .fetch({ message: newcomersId.msg })
+            .then((msg) => msg.delete());
           await db.delete(`newcomers_${oldMember.guild.id}_${newmember.id}`);
         }
       }
@@ -102,7 +104,7 @@ module.exports = async (client, oldMember, newMember) => {
         let wlcmCh = client.channels.cache.get(embedWelcome.channel);
         if (wlcmCh)
           await wlcmCh.messages
-            .fetch(embedWelcome.msg)
+            .fetch({ message: embedWelcome.msg })
             .then((msg) => msg.delete());
       }
     }
