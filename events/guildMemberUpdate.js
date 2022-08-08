@@ -93,7 +93,7 @@ module.exports = async (client, oldMember, newMember) => {
 
       if (newcomersId) {
         if (newcomersChannel) {
-          await newcomersChannel.fetch(newcomersId).then((msg) => msg.delete());
+          await newcomersChannel.fetch(newcomersId.msg).then((msg) => msg.delete());
           await db.delete(`newcomers_${oldMember.guild.id}_${newmember.id}`);
         }
       }
