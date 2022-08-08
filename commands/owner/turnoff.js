@@ -28,7 +28,7 @@ module.exports.slashRun = async (client, interaction) => {
     .reply({
       embeds: [
         client.embedBuilder(client, message, "", "", "#3db39e").setAuthor({
-          name: "Bot has been turned off.",
+          name: `${interaction.user.id} has shut down the bot.`,
           iconURL: `https://cdn.upload.systems/uploads/6KOGFYJM.png`,
         }),
       ],

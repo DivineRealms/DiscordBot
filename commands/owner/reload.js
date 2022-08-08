@@ -51,56 +51,35 @@ module.exports.slashRun = async (client, interaction, args) => {
     });
   try {
     delete require.cache[
-      require.resolve(
-        `../${command.category}/${interaction.options
-          .getString("command")
-          .toLowerCase()}.js`
-      )
+      require.resolve(`../${command.category}/${command}.js`)
     ];
 
-    const commandData = require(`../${command.category}/${interaction.options
-      .getString("command")
-      .toLowerCase()}.js`);
+    const commandData = require(`../${command.category}/${command}.js`);
 
-    client.commands.set(
-      interaction.options.getString("command").toLowerCase(),
-      {
-        ...require(`../${command.category}/${interaction.options
-          .getString("command")
-          .toLowerCase()}.js`),
-        category: command.category,
-      }
-    );
+    client.commands.set(command, {
+      ...require(`../${command.category}/${command}.js`),
+      category: command.category,
+    });
 
-    client.slashCommands.set(
-      interaction.options.getString("command").toLowerCase(),
-      {
-        ...require(`../${command.category}/${interaction.options
-          .getString("command")
-          .toLowerCase()}.js`),
-      }
-    );
+    client.slashCommands.set(command, {
+      ...require(`../${command.category}/${command}.js`),
+    });
 
-    client.slashArray.filter(
-      (x) => x.name != interaction.options.getString("command").toLowerCase()
-    );
+    client.slashArray.filter((x) => x.name != command);
     client.slashArray.push(commandData);
 
     const cmdExists = client.application.commands.cache.find(
-      (x) => x.name == interaction.options.getString("command").toLowerCase()
+      (x) => x.name == command
     );
     client.application.commands.edit(cmdExists, commandData);
 
     interaction.reply({
       embeds: [
         client.embedBuilder(client, interaction, "", "", "#3db39e").setAuthor({
-          name: `Command ${interaction.options.getString(
-            "command"
-          )} has been reloaded successfully.`,
+          name: `Command ${command} has been reloaded successfully.`,
           iconURL: `https://cdn.upload.systems/uploads/6KOGFYJM.png`,
         }),
       ],
-      ephemeral: true,
     });
   } catch (err) {
     interaction.reply({

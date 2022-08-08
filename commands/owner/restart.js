@@ -24,25 +24,14 @@ module.exports.slashRun = async (client, interaction) => {
       ephemeral: true,
     });
 
-  await interaction.reply({
-    embeds: [
-      client.embedBuilder(client, interaction, "", "", "#3db39e").setAuthor({
-        name: "Bot is restarting...",
-        iconURL: `https://cdn.upload.systems/uploads/6KOGFYJM.png`,
-      }),
-    ],
-    ephemeral: true,
-  });
-
   await interaction
-    .followUp({
+    .reply({
       embeds: [
         client.embedBuilder(client, interaction, "", "", "#3db39e").setAuthor({
-          name: `Bot has been restarted!`,
+          name: `Bot has been restarted by ${interaction.user.tag}`,
           iconURL: `https://cdn.upload.systems/uploads/6KOGFYJM.png`,
         }),
       ],
-      ephemeral: true,
     })
     .then(() => process.exit());
 };

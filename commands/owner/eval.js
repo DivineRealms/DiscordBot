@@ -1,4 +1,4 @@
-const Discord = require("discord.js");
+const { ApplicationCommandOptionType, Discord } = require("discord.js");
 const fetch = require("node-fetch");
 
 module.exports = {
@@ -11,6 +11,14 @@ module.exports = {
   aliases: [],
   usage: "eval <code>",
   slash: true,
+  options: [
+    {
+      name: "ephemeral",
+      description: "Should the output be shown only to you?",
+      type: ApplicationCommandOptionType.Boolean,
+      required: true,
+    },
+  ],
 };
 
 module.exports.run = async (client, message, args) => {};
@@ -27,6 +35,10 @@ module.exports.slashRun = async (client, interaction) => {
       ],
       ephemeral: true,
     });
+
+  const ephemeral = client.commands.get(
+    interaction.options.getBoolean("ephemeral")
+  );
 
   let codeInput = new Discord.ActionRowBuilder().addComponents(
     new Discord.TextInputBuilder()
@@ -103,19 +115,33 @@ module.exports.slashRun = async (client, interaction) => {
             value: `\`\`\`js\n${evaled}\`\`\``,
           });
 
-        md.reply({ embeds: [embed] });
+        if (ephemeral) md.reply({ embeds: [embed], ephemeral: true });
+        else md.reply({ embeds: [embed] });
       } catch (err) {
         console.log(err);
-        md.reply({
-          embeds: [
-            client.utils
-              .errorEmbed(client, interaction, "Code Evaluation Failed")
-              .addFields([
-                { name: "📥︲Input:", value: `\`\`\`js\n${codeValue}\`\`\`` },
-                { name: "📤︲Output:", value: `\`\`\`js\n${err}\`\`\`` },
-              ]),
-          ],
-        });
+        if (ephemeral)
+          md.reply({
+            embeds: [
+              client.utils
+                .errorEmbed(client, interaction, "Code Evaluation Failed")
+                .addFields([
+                  { name: "📥︲Input:", value: `\`\`\`js\n${codeValue}\`\`\`` },
+                  { name: "📤︲Output:", value: `\`\`\`js\n${err}\`\`\`` },
+                ]),
+            ],
+            ephemeral: true,
+          });
+        else
+          md.reply({
+            embeds: [
+              client.utils
+                .errorEmbed(client, interaction, "Code Evaluation Failed")
+                .addFields([
+                  { name: "📥︲Input:", value: `\`\`\`js\n${codeValue}\`\`\`` },
+                  { name: "📤︲Output:", value: `\`\`\`js\n${err}\`\`\`` },
+                ]),
+            ],
+          });
       }
     })
     .catch((e) => console.log(e));
