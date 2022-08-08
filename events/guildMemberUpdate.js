@@ -32,38 +32,36 @@ module.exports = async (client, oldMember, newMember) => {
       );
 
       if (newcomersChannel) {
-        let newComMsg = await newcomersChannel.messages
-          .fetch(newcomersId);
+        let newComMsg = await newcomersChannel.messages.fetch(newcomersId);
 
-        if(newComMsg) await newComMsg.delete();
+        if (newComMsg) await newComMsg.delete();
       }
 
       if (welcomeChannel) {
-        let wlcmRoleCh = await welcomeChannel
-          .send({
-            embeds: [
-              client
-                .embedBuilder(
-                  client,
-                  "",
-                  "",
-                  `<:ArrowRightGray:813815804768026705>Welcome ${newMember.user.toString()} to **Divine Realms**.\n<:ArrowRightGray:813815804768026705>For more info, see <#818930313593487380>.`,
-                  "#ffdc5d"
-                )
-                .setAuthor({
-                  name: `A new member appeared! (#${newMember.guild.memberCount})`,
-                  iconURL: `https://cdn.upload.systems/uploads/hhgfsHXT.png`,
-                })
-                .setThumbnail(
-                  newMember.displayAvatarURL({ size: 64, dynamic: true })
-                ),
-            ],
-          });
-        
+        let wlcmRoleCh = await welcomeChannel.send({
+          embeds: [
+            client
+              .embedBuilder(
+                client,
+                "",
+                "",
+                `<:ArrowRightGray:813815804768026705>Welcome ${newMember.user.toString()} to **Divine Realms**.\n<:ArrowRightGray:813815804768026705>For more info, see <#818930313593487380>.`,
+                "#ffdc5d"
+              )
+              .setAuthor({
+                name: `A new member appeared! (#${newMember.guild.memberCount})`,
+                iconURL: `https://cdn.upload.systems/uploads/hhgfsHXT.png`,
+              })
+              .setThumbnail(
+                newMember.displayAvatarURL({ size: 64, dynamic: true })
+              ),
+          ],
+        });
+
         await db.set(`wlcmEmbed_${newMember.guild.id}_${newMember.id}`, {
           msg: wlcmRoleCh.id,
           channel: wlcmRoleCh.channel.id,
-        })
+        });
       }
     }
   }
@@ -85,10 +83,20 @@ module.exports = async (client, oldMember, newMember) => {
 
     const removed = removedRoles.map((r) => r.id);
 
-    if (removed.includes(autoroleId)) {
-      let embedWelcome = await db.get(
-        `wlcmEmbed_${oldMember.guild.id}_${newMember.id}`
-      );
+    if (settings.Automod.Autorole && removed.includes(autoroleId)) {
+      let newcomersId = await db.get(
+          `newcomers_${oldMember.guild.id}_${newMember.id}`
+        ),
+        embedWelcome = await db.get(
+          `wlcmEmbed_${oldMember.guild.id}_${newMember.id}`
+        );
+
+      if (newcomersId) {
+        if (newcomersChannel) {
+          await newcomersChannel.fetch(newcomersId).then((msg) => msg.delete());
+          await db.delete(`newcomers_${oldMember.guild.id}_${newmember.id}`);
+        }
+      }
 
       if (embedWelcome) {
         let wlcmCh = client.channels.cache.get(embedWelcome.channel);
