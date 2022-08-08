@@ -63,7 +63,6 @@ module.exports = async (client, interaction) => {
           ], ephemeral: true
         });
       } else if (!findCooldown && cmd.cooldown > 0) {
-        console.log('kdksksks')
         let cooldown = {
           id: interaction.user.id,
           name: cmd.name,
