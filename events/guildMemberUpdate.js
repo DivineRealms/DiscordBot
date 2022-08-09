@@ -29,7 +29,10 @@ module.exports = async (client, oldMember, newMember) => {
         nwcCh = client.channels.cache.get(newcomersId.channel);
 
       if (newcomersId)
-        if (nwcCh) await nwcCh.messages.fetch(newcomersId.msg).delete();
+        if (nwcCh)
+          await nwcCh.messages
+            .fetch(newcomersId.msg)
+            .then((msg) => msg.delete());
 
       if (welcomeChannel) {
         let wlcmRoleCh = await welcomeChannel.send({
