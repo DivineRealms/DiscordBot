@@ -1,4 +1,3 @@
-const { AttachmentBuilder } = require("discord.js");
 const { QuickDB } = require("quick.db");
 const db = new QuickDB();
 
@@ -6,26 +5,18 @@ module.exports = async (client, member) => {
   const settings = client.conf,
     channel = client.channels.cache.get(settings.Goodbye_System.Channel),
     embedWelcome = await db.get(`wlcmEmbed_${member.guild.id}_${member.id}`),
-    newcomersId = await db.get(`newcomers_${member.guild.id}_${member.id}`),
-    newcomersChannel = client.channels.cache.get(
-      settings.Settings.Newcomers_Channel
-    );
+    newcomersId = await db.get(`newcomers_${member.guild.id}_${member.id}`);
 
   if (newcomersId) {
-    if (newcomersChannel)
-      await newcomersChannel.messages
-        .fetch({ message: newcomersId.msg })
-        .then((msg) => msg.delete());
+    let nwcCh = client.channels.cache.get(newcomersId.channel);
+    if (nwcCh)
+      await nwcCh.messages.fetch(newcomersId.msg).then((msg) => msg.delete());
   }
 
   if (embedWelcome) {
     let wlcmCh = client.channels.cache.get(embedWelcome.channel);
     if (wlcmCh)
-      await wlcmCh.messages
-        .fetch({ message: embedWelcome.msg })
-        .then((msg) => msg.delete());
-
-    await db.delete(`wlcmEmbed_${member.guild.id}_${member.id}`);
+      await wlcmCh.messages.fetch(embedWelcome.msg).then((msg) => msg.delete());
   }
 
   let data = (await db.all()).filter((data) => data.id.includes(member.id));

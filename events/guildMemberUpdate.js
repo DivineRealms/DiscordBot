@@ -5,10 +5,6 @@ module.exports = async (client, oldMember, newMember) => {
   const settings = client.conf;
   const autoroleId = settings.Automod.Autorole;
 
-  const newcomersChannel = client.channels.cache.get(
-    settings.Settings.Newcomers_Channel
-  );
-
   // Join
   if (
     settings.Welcome_System.Enabled &&
@@ -28,14 +24,12 @@ module.exports = async (client, oldMember, newMember) => {
 
     if (settings.Automod.Autorole && autorole) {
       let newcomersId = await db.get(
-        `newcomers_${newMember.guild.id}_${newMember.id}`
-      );
+          `newcomers_${newMember.guild.id}_${newMember.id}`
+        ),
+        nwcCh = client.channels.cache.get(newcomersId.channel);
 
-      if (newcomersChannel) {
-        let newComMsg = await newcomersChannel.messages.fetch(newcomersId);
-
-        if (newComMsg) await newComMsg.delete();
-      }
+      if (newcomersId)
+        if (nwcCh) await nwcCh.messages.fetch(newcomersId.msg).delete();
 
       if (welcomeChannel) {
         let wlcmRoleCh = await welcomeChannel.send({
@@ -92,19 +86,18 @@ module.exports = async (client, oldMember, newMember) => {
         );
 
       if (newcomersId) {
-        if (newcomersChannel) {
-          await newcomersChannel.messages
-            .fetch({ message: newcomersId.msg })
+        let nwcCh = client.channels.cache.get(newcomersId.channel);
+        if (nwcCh)
+          await nwcCh.messages
+            .fetch(newcomersId.msg)
             .then((msg) => msg.delete());
-          await db.delete(`newcomers_${oldMember.guild.id}_${newmember.id}`);
-        }
       }
 
       if (embedWelcome) {
         let wlcmCh = client.channels.cache.get(embedWelcome.channel);
         if (wlcmCh)
           await wlcmCh.messages
-            .fetch({ message: embedWelcome.msg })
+            .fetch(embedWelcome.msg)
             .then((msg) => msg.delete());
       }
     }

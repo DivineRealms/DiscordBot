@@ -3,21 +3,23 @@ const db = new QuickDB();
 
 module.exports = async (client, member) => {
   const settings = client.conf.Welcome_System,
-    channel = client.channels.cache.get(settings.Channel),
-    newcomersChannel = client.channels.cache.get(
-      client.conf.Settings.Newcomers_Channel
-    );
+    channel = client.channels.cache.get(settings.Channel);
 
   if (!settings.Enabled) return;
 
-  if (newcomersChannel) {
-    let newComMsg = await newcomersChannel
+  let nwcCh = client.channels.cache.get(client.conf.Settings.Newcomers_Channel);
+  if (nwcCh)
+    nwcCh
       .send({
         content: `${member.user.toString()} please accept the rules to proceed.`,
-      });
-    
-    await db.set(`newcomers_${member.guild.id}_${member.id}`, `${newComMsg.id}`);
-  }
+      })
+      .then(
+        async (msg) =>
+          await db.set(`newcomers_${member.guild.id}_${member.id}`, {
+            msg: msg.id,
+            channel: msg.channel.id,
+          })
+      );
 
   if (settings.Type == "message") {
     channel
