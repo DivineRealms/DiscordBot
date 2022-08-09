@@ -77,7 +77,7 @@ module.exports.slashRun = async (client, interaction, args) => {
     interaction.reply({
       embeds: [
         client.embedBuilder(client, interaction, "", "", "#3db39e").setAuthor({
-          name: `Command ${command} has been reloaded successfully.`,
+          name: `Command ${command.name} has been reloaded successfully.`,
           iconURL: `https://cdn.upload.systems/uploads/6KOGFYJM.png`,
         }),
       ],
