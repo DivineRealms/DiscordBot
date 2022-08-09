@@ -49,29 +49,30 @@ module.exports.slashRun = async (client, interaction, args) => {
       ],
       ephemeral: true,
     });
+
   try {
     delete require.cache[
-      require.resolve(`../${command.category}/${command}.js`)
+      require.resolve(`../${command.category}/${command.name}.js`)
     ];
 
-    const commandData = require(`../${command.category}/${command}.js`);
+    const commandData = require(`../${command.category}/${command.name}.js`);
 
-    client.commands.set(command, {
-      ...require(`../${command.category}/${command}.js`),
+    client.commands.set(command.name, {
+      ...require(`../${command.category}/${command.name}.js`),
       category: command.category,
     });
 
-    client.slashCommands.set(command, {
-      ...require(`../${command.category}/${command}.js`),
+    client.slashCommands.set(command.name, {
+      ...require(`../${command.category}/${command.name}.js`),
     });
 
-    client.slashArray.filter((x) => x.name != command);
+    client.slashArray.filter((x) => x.name != command.name);
     client.slashArray.push(commandData);
 
     const cmdExists = client.application.commands.cache.find(
-      (x) => x.name == command
+      (x) => x.name == command.name
     );
-    client.application.commands.edit(cmdExists, commandData);
+    client.application.commands.edit(cmdExists.name, commandData);
 
     interaction.reply({
       embeds: [
