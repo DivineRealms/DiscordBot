@@ -17,7 +17,7 @@ module.exports = {
       name: "ephemeral",
       description: "Should the output be shown only to you?",
       type: ApplicationCommandOptionType.Boolean,
-      required: true,
+      required: false,
     },
   ],
 };
