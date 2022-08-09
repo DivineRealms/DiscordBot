@@ -83,7 +83,9 @@ module.exports.slashRun = async (client, interaction, args) => {
     });
   } catch (err) {
     interaction.reply({
-      embeds: [client.errorEmbed(client, interaction, "An error occurred")],
+      embeds: [
+        client.utils.errorEmbed(client, interaction, "An error occurred"),
+      ],
       ephemeral: true,
     });
     console.log(err);
