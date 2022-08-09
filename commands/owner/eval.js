@@ -1,5 +1,5 @@
 const { ApplicationCommandOptionType } = require("discord.js");
-const Discord = require("discord.js")
+const Discord = require("discord.js");
 const fetch = require("node-fetch");
 
 module.exports = {
@@ -37,9 +37,7 @@ module.exports.slashRun = async (client, interaction) => {
       ephemeral: true,
     });
 
-  const ephemeral = client.commands.get(
-    interaction.options.getBoolean("ephemeral")
-  );
+  const ephemeral = interaction.options.getBoolean("ephemeral");
 
   let codeInput = new Discord.ActionRowBuilder().addComponents(
     new Discord.TextInputBuilder()
