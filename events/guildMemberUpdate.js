@@ -64,6 +64,11 @@ module.exports = async (client, oldMember, newMember) => {
   }
 
   if (oldMember.pending && !newMember.pending) {
+    const savedRoles = await db.get(`savedRoles_${newMember.guild.id}_${newMember.id}`) || [];
+    if(client.conf.Settings.Save_Roles == true && savedRoles.length > 0) {
+      await newMember.roles.add(savedRoles);
+      await db.delete(`savedRoles_${newMember.guild.id}_${newMember.id}`);
+    }
     await newMember.roles.add(autoroleId);
   }
 

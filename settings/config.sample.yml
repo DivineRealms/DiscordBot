@@ -99,6 +99,10 @@ Settings:
           emoji: "🎁"
           placeholder: "Select this Role to get notified of new Giveaways"
           role: ""
+  
+  # Whether to Save Roles when Member leaves Server
+  # and to give them back when they rejoin
+  Save_Roles: true
 
 Automod:
   # Role(s) that bypass command cooldown.

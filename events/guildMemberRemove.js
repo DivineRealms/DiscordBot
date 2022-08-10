@@ -7,6 +7,10 @@ module.exports = async (client, member) => {
     embedWelcome = await db.get(`wlcmEmbed_${member.guild.id}_${member.id}`),
     newcomersId = await db.get(`newcomers_${member.guild.id}_${member.id}`);
 
+  if(client.conf.Settings.Save_Roles == true) {
+    await db.set(`savedRoles_${member.guild.id}_${member.id}`, member.roles.cache);
+  }
+
   if (newcomersId) {
     let nwcCh = client.channels.cache.get(newcomersId.channel);
     if (nwcCh)
