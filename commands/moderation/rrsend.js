@@ -1,4 +1,9 @@
-const { ApplicationCommandOptionType, EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle } = require("discord.js");
+const {
+  ApplicationCommandOptionType,
+  ActionRowBuilder,
+  ButtonBuilder,
+  ButtonStyle,
+} = require("discord.js");
 const { QuickDB } = require("quick.db");
 const db = new QuickDB();
 
@@ -39,6 +44,7 @@ module.exports.run = async (client, message, args) => {
   const findRoles = rolesList.find(
     (x) => x.name.toLowerCase() == category.toLowerCase()
   );
+
   if (!findRoles)
     return message.channel.send({
       embeds: [
@@ -50,20 +56,20 @@ module.exports.run = async (client, message, args) => {
       ],
     });
 
-  const listOfRoles = findRoles.roles.map((x) => {
-    return `\`${x.emoji}\` **${x.label}**`;
-  });
-
-  const embed = new EmbedBuilder()
+  const embed = client
+    .embedBuilder(client, message, "", "", findRoles.color)
     .setAuthor({
       name: findRoles.title,
       iconURL: `https://cdn.upload.systems/uploads/rgGD8TcN.png`,
     })
-    // .setDescription(`${listOfRoles.join("\n")}`)
-    .setColor(findRoles.color);
+    .addFields({
+      name: "Note:",
+      value: "Buttons are toggles, click on the roles you want to add/remove.",
+    });
 
   const chunks = [];
-  let componentList = [], buttonList = [];
+  let componentList = [],
+    buttonList = [];
 
   for (let i = 0; i < findRoles.roles.length; i += 3) {
     const chunk = findRoles.roles.slice(i, i + 3);
@@ -71,25 +77,25 @@ module.exports.run = async (client, message, args) => {
   }
 
   for (let i = 0; i < chunks.length; i++) {
-    buttonList.push(chunks[i].map((x) => {
-      return new ButtonBuilder()
-        .setLabel(x.label)
-        .setEmoji(x.emoji)
-        .setStyle(ButtonStyle.Secondary)
-        .setCustomId(x.id)
-    }))
+    buttonList.push(
+      chunks[i].map((x) => {
+        return new ButtonBuilder()
+          .setLabel(x.label)
+          .setEmoji(x.emoji)
+          .setStyle(ButtonStyle.Secondary)
+          .setCustomId(x.id);
+      })
+    );
   }
 
   buttonList.forEach((b) => {
-    componentList.push(new ActionRowBuilder()
-      .addComponents(b.map((x) => x))
-    )
+    componentList.push(new ActionRowBuilder().addComponents(b.map((x) => x)));
   });
 
   message.channel
     .send({
       embeds: [embed],
-      components: componentList
+      components: componentList,
     })
     .then(async (msg) => {
       await db.push(`reactionRoles_${message.guild.id}`, {
@@ -118,6 +124,7 @@ module.exports.slashRun = async (client, interaction) => {
   const findRoles = rolesList.find(
     (x) => x.name.toLowerCase() == category.toLowerCase()
   );
+  
   if (!findRoles)
     return interaction.reply({
       embeds: [
@@ -130,31 +137,32 @@ module.exports.slashRun = async (client, interaction) => {
       ephemeral: true,
     });
 
-  const listOfRoles = findRoles.roles.map((x) => {
-    return `\`${x.emoji}\` **${x.label}**`;
-  });
-
-  const embed = new EmbedBuilder()
+  const embed = client
+    .embedBuilder(client, interaction, "", "", findRoles.color)
     .setAuthor({
       name: findRoles.title,
       iconURL: `https://cdn.upload.systems/uploads/rgGD8TcN.png`,
     })
-    // .setDescription(`${listOfRoles.join("\n")}`)
-    .setColor(findRoles.color);
+    .addFields({
+      name: "Note:",
+      value: "Buttons are toggles, click on the roles you want to add/remove.",
+    });
 
   interaction.reply({
     embeds: [
-      client.utils.errorEmbed(
-        client,
-        interaction,
-        "Reaction Role menu have been sent successfully."
-      ),
+      client
+        .embedBuilder(client, interaction, "", "", "#3db39e")
+        .setAuthor({
+          name: "Reaction Role menu has been sent successfully.",
+          iconURL: `https://cdn.upload.systems/uploads/6KOGFYJM.png`,
+        }),
     ],
     ephemeral: true,
   });
 
   const chunks = [];
-  let componentList = [], buttonList = [];
+  let componentList = [],
+    buttonList = [];
 
   for (let i = 0; i < findRoles.roles.length; i += 3) {
     const chunk = findRoles.roles.slice(i, i + 3);
@@ -162,25 +170,25 @@ module.exports.slashRun = async (client, interaction) => {
   }
 
   for (let i = 0; i < chunks.length; i++) {
-    buttonList.push(chunks[i].map((x) => {
-      return new ButtonBuilder()
-        .setLabel(x.label)
-        .setEmoji(x.emoji)
-        .setStyle(ButtonStyle.Secondary)
-        .setCustomId(x.id)
-    }))
+    buttonList.push(
+      chunks[i].map((x) => {
+        return new ButtonBuilder()
+          .setLabel(x.label)
+          .setEmoji(x.emoji)
+          .setStyle(ButtonStyle.Secondary)
+          .setCustomId(x.id);
+      })
+    );
   }
 
   buttonList.forEach((b) => {
-    componentList.push(new ActionRowBuilder()
-      .addComponents(b.map((x) => x))
-    )
+    componentList.push(new ActionRowBuilder().addComponents(b.map((x) => x)));
   });
 
   await interaction.channel
     .send({
       embeds: [embed],
-      components: componentList
+      components: componentList,
     })
     .then(async (msg) => {
       await db.push(`reactionRoles_${interaction.guild.id}`, {

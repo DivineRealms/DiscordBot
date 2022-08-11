@@ -3,7 +3,7 @@ const {
   ButtonBuilder,
   ButtonStyle,
   ActivityType,
-  EmbedBuilder
+  EmbedBuilder,
 } = require("discord.js");
 const cron = require("cron");
 const { QuickDB } = require("quick.db");
@@ -127,19 +127,21 @@ module.exports = async (client) => {
       let generalCh = client.channels.cache.get("512274978754920463");
       const voteRow = new ActionRowBuilder().addComponents(
         new ButtonBuilder()
+          .setEmoji("<:DR:765260828714467418>")
           .setURL(`https://minecraft-mp.com/server/295045/vote/`)
-          .setLabel("Divine Realms")
+          .setLabel("Vote for Divine Realms")
           .setStyle(ButtonStyle.Link),
         new ButtonBuilder()
+          .setEmoji("<:hog:916427016071442442>")
           .setURL(`https://minecraft-mp.com/server/296478/vote/`)
-          .setLabel("HogRealms")
+          .setLabel("Vote for HogRealms")
           .setStyle(ButtonStyle.Link)
       );
       if (generalCh)
         generalCh.send({
           embeds: [
             client.embedBuilder(client, "", "", "", "#8ee26b").setAuthor({
-              name: "Click the buttons below to vote and help us climb the leaderboard.",
+              name: "Daily reminder to vote!",
               iconURL: `https://cdn.upload.systems/uploads/U5K71mCE.png`,
             }),
           ],
@@ -159,9 +161,9 @@ module.exports = async (client) => {
       const lastMonth = new Date();
       lastMonth.setMonth(lastMonth.getMonth() - 1);
 
-      let leaderboard = (await db
-        .get(`votes_${guild.id}`))
-        .sort((a, b) => b.votes - a.votes);
+      let leaderboard = (await db.get(`votes_${guild.id}`)).sort(
+        (a, b) => b.votes - a.votes
+      );
       let content = "";
 
       for (let i = 0; i < leaderboard.length; i++) {
@@ -185,7 +187,9 @@ module.exports = async (client) => {
         )
         .setColor("#7ec0ff");
 
-      const lbChannel = client.channels.cache.get(client.conf.Settings.Votes_LB);
+      const lbChannel = client.channels.cache.get(
+        client.conf.Settings.Votes_LB
+      );
       if (lbChannel) lbChannel.send({ embeds: [votesEmbed] });
     },
     { timezone: "Europe/Belgrade" }
