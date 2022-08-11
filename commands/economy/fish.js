@@ -9,7 +9,7 @@ module.exports = {
   cooldown: 120,
   aliases: [],
   usage: "fish",
-  slash: true
+  slash: true,
 };
 
 module.exports.run = async (client, message, args) => {
@@ -25,17 +25,15 @@ module.exports.run = async (client, message, args) => {
       "tropical fish",
     ],
     amount = Math.floor(Math.random() * 200) + 1;
-    
+
   message.channel.send({
     embeds: [
-      client
-        .embedBuilder(client, message, "", "", "#3db39e")
-        .setAuthor({
-          name: `You have caught a ${
-            fish[Math.floor(Math.random() * fish.length)]
-          } and earned $${amount}.`,
-          iconURL: `https://cdn.upload.systems/uploads/6KOGFYJM.png`
-        }),
+      client.embedBuilder(client, message, "", "", "#3db39e").setAuthor({
+        name: `You have caught a ${
+          fish[Math.floor(Math.random() * fish.length)]
+        } and earned $${amount}.`,
+        iconURL: `https://cdn.upload.systems/uploads/6KOGFYJM.png`,
+      }),
     ],
   });
 
@@ -55,17 +53,15 @@ module.exports.slashRun = async (client, interaction) => {
       "tropical fish",
     ],
     amount = Math.floor(Math.random() * 200) + 1;
-    
+
   interaction.reply({
     embeds: [
-      client
-        .embedBuilder(client, interaction, "", "", "#3db39e")
-        .setAuthor({
-          name: `You have caught a ${
-            fish[Math.floor(Math.random() * fish.length)]
-          } and earned $${amount}.`,
-          iconURL: `https://cdn.upload.systems/uploads/6KOGFYJM.png`
-        }),
+      client.embedBuilder(client, interaction, "", "", "#3db39e").setAuthor({
+        name: `You have caught a ${
+          fish[Math.floor(Math.random() * fish.length)]
+        } and earned $${amount}.`,
+        iconURL: `https://cdn.upload.systems/uploads/6KOGFYJM.png`,
+      }),
     ],
   });
 

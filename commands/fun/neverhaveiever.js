@@ -9,7 +9,7 @@ module.exports = {
   cooldown: 0,
   aliases: ["nvhie"],
   usage: "neverhaveiever",
-  slash: true
+  slash: true,
 };
 
 module.exports.run = async (client, message, args) => {

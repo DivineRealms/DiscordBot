@@ -9,12 +9,14 @@ module.exports = {
   aliases: ["pfp", "av"],
   usage: "avatar <@User>",
   slash: true,
-  options: [{
-    name: "user",
-    description: "User whoes avatar to see",
-    type: ApplicationCommandOptionType.User,
-    required: false
-  }]
+  options: [
+    {
+      name: "user",
+      description: "User whoes avatar to see",
+      type: ApplicationCommandOptionType.User,
+      required: false,
+    },
+  ],
 };
 
 module.exports.run = async (client, message, args) => {
@@ -37,8 +39,7 @@ module.exports.run = async (client, message, args) => {
 };
 
 module.exports.slashRun = async (client, interaction) => {
-  const user =
-    interaction.options.getUser("user") || interaction.user;
+  const user = interaction.options.getUser("user") || interaction.user;
 
   interaction.reply({
     embeds: [

@@ -9,12 +9,14 @@ module.exports = {
   aliases: [],
   usage: "apply",
   slash: true,
-  options: [{
-    name: "apply",
-    description: "Apply type",
-    type: ApplicationCommandOptionType.String,
-    required: true
-  }]
+  options: [
+    {
+      name: "apply",
+      description: "Apply type",
+      type: ApplicationCommandOptionType.String,
+      required: true,
+    },
+  ],
 };
 
 module.exports.run = async (client, message, args) => {
@@ -242,9 +244,11 @@ module.exports.slashRun = async (client, interaction) => {
           "Application Process",
           `Please confirm that you would like to start the application by reacting below.\nYou can send \`cancel\` at any time to cancel the application.`
         ),
-      ], fetchReply: true,
-    }).then(() => {
-      interaction.reply({ content: "> Apply started in DMs", ephemeral: true })
+      ],
+      fetchReply: true,
+    })
+    .then(() => {
+      interaction.reply({ content: "> Apply started in DMs", ephemeral: true });
     })
     .catch(() => {
       interaction.reply({ content: "> Your DMs are closed" });

@@ -11,12 +11,14 @@ module.exports = {
   aliases: ["xp"],
   usage: "rank [@user]",
   slash: true,
-  options: [{
-    name: "user",
-    description: "User whoes rank to see",
-    type: ApplicationCommandOptionType.User,
-    required: false
-  }]
+  options: [
+    {
+      name: "user",
+      description: "User whoes rank to see",
+      type: ApplicationCommandOptionType.User,
+      required: false,
+    },
+  ],
 };
 
 module.exports.run = async (client, message, args) => {
@@ -25,8 +27,8 @@ module.exports.run = async (client, message, args) => {
     client.users.cache.get(args[0]) ||
     message.author;
 
-  let level = await db.get(`level_${message.guild.id}_${user.id}`) || 1;
-  let xp = await db.get(`xp_${message.guild.id}_${user.id}`) || 1;
+  let level = (await db.get(`level_${message.guild.id}_${user.id}`)) || 1;
+  let xp = (await db.get(`xp_${message.guild.id}_${user.id}`)) || 1;
   let xpNeeded = (parseInt(level) + 1) * 2 * 250 + 250;
   let every = (await db.all())
     .filter((i) => i.id.startsWith(`level_${message.guild.id}_`))
@@ -53,18 +55,17 @@ module.exports.run = async (client, message, args) => {
         )
         .setAuthor({
           name: user.username + "'s Rank",
-          iconURL: `https://cdn.upload.systems/uploads/6uDK0XAN.png`
+          iconURL: `https://cdn.upload.systems/uploads/6uDK0XAN.png`,
         }),
     ],
   });
 };
 
 module.exports.slashRun = async (client, interaction) => {
-  let user =
-    interaction.options.getUser("user") || interaction.user;
+  let user = interaction.options.getUser("user") || interaction.user;
 
-  let level = await db.get(`level_${interaction.guild.id}_${user.id}`) || 1;
-  let xp = await db.get(`xp_${interaction.guild.id}_${user.id}`) || 1;
+  let level = (await db.get(`level_${interaction.guild.id}_${user.id}`)) || 1;
+  let xp = (await db.get(`xp_${interaction.guild.id}_${user.id}`)) || 1;
   let xpNeeded = (parseInt(level) + 1) * 2 * 250 + 250;
   let every = (await db.all())
     .filter((i) => i.id.startsWith(`level_${interaction.guild.id}_`))
@@ -91,7 +92,7 @@ module.exports.slashRun = async (client, interaction) => {
         )
         .setAuthor({
           name: user.username + "'s Rank",
-          iconURL: `https://cdn.upload.systems/uploads/6uDK0XAN.png`
+          iconURL: `https://cdn.upload.systems/uploads/6uDK0XAN.png`,
         }),
     ],
   });

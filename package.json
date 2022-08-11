@@ -30,6 +30,7 @@
         "ms": "^2.1.2",
         "node-fetch": "^2.6.1",
         "pageres": "latest",
+        "prettier": "^2.7.1",
         "puppeteer": "latest",
         "quick.db": "^9.0.5",
         "relevant-urban": "^2.0.0",

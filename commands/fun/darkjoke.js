@@ -6,7 +6,7 @@ module.exports = {
   cooldown: 0,
   aliases: ["drkjoke"],
   usage: "darkjoke",
-  slash: true
+  slash: true,
 };
 
 module.exports.run = async (client, message) => {

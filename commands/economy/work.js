@@ -9,7 +9,7 @@ module.exports = {
   cooldown: 120,
   aliases: [],
   usage: "work",
-  slash: true
+  slash: true,
 };
 
 module.exports.run = async (client, message, args) => {

@@ -6,7 +6,7 @@ module.exports = {
   cooldown: 0,
   aliases: ["sinfo", "servinfo"],
   usage: "serverinfo",
-  slash: true
+  slash: true,
 };
 
 module.exports.run = async (client, message, args) =>
@@ -57,11 +57,15 @@ module.exports.slashRun = async (client, interaction) =>
             interaction.guild.createdTimestamp / 1000
           )}:R>
 <:ArrowRightGray:813815804768026705>Guild ID: **${interaction.guild.id}**
-<:ArrowRightGray:813815804768026705>Server Owner: <@!${interaction.guild.ownerId}>
+<:ArrowRightGray:813815804768026705>Server Owner: <@!${
+            interaction.guild.ownerId
+          }>
 <:ArrowRightGray:813815804768026705>Channels: **${
             interaction.guild.channels.cache.size
           }**
-<:ArrowRightGray:813815804768026705>Roles: **${interaction.guild.roles.cache.size}**
+<:ArrowRightGray:813815804768026705>Roles: **${
+            interaction.guild.roles.cache.size
+          }**
 <:ArrowRightGray:813815804768026705>Server Boost Tier: **${
             interaction.guild.premiumTier + 1
           }**

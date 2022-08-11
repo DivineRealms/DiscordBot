@@ -9,7 +9,7 @@ module.exports = {
   cooldown: 0,
   aliases: ["pic"],
   usage: "meme",
-  slash: true
+  slash: true,
 };
 
 module.exports.run = async (client, message, args) => {

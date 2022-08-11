@@ -8,13 +8,16 @@ module.exports = {
   cooldown: 0,
   aliases: ["pings", "bping"],
   usage: "ping",
-  slash: true
+  slash: true,
 };
 
 module.exports.run = async (client, message, args) => {
   let embed = client
     .embedBuilder(client, message, "", "", "#60b8ff")
-    .setAuthor({ name: "Pinging...", iconURL: `https://cdn.upload.systems/uploads/6uDK0XAN.png` });
+    .setAuthor({
+      name: "Pinging...",
+      iconURL: `https://cdn.upload.systems/uploads/6uDK0XAN.png`,
+    });
 
   let msg = await message.channel.send({ embeds: [embed] });
 
@@ -33,7 +36,7 @@ module.exports.run = async (client, message, args) => {
         )
         .setAuthor({
           name: "Pinging finished!",
-          iconURL: `https://cdn.upload.systems/uploads/6uDK0XAN.png`
+          iconURL: `https://cdn.upload.systems/uploads/6uDK0XAN.png`,
         }),
     ],
   });
@@ -43,7 +46,10 @@ module.exports.slashRun = async (client, interaction) => {
   await interaction.deferReply().catch(() => {});
   let embed = client
     .embedBuilder(client, interaction, "", "", "#60b8ff")
-    .setAuthor({ name: "Pinging...", iconURL: `https://cdn.upload.systems/uploads/6uDK0XAN.png` });
+    .setAuthor({
+      name: "Pinging...",
+      iconURL: `https://cdn.upload.systems/uploads/6uDK0XAN.png`,
+    });
 
   let msg = await interaction.followUp({ embeds: [embed], fethcReply: true });
 
@@ -62,7 +68,7 @@ module.exports.slashRun = async (client, interaction) => {
         )
         .setAuthor({
           name: "Pinging finished!",
-          iconURL: `https://cdn.upload.systems/uploads/6uDK0XAN.png`
+          iconURL: `https://cdn.upload.systems/uploads/6uDK0XAN.png`,
         }),
     ],
   });

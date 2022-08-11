@@ -1,4 +1,4 @@
-const { ActionRowBuilder, ButtonBuilder, ButtonStyle } = require('discord.js');
+const { ActionRowBuilder, ButtonBuilder, ButtonStyle } = require("discord.js");
 
 module.exports = {
   name: "vote",
@@ -26,7 +26,7 @@ module.exports.run = async (client, message, args) => {
   let row = new ActionRowBuilder().addComponents([drButton, hogButton]);
 
   message.reply({ components: [row] });
-}
+};
 
 module.exports.slashRun = async (client, interaction) => {
   const drButton = new ButtonBuilder()

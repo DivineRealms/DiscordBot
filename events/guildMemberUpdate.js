@@ -65,11 +65,11 @@ module.exports = async (client, oldMember, newMember) => {
 
   if (oldMember.pending && !newMember.pending) {
     const savedRoles =
-      await db.get(`savedRoles_${newMember.guild.id}_${newMember.id}`) || [];
+      (await db.get(`savedRoles_${newMember.guild.id}_${newMember.id}`)) || [];
     if (client.conf.Settings.Save_Roles == true && savedRoles) {
-      savedRoles.forEach(async(r) => {
+      savedRoles.forEach(async (r) => {
         await newMember.roles.add(r.id).catch((err) => {});
-      })
+      });
       await db.delete(`savedRoles_${newMember.guild.id}_${newMember.id}`);
     }
     await newMember.roles.add(autoroleId);

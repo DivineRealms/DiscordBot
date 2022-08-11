@@ -10,7 +10,7 @@
   color: red !important;
 }
 
-.col-12>.row {
+.col-12 > .row {
   background-color: #161616 !important;
   color: #d8dee9 !important;
 }
@@ -24,13 +24,13 @@
 }
 
 .border-lighter {
-  border-color: #212121 !important;  
+  border-color: #212121 !important;
 }
 
 .text-primary {
   color: #fff !important;
 }
 
-.col-auto.mr-1.px-0.font-weight-bold>span {
+.col-auto.mr-1.px-0.font-weight-bold > span {
   color: #fff !important;
 }

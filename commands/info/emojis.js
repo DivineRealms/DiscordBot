@@ -6,7 +6,7 @@ module.exports = {
   cooldown: 0,
   aliases: ["emoji", "whatstheemojis"],
   usage: "emojis",
-  slash: true
+  slash: true,
 };
 
 module.exports.run = async (client, message, args) => {
@@ -40,15 +40,20 @@ module.exports.run = async (client, message, args) => {
           name: `Emojis in ${message.guild.name}`,
           iconURL: `https://cdn.upload.systems/uploads/6uDK0XAN.png`,
         })
-        .addFields([ { name: `Regular Emojis:`, value: `${RegularEmojis}`, inline: false },
-        { name: `Animated Emojis:`, value: `${AnimeOnesLol}`, inline: false },
-        {
-          name: `Emojis Displaying:`,
-          value: `${AnimeOnesLolDisplaying} ${TEHEMOJIS}`,
-          inline: false
-        },
-        { name: `Total Count Of Emojis:`, value: `${totalemojislol}`, name: false }
-       ])
+        .addFields([
+          { name: `Regular Emojis:`, value: `${RegularEmojis}`, inline: false },
+          { name: `Animated Emojis:`, value: `${AnimeOnesLol}`, inline: false },
+          {
+            name: `Emojis Displaying:`,
+            value: `${AnimeOnesLolDisplaying} ${TEHEMOJIS}`,
+            inline: false,
+          },
+          {
+            name: `Total Count Of Emojis:`,
+            value: `${totalemojislol}`,
+            name: false,
+          },
+        ]),
     ],
   });
 };
@@ -84,15 +89,20 @@ module.exports.slashRun = async (client, interaction) => {
           name: `Emojis in ${interaction.guild.name}`,
           iconURL: `https://cdn.upload.systems/uploads/6uDK0XAN.png`,
         })
-        .addFields([ { name: `Regular Emojis:`, value: `${RegularEmojis}`, inline: false },
-        { name: `Animated Emojis:`, value: `${AnimeOnesLol}`, inline: false },
-        {
-          name: `Emojis Displaying:`,
-          value: `${AnimeOnesLolDisplaying} ${TEHEMOJIS}`,
-          inline: false
-        },
-        { name: `Total Count Of Emojis:`, value: `${totalemojislol}`, name: false }
-       ])
+        .addFields([
+          { name: `Regular Emojis:`, value: `${RegularEmojis}`, inline: false },
+          { name: `Animated Emojis:`, value: `${AnimeOnesLol}`, inline: false },
+          {
+            name: `Emojis Displaying:`,
+            value: `${AnimeOnesLolDisplaying} ${TEHEMOJIS}`,
+            inline: false,
+          },
+          {
+            name: `Total Count Of Emojis:`,
+            value: `${totalemojislol}`,
+            name: false,
+          },
+        ]),
     ],
   });
 };

@@ -6,7 +6,7 @@ module.exports = {
   cooldown: 0,
   aliases: ["bubbles", "bw"],
   usage: "bubblewrap",
-  slash: true
+  slash: true,
 };
 
 module.exports.run = async (client, message, args) =>
@@ -20,5 +20,5 @@ module.exports.slashRun = async (client, interaction) =>
   interaction.reply({
     content: `Here is some of the finest bubblewrap, enjoy popping!\n\n${`${"||pop||".repeat(
       10
-    )}\n`.repeat(15)}`
+    )}\n`.repeat(15)}`,
   });

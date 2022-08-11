@@ -6,7 +6,7 @@ module.exports = {
   cooldown: 0,
   aliases: ["binfo", "infobot", "bottinfo"],
   usage: "botinfo",
-  slash: true
+  slash: true,
 };
 
 module.exports.run = async (client, message, args) => {

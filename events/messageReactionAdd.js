@@ -7,21 +7,40 @@ module.exports = async (client, reaction, user) => {
   const message = reaction.message;
   if (user.bot || !reaction.message.guild) return;
 
-  let data = await db.get(`reactionRoles_${message.guild.id}`) || [];
+  let data = (await db.get(`reactionRoles_${message.guild.id}`)) || [];
   data = data.find((d) => d.message == message.id);
-  if(data) {
-    let findReaction = client.conf.Settings.Reaction_Roles.find((r) => r.name == data.id) || undefined;
-    if(findReaction) {
-      for(let i = 0; i < findReaction.roles.length; i++) {
-        if(findReaction.roles[i].emoji == reaction.emoji.name && data.message == reaction.message.id) {
-          if(!reaction.message.guild.members.cache.get(user.id).roles.cache.has(findReaction.roles[i].role)) {
-            if(!reaction.message.guild.members.cache.get(user.id).roles.cache.has("1002915912300638239"))
-              reaction.message.guild.members.cache.get(user.id).roles.add("1002915912300638239");
+  if (data) {
+    let findReaction =
+      client.conf.Settings.Reaction_Roles.find((r) => r.name == data.id) ||
+      undefined;
+    if (findReaction) {
+      for (let i = 0; i < findReaction.roles.length; i++) {
+        if (
+          findReaction.roles[i].emoji == reaction.emoji.name &&
+          data.message == reaction.message.id
+        ) {
+          if (
+            !reaction.message.guild.members.cache
+              .get(user.id)
+              .roles.cache.has(findReaction.roles[i].role)
+          ) {
+            if (
+              !reaction.message.guild.members.cache
+                .get(user.id)
+                .roles.cache.has("1002915912300638239")
+            )
+              reaction.message.guild.members.cache
+                .get(user.id)
+                .roles.add("1002915912300638239");
             reaction.users.remove(user.id);
-            return reaction.message.guild.members.cache.get(user.id).roles.add(findReaction.roles[i].role);
+            return reaction.message.guild.members.cache
+              .get(user.id)
+              .roles.add(findReaction.roles[i].role);
           } else {
             reaction.users.remove(user.id);
-            return reaction.message.guild.members.cache.get(user.id).roles.remove(findReaction.roles[i].role);
+            return reaction.message.guild.members.cache
+              .get(user.id)
+              .roles.remove(findReaction.roles[i].role);
           }
         }
       }

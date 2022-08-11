@@ -124,7 +124,7 @@ module.exports.slashRun = async (client, interaction) => {
   const findRoles = rolesList.find(
     (x) => x.name.toLowerCase() == category.toLowerCase()
   );
-  
+
   if (!findRoles)
     return interaction.reply({
       embeds: [
@@ -150,12 +150,10 @@ module.exports.slashRun = async (client, interaction) => {
 
   interaction.reply({
     embeds: [
-      client
-        .embedBuilder(client, interaction, "", "", "#3db39e")
-        .setAuthor({
-          name: "Reaction Role menu has been sent successfully.",
-          iconURL: `https://cdn.upload.systems/uploads/6KOGFYJM.png`,
-        }),
+      client.embedBuilder(client, interaction, "", "", "#3db39e").setAuthor({
+        name: "Reaction Role menu has been sent successfully.",
+        iconURL: `https://cdn.upload.systems/uploads/6KOGFYJM.png`,
+      }),
     ],
     ephemeral: true,
   });

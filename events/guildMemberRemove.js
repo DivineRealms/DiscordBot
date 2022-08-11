@@ -11,7 +11,7 @@ module.exports = async (client, member) => {
     let nwcCh = client.channels.cache.get(newcomersId.channel);
     if (nwcCh) {
       let nwChMess = await nwcCh.messages.fetch(newcomersId.msg);
-      if(newChMess) await nwChMess.delete();
+      if (newChMess) await nwChMess.delete();
     }
   }
 
@@ -19,7 +19,7 @@ module.exports = async (client, member) => {
     let wlcmCh = client.channels.cache.get(embedWelcome.channel);
     if (wlcmCh) {
       const wlcmChMsg = await wlcmCh.messages.fetch(embedWelcome.msg);
-      if(wlcmChMsg) await wlcmChMsg.delete();
+      if (wlcmChMsg) await wlcmChMsg.delete();
     }
   }
 

@@ -9,11 +9,11 @@ module.exports = {
   cooldown: 0,
   aliases: ["baltop", "lvltop", "top"],
   usage: "leaderboard",
-  slash: true
+  slash: true,
 };
 
 module.exports.run = async (client, message) => {
-  let until = await db.get(`untilVote_${message.guild.id}`) || Date.now(),
+  let until = (await db.get(`untilVote_${message.guild.id}`)) || Date.now(),
     timeout = 7200000 - (Date.now() - until),
     parsed = client.utils.formatTime(timeout),
     data = [];
@@ -59,7 +59,7 @@ module.exports.run = async (client, message) => {
             ? await client.utils.lbMoney(client, message)
             : i == 3
             ? `Page updating in **\`${parsed}\`**.\n\n` +
-              await client.utils.lbVotes(client, message)
+              (await client.utils.lbVotes(client, message))
             : await client.utils.lbContent(
                 client,
                 message,
@@ -88,7 +88,7 @@ module.exports.run = async (client, message) => {
 };
 
 module.exports.slashRun = async (client, interaction) => {
-  let until = await db.get(`untilVote_${interaction.guild.id}`) || Date.now(),
+  let until = (await db.get(`untilVote_${interaction.guild.id}`)) || Date.now(),
     timeout = 7200000 - (Date.now() - until),
     parsed = client.utils.formatTime(timeout),
     data = [];
@@ -134,7 +134,7 @@ module.exports.slashRun = async (client, interaction) => {
             ? await client.utils.lbMoney(client, interaction)
             : i == 3
             ? `Page updating in **\`${parsed}\`**.\n\n` +
-              await client.utils.lbVotes(client, interaction)
+              (await client.utils.lbVotes(client, interaction))
             : await client.utils.lbContent(
                 client,
                 interaction,

@@ -6,7 +6,7 @@ module.exports = {
   cooldown: 0,
   aliases: ["dvjoke"],
   usage: "devjoke ",
-  slash: true
+  slash: true,
 };
 
 module.exports.run = async (client, message) => {

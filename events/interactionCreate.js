@@ -16,7 +16,7 @@ module.exports = async (client, interaction) => {
     const cmd = client.slashCommands.get(interaction.commandName);
     if (!cmd)
       return interaction.reply({
-        content: "> That slash command doesn't exist, contact bot developer.",
+        content: "That slash command doesn't exist, contact bot developer.",
         ephemeral: true,
       });
 
@@ -41,7 +41,7 @@ module.exports = async (client, interaction) => {
         ],
         ephemeral: true,
       });
-    
+
     let findCooldown = client.cmdCooldowns.find(
       (c) => c.name == cmd.name && c.id == interaction.user.id
     );
@@ -60,7 +60,8 @@ module.exports = async (client, interaction) => {
               interaction,
               `You can use that command again in ${time}.`
             ),
-          ], ephemeral: true
+          ],
+          ephemeral: true,
         });
       } else if (!findCooldown && cmd.cooldown > 0) {
         let cooldown = {
@@ -80,22 +81,35 @@ module.exports = async (client, interaction) => {
     cmd.slashRun(client, interaction);
   }
 
-  if(interaction.type == InteractionType.MessageComponent && interaction.isButton()) {
-    let data = await db.get(`reactionRoles_${interaction.guild.id}`) || [];
+  if (
+    interaction.type == InteractionType.MessageComponent &&
+    interaction.isButton()
+  ) {
+    let data = (await db.get(`reactionRoles_${interaction.guild.id}`)) || [];
     data = data.find((d) => d.message == interaction.message.id);
-    if(data) {
-      let findReaction = client.conf.Settings.Reaction_Roles.find((r) => r.name == data.id) || undefined;
-      if(findReaction) {
-        let reactionRole = interaction.guild.roles.cache.get(findReaction.roles.find((r) => r.id == interaction.customId)?.role);
+    if (data) {
+      let findReaction =
+        client.conf.Settings.Reaction_Roles.find((r) => r.name == data.id) ||
+        undefined;
+      if (findReaction) {
+        let reactionRole = interaction.guild.roles.cache.get(
+          findReaction.roles.find((r) => r.id == interaction.customId)?.role
+        );
         let member = interaction.guild.members.cache.get(interaction.user.id);
-        if(!member.roles.cache.has("1002915912300638239"))
+        if (!member.roles.cache.has("1002915912300638239"))
           member.roles.add("1002915912300638239");
 
-        if(member.roles.cache.has(reactionRole.id)) {
-          interaction.reply({ content: `Role ${reactionRole} have been removed from you`, ephemeral: true })
+        if (member.roles.cache.has(reactionRole.id)) {
+          interaction.reply({
+            content: `Role ${reactionRole} has been removed from you`,
+            ephemeral: true,
+          });
           member.roles.remove(reactionRole.id);
         } else {
-          interaction.reply({ content: `Role ${reactionRole} have been added to you`, ephemeral: true })
+          interaction.reply({
+            content: `Role ${reactionRole} has been added to you`,
+            ephemeral: true,
+          });
           member.roles.add(reactionRole.id);
         }
       }

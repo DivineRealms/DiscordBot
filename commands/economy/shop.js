@@ -8,7 +8,7 @@ module.exports = {
   cooldown: 0,
   aliases: [],
   usage: "shop",
-  slash: true
+  slash: true,
 };
 
 module.exports.run = async (client, message, args) => {

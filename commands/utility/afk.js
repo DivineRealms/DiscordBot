@@ -9,12 +9,14 @@ module.exports = {
   aliases: [`brb`],
   usage: "afk <Reason>",
   slash: true,
-  options: [{
-    name: "reason",
-    description: "AFK Reason",
-    type: ApplicationCommandOptionType.String,
-    required: false
-  }]
+  options: [
+    {
+      name: "reason",
+      description: "AFK Reason",
+      type: ApplicationCommandOptionType.String,
+      required: false,
+    },
+  ],
 };
 
 module.exports.run = async (client, message, args) => {
@@ -31,12 +33,12 @@ module.exports.run = async (client, message, args) => {
 
   message.channel.send({
     embeds: [
-      client
-        .embedBuilder(client, message, "", "", "#7bc2cc")
-        .setAuthor({
-          name: `I have set your AFK status to ${args[0] ? args.join(" ") : "AFK"}`,
-          iconURL: `https://cdn.upload.systems/uploads/Za4oLQsR.png`
-        }),
+      client.embedBuilder(client, message, "", "", "#7bc2cc").setAuthor({
+        name: `I have set your AFK status to ${
+          args[0] ? args.join(" ") : "AFK"
+        }`,
+        iconURL: `https://cdn.upload.systems/uploads/Za4oLQsR.png`,
+      }),
     ],
   });
 };
@@ -55,12 +57,14 @@ module.exports.slashRun = async (client, interaction) => {
 
   interaction.reply({
     embeds: [
-      client
-        .embedBuilder(client, interaction, "", "", "#7bc2cc")
-        .setAuthor({
-          name: `I have set your AFK status to ${interaction.options.getString("reason") ? interaction.options.getString("reason") : "AFK"}`,
-          iconURL: `https://cdn.upload.systems/uploads/Za4oLQsR.png`
-        }),
+      client.embedBuilder(client, interaction, "", "", "#7bc2cc").setAuthor({
+        name: `I have set your AFK status to ${
+          interaction.options.getString("reason")
+            ? interaction.options.getString("reason")
+            : "AFK"
+        }`,
+        iconURL: `https://cdn.upload.systems/uploads/Za4oLQsR.png`,
+      }),
     ],
   });
 };
