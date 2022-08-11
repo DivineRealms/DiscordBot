@@ -7,29 +7,33 @@ module.exports = async (client, member) => {
     embedWelcome = await db.get(`wlcmEmbed_${member.guild.id}_${member.id}`),
     newcomersId = await db.get(`newcomers_${member.guild.id}_${member.id}`);
 
-  if (client.conf.Settings.Save_Roles == true) {
-    await db.set(
-      `savedRoles_${member.guild.id}_${member.id}`,
-      member.roles.cache
-    );
-  }
-
   if (newcomersId) {
     let nwcCh = client.channels.cache.get(newcomersId.channel);
-    if (nwcCh)
-      await nwcCh.messages.fetch(newcomersId.msg).then((msg) => msg.delete());
+    if (nwcCh) {
+      let nwChMess = await nwcCh.messages.fetch(newcomersId.msg);
+      if(newChMess) await nwChMess.delete();
+    }
   }
 
   if (embedWelcome) {
     let wlcmCh = client.channels.cache.get(embedWelcome.channel);
-    if (wlcmCh)
-      await wlcmCh.messages.fetch(embedWelcome.msg).then((msg) => msg.delete());
+    if (wlcmCh) {
+      const wlcmChMsg = await wlcmCh.messages.fetch(embedWelcome.msg);
+      if(wlcmChMsg) await wlcmChMsg.delete();
+    }
   }
 
   let data = (await db.all()).filter((data) => data.id.includes(member.id));
   data.forEach(async (data) => {
     await db.delete(data.id);
   });
+
+  if (client.conf.Settings.Save_Roles == true) {
+    await db.set(
+      `savedRoles_${member.guild.id}_${member.id}`,
+      member.roles.cache
+    );
+  }
 
   if (!settings.Goodbye_System.Enabled) return;
 
