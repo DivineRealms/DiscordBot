@@ -79,4 +79,26 @@ module.exports = async (client, interaction) => {
 
     cmd.slashRun(client, interaction);
   }
+
+  if(interaction.type == InteractionType.MessageComponent && interaction.isButton()) {
+    let data = await db.get(`reactionRoles_${interaction.guild.id}`) || [];
+    data = data.find((d) => d.message == interaction.message.id);
+    if(data) {
+      let findReaction = client.conf.Settings.Reaction_Roles.find((r) => r.name == data.id) || undefined;
+      if(findReaction) {
+        let reactionRole = interaction.guild.roles.cache.get(findReaction.roles.find((r) => r.id == interaction.customId)?.role);
+        let member = interaction.guild.members.cache.get(interaction.user.id);
+        if(!member.roles.cache.has("1002915912300638239"))
+          member.roles.add("1002915912300638239");
+
+        if(member.roles.cache.has(reactionRole.id)) {
+          interaction.reply({ content: `Role ${reactionRole} have been removed from you`, ephemeral: true })
+          member.roles.remove(reactionRole.id);
+        } else {
+          interaction.reply({ content: `Role ${reactionRole} have been added to you`, ephemeral: true })
+          member.roles.add(reactionRole.id);
+        }
+      }
+    }
+  }
 };
