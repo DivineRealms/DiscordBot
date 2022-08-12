@@ -120,7 +120,7 @@ router.get("/players/get", async (req, res) => {
   });
 });
 
-router.put("/players/update", async (req, res) => {
+router.patch("/players/update", async (req, res) => {
   if (req.body.key != process.env.ACCESS_KEY)
     return res.status(401).json({
       code: 401,
@@ -324,5 +324,23 @@ router.post("/season/reset", async (req, res) => {
     response: "Season have been reseted.",
   });
 });
+
+router.post("/club/create", async(req, res) => {
+  let listOfClubs = (await db.all).filter((x) => x.id.startsWith("club_")) || [];
+  await db.set(`club_${listOfClubs.length}`);
+});
+
+router.post("/matchday", async(req, res) => {
+  const { league, kolo, home, away } = req.body;
+
+  await db.set(`${league}_${home}_${away}`, {
+    home,
+    away,
+    rezultat: "0-0",
+    ref: null,
+    timestamp: new Date().getTime(),
+    
+  })
+})
 
 module.exports = router;
