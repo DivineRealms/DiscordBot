@@ -333,14 +333,42 @@ router.post("/club/create", async(req, res) => {
 router.post("/matchday", async(req, res) => {
   const { league, kolo, home, away } = req.body;
 
-  await db.set(`${league}_${home}_${away}`, {
+  const matchdayId = (Math.random() + 1).toString(36).substring(7);
+
+  await db.set(`match_${matchdayId}`, {
     home,
     away,
+    kolo,
+    league,
+    customId: matchdayId,
     rezultat: "0-0",
     ref: null,
     timestamp: new Date().getTime(),
-    
-  })
+    scorers: [],
+    assists: [],
+    cleanSheets: [],
+    yellow: [],
+    red: [],
+    fansMotm: '',
+    fcfaMotm: ''
+  });
+});
+
+router.put("/matchday/update", async(req, res) => {
+  const { customId } = req.body;
+
+  let match = await db.get(`match_${customId}`);
+  if(!match) return res.status(404).json({
+    code: 404,
+    response: "No Match with such ID could be found."
+  });
+
+  // Check which option were send in request
+  // and update it here.
+  //
+  // Player stats need to be updated separately
+  // by calling separate endpoint.
+
 })
 
 module.exports = router;
