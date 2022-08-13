@@ -354,8 +354,9 @@ router.post("/matchday", async(req, res) => {
   });
 });
 
-router.put("/matchday/update", async(req, res) => {
-  const { customId } = req.body;
+router.put("/matchday/update/:type", async(req, res) => {
+  const { customId, uuid1, uuid2, motm } = req.body;
+  const { type } = req.params;
 
   let match = await db.get(`match_${customId}`);
   if(!match) return res.status(404).json({
@@ -363,12 +364,38 @@ router.put("/matchday/update", async(req, res) => {
     response: "No Match with such ID could be found."
   });
 
-  // Check which option were send in request
+  if(type == "goal") {
+    const whoScored = await db.get(`player_${uuid1}`);
+    whoScored.currentClub == home ? match.rezultat = `${parseInt(match.rezultat.split("-")[0]) + 1}-${match.rezultat.split("-")[1]}` 
+      : `${match.rezultat.split("-")[0]}-${parseInt(match.rezultat.split("-")[1]) + 1}`;
+    
+    match.scorers.push(uuid1);
+    match.assists.push(uuid2);
+  } else if(type == "red") {
+    match.red.push(uuid1);
+  } else if(type == "yellow") {
+    match.yellow.push(uuid1);
+  } else if(type == "cs") {
+    match.cleanSheets.push(uuid1);
+  } else if(type == "fans") {
+    match.fansMotm = motm;
+  } else if(type == "fcfa") {
+    match.fcfaMotm = motm;
+  }
+
+  const updatedData = await db.set(`match_${customId}`, match);
+
+  res.status(200).json({
+    code: 200,
+    response: updatedData
+  });
+
+  // Check which option were sent in request
   // and update it here.
   //
   // Player stats need to be updated separately
   // by calling separate endpoint.
 
-})
+});
 
 module.exports = router;
