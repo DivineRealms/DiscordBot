@@ -327,7 +327,13 @@ router.post("/season/reset", async (req, res) => {
 
 router.post("/club/create", async(req, res) => {
   let listOfClubs = (await db.all).filter((x) => x.id.startsWith("club_")) || [];
-  await db.set(`club_${listOfClubs.length}`);
+  const clubData = await db.set(`club_${listOfClubs.length}`);
+
+  res.status(201).json({
+    code: 201,
+    message: "Club have been created successfully",
+    response: clubData
+  })
 });
 
 router.post("/matchday", async(req, res) => {
@@ -335,7 +341,7 @@ router.post("/matchday", async(req, res) => {
 
   const matchdayId = (Math.random() + 1).toString(36).substring(7);
 
-  await db.set(`match_${matchdayId}`, {
+  const matchData = await db.set(`match_${matchdayId}`, {
     home,
     away,
     kolo,
@@ -352,6 +358,12 @@ router.post("/matchday", async(req, res) => {
     fansMotm: '',
     fcfaMotm: ''
   });
+
+  res.status(201).json({
+    code: 201,
+    message: "Match have been created successfully",
+    response: matchData
+  })
 });
 
 router.put("/matchday/update/:type", async(req, res) => {
@@ -387,6 +399,7 @@ router.put("/matchday/update/:type", async(req, res) => {
 
   res.status(200).json({
     code: 200,
+    message: "Matchday have been updated",
     response: updatedData
   });
 
