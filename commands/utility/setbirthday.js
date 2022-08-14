@@ -125,7 +125,7 @@ module.exports.slashRun = async (client, interaction) => {
       ephemeral: true,
     });
 
-  const age = getAge(args.slice(1).join(" "));
+  const age = getAge(date);
   if (age <= 12)
     return interaction.reply({
       embeds: [
@@ -155,10 +155,7 @@ module.exports.slashRun = async (client, interaction) => {
     ],
   });
 
-  await db.set(
-    `birthday_${interaction.guild.id}_${user.id}`,
-    args.slice(1).join(" ")
-  );
+  await db.set(`birthday_${interaction.guild.id}_${user.id}`, date);
 };
 
 const getAge = (b) => {
