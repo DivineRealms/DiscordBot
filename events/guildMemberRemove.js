@@ -13,7 +13,7 @@ module.exports = async (client, member) => {
       await wlcmCh.messages
         .fetch(embedWelcome.msg)
         .then((msg) => msg.delete())
-        .catch();
+        .catch((err) => {});
   }
 
   if (newcomersId) {
@@ -22,7 +22,7 @@ module.exports = async (client, member) => {
       await nwcCh.messages
         .fetch(newcomersId.msg)
         .then((msg) => msg.delete())
-        .catch();
+        .catch((err) => {});
   }
 
   let data = (await db.all()).filter((data) => data.id.includes(member.id));
