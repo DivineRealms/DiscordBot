@@ -96,7 +96,7 @@ module.exports.run = async (client, message, args) => {
 
 module.exports.slashRun = async (client, interaction) => {
   let birthday = await db.get(
-    `birthday_${interaction.guild.id}_${interaction.author.id}`
+    `birthday_${interaction.guild.id}_${interaction.user.id}`
   );
 
   if (!client.conf.Birthday_System.Enabled)
