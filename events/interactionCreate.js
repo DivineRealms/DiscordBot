@@ -103,6 +103,7 @@ module.exports = async (client, interaction) => {
           member.roles.add(placeholder_role);
 
         if (member.roles.cache.has(reactionRoleId.id)) {
+          interaction.reply({ content: member.user, ephemeral: true });
           interaction.followUp({
             embeds: [
               client
@@ -116,6 +117,7 @@ module.exports = async (client, interaction) => {
           });
           member.roles.remove(reactionRoleId.id);
         } else {
+          interaction.reply({ content: member.user, ephemeral: true });
           interaction.followUp({
             embeds: [
               client

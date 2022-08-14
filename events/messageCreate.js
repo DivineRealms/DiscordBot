@@ -85,6 +85,14 @@ module.exports = async (client, message) => {
   )
     await leveling.manageLeveling(client, message);
 
+  const prefixRegex = new RegExp(
+    `^(${
+      client.conf.Settings.Mention_Prefix ? `<@!?${client.user.id}>|` : ""
+    }${escapeRegex(message.px)})\\s*`
+  );
+
+  if (!prefixRegex.test(message.content)) return;
+
   const [, matchedPrefix] = message.content.match(prefixRegex);
   const args = message.content.slice(matchedPrefix.length).trim().split(/ +/);
   const cmd = args.shift().toLowerCase();
