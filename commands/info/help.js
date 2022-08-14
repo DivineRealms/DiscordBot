@@ -261,10 +261,9 @@ module.exports.slashRun = async (client, interaction) => {
       true
     );
   } else {
+    let cmd = interaction.options.getString("command");
     const command = client.commands.find(
-      (c, n) =>
-        n === args[0].toLowerCase() ||
-        (c.aliases && c.aliases.includes(args[0].toLowerCase()))
+      (c, n) => n === cmd || (c.aliases && c.aliases.includes(cmd))
     );
 
     if (!command)
@@ -273,7 +272,7 @@ module.exports.slashRun = async (client, interaction) => {
           client.utils.errorEmbed(
             client,
             interaction,
-            `I couldnt find a command named ${args[0]}.`
+            `I couldnt find a command named ${cmd}.`
           ),
         ],
         ephemeral: true,
@@ -286,7 +285,7 @@ module.exports.slashRun = async (client, interaction) => {
             client,
             interaction,
             "",
-            `<:ArrowRightGray:813815804768026705>Name: **${args[0].toLowerCase()}**
+            `<:ArrowRightGray:813815804768026705>Name: **${cmd}**
 <:ArrowRightGray:813815804768026705>Aliases: **${
               command.aliases.map((s) => `\`${s}\``).join(", ") || "none"
             }**
