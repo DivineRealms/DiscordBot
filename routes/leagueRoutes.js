@@ -120,7 +120,7 @@ router.get("/players/get", async (req, res) => {
   });
 });
 
-router.put("/players/update", async (req, res) => {
+router.patch("/players/update", async (req, res) => {
   if (req.body.key != process.env.ACCESS_KEY)
     return res.status(401).json({
       code: 401,
@@ -323,6 +323,92 @@ router.post("/season/reset", async (req, res) => {
     code: 200,
     response: "Season have been reseted.",
   });
+});
+
+router.post("/club/create", async(req, res) => {
+  let listOfClubs = (await db.all).filter((x) => x.id.startsWith("club_")) || [];
+  const clubData = await db.set(`club_${listOfClubs.length}`);
+
+  res.status(201).json({
+    code: 201,
+    message: "Club have been created successfully",
+    response: clubData
+  })
+});
+
+router.post("/matchday", async(req, res) => {
+  const { league, kolo, home, away } = req.body;
+
+  const matchdayId = (Math.random() + 1).toString(36).substring(7);
+
+  const matchData = await db.set(`match_${matchdayId}`, {
+    home,
+    away,
+    kolo,
+    league,
+    customId: matchdayId,
+    rezultat: "0-0",
+    ref: null,
+    timestamp: new Date().getTime(),
+    scorers: [],
+    assists: [],
+    cleanSheets: [],
+    yellow: [],
+    red: [],
+    fansMotm: '',
+    fcfaMotm: ''
+  });
+
+  res.status(201).json({
+    code: 201,
+    message: "Match have been created successfully",
+    response: matchData
+  })
+});
+
+router.put("/matchday/update/:type", async(req, res) => {
+  const { customId, uuid1, uuid2, motm } = req.body;
+  const { type } = req.params;
+
+  let match = await db.get(`match_${customId}`);
+  if(!match) return res.status(404).json({
+    code: 404,
+    response: "No Match with such ID could be found."
+  });
+
+  if(type == "goal") {
+    const whoScored = await db.get(`player_${uuid1}`);
+    whoScored.currentClub == home ? match.rezultat = `${parseInt(match.rezultat.split("-")[0]) + 1}-${match.rezultat.split("-")[1]}` 
+      : `${match.rezultat.split("-")[0]}-${parseInt(match.rezultat.split("-")[1]) + 1}`;
+    
+    match.scorers.push(uuid1);
+    match.assists.push(uuid2);
+  } else if(type == "red") {
+    match.red.push(uuid1);
+  } else if(type == "yellow") {
+    match.yellow.push(uuid1);
+  } else if(type == "cs") {
+    match.cleanSheets.push(uuid1);
+  } else if(type == "fans") {
+    match.fansMotm = motm;
+  } else if(type == "fcfa") {
+    match.fcfaMotm = motm;
+  }
+
+  const updatedData = await db.set(`match_${customId}`, match);
+
+  res.status(200).json({
+    code: 200,
+    message: "Matchday have been updated",
+    response: updatedData
+  });
+
+  // Check which option were sent in request
+  // and update it here.
+  //
+  // Player stats need to be updated separately
+  // by calling separate endpoint.
+
 });
 
 module.exports = router;

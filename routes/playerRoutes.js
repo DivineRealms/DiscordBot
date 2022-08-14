@@ -21,6 +21,82 @@ router.get("/", async (req, res) => {
   });
 });
 
+router.patch("/update", async (req, res) => {
+  if (req.body.key != process.env.ACCESS_KEY)
+    return res.status(401).json({
+      code: 401,
+      response: "You're not autorized",
+    });
+  if (!req.body.uuid)
+    return res.status(400).json({
+      code: 400,
+      response: "Invalid Request, you didn't provide UUID in Body.",
+    });
+  const uuid = req.body.uuid;
+  const type = req.body.type || "add_remove";
+
+  let playerData = await db.get(`player_${uuid}`);
+  let clubData = await db.get(`club_${player.currentClub}`);
+
+  if (type?.toLowerCase() == "set") {
+    if (req.body.goals) {
+      playerData.goals = req.body.goals;
+      clubData.goals = req.body.goals;
+    }
+    if (req.body.assists) {
+      playerData.assists = req.body.assists;
+      clubData.assists = req.body.assists;
+    }
+    if (req.body.cleanSheets) {
+      clubData.cleanSheets = req.body.cleanSheets;
+      playerData.cleanSheets = req.body.cleanSheets;
+    }
+    if (req.body.yellow) {
+      playerData.yellow = req.body.yellow;
+      clubData.yellow = req.body.yellow;
+    }
+    if (req.body.red) {
+      playerData.red = req.body.red;
+      clubData.red = req.body.red;
+    }
+    await db.set(`player_${uuid}`, playerData);
+    await db.set(`club_${player.currentClub}`, clubData);
+
+    res.status(200).json({
+      code: 200,
+      response: "Player & Club Updated Successfully",
+    });
+  } else {
+    if (req.body.goals) {
+      playerData.goals += req.body.goals;
+      clubData.goals += req.body.goals;
+    }
+    if (req.body.assists) {
+      playerData.assists += req.body.assists;
+      clubData.assists += req.body.assists;
+    }
+    if (req.body.cleanSheets) {
+      clubData.cleanSheets += req.body.cleanSheets;
+      playerData.cleanSheets += req.body.cleanSheets;
+    }
+    if (req.body.yellow) {
+      playerData.yellow += req.body.yellow;
+      clubData.yellow += req.body.yellow;
+    }
+    if (req.body.red) {
+      playerData.red += req.body.red;
+      clubData.red += req.body.red;
+    }
+    await db.set(`player_${uuid}`, playerData);
+    await db.set(`club_${player.currentClub}`, clubData);
+
+    res.status(200).json({
+      code: 200,
+      response: "Player & Club Updated Successfully",
+    });
+  }
+});
+
 router.post("/firstJoin", async (req, res) => {
   if (req.body.key != process.env.ACCESS_KEY)
     return res.status(401).json({
@@ -41,6 +117,10 @@ router.post("/firstJoin", async (req, res) => {
     cleanSheets: 0,
     yellow: 0,
     red: 0,
+    clubs: [],
+    positions: [],
+    played: 0,
+    currentClub: -1
   });
 
   res.status(201).json({
@@ -63,6 +143,12 @@ router.post("/goals/add", async (req, res) => {
   let player = await db.get(`player_${req.body.uuid}`);
   player.goals = parseInt(player.goals + 1);
   await db.set(`player_${req.body.uuid}`, player);
+
+  let currentClub = await db.get(`club_${player.currentClub}`);
+  if(currentClub) {
+    currentClub.find((p) => p.id == req.body.uuid).goals += req.body.goals;
+    await db.set(`club_${player.currentClub}`, currentClub);
+  }
 
   res.status(200).json({
     code: 200,
@@ -91,6 +177,12 @@ router.post("/goals/remove", async (req, res) => {
   player.goals = parseInt(player.goals - 1);
   await db.set(`player_${req.body.uuid}`, player);
 
+  let currentClub = await db.get(`club_${player.currentClub}`);
+  if(currentClub) {
+    currentClub.find((p) => p.id == req.body.uuid).goals -= req.body.goals;
+    await db.set(`club_${player.currentClub}`, currentClub);
+  }
+  
   res.status(200).json({
     code: 200,
     response: player,
@@ -143,6 +235,12 @@ router.post("/assists/add", async (req, res) => {
   player.assists = parseInt(player.assists + 1);
   await db.set(`player_${req.body.uuid}`, player);
 
+  let currentClub = await db.get(`club_${player.currentClub}`);
+  if(currentClub) {
+    currentClub.find((p) => p.id == req.body.uuid).assists += req.body.assists;
+    await db.set(`club_${player.currentClub}`, currentClub);
+  }
+  
   res.status(200).json({
     code: 200,
     response: player,
@@ -170,6 +268,12 @@ router.post("/assists/remove", async (req, res) => {
   player.assists = parseInt(player.assists - 1);
   await db.set(`player_${req.body.uuid}`, player);
 
+  let currentClub = await db.get(`club_${player.currentClub}`);
+  if(currentClub) {
+    currentClub.find((p) => p.id == req.body.uuid).assists -= req.body.assists;
+    await db.set(`club_${player.currentClub}`, currentClub);
+  }
+  
   res.status(200).json({
     code: 200,
     response: player,
@@ -223,6 +327,12 @@ router.post("/cleanSheets/add", async (req, res) => {
   player.cleanSheets = parseInt(player.cleanSheets + 1);
   await db.set(`player_${req.body.uuid}`, player);
 
+  let currentClub = await db.get(`club_${player.currentClub}`);
+  if(currentClub) {
+    currentClub.find((p) => p.id == req.body.uuid).cleanSheets += req.body.cleanSheets;
+    await db.set(`club_${player.currentClub}`, currentClub);
+  }
+  
   res.status(200).json({
     code: 200,
     response: player,
@@ -251,6 +361,12 @@ router.post("/cleanSheets/remove", async (req, res) => {
   player.cleanSheets = parseInt(player.cleanSheets - 1);
   await db.set(`player_${req.body.uuid}`, player);
 
+  let currentClub = await db.get(`club_${player.currentClub}`);
+  if(currentClub) {
+    currentClub.find((p) => p.id == req.body.uuid).goals -= req.body.cleanSheets;
+    await db.set(`club_${player.currentClub}`, currentClub);
+  }
+  
   res.status(200).json({
     code: 200,
     response: player,
@@ -304,6 +420,12 @@ router.post("/cards/yellow/add", async (req, res) => {
   player.yellow = parseInt(player.yellow + 1);
   await db.set(`player_${req.body.uuid}`, player);
 
+  let currentClub = await db.get(`club_${player.currentClub}`);
+  if(currentClub) {
+    currentClub.find((p) => p.id == req.body.uuid).yellow += req.body.yellow;
+    await db.set(`club_${player.currentClub}`, currentClub);
+  }
+  
   res.status(200).json({
     code: 200,
     response: player,
@@ -331,6 +453,12 @@ router.post("/cards/yellow/remove", async (req, res) => {
   player.yellow = parseInt(player.yellow - 1);
   await db.set(`player_${req.body.uuid}`, player);
 
+  let currentClub = await db.get(`club_${player.currentClub}`);
+  if(currentClub) {
+    currentClub.find((p) => p.id == req.body.uuid).yellow -= req.body.yellow;
+    await db.set(`club_${player.currentClub}`, currentClub);
+  }
+  
   res.status(200).json({
     code: 200,
     response: player,
@@ -383,6 +511,12 @@ router.post("/cards/red/add", async (req, res) => {
   player.red = parseInt(player.red + 1);
   await db.set(`player_${req.body.uuid}`, player);
 
+  let currentClub = await db.get(`club_${player.currentClub}`);
+  if(currentClub) {
+    currentClub.find((p) => p.id == req.body.uuid).red += req.body.red;
+    await db.set(`club_${player.currentClub}`, currentClub);
+  }
+  
   res.status(200).json({
     code: 200,
     response: player,
@@ -410,6 +544,12 @@ router.post("/cards/red/remove", async (req, res) => {
   player.red = parseInt(player.red - 1);
   await db.set(`player_${req.body.uuid}`, player);
 
+  let currentClub = await db.get(`club_${player.currentClub}`);
+  if(currentClub) {
+    currentClub.find((p) => p.id == req.body.uuid).red -= req.body.red;
+    await db.set(`club_${player.currentClub}`, currentClub);
+  }
+  
   res.status(200).json({
     code: 200,
     response: player,
@@ -444,6 +584,27 @@ router.post("/cards/red/set", async (req, res) => {
   res.status(200).json({
     code: 200,
     response: player,
+  });
+});
+
+router.post("/club/set", async(req, res) => {
+  const { uuid, clubId } = req.query;
+
+  let player = await db.get(`player_${uuid}`);
+  player.currentClub = clubId;
+  await db.set(`player_${uuid}`, player);
+
+  await db.push(`club_${clubId}`, {
+    player: uuid,
+    played: player.played,
+    goals: player.goals,
+    assists: player.assists,
+    cleanSheets: player.cleanSheets
+  });
+
+  res.status(200).json({
+    code: 200,
+    response: "Changed player's Club successfully"
   });
 });
 
