@@ -54,13 +54,13 @@ module.exports.run = async (client, message, args) => {
       args.join(" ").slice(1).toLowerCase(),
     date = datetime.parse(birthd, "MMM D YYYY");
 
-  if (!date.getDay())
+  if (isNaN(date))
     return message.channel.send({
       embeds: [
         client.utils.errorEmbed(
           client,
           message,
-          "Invalid format, example: Jan 21 2004."
+          "Invalid format, example: Jan 21 2004"
         ),
       ],
     });
@@ -126,19 +126,19 @@ module.exports.slashRun = async (client, interaction) => {
   const birthd = interaction.options.getString("date");
   date = datetime.parse(birthd, "MMM D YYYY");
 
-  if (!date.getDay())
+  if (isNaN(date))
     return interaction.reply({
       embeds: [
         client.utils.errorEmbed(
           client,
           interaction,
-          "Invalid format, example: Jan 21 2004."
+          "Invalid format, example: Jan 21 2004"
         ),
       ],
       ephemeral: true,
     });
 
-  const age = getAge(args.join(" "));
+  const age = getAge(birthd);
   if (age <= 12)
     return interaction.reply({
       embeds: [

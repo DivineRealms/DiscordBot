@@ -47,7 +47,7 @@ module.exports.run = async (client, message, args) => {
       args.slice(1).join(" ").slice(1).toLowerCase(),
     date = datetime.parse(birthd, "MMM D YYYY");
 
-  if (!user || !date.getDay())
+  if (!user || isNaN(date))
     return message.channel.send({
       embeds: [
         client.utils.errorEmbed(
@@ -58,7 +58,7 @@ module.exports.run = async (client, message, args) => {
       ],
     });
 
-  const age = getAge(args.slice(1).join(" "));
+  const age = getAge(birthd);
   if (age <= 12)
     return message.channel.send({
       embeds: [
@@ -89,10 +89,7 @@ module.exports.run = async (client, message, args) => {
     ],
   });
 
-  await db.set(
-    `birthday_${message.guild.id}_${user.id}`,
-    args.slice(1).join(" ")
-  );
+  await db.set(`birthday_${message.guild.id}_${user.id}`, birthd);
 };
 
 module.exports.slashRun = async (client, interaction) => {
@@ -113,7 +110,7 @@ module.exports.slashRun = async (client, interaction) => {
     birthd = interaction.options.getString("date"),
     date = datetime.parse(birthd, "MMM D YYYY");
 
-  if (!date.getDay())
+  if (isNaN(date))
     return interaction.reply({
       embeds: [
         client.utils.errorEmbed(
@@ -125,7 +122,7 @@ module.exports.slashRun = async (client, interaction) => {
       ephemeral: true,
     });
 
-  const age = getAge(date);
+  const age = getAge(birthd);
   if (age <= 12)
     return interaction.reply({
       embeds: [
