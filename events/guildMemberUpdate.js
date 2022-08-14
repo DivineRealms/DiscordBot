@@ -102,7 +102,9 @@ module.exports = async (client, oldMember, newMember) => {
         );
 
       if (newcomersId) {
-        let nwcCh = client.channels.cache.get(newcomersId.channel);
+        let nwcCh = client.channels.cache.get(
+          settings.Settings.Newcomers_Channel
+        );
         if (nwcCh)
           await nwcCh.messages
             .fetch(newcomersId.msg)
@@ -111,7 +113,7 @@ module.exports = async (client, oldMember, newMember) => {
       }
 
       if (embedWelcome) {
-        let wlcmCh = client.channels.cache.get(embedWelcome.channel);
+        let wlcmCh = client.channels.cache.get(settings.Welcome_System.Channel);
         if (wlcmCh)
           await wlcmCh.messages
             .fetch(embedWelcome.msg)

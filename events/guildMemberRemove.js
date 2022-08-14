@@ -8,7 +8,7 @@ module.exports = async (client, member) => {
     newcomersId = await db.get(`newcomers_${member.guild.id}_${member.id}`);
 
   if (embedWelcome) {
-    let wlcmCh = client.channels.cache.get(embedWelcome.channel);
+    let wlcmCh = client.channels.cache.get(settings.Welcome_System.Channel);
     if (wlcmCh)
       await wlcmCh.messages
         .fetch(embedWelcome.msg)
@@ -17,7 +17,7 @@ module.exports = async (client, member) => {
   }
 
   if (newcomersId) {
-    let nwcCh = client.channels.cache.get(newcomersId.channel);
+    let nwcCh = client.channels.cache.get(settings.Settings.Newcomers_Channel);
     if (nwcCh)
       await nwcCh.messages
         .fetch(newcomersId.msg)
