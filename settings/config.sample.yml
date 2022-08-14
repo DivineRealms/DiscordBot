@@ -87,8 +87,8 @@ Settings:
     Statistics_Channel: ""
 
   # List of Reaction Roles
+  Placeholder_Role: "734759761660084268"
   Reaction_Roles:
-    Placeholder_Role: "734759761660084268"
     - name: "category_name"
       title: "Embed Title"
       color: "Green"
@@ -100,7 +100,7 @@ Settings:
           emoji: "🎁"
           placeholder: "Select this Role to get notified of new Giveaways"
           role: ""
-  
+
   # Whether to Save Roles when Member leaves Server
   # and to give them back when they rejoin
   Save_Roles: true
@@ -121,7 +121,7 @@ Automod:
   # Role(s) that have access to the moderator commands.
   Moderators:
     - ""
-  
+
   Autorole: "597888019663421440"
 
 Automation:

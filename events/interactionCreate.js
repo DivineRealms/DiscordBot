@@ -95,8 +95,7 @@ module.exports = async (client, interaction) => {
           findReaction.roles.find((r) => r.id == interaction.customId)?.role
         );
         let member = interaction.guild.members.cache.get(interaction.user.id),
-          placeholder_role =
-            client.conf.Settings.Reaction_Roles.Placeholder_Role;
+          placeholder_role = client.conf.Settings.Placeholder_Role;
         if (placeholder_role && !member.roles.cache.has(placeholder_role))
           member.roles.add(placeholder_role);
 
