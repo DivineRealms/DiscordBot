@@ -88,6 +88,7 @@ Settings:
 
   # List of Reaction Roles
   Reaction_Roles:
+    Placeholder_Role: "734759761660084268"
     - name: "category_name"
       title: "Embed Title"
       color: "Green"

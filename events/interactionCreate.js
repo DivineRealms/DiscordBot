@@ -3,7 +3,6 @@ const db = new QuickDB();
 const { InteractionType } = require("discord.js");
 
 module.exports = async (client, interaction) => {
-  const message = interaction.message;
   const user = interaction.user;
   if (user.bot) return;
 
@@ -95,19 +94,34 @@ module.exports = async (client, interaction) => {
         let reactionRole = interaction.guild.roles.cache.get(
           findReaction.roles.find((r) => r.id == interaction.customId)?.role
         );
-        let member = interaction.guild.members.cache.get(interaction.user.id);
-        if (!member.roles.cache.has("1002915912300638239"))
-          member.roles.add("1002915912300638239");
+        let member = interaction.guild.members.cache.get(interaction.user.id),
+          placeholder_role =
+            client.conf.Settings.Reaction_Roles.Placeholder_Role;
+        if (placeholder_role && !member.roles.cache.has(placeholder_role))
+          member.roles.add(placeholder_role);
 
         if (member.roles.cache.has(reactionRole.id)) {
           interaction.reply({
-            content: `Role ${reactionRole} has been removed from you`,
-            ephemeral: true,
+            embeds: [
+              client
+                .embedBuilder(client, interaction, "", "", "#3db39e")
+                .setAuthor({
+                  name: `No longer subscribed to ${reactionRole.emoji} ${reactionRole.label}.`,
+                  iconURL: `https://cdn.upload.systems/uploads/6KOGFYJM.png`,
+                }),
+            ],
           });
           member.roles.remove(reactionRole.id);
         } else {
           interaction.reply({
-            content: `Role ${reactionRole} has been added to you`,
+            embeds: [
+              client
+                .embedBuilder(client, interaction, "", "", "#3db39e")
+                .setAuthor({
+                  name: `Subscribed to ${reactionRole.emoji} ${reactionRole.label}.`,
+                  iconURL: `https://cdn.upload.systems/uploads/6KOGFYJM.png`,
+                }),
+            ],
             ephemeral: true,
           });
           member.roles.add(reactionRole.id);
