@@ -8,9 +8,9 @@ module.exports = async (client, member) => {
     newcomersId = await db.get(`newcomers_${member.guild.id}_${member.id}`);
 
   if (newcomersId) {
-    let nwcCh = client.channels.cache.get(newcomersId.channel);
-    if (nwcCh) {
-      let nwChMess = await nwcCh.messages.fetch(newcomersId.msg);
+    let newcCh = client.channels.cache.get(newcomersId.channel);
+    if (newcCh) {
+      let newChMess = await newcCh.messages.fetch(newcomersId.msg);
       if (newChMess) await nwChMess.delete();
     }
   }
