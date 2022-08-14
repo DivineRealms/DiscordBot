@@ -54,19 +54,6 @@ module.exports = async (client, message) => {
     }
   }
 
-  if (message.channel.id == "529065596449456128" && message.member) {
-    const regexLinks = new RegExp(
-      "(https?://(?:www.|(?!www))[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9].[^s]{2,}|www.[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9].[^s]{2,}|https?://(?:www.|(?!www))[a-zA-Z0-9]+.[^s]{2,}|www.[a-zA-Z0-9]+.[^s]{2,})",
-      "g"
-    );
-    if (
-      message.attachments.size == 0 &&
-      !message.content.match(regexLinks) &&
-      !message.member.permissions.has("ManageMessages")
-    )
-      await message.delete();
-  }
-
   if (!message.guild || message.author.bot) return;
   utils.automod(client, message);
 
@@ -97,21 +84,6 @@ module.exports = async (client, message) => {
     !client.conf.Leveling.Ignore_XP_Channels.includes(message.channel.id)
   )
     await leveling.manageLeveling(client, message);
-
-  const prefixRegex = new RegExp(
-    `^(${
-      client.conf.Settings.Mention_Prefix ? `<@!?${client.user.id}>|` : ""
-    }${escapeRegex(message.px)})\\s*`
-  );
-
-  if (
-    message.channel.id == "912855458795094057" &&
-    !prefixRegex.test(message.content) &&
-    !message.member.permissions.has("ManageMessages")
-  )
-    await message.delete();
-
-  if (!prefixRegex.test(message.content)) return;
 
   const [, matchedPrefix] = message.content.match(prefixRegex);
   const args = message.content.slice(matchedPrefix.length).trim().split(/ +/);

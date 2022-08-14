@@ -91,16 +91,19 @@ module.exports = async (client, interaction) => {
         client.conf.Settings.Reaction_Roles.find((r) => r.name == data.id) ||
         undefined;
       if (findReaction) {
-        let reactionRole = interaction.guild.roles.cache.get(
-          findReaction.roles.find((r) => r.id == interaction.customId)?.role
-        );
-        let member = interaction.guild.members.cache.get(interaction.user.id),
+        let reactionRole = findReaction.roles.find(
+            (r) => r.id == interaction.customId
+          ),
+          reactionRoleId = interaction.guild.roles.cache.get(
+            findReaction.roles.find((r) => r.id == interaction.customId)?.role
+          ),
+          member = interaction.guild.members.cache.get(interaction.user.id),
           placeholder_role = client.conf.Settings.Placeholder_Role;
         if (placeholder_role && !member.roles.cache.has(placeholder_role))
           member.roles.add(placeholder_role);
 
-        if (member.roles.cache.has(reactionRole.id)) {
-          interaction.reply({
+        if (member.roles.cache.has(reactionRoleId.id)) {
+          interaction.followUp({
             embeds: [
               client
                 .embedBuilder(client, interaction, "", "", "#3db39e")
@@ -109,10 +112,11 @@ module.exports = async (client, interaction) => {
                   iconURL: `https://cdn.upload.systems/uploads/6KOGFYJM.png`,
                 }),
             ],
+            ephemeral: true,
           });
-          member.roles.remove(reactionRole.id);
+          member.roles.remove(reactionRoleId.id);
         } else {
-          interaction.reply({
+          interaction.followUp({
             embeds: [
               client
                 .embedBuilder(client, interaction, "", "", "#3db39e")
@@ -123,7 +127,7 @@ module.exports = async (client, interaction) => {
             ],
             ephemeral: true,
           });
-          member.roles.add(reactionRole.id);
+          member.roles.add(reactionRoleId.id);
         }
       }
     }
