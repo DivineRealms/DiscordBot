@@ -29,10 +29,11 @@ module.exports = async (client, oldMember, newMember) => {
 
       if (newcomersId) {
         let nwcCh = client.channels.cache.get(newcomersId.channel);
-        if (nwcCh) {
-          const nwcChMsg = await nwcCh.messages.fetch(newcomersId.msg);
-          if (nwcChMsg) await nwcChMsg.delete();
-        }
+        if (nwcCh)
+          await nwcCh.messages
+            .fetch(newcomersId.msg)
+            .then((msg) => msg.delete())
+            .catch(console.error);
       }
 
       if (welcomeChannel) {
@@ -105,7 +106,8 @@ module.exports = async (client, oldMember, newMember) => {
         if (nwcCh)
           await nwcCh.messages
             .fetch(newcomersId.msg)
-            .then((msg) => msg.delete());
+            .then((msg) => msg.delete())
+            .catch(console.error);
       }
 
       if (embedWelcome) {
@@ -113,7 +115,8 @@ module.exports = async (client, oldMember, newMember) => {
         if (wlcmCh)
           await wlcmCh.messages
             .fetch(embedWelcome.msg)
-            .then((msg) => msg.delete());
+            .then((msg) => msg.delete())
+            .catch(console.error);
       }
     }
   }

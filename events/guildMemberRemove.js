@@ -7,20 +7,22 @@ module.exports = async (client, member) => {
     embedWelcome = await db.get(`wlcmEmbed_${member.guild.id}_${member.id}`),
     newcomersId = await db.get(`newcomers_${member.guild.id}_${member.id}`);
 
-  if (newcomersId) {
-    let nwcCh = client.channels.cache.get(newcomersId.channel);
-    if (nwcCh) {
-      const nwcChMsg = await nwcCh.messages.fetch(newcomersId.msg);
-      if (nwcChMsg) await nwcChMsg.delete();
-    }
-  }
-
   if (embedWelcome) {
     let wlcmCh = client.channels.cache.get(embedWelcome.channel);
-    if (wlcmCh) {
-      const wlcmChMsg = await wlcmCh.messages.fetch(embedWelcome.msg);
-      if (wlcmChMsg) await wlcmChMsg.delete();
-    }
+    if (wlcmCh)
+      await wlcmCh.messages
+        .fetch(embedWelcome.msg)
+        .then((msg) => msg.delete())
+        .catch(console.error);
+  }
+
+  if (newcomersId) {
+    let nwcCh = client.channels.cache.get(newcomersId.channel);
+    if (nwcCh)
+      await nwcCh.messages
+        .fetch(newcomersId.msg)
+        .then((msg) => msg.delete())
+        .catch(console.error);
   }
 
   let data = (await db.all()).filter((data) => data.id.includes(member.id));

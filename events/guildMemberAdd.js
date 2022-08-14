@@ -11,7 +11,7 @@ module.exports = async (client, member) => {
   if (nwcCh)
     nwcCh
       .send({
-        content: `${member.user.toString()} please accept the rules to proceed.`,
+        content: `<a:walcome1_animiran:683092691793215490><a:walcome2_animiran:683092691571048449> ${member.user.toString()} please accept the rules to proceed.`,
       })
       .then(
         async (msg) =>
