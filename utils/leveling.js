@@ -42,13 +42,13 @@ const manageLeveling = async (client, message) => {
         await db.add(`level_${message.guild.id}_${message.author.id}`, 1);
       }
       const reward = levelSettings.Level_Up.Roles.find(
-        ({ level: l }) => l == level + 1
+        ({ Level: l }) => l == level + 1
       );
       if (reward) {
         message.member.roles.add(reward.Role).catch(() => {});
         if (reward.id > 0) {
           let removeReward = levelSettings.Level_Up.Roles.find(
-            ({ id: i }) => i == parseInt(reward.id - 1)
+            ({ ID: i }) => i == parseInt(reward.id - 1)
           );
           message.member.roles.remove(removeReward.Role);
         }
