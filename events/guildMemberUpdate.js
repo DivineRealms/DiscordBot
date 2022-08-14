@@ -35,30 +35,33 @@ module.exports = async (client, oldMember, newMember) => {
             .then((msg) => msg.delete());
 
       if (welcomeChannel) {
-        let wlcmRoleCh = await welcomeChannel.send({
-          embeds: [
-            client
-              .embedBuilder(
-                client,
-                "",
-                "",
-                `<:ArrowRightGray:813815804768026705>Welcome ${newMember.user.toString()} to **Divine Realms**.\n<:ArrowRightGray:813815804768026705>For more info, see <#818930313593487380>.`,
-                "#ffdc5d"
-              )
-              .setAuthor({
-                name: `A new member appeared! (#${newMember.guild.memberCount})`,
-                iconURL: `https://cdn.upload.systems/uploads/hhgfsHXT.png`,
+        await welcomeChannel
+          .send({
+            embeds: [
+              client
+                .embedBuilder(
+                  client,
+                  "",
+                  "",
+                  `<:ArrowRightGray:813815804768026705>Welcome ${newMember.user.toString()} to **Divine Realms**.\n<:ArrowRightGray:813815804768026705>For more info, see <#818930313593487380>.`,
+                  "#ffdc5d"
+                )
+                .setAuthor({
+                  name: `A new member appeared! (#${newMember.guild.memberCount})`,
+                  iconURL: `https://cdn.upload.systems/uploads/hhgfsHXT.png`,
+                })
+                .setThumbnail(
+                  newMember.displayAvatarURL({ size: 64, dynamic: true })
+                ),
+            ],
+          })
+          .then(
+            async (msg) =>
+              await db.set(`wlcmEmbed_${newMember.guild.id}_${newMember.id}`, {
+                msg: msg.id,
+                channel: msg.channel.id,
               })
-              .setThumbnail(
-                newMember.displayAvatarURL({ size: 64, dynamic: true })
-              ),
-          ],
-        });
-
-        await db.set(`wlcmEmbed_${newMember.guild.id}_${newMember.id}`, {
-          msg: wlcmRoleCh.id,
-          channel: wlcmRoleCh.channel.id,
-        });
+          );
       }
     }
   }
