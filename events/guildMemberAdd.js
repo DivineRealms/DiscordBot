@@ -17,7 +17,6 @@ module.exports = async (client, member) => {
         async (msg) =>
           await db.set(`newcomers_${member.guild.id}_${member.id}`, {
             msg: msg.id,
-            channel: msg.channel.id,
           })
       );
 
@@ -30,7 +29,6 @@ module.exports = async (client, member) => {
         async (msg) =>
           await db.set(`wlcmEmbed_${member.guild.id}_${member.id}`, {
             msg: msg.id,
-            channel: msg.channel.id,
           })
       );
   } else if (settings.Type == "dm") {

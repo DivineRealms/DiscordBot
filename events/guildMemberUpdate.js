@@ -109,7 +109,7 @@ module.exports = async (client, oldMember, newMember) => {
           await nwcCh.messages
             .fetch(newcomersId.msg)
             .then((msg) => msg.delete())
-            .catch(console.error);
+            .catch();
       }
 
       if (embedWelcome) {
@@ -118,7 +118,7 @@ module.exports = async (client, oldMember, newMember) => {
           await wlcmCh.messages
             .fetch(embedWelcome.msg)
             .then((msg) => msg.delete())
-            .catch(console.error);
+            .catch();
       }
     }
   }
