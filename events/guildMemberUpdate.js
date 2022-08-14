@@ -28,12 +28,14 @@ module.exports = async (client, oldMember, newMember) => {
       );
 
       if (newcomersId) {
-        let nwcCh = client.channels.cache.get(newcomersId.channel);
+        let nwcCh = client.channels.cache.get(
+          settings.Settings.Newcomers_Channel
+        );
         if (nwcCh)
           await nwcCh.messages
             .fetch(newcomersId.msg)
             .then((msg) => msg.delete())
-            .catch(console.error);
+            .catch();
       }
 
       if (welcomeChannel) {
@@ -61,7 +63,6 @@ module.exports = async (client, oldMember, newMember) => {
             async (msg) =>
               await db.set(`wlcmEmbed_${newMember.guild.id}_${newMember.id}`, {
                 msg: msg.id,
-                channel: msg.channel.id,
               })
           );
       }
