@@ -138,6 +138,12 @@ module.exports = async (client) => {
 
   const app = express();
   app.use(express.json());
+
+  app.use(async(req, res, next) => {
+    res.client = client;
+    next();
+  });
+
   app.use("/players", playerRoutes);
   app.use("/leagues", leagueRoutes);
 
