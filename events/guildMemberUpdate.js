@@ -24,15 +24,16 @@ module.exports = async (client, oldMember, newMember) => {
 
     if (settings.Automod.Autorole && autorole) {
       let newcomersId = await db.get(
-          `newcomers_${newMember.guild.id}_${newMember.id}`
-        ),
-        nwcCh = client.channels.cache.get(newcomersId.channel);
+        `newcomers_${newMember.guild.id}_${newMember.id}`
+      );
 
-      if (newcomersId)
-        if (nwcCh)
-          await nwcCh.messages
-            .fetch(newcomersId.msg)
-            .then((msg) => msg.delete());
+      if (newcomersId) {
+        let nwcCh = client.channels.cache.get(newcomersId.channel);
+        if (nwcCh) {
+          const nwcChMsg = await nwcCh.messages.fetch(newcomersId.msg);
+          if (nwcChMsg) await nwcChMsg.delete();
+        }
+      }
 
       if (welcomeChannel) {
         await welcomeChannel
