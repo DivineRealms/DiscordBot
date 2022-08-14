@@ -11,7 +11,7 @@ module.exports = async (client, member) => {
     let newcCh = client.channels.cache.get(newcomersId.channel);
     if (newcCh) {
       let newChMess = await newcCh.messages.fetch(newcomersId.msg);
-      if (newChMess) await nwChMess.delete();
+      if (newChMess) await newChMess.delete();
     }
   }
 
