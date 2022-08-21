@@ -55,132 +55,132 @@ module.exports.slashRun = async (client, interaction) => {
     client.conf.Settings.Football.Statistics_Channel
   );
 
-  let fieldsInput = new ActionRowBuilder().addComponents(
+  let scorersField = new ActionRowBuilder().addComponents(
     new TextInputBuilder()
-      .setCustomId("stats_data")
-      .setLabel("Statistics Fields")
-      .setPlaceholder(
-        "Fields for your Statistics, separate using |\nExample: <Field Title> | <Field Description> | ..."
-      )
+      .setCustomId("scorers_stats")
+      .setLabel("List of Goal Scorers")
+      .setPlaceholder("Players which scored goal(s)")
+      .setRequired(false)
+      .setStyle(TextInputStyle.Paragraph)
+  );
+
+  let assistsField = new ActionRowBuilder().addComponents(
+    new TextInputBuilder()
+      .setCustomId("assists_stats")
+      .setLabel("List of Assists")
+      .setPlaceholder("Players which scored assisted")
+      .setRequired(false)
+      .setStyle(TextInputStyle.Paragraph)
+  );
+
+  let csField = new ActionRowBuilder().addComponents(
+    new TextInputBuilder()
+      .setCustomId("cs_stats")
+      .setLabel("List of CleanSheets")
+      .setPlaceholder("Players which did Clean Sheet")
+      .setRequired(false)
+      .setStyle(TextInputStyle.Paragraph)
+  );
+
+  let yellowCardField = new ActionRowBuilder().addComponents(
+    new TextInputBuilder()
+      .setCustomId("yellow_stats")
+      .setLabel("List of Yellow Cards")
+      .setPlaceholder("Players which got Yellow Card(s)")
+      .setRequired(false)
+      .setStyle(TextInputStyle.Paragraph)
+  );
+
+  let redCardField = new ActionRowBuilder().addComponents(
+    new TextInputBuilder()
+      .setCustomId("red_stats")
+      .setLabel("List of Red Cards")
+      .setPlaceholder("Players which got Red Card(s)")
       .setRequired(false)
       .setStyle(TextInputStyle.Paragraph)
   );
 
   let statsModal = new ModalBuilder()
-    .setTitle("Create Statistics")
+    .setTitle("Send Statistics")
     .setCustomId("stats_modal")
-    .addComponents(fieldsInput);
+    .addComponents([scorersField, assistsField, csField, yellowCardField, redCardField]);
 
-  let embed = client
-    .embedBuilder(client, interaction, "", "")
-    .setFooter({
-      text: `Statistics sent by ${interaction.user.tag}`,
-      iconURL: interaction.user.displayAvatarURL({
-        size: 1024,
-        dynamic: true,
-      }),
-    })
-    .setAuthor({
-      name: title,
-      iconURL: `https://cdn.upload.systems/uploads/i9khkd5N.png`,
-    })
-    .setTimestamp();
+  const statsFormat = (string) => string.split("\n").map((s, i) => {
+    if(i == 0) s = `**${s.replace(/\s([0-9]{1,2}\s(gol(a|ova)|asistencij(a|e)|CS|(z|ž)utih|crvenih))/g, (a) => `<:ArrowRightGray:813815804768026705>${a.trim()}`)}**`
+    else s = s.replace(/\s([0-9]{1,2}\s(gol(a|ova)|asistencij(a|e)|CS|(z|ž)utih|crvenih))/g, (a) => `<:ArrowRightGray:813815804768026705>**${a.trim()}**`)
+    return `\`${medalEmojis[i]}\` ` + s;
+  }).join("\n");
 
-  if (league == "svebalkan")
-    embed.setColor("#096feb").setThumbnail(`https://i.imgur.com/JAJ18E5.png?1`);
-  else if (league == "challenge")
-    embed.setColor("#00a100").setThumbnail(`https://i.imgur.com/WOLpIf2.png?1`);
-  else if (league == "cup")
-    embed.setColor("#ef9f03").setThumbnail(`https://i.imgur.com/fZBoubi.png`);
+  await interaction.showModal(statsModal);
+  const filter = (i) => i.user.id == interaction.user.id && i.customId == "stats_modal";
+  const medalEmojis = ["🥇", "🥈", "🥉"];
+  await interaction.awaitModalSubmit({ filter, time: 600_000 }).then(async(i) => {
+    let scorers = i.fields.getTextInputValue("scorers_stats");
+    let assists = i.fields.getTextInputValue("assists_stats");
+    let cs = i.fields.getTextInputValue("cs_stats");
+    let yellow = i.fields.getTextInputValue("yellow_stats");
+    let red = i.fields.getTextInputValue("red_stats");
 
-  interaction.showModal(statsModal);
+    let embed = client
+      .embedBuilder(client, interaction, "", "")
+      .setFooter({
+        text: `Statistics sent by ${interaction.user.tag}`,
+        iconURL: interaction.user.displayAvatarURL({
+          size: 1024,
+          dynamic: true,
+        }),
+      })
+      .setTimestamp();
 
-  const filter = (i) =>
-    i.customId == "stats_modal" && i.user.id == interaction.user.id;
-  interaction
-    .awaitModalSubmit({ filter, time: 300_300 })
-    .then(async (md) => {
-      let fieldsValue = md.fields.getTextInputValue("stats_data");
-      fieldsValue = fieldsValue.split(/\s*\|\s*/);
+    if (league == "svebalkan")
+      embed.setColor("#096feb").setAuthor({ name: title, iconURL: `https://i.imgur.com/JAJ18E5.png?1` });
+    else if (league == "challenge")
+      embed.setColor("#00a100").setAuthor({ name: title, iconURL: `https://i.imgur.com/WOLpIf2.png?1` });
+    else if (league == "cup")
+      embed.setColor("#ef9f03").setAuthor({ name: title, iconURL: `https://i.imgur.com/fZBoubi.png` });
 
-      if (fieldsValue.length > 1) {
-        if (fieldsValue.length % 2 !== 0)
-          return md.reply({
-            embeds: [
-              client.utils.errorEmbed(
-                client,
-                interaction,
-                "You are missing a title or a description."
-              ),
-            ],
-            ephemeral: true,
-          });
+    if(scorers.length >= 6) {
+      embed.addFields([{
+        name: "Najbolji Strelci:",
+        value: statsFormat(scorers)
+      }])
+    }
+    if(assists.length >= 6) {
+      embed.addFields([{
+        name: "Najbolji Asisteni:",
+        value: statsFormat(assists)
+      }])
+    }
+    if(cs.length >= 6) {
+      embed.addFields([{
+        name: "Najviše Clean Sheet:",
+        value: statsFormat(cs)
+      }])
+    }
+    if(yellow.length >= 6) {
+      embed.addFields([{
+        name: "Najvise žutih kartona:",
+        value: statsFormat(yellow)
+      }])
+    }
+    if(red.length >= 6) {
+      embed.addFields([{
+        name: "Najvise crvenih kartona:",
+        value: statsFormat(red)
+      }])
+    }
 
-        const fields = [];
-        for (let i = 0; i < fieldsValue.length; i += 2)
-          fields.push({
-            title: fieldsValue[i],
-            description: fieldsValue[i + 1],
-          });
-
-        for (let i = 0; i < fields.length && fields.length <= 25; i++) {
-          embed.addFields({
-            name: fields[i].title,
-            value: fields[i].description,
-          });
-          if (!fields[i].title || !fields[i].description)
-            return md.followUp({
-              embeds: [
-                client.utils.errorEmbed(
-                  client,
-                  interaction,
-                  "You need to provide both a title and a description."
-                ),
-              ],
-              ephemeral: true,
-            });
-        }
-
-        md.reply({
-          embeds: [
-            client
-              .embedBuilder(client, interaction, "", "", "#3db39e")
-              .setAuthor({
-                name: `Statistics have been sent!`,
-                iconURL: `https://cdn.upload.systems/uploads/6KOGFYJM.png`,
-              }),
-          ],
-          ephemeral: true,
-        });
-
-        statisticsChannel.send({ embeds: [embed] });
-      } else {
-        md.reply({
-          embeds: [
-            client
-              .embedBuilder(client, interaction, "", "", "#3db39e")
-              .setAuthor({
-                name: `Statistics have been sent!`,
-                iconURL: `https://cdn.upload.systems/uploads/6KOGFYJM.png`,
-              }),
-          ],
-          ephemeral: true,
-        });
-
-        statisticsChannel.send({ embeds: [embed] });
-      }
-    })
-    .catch((err) => {
-      console.log(err);
-      interaction.followUp({
-        embeds: [
-          client.utils.errorEmbed(
-            client,
-            interaction,
-            "Time for entering statistics fields has passed without answer."
-          ),
-        ],
-        ephemeral: true,
-      });
+    i.reply({
+      embeds: [
+        client
+          .embedBuilder(client, interaction, "", "", "#3db39e")
+          .setAuthor({
+            name: `Statistics have been sent!`,
+            iconURL: `https://cdn.upload.systems/uploads/6KOGFYJM.png`,
+          }),
+      ],
+      ephemeral: true,
     });
+    statisticsChannel.send({ embeds: [embed] });
+  });
 };
