@@ -68,7 +68,7 @@ module.exports.slashRun = async (client, interaction) => {
     new TextInputBuilder()
       .setCustomId("assists_stats")
       .setLabel("List of Assists")
-      .setPlaceholder("Players which scored assisted")
+      .setPlaceholder("Players who assisted")
       .setRequired(false)
       .setStyle(TextInputStyle.Paragraph)
   );
@@ -106,8 +106,8 @@ module.exports.slashRun = async (client, interaction) => {
     .addComponents([scorersField, assistsField, csField, yellowCardField, redCardField]);
 
   const statsFormat = (string) => string.split("\n").map((s, i) => {
-    if(i == 0) s = `**${s.replace(/\s([0-9]{1,2}\s(gol(a|ova)|asistencij(a|e)|CS|(z|ž)utih|crvenih))/g, (a) => `<:ArrowRightGray:813815804768026705>${a.trim()}`)}**`
-    else s = s.replace(/\s([0-9]{1,2}\s(gol(a|ova)|asistencij(a|e)|CS|(z|ž)utih|crvenih))/g, (a) => `<:ArrowRightGray:813815804768026705>**${a.trim()}**`)
+    if(i == 0) s = `**${s.replace(/\s([0-9]{1,2}\s(gol(a|ova)|asistencij(a|e)|CS|(z|ž)ut(ih|i)|crven(ih|i)))/g, (a) => `<:ArrowRightGray:813815804768026705>${a.trim()}`)}**`
+    else s = s.replace(/\s([0-9]{1,2}\s(gol(a|ova)|asistencij(a|e)|CS|Clean Sheets|(z|ž)ut(ih|i)|crven(ih|i)))/g, (a) => `<:ArrowRightGray:813815804768026705>**${a.trim()}**`)
     return `\`${medalEmojis[i]}\` ` + s;
   }).join("\n");
 
@@ -159,13 +159,13 @@ module.exports.slashRun = async (client, interaction) => {
     }
     if(yellow.length >= 6) {
       embed.addFields([{
-        name: "Najvise žutih kartona:",
+        name: "Najviše žutih kartona:",
         value: statsFormat(yellow)
       }])
     }
     if(red.length >= 6) {
       embed.addFields([{
-        name: "Najvise crvenih kartona:",
+        name: "Najviše crvenih kartona:",
         value: statsFormat(red)
       }])
     }
