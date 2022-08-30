@@ -79,15 +79,15 @@ Settings:
   Paste_Key: ""
 
   # Channel for Announcements
-  Announcement_Channel: "876834561735143456"
-  Newcommers_Channel: "512570600682684436"
+  Announcement_Channel: ""
+  Newcommers_Channel: ""
 
   # Settings regarding Football
   Football:
     Statistics_Channel: ""
 
   # List of Reaction Roles
-  Placeholder_Role: "734759761660084268"
+  Placeholder_Role: ""
   Reaction_Roles:
     - name: "category_name"
       title: "Embed Title"
@@ -122,7 +122,7 @@ Automod:
   Moderators:
     - ""
 
-  Autorole: "597888019663421440"
+  Autorole: ""
 
 Automation:
   # Channel that displays your guild's member count.
