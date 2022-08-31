@@ -143,7 +143,7 @@ Automation:
     # Voice Channel ID that will be updated with the channel count.
     Channel: ""
     Message: "Channels: {count}"
-  
+
   # Channel that display your Minecraft Server's player count.
   Minecraft_Count:
     Enabled: false
@@ -172,7 +172,7 @@ Automation:
     Channels: []
     List:
       # Trigger: Response
-      - "Trigger": "Response"
+      "Trigger": "Response"
 
   # Custom boosters
   Boosts:

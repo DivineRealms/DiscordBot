@@ -85,12 +85,8 @@ module.exports = async (client, message) => {
 
         let resp = Object.values(autoResponse.List)[respIndex];
         message.channel.send({
-          embeds: [
-            client.embedBuilder(client, message, "", `${resp}`).setAuthor({
-              name: `Auto Response`,
-              iconURL: message.author.displayAvatarURL({ dynamic: true }),
-            }),
-          ],
+          content: `${message.author}`,
+          embeds: [client.embedBuilder(client, message, "", `${resp}`)],
         });
       }
     }
