@@ -66,12 +66,23 @@ module.exports = async (client, message) => {
   }
 
   const autoResponse = client.conf.Automation.Auto_Response;
-  if(autoResponse.Enabled == true) {
-    if(autoResponse.Channels.includes(message.channel.id)) {
-      if(Object.keys(autoResponse.List).some((w) => message.content.toLowerCase() == w.toLowerCase() || message.content.toLowerCase().startsWith(w.toLowerCase()) || message.content.toLowerCase().includes(w.toLowerCase()))) {
-        let rWord = Object.keys(autoResponse.List).filter((w) => Object.keys(autoResponse.List).some((a) => message.content.toLowerCase().includes(w.toLowerCase())));
+  if (autoResponse.Enabled == true) {
+    if (autoResponse.Channels.includes(message.channel.id)) {
+      if (
+        Object.keys(autoResponse.List).some(
+          (w) =>
+            message.content.toLowerCase() == w.toLowerCase() ||
+            message.content.toLowerCase().startsWith(w.toLowerCase()) ||
+            message.content.toLowerCase().includes(w.toLowerCase())
+        )
+      ) {
+        let rWord = Object.keys(autoResponse.List).filter((w) =>
+          Object.keys(autoResponse.List).some((a) =>
+            message.content.toLowerCase().includes(w.toLowerCase())
+          )
+        );
         let respIndex = Object.keys(autoResponse.List).indexOf(rWord[0]);
-        
+
         let resp = Object.values(autoResponse.List)[respIndex];
         message.channel.send({
           embeds: [

@@ -51,21 +51,23 @@ module.exports = async (client) => {
       settings.Channel_Count.Channel
     );
 
-    const mcCount = client.channels.cache.get(
-      settings.Minecraft_Count.Channel
-    );
+    const mcCount = client.channels.cache.get(settings.Minecraft_Count.Channel);
 
     if (settings.Member_Count.Enabled)
       memberCount.setName(
         settings.Member_Count.Message.replace("{count}", guild.memberCount)
       );
 
-    let playerCount = await fetch(`https://api.mcsrvstat.us/2/${client.conf.Settings.Server_IP}`).then(async(res) => await res.json());
+    let playerCount = await fetch(
+      `https://api.mcsrvstat.us/2/${client.conf.Settings.Server_IP}`
+    ).then(async (res) => await res.json());
 
     if (settings.Minecraft_Count.Enabled)
       mcCount.setName(
-        settings.Minecraft_Count.Message.replace("{count}", playerCount.players.online)
-          .replace("{countMax}", playerCount.players.max)
+        settings.Minecraft_Count.Message.replace(
+          "{count}",
+          playerCount.players.online
+        ).replace("{countMax}", playerCount.players.max)
       );
 
     if (settings.Channel_Count.Enabled)
@@ -220,7 +222,7 @@ module.exports = async (client) => {
 
   voteLeaderboardCron.start();
 
-  if(client.conf.Automation.Auto_Messages.Enabled == true) {
+  if (client.conf.Automation.Auto_Messages.Enabled == true) {
     const autoMsgChannel = client.channels.cache.get(
       client.conf.Automation.Auto_Messages.Channel
     );
@@ -228,7 +230,19 @@ module.exports = async (client) => {
     setInterval(() => {
       autoMsgChannel.send({
         embeds: [
-          client.embedBuilder(client, message, "", `${client.conf.Automation.Auto_Messages.List[Math.floor(Math.random() * client.conf.Automation.Auto_Messages.List.length)]}`)
+          client.embedBuilder(
+            client,
+            null,
+            "",
+            `${
+              client.conf.Automation.Auto_Messages.List[
+                Math.floor(
+                  Math.random() *
+                    client.conf.Automation.Auto_Messages.List.length
+                )
+              ]
+            }`
+          ),
         ],
       });
     }, client.conf.Automation.Auto_Messages.Interval * 1000);
