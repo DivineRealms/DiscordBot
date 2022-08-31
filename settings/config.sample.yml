@@ -105,6 +105,9 @@ Settings:
   # and to give them back when they rejoin
   Save_Roles: true
 
+  # IP of Minecraft Server
+  Server_IP: ""
+
 Automod:
   # Role(s) that bypass command cooldown.
   # Disabled by default. To enable just add IDs to the list.
@@ -140,10 +143,36 @@ Automation:
     # Voice Channel ID that will be updated with the channel count.
     Channel: ""
     Message: "Channels: {count}"
+  
+  # Channel that display your Minecraft Server's player count.
+  Minecraft_Count:
+    Enabled: false
+
+    # Voice Channel ID that will be updated with the channel count.
+    Channel: ""
+    Message: "🎮︲Playing: {count}"
 
   # Invite link of your guild.
   # Example: https://discord.gg/UqAm4B5
   Invite_Link: ""
+
+  # Automated Messages
+  Auto_Messages:
+    Enabled: false
+    Channel: ""
+    # Interval in seconds
+    Interval: 300
+    List:
+      - "Test Message"
+
+  # Automated Responses
+  Auto_Response:
+    Enabled: false
+    # List of Channels in which Auto Responses are enabled
+    Channels: []
+    List:
+      # Trigger: Response
+      - "Trigger": "Response"
 
   # Custom boosters
   Boosts:

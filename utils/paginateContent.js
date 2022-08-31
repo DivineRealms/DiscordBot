@@ -5,6 +5,7 @@ const {
   ComponentType,
   InteractionType,
 } = require("discord.js");
+
 async function sliceContent(content, currentPage, perPage) {
   var page = content.slice(perPage * (currentPage - 1), perPage * currentPage);
 

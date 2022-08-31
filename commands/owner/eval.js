@@ -94,7 +94,7 @@ module.exports.slashRun = async (client, interaction) => {
           };
 
           const response = await fetch(
-            "https://api.upload.systems/pastes/new",
+            "https://api.upload.systems/pastes",
             {
               method: "POST",
               body: JSON.stringify(body),

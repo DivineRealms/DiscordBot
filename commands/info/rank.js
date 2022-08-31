@@ -35,8 +35,8 @@ module.exports.run = async (client, message, args) => {
     .sort((a, b) => b.value - a.value);
 
   let rank =
-    every.map((x) => x.id).indexOf(`level_${message.guild.id}_${user.id}`) +
-      1 || 1;
+    (every.map((x) => x.id).indexOf(`level_${message.guild.id}_${user.id}`) +
+      1) || 1;
 
   message.channel.send({
     embeds: [
@@ -72,8 +72,8 @@ module.exports.slashRun = async (client, interaction) => {
     .sort((a, b) => b.value - a.value);
 
   let rank =
-    every.map((x) => x.id).indexOf(`level_${interaction.guild.id}_${user.id}`) +
-      1 || 1;
+    (every.map((x) => x.id).indexOf(`level_${interaction.guild.id}_${user.id}`) +
+      1) || 1;
 
   interaction.reply({
     embeds: [

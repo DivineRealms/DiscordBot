@@ -6,6 +6,10 @@ module.exports = async (client, reaction, user) => {
   if (reaction.message.partial) await reaction.message.fetch();
   const message = reaction.message;
   if (user.bot || !reaction.message.guild) return;
+  
+/* 
+
+  // OLD REACTION ROLES
 
   let data = (await db.get(`reactionRoles_${message.guild.id}`)) || [];
   data = data.find((d) => d.message == message.id);
@@ -45,7 +49,7 @@ module.exports = async (client, reaction, user) => {
         }
       }
     }
-  }
+  } */
 
   const starboard = client.conf.Starboard;
   const schannel = client.channels.cache.get(starboard.Channel);
