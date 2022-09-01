@@ -66,8 +66,8 @@ module.exports = async (client, message) => {
     await db.add(`xp_${message.guild.id}_${message.author.id}`, 1);
   }
 
-  const rndmMessageChance = Math.floor(Math.random() * 1000);
-  if(rndmMessageChance < 200 && rndmMessageChance % 2 == 1) {
+  const rndmMessageChance = Math.floor(Math.random() * 1100);
+  if(rndmMessageChance < 200 && rndmMessageChance % 2 == 1 && message.channel.id == "512274978754920463") {
     const autoMsgChannel = client.channels.cache.get(
       client.conf.Automation.Auto_Messages.Channel
     );
