@@ -69,24 +69,26 @@ module.exports = async (client, oldMember, newMember) => {
     }
   }
 
-  if([...newMember.roles.cache.keys()].join("") !==
-    [...oldMember.roles.cache.keys()].join("")) {
-      const addedRoles = newMember.roles.cache.filter(
-        (r) => !oldMember.roles.cache.has(r.id)
-      );
-      const added = addedRoles.map((r) => r.id);
+  if (
+    [...newMember.roles.cache.keys()].join("") !==
+    [...oldMember.roles.cache.keys()].join("")
+  ) {
+    const addedRoles = newMember.roles.cache.filter(
+      (r) => !oldMember.roles.cache.has(r.id)
+    );
+    const added = addedRoles.map((r) => r.id);
 
-      if(added.includes(client.conf.Settings.Mute_Role)) 
-        newMember.roles.remove(client.conf.Settings.Member_Role);
+    if (added.includes(client.conf.Settings.Mute_Role))
+      await newMember.roles.remove(client.conf.Settings.Member_Role);
 
-      const removedRoles = oldMember.roles.cache.filter(
-        (r) => !newMember.roles.cache.has(r.id)
-      );
-      const removed = removedRoles.map((r) => r.id);
+    const removedRoles = oldMember.roles.cache.filter(
+      (r) => !newMember.roles.cache.has(r.id)
+    );
+    const removed = removedRoles.map((r) => r.id);
 
-      if(removed.includes(client.conf.Settings.Mute_Role)) 
-        newMember.roles.add(client.conf.Settings.Member_Role);
-    }
+    if (removed.includes(client.conf.Settings.Mute_Role))
+      await newMember.roles.add(client.conf.Settings.Member_Role);
+  }
 
   if (oldMember.pending && !newMember.pending) {
     const savedRoles =

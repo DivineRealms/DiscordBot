@@ -66,8 +66,12 @@ module.exports = async (client, message) => {
     await db.add(`xp_${message.guild.id}_${message.author.id}`, 1);
   }
 
-  const rndmMessageChance = Math.floor(Math.random() * 1100);
-  if(rndmMessageChance < 200 && rndmMessageChance % 2 == 1 && message.channel.id == "512274978754920463") {
+  const rndmMessageChance = Math.floor(Math.random() * 1500);
+  if (
+    rndmMessageChance < 110 &&
+    rndmMessageChance % 2 == 1 &&
+    message.channel.id == client.conf.Automation.Auto_Messages.Channel
+  ) {
     const autoMsgChannel = client.channels.cache.get(
       client.conf.Automation.Auto_Messages.Channel
     );
@@ -81,8 +85,7 @@ module.exports = async (client, message) => {
           `${
             client.conf.Automation.Auto_Messages.List[
               Math.floor(
-                Math.random() *
-                  client.conf.Automation.Auto_Messages.List.length
+                Math.random() * client.conf.Automation.Auto_Messages.List.length
               )
             ]
           }`
