@@ -67,32 +67,37 @@ module.exports = async (client, message) => {
     await db.add(`xp_${message.guild.id}_${message.author.id}`, 1);
   }
 
-  const rndmMessageChance = Math.floor(Math.random() * 1500);
-  if (
-    rndmMessageChance < 40 &&
-    rndmMessageChance % 2 == 1 &&
-    message.channel.id == client.conf.Automation.Auto_Messages.Channel
-  ) {
-    const autoMsgChannel = client.channels.cache.get(
-      client.conf.Automation.Auto_Messages.Channel
-    );
-
-    autoMsgChannel.send({
-      embeds: [
-        client.embedBuilder(
-          client,
-          message,
-          "",
-          `${
-            client.conf.Automation.Auto_Messages.List[
-              Math.floor(
-                Math.random() * client.conf.Automation.Auto_Messages.List.length
-              )
-            ]
-          }`
-        ),
-      ],
-    });
+  const rndmMessageChance = Math.floor(Math.random() * 1235);
+  const lastAutoMsg = await db.get(`lastAutoMsg_${message.guild.id}`);
+  if(!lastAutoMsg || (240000 - (Date.now() - lastAutoMsg) <= 0)) {
+    if (
+      rndmMessageChance < 220 &&
+      rndmMessageChance % 2 == 1 &&
+      message.channel.id == client.conf.Automation.Auto_Messages.Channel
+    ) {
+      const autoMsgChannel = client.channels.cache.get(
+        client.conf.Automation.Auto_Messages.Channel
+      );
+  
+      autoMsgChannel.send({
+        embeds: [
+          client.embedBuilder(
+            client,
+            message,
+            "",
+            `${
+              client.conf.Automation.Auto_Messages.List[
+                Math.floor(
+                  Math.random() * client.conf.Automation.Auto_Messages.List.length
+                )
+              ]
+            }`
+          ),
+        ],
+      });
+  
+      await db.set(`lastAutoMsg_${message.guild.id}`, Date.now());
+    }
   }
 
   const autoResponse = client.conf.Automation.Auto_Response;
