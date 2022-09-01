@@ -222,32 +222,6 @@ module.exports = async (client) => {
 
   voteLeaderboardCron.start();
 
-  if (client.conf.Automation.Auto_Messages.Enabled == true) {
-    const autoMsgChannel = client.channels.cache.get(
-      client.conf.Automation.Auto_Messages.Channel
-    );
-
-    setInterval(() => {
-      autoMsgChannel.send({
-        embeds: [
-          client.embedBuilder(
-            client,
-            null,
-            "",
-            `${
-              client.conf.Automation.Auto_Messages.List[
-                Math.floor(
-                  Math.random() *
-                    client.conf.Automation.Auto_Messages.List.length
-                )
-              ]
-            }`
-          ),
-        ],
-      });
-    }, client.conf.Automation.Auto_Messages.Interval * 1000);
-  }
-
   while (guild) {
     await counter();
     await new Promise((r) => setTimeout(r, 310000));

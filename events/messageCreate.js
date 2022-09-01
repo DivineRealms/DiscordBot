@@ -4,6 +4,7 @@ const leveling = require("../utils/leveling.js");
 const { QuickDB } = require("quick.db");
 const db = new QuickDB();
 const { MessageType, ChannelType } = require("discord.js");
+let msgCooldown;
 
 module.exports = async (client, message) => {
   if (message.channel.type == ChannelType.DM) return;
@@ -63,6 +64,31 @@ module.exports = async (client, message) => {
   if (level == null || xp == null) {
     await db.add(`level_${message.guild.id}_${message.author.id}`, 1);
     await db.add(`xp_${message.guild.id}_${message.author.id}`, 1);
+  }
+
+  const rndmMessageChance = Math.floor(Math.random() * 1000);
+  if(rndmMessageChance < 200 && rndmMessageChance % 2 == 1) {
+    const autoMsgChannel = client.channels.cache.get(
+      client.conf.Automation.Auto_Messages.Channel
+    );
+
+    autoMsgChannel.send({
+      embeds: [
+        client.embedBuilder(
+          client,
+          message,
+          "",
+          `${
+            client.conf.Automation.Auto_Messages.List[
+              Math.floor(
+                Math.random() *
+                  client.conf.Automation.Auto_Messages.List.length
+              )
+            ]
+          }`
+        ),
+      ],
+    });
   }
 
   const autoResponse = client.conf.Automation.Auto_Response;

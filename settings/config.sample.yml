@@ -108,6 +108,12 @@ Settings:
   # IP of Minecraft Server
   Server_IP: ""
 
+  # ID of Mute Role
+  Mute_Role: ""
+
+  # ID of Member Role
+  Member_Role: ""
+
 Automod:
   # Role(s) that bypass command cooldown.
   # Disabled by default. To enable just add IDs to the list.
@@ -160,8 +166,6 @@ Automation:
   Auto_Messages:
     Enabled: false
     Channel: ""
-    # Interval in seconds
-    Interval: 300
     List:
       - "Test Message"
 
