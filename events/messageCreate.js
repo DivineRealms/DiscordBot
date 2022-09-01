@@ -4,6 +4,7 @@ const leveling = require("../utils/leveling.js");
 const { QuickDB } = require("quick.db");
 const db = new QuickDB();
 const { MessageType, ChannelType } = require("discord.js");
+const { includes } = require("lodash");
 let msgCooldown;
 
 module.exports = async (client, message) => {
@@ -68,7 +69,7 @@ module.exports = async (client, message) => {
 
   const rndmMessageChance = Math.floor(Math.random() * 1500);
   if (
-    rndmMessageChance < 110 &&
+    rndmMessageChance < 40 &&
     rndmMessageChance % 2 == 1 &&
     message.channel.id == client.conf.Automation.Auto_Messages.Channel
   ) {
@@ -100,9 +101,8 @@ module.exports = async (client, message) => {
       if (
         Object.keys(autoResponse.List).some(
           (w) =>
-            message.content.toLowerCase() == w.toLowerCase() ||
-            message.content.toLowerCase().startsWith(w.toLowerCase()) ||
-            message.content.toLowerCase().includes(w.toLowerCase())
+            message.content.toLowerCase().includes(w.toLowerCase()) ||
+            message.content.toLowerCase() == w.toLowerCase()
         )
       ) {
         let rWord = Object.keys(autoResponse.List).filter((w) =>
@@ -113,10 +113,11 @@ module.exports = async (client, message) => {
         let respIndex = Object.keys(autoResponse.List).indexOf(rWord[0]);
 
         let resp = Object.values(autoResponse.List)[respIndex];
-        message.channel.send({
-          content: `${message.author}`,
-          embeds: [client.embedBuilder(client, message, "", `${resp}`)],
-        });
+        message
+          .reply({
+            embeds: [client.embedBuilder(client, message, "", `${resp}`)],
+          })
+          .then((msg) => setTimeout(() => msg.delete(), 60 * 1000));
       }
     }
   }
