@@ -69,7 +69,7 @@ module.exports = async (client, message) => {
 
   const rndmMessageChance = Math.floor(Math.random() * 1235);
   const lastAutoMsg = await db.get(`lastAutoMsg_${message.guild.id}`);
-  if(!lastAutoMsg || (240000 - (Date.now() - lastAutoMsg) <= 0)) {
+  if (!lastAutoMsg || 240000 - (Date.now() - lastAutoMsg) <= 0) {
     if (
       rndmMessageChance < 220 &&
       rndmMessageChance % 2 == 1 &&
@@ -78,24 +78,27 @@ module.exports = async (client, message) => {
       const autoMsgChannel = client.channels.cache.get(
         client.conf.Automation.Auto_Messages.Channel
       );
-  
-      autoMsgChannel.send({
-        embeds: [
-          client.embedBuilder(
-            client,
-            message,
-            "",
-            `${
-              client.conf.Automation.Auto_Messages.List[
-                Math.floor(
-                  Math.random() * client.conf.Automation.Auto_Messages.List.length
-                )
-              ]
-            }`
-          ),
-        ],
-      });
-  
+
+      autoMsgChannel
+        .send({
+          embeds: [
+            client.embedBuilder(
+              client,
+              message,
+              "",
+              `${
+                client.conf.Automation.Auto_Messages.List[
+                  Math.floor(
+                    Math.random() *
+                      client.conf.Automation.Auto_Messages.List.length
+                  )
+                ]
+              }`
+            ),
+          ],
+        })
+        .then((msg) => msg.delete(), 300000);
+
       await db.set(`lastAutoMsg_${message.guild.id}`, Date.now());
     }
   }
@@ -122,7 +125,12 @@ module.exports = async (client, message) => {
           .reply({
             embeds: [client.embedBuilder(client, message, "", `${resp}`)],
           })
-          .then((msg) => setTimeout(() => msg.delete(), 60 * 1000));
+          .then((msg) =>
+            setTimeout(() => {
+              message.delete();
+              msg.delete();
+            }, 60 * 1000)
+          );
       }
     }
   }
