@@ -80,6 +80,7 @@ Settings:
 
   # Channel for Announcements
   Announcement_Channel: ""
+  Matchday_Channel: ""
   Newcommers_Channel: ""
 
   # Settings regarding Football
