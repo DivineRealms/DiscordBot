@@ -3,7 +3,12 @@ const utils = require("../handler/utilities");
 const leveling = require("../utils/leveling.js");
 const { QuickDB } = require("quick.db");
 const db = new QuickDB();
-const { MessageType, ChannelType, AttachmentBuilder, EmbedBuilder } = require("discord.js");
+const {
+  MessageType,
+  ChannelType,
+  AttachmentBuilder,
+  EmbedBuilder,
+} = require("discord.js");
 const { includes } = require("lodash");
 const { contents } = require("cheerio/lib/api/traversing");
 let msgCooldown;
@@ -68,18 +73,27 @@ module.exports = async (client, message) => {
     await db.add(`xp_${message.guild.id}_${message.author.id}`, 1);
   }
 
-  if(message.channel.id == client.conf.Settings.Announcement_Channel) {
+  if (message.channel.id == client.conf.Settings.Announcement_Channel) {
     const contentSplit = message.content.split("\n");
-    if(contentSplit.length < 3)
-      return message.channel.send({
-        embeds: [
-          client.utils.errorEmbed(
-            client,
-            message,
-            `You didn't provide all arguments \`(Type/Title/Description)\``
-          ),
-        ],
-      });
+    if (contentSplit.length < 3) {
+      return message.channel
+        .send({
+          embeds: [
+            client.utils.errorEmbed(
+              client,
+              message,
+              `You didn't provide all arguments (Type/Title/Description)`
+            ),
+          ],
+        })
+        .then((msg) =>
+          setTimeout(() => {
+            message.delete();
+            msg.delete();
+          }, 3000)
+        );
+    }
+
     const type = contentSplit[0];
     const title = contentSplit[1];
     const description = contentSplit[2];
@@ -93,24 +107,37 @@ module.exports = async (client, message) => {
       })
       .setTimestamp();
 
-    msgFields = msgFields.split(/\s*\|\s*/);
+    if (msgFields) {
+      msgFields = msgFields.split(/\s*\|\s*/);
 
-    const fields = [];
-    for (let i = 0; i < msgFields.length; i += 2)
-      fields.push({ title: msgFields[i], description: msgFields[i + 1] });
+      const fields = [];
+      for (let i = 0; i < msgFields.length; i += 2)
+        fields.push({ title: msgFields[i], description: msgFields[i + 1] });
 
-    for (let i = 0; i < fields.length && fields.length <= 25; i++) {
-      embed.addFields({ name: fields[i].title, value: fields[i].description });
-      if (!fields[i].title || !fields[i].description)
-        return message.channel.send({
-          embeds: [
-            client.utils.errorEmbed(
-              client,
-              message,
-              "You need to provide both a title and a description."
-            ),
-          ],
+      for (let i = 0; i < fields.length && fields.length <= 25; i++) {
+        embed.addFields({
+          name: fields[i].title,
+          value: fields[i].description,
         });
+        if (!fields[i].title || !fields[i].description) {
+          return message.channel
+            .send({
+              embeds: [
+                client.utils.errorEmbed(
+                  client,
+                  message,
+                  "You need to provide both a title and a description."
+                ),
+              ],
+            })
+            .then((msg) =>
+              setTimeout(() => {
+                message.delete();
+                msg.delete();
+              }, 3000)
+            );
+        }
+      }
     }
 
     let upAliases = ["update", "up", "1"],
@@ -138,72 +165,100 @@ module.exports = async (client, message) => {
         iconURL: `https://cdn.upload.systems/uploads/sYDS6yZI.png`,
       });
 
-    message.channel.send({ embeds: [embed] });
+    message.channel
+      .send({ embeds: [embed] })
+      .then(async () => await message.delete());
   }
 
-  if(message.channel.id == client.conf.Settings.Matchday_Channel) {
+  if (message.channel.id == client.conf.Settings.Matchday_Channel) {
     let contentSplit = message.content.split("```");
-    if(!contentSplit) return;
-    const matchdayEmbed = client.embedBuilder(client, message, "", "")
-      .setTitle((contentSplit[0]).split("\n")[1]);
+    if (!contentSplit) return;
+    const matchdayEmbed = client
+      .embedBuilder(client, message, "", "")
+      .setTitle(contentSplit[0].split("\n")[1]);
 
-    if(contentSplit.length < 3)
-      return message.channel.send({
-        embeds: [
-          client.utils.errorEmbed(
-            client,
-            message,
-            `First two lines must be League & Round, while Matchday have to be in codeblock.`
-          ),
-        ],
-      });
+    if (contentSplit.length < 3)
+      return message.channel
+        .send({
+          embeds: [
+            client.utils.errorEmbed(
+              client,
+              message,
+              `First two lines must be League & Round, while Matchday have to be in codeblock.`
+            ),
+          ],
+        })
+        .then((msg) =>
+          setTimeout(() => {
+            message.delete;
+            msg.delete();
+          }, 3000)
+        );
 
-    const league = (contentSplit[0]).split("\n")[0].toLowerCase();
-    if(league.includes("fcfa"))
-      matchdayEmbed.setAuthor({
-        name: "FCFA Challenge League",
-        iconURL: "https://i.imgur.com/WOLpIf2.png",
-        url: "https://challenge.place/c/62aa8b995f6adfd26e923544/stage/6311f0d27f11701814dda779",
-      })
-      .setColor("#00a100");
-    else if(league.includes("svebalkan"))
-      matchdayEmbed.setAuthor({
-        name: "Svebalkan League",
-        iconURL: "https://i.imgur.com/JAJ18E5.png",
-        url: "https://challenge.place/c/62aa8b995f6adfd26e923544/stage/6311ed215097d41839b2319b",
-      })
-      .setColor("#096feb");
-    else if(league.includes("fcfa cup") || league.includes("cup"))
-      matchdayEmbed.setAuthor({
-        name: "FCFA Cup",
-        iconURL: "https://i.imgur.com/fZBoubi.png",
-        url: "https://challenge.place/c/62aa8b995f6adfd26e923544/stage/6311f6103034c2183a6bfe7f",
-      })
-      .setColor("#ef9f03");
+    const league = contentSplit[0].split("\n")[0].toLowerCase();
+    if (league.includes("fcfa"))
+      matchdayEmbed
+        .setAuthor({
+          name: "FCFA Challenge League",
+          iconURL: "https://i.imgur.com/WOLpIf2.png",
+          url: "https://challenge.place/c/62aa8b995f6adfd26e923544/stage/6311f0d27f11701814dda779",
+        })
+        .setColor("#00a100");
+    else if (league.includes("svebalkan"))
+      matchdayEmbed
+        .setAuthor({
+          name: "Svebalkan League",
+          iconURL: "https://i.imgur.com/JAJ18E5.png",
+          url: "https://challenge.place/c/62aa8b995f6adfd26e923544/stage/6311ed215097d41839b2319b",
+        })
+        .setColor("#096feb");
+    else if (league.includes("fcfa cup") || league.includes("cup"))
+      matchdayEmbed
+        .setAuthor({
+          name: "FCFA Cup",
+          iconURL: "https://i.imgur.com/fZBoubi.png",
+          url: "https://challenge.place/c/62aa8b995f6adfd26e923544/stage/6311f6103034c2183a6bfe7f",
+        })
+        .setColor("#ef9f03");
 
-    const splitLine = (contentSplit[1]).split("---");
-    if(splitLine.map((r) => r.split("\n").filter(Boolean)).some(((l) => l.length < 2)))
-      return message.channel.send({
-        embeds: [
-          client.utils.errorEmbed(
-            client,
-            message,
-            `You must provide Field Title & Referee.`
-          ),
-        ],
-      });
+    const splitLine = contentSplit[1].split("---");
+    if (
+      splitLine
+        .map((r) => r.split("\n").filter(Boolean))
+        .some((l) => l.length < 2)
+    )
+      return message.channel
+        .send({
+          embeds: [
+            client.utils.errorEmbed(
+              client,
+              message,
+              `You must provide Field Title & Referee.`
+            ),
+          ],
+        })
+        .then((msg) =>
+          setTimeout(() => {
+            message.delete();
+            msg.delete();
+          }, 3000)
+        );
 
-    for(const match of splitLine) {
+    for (const match of splitLine) {
       const matchArr = match.split("\n").filter(Boolean);
       let matchdayValue = "";
 
       let dateAndTeams = matchArr[0];
       let teamList = dateAndTeams.split("|")[1].trim();
       let firstEmoji = getEmoji(client, teamList.split(" ")[0]);
-      let secondEmoji = getEmoji(client, (teamList.split(" "))[teamList.split(" ").length - 1]);
-      
-      dateAndTeams = 
-        `<t:${Math.floor(new Date(`${dateAndTeams.split("|")[0]} GMT+2`).getTime() / 1000)}:t>`;
+      let secondEmoji = getEmoji(
+        client,
+        teamList.split(" ")[teamList.split(" ").length - 1]
+      );
+
+      dateAndTeams = `<t:${Math.floor(
+        new Date(`${dateAndTeams.split("|")[0]} GMT+2`).getTime() / 1000
+      )}:t>`;
       dateAndTeams = `${dateAndTeams} ${firstEmoji} ${teamList} ${secondEmoji}`;
 
       const referee = matchArr[1];
@@ -212,22 +267,31 @@ module.exports = async (client, message) => {
       const fans = matchArr[4];
       const fcfa = matchArr[5];
 
-      if(teamA && teamA != "N/A") 
-        matchdayValue += `${teamA.split(" ")[0].trim()} ${getEmoji(client, teamA.split(":")[0].replace(/\**/gm, ""))} ${teamA.split(" ").slice(1).join(" ")}\n`;
-      if(teamB && teamB != "N/A") 
-        matchdayValue += `${teamB.split(" ")[0].trim()} ${getEmoji(client, teamB.split(":")[0].replace(/\**/gm, ""))} ${teamB.split(" ").slice(1).join(" ")}\n`;
+      if (teamA && teamA != "N/A")
+        matchdayValue += `${teamA.split(" ")[0].trim()} ${getEmoji(
+          client,
+          teamA.split(":")[0].replace(/\**/gm, "")
+        )} ${teamA.split(" ").slice(1).join(" ")}\n`;
+      if (teamB && teamB != "N/A")
+        matchdayValue += `${teamB.split(" ")[0].trim()} ${getEmoji(
+          client,
+          teamB.split(":")[0].replace(/\**/gm, "")
+        )} ${teamB.split(" ").slice(1).join(" ")}\n`;
       matchdayValue += `**Referee:** ${getEmoji(client, "fcfa")} ${referee}\n`;
-      if(fans && fans != "N/A") matchdayValue += `**Fans MOTM:** ${fans}\n`;
-      if(fcfa && fcfa != "N/A") matchdayValue += `**FCFA MOTM:** ${fcfa}\n`;
+      if (fans && fans != "N/A") matchdayValue += `**Fans MOTM:** ${fans}\n`;
+      if (fcfa && fcfa != "N/A") matchdayValue += `**FCFA MOTM:** ${fcfa}\n`;
 
-      matchdayEmbed.addFields([{
-        name: dateAndTeams,
-        value:
-          `>>> ${matchdayValue}`,
-      }])
+      matchdayEmbed.addFields([
+        {
+          name: dateAndTeams,
+          value: `>>> ${matchdayValue}`,
+        },
+      ]);
     }
 
-    message.channel.send({ embeds: [matchdayEmbed] }).then(async() => await message.delete());
+    message.channel
+      .send({ embeds: [matchdayEmbed] })
+      .then(async () => await message.delete());
   }
 
   const rndmMessageChance = Math.floor(Math.random() * 1235);
@@ -423,4 +487,9 @@ module.exports = async (client, message) => {
   if (command) command.run(client, message, args);
 };
 
-const getEmoji = (client, emoji) => client.emojis.cache.find((e) => e.name.toLowerCase() == emoji.toLowerCase() || e.name.toLowerCase().includes(emoji.toLowerCase()));
+const getEmoji = (client, emoji) =>
+  client.emojis.cache.find(
+    (e) =>
+      e.name.toLowerCase() == emoji.toLowerCase() ||
+      e.name.toLowerCase().includes(emoji.toLowerCase())
+  );
