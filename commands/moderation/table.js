@@ -42,12 +42,7 @@ module.exports.slashRun = async (client, interaction) => {
 
   if (league.toLowerCase() == "svebalkan" || league.toLowerCase() == "svb") {
     interaction.reply({
-      embeds: [
-        client.embedBuilder(client, interaction, "", "", "#f44336").setAuthor({
-          name: "Svebalkan League table is being downloaded...",
-          iconURL: `https://cdn.upload.systems/uploads/6Xdg16Gh.png`,
-        }),
-      ],
+      content: "Svebalkan League table is being downloaded...",
       ephemeral: true,
     });
 
@@ -62,7 +57,7 @@ module.exports.slashRun = async (client, interaction) => {
       selector: ".col-12.col-lg-7.col-xl-8.mb-3",
     })
       .src(
-        "https://challenge.place/c/62aa8b995f6adfd26e923544/stage/62cf0094c41566e3d56d36c3",
+        "https://challenge.place/c/62aa8b995f6adfd26e923544/stage/6311ed215097d41839b2319b",
         ["2048x1024"]
       )
       .dest(process.cwd() + "/assets")
@@ -73,6 +68,7 @@ module.exports.slashRun = async (client, interaction) => {
     );
 
     await interaction.editReply({
+      content: "Done!",
       files: [image],
       ephemeral: true,
     });
@@ -81,12 +77,7 @@ module.exports.slashRun = async (client, interaction) => {
     league.toLowerCase() == "fcl"
   ) {
     interaction.reply({
-      embeds: [
-        client.embedBuilder(client, interaction, "", "", "#f44336").setAuthor({
-          name: "FCFA Challenge League table is being downloaded...",
-          iconURL: `https://cdn.upload.systems/uploads/6Xdg16Gh.png`,
-        }),
-      ],
+      content: "FCFA Challenge League table is being downloaded...",
       ephemeral: true,
     });
 
@@ -101,7 +92,7 @@ module.exports.slashRun = async (client, interaction) => {
       selector: ".col-12.col-lg-7.col-xl-8.mb-3",
     })
       .src(
-        "https://challenge.place/c/62aa8b995f6adfd26e923544/stage/62cf006dba35d7e39e7d1a56",
+        "https://challenge.place/c/62aa8b995f6adfd26e923544/stage/6311f0d27f11701814dda779",
         ["2048x1024"]
       )
       .dest(process.cwd() + "/assets")
@@ -112,6 +103,7 @@ module.exports.slashRun = async (client, interaction) => {
     );
 
     await interaction.editReply({
+      content: "Done!",
       files: [image],
       ephemeral: true,
     });

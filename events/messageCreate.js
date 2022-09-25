@@ -271,15 +271,20 @@ module.exports = async (client, message) => {
         matchdayValue += `${teamA.split(" ")[0].trim()} ${getEmoji(
           client,
           teamA.split(":")[0].replace(/\**/gm, "")
-        )} ${teamA.split(" ").slice(1).join(" ")}\n`;
+        )} \`${teamA.split(" ").slice(1).join(" ")}\`\n`;
       if (teamB && teamB != "N/A")
         matchdayValue += `${teamB.split(" ")[0].trim()} ${getEmoji(
           client,
           teamB.split(":")[0].replace(/\**/gm, "")
-        )} ${teamB.split(" ").slice(1).join(" ")}\n`;
-      matchdayValue += `**Referee:** ${getEmoji(client, "fcfa")} ${referee}\n`;
-      if (fans && fans != "N/A") matchdayValue += `**Fans MOTM:** ${fans}\n`;
-      if (fcfa && fcfa != "N/A") matchdayValue += `**FCFA MOTM:** ${fcfa}\n`;
+        )} \`${teamB.split(" ").slice(1).join(" ")}\`\n`;
+      matchdayValue += `**Referee:** ${getEmoji(
+        client,
+        "fcfa"
+      )} \`${referee}\`\n`;
+      if (fans && fans != "N/A")
+        matchdayValue += `**Fans MOTM:** \`${fans}\`\n`;
+      if (fcfa && fcfa != "N/A")
+        matchdayValue += `**FCFA MOTM:** \`${fcfa}\`\n`;
 
       matchdayEmbed.addFields([
         {
