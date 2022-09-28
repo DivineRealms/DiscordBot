@@ -75,99 +75,107 @@ module.exports = async (client, message) => {
 
   if (message.channel.id == client.conf.Settings.Announcement_Channel) {
     const contentSplit = message.content.split("\n");
-    if (contentSplit.length < 3) {
-      return message.channel
-        .send({
-          embeds: [
-            client.utils.errorEmbed(
-              client,
-              message,
-              `You didn't provide all arguments (Type/Title/Description)`
-            ),
-          ],
-        })
-        .then((msg) =>
-          setTimeout(() => {
-            message.delete();
-            msg.delete();
-          }, 3000)
-        );
-    }
-
-    const type = contentSplit[0];
-    const title = contentSplit[1];
-    const description = contentSplit[2];
-    let msgFields = contentSplit[3];
-
-    let embed = client
-      .embedBuilder(client, message, "", description)
-      .setFooter({
-        text: `Announcement by ${message.author.tag}`,
-        iconURL: message.author.displayAvatarURL({ size: 1024, dynamic: true }),
-      })
-      .setTimestamp();
-
-    if (msgFields) {
-      msgFields = msgFields.split(/\s*\|\s*/);
-
-      const fields = [];
-      for (let i = 0; i < msgFields.length; i += 2)
-        fields.push({ title: msgFields[i], description: msgFields[i + 1] });
-
-      for (let i = 0; i < fields.length && fields.length <= 25; i++) {
-        embed.addFields({
-          name: fields[i].title,
-          value: fields[i].description,
-        });
-        if (!fields[i].title || !fields[i].description) {
-          return message.channel
-            .send({
-              embeds: [
-                client.utils.errorEmbed(
-                  client,
-                  message,
-                  "You need to provide both a title and a description."
-                ),
-              ],
-            })
-            .then((msg) =>
-              setTimeout(() => {
-                message.delete();
-                msg.delete();
-              }, 3000)
-            );
-        }
-      }
-    }
-
     let upAliases = ["update", "up", "1"],
       mnAliases = ["maintenance", "main", "2"],
       suAliases = ["survey", "3"];
 
-    if (upAliases.includes(type))
-      embed.setColor("#7edd8a").setAuthor({
-        name: title,
-        iconURL: `https://cdn.upload.systems/uploads/aKT2mjr0.png`,
-      });
-    else if (mnAliases.includes(type))
-      embed.setColor("#ffae63").setAuthor({
-        name: title,
-        iconURL: `https://cdn.upload.systems/uploads/vRfWnVT5.png`,
-      });
-    else if (suAliases.includes(type))
-      embed.setAuthor({
-        name: title,
-        iconURL: `https://cdn.upload.systems/uploads/KSTCcy4V.png`,
-      });
-    else
-      embed.setAuthor({
-        name: title,
-        iconURL: `https://cdn.upload.systems/uploads/sYDS6yZI.png`,
-      });
+    if(contentSplit[0].toLowerCase() == "najava") {
+      
+    }
 
-    message.channel
-      .send({ embeds: [embed] })
-      .then(async () => await message.delete());
+    if((upAliases.some((x) => contentSplit[0].toLowerCase() == x.toLowerCase()) ||
+    mnAliases.some((x) => contentSplit[0].toLowerCase() == x.toLowerCase()) ||
+    suAliases.some((x) => contentSplit[0].toLowerCase() == x.toLowerCase())) && contentSplit[0].toLowerCase() != "najava") {
+      if (contentSplit.length < 3) {
+        return message.channel
+          .send({
+            embeds: [
+              client.utils.errorEmbed(
+                client,
+                message,
+                `You didn't provide all arguments (Type/Title/Description)`
+              ),
+            ],
+          })
+          .then((msg) =>
+            setTimeout(() => {
+              message.delete();
+              msg.delete();
+            }, 3000)
+          );
+      }
+  
+      const type = contentSplit[0];
+      const title = contentSplit[1];
+      const description = contentSplit[2];
+      let msgFields = contentSplit[3];
+  
+      let embed = client
+        .embedBuilder(client, message, "", description)
+        .setFooter({
+          text: `Announcement by ${message.author.tag}`,
+          iconURL: message.author.displayAvatarURL({ size: 1024, dynamic: true }),
+        })
+        .setTimestamp();
+  
+      if (msgFields) {
+        msgFields = msgFields.split(/\s*\|\s*/);
+  
+        const fields = [];
+        for (let i = 0; i < msgFields.length; i += 2)
+          fields.push({ title: msgFields[i], description: msgFields[i + 1] });
+  
+        for (let i = 0; i < fields.length && fields.length <= 25; i++) {
+          embed.addFields({
+            name: fields[i].title,
+            value: fields[i].description,
+          });
+          if (!fields[i].title || !fields[i].description) {
+            return message.channel
+              .send({
+                embeds: [
+                  client.utils.errorEmbed(
+                    client,
+                    message,
+                    "You need to provide both a title and a description."
+                  ),
+                ],
+              })
+              .then((msg) =>
+                setTimeout(() => {
+                  message.delete();
+                  msg.delete();
+                }, 3000)
+              );
+          }
+        }
+      }
+  
+      if (upAliases.includes(type))
+        embed.setColor("#7edd8a").setAuthor({
+          name: title,
+          iconURL: `https://cdn.upload.systems/uploads/aKT2mjr0.png`,
+        });
+      else if (mnAliases.includes(type))
+        embed.setColor("#ffae63").setAuthor({
+          name: title,
+          iconURL: `https://cdn.upload.systems/uploads/vRfWnVT5.png`,
+        });
+      else if (suAliases.includes(type))
+        embed.setAuthor({
+          name: title,
+          iconURL: `https://cdn.upload.systems/uploads/KSTCcy4V.png`,
+        });
+      else
+        embed.setAuthor({
+          name: title,
+          iconURL: `https://cdn.upload.systems/uploads/sYDS6yZI.png`,
+        });
+  
+      message.channel
+        .send({ embeds: [embed] })
+        .then(async () => await message.delete());
+    }
   }
 
   if (message.channel.id == client.conf.Settings.Matchday_Channel) {
