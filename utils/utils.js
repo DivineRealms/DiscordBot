@@ -122,6 +122,32 @@ const updateVotesLb = async (client, guild) => {
     });
 };
 
+const getEmoji = (client, emoji) =>
+  client.emojis.cache.find(
+    (e) =>
+      e.name.toLowerCase() == emoji.toLowerCase() ||
+      e.name.toLowerCase().includes(emoji.toLowerCase())
+  );
+
+const findEmoji = (client, text) => {
+  const splitEmoji = text.split("\n");
+  return splitEmoji.map((spl) => {
+    spl = spl.split(" ");
+    return spl.map((str) => {
+      if(str.match(/(?<=:)(.*)(?=:)/gm) && !str.startsWith("<t:")) {
+        str = str.toLowerCase().replaceAll(/(:)(.*)(:)/gm, (a) => getEmoji(client, a.replaceAll(/:/gm, "")))
+        return str;
+      } else if(new Date(str).getTime() && new Date(str) != "Invalid Date" && !str.startsWith("<t:")) {
+        str = timestampFormat(str);
+        return str;
+      } else return str;
+    }).join(" ")
+  })
+}
+
+const timestampFormat = (text) => 
+  text.replaceAll(/(0[1-9]|[1-2][0-9]|3[0-1])\/(0[1-9]|1[0-2])\/[0-9]{4} (2[0-3]|[01][0-9]):[0-5][0-9]/gm, (d) => `<t:${Math.floor(new Date(d.split(" ")[0].split("/").reverse().join("-") + " " + d.split(" ")[1]).getTime() / 1000)}:f>`);
+
 module.exports = {
   formatTime,
   commandsList,
@@ -130,4 +156,7 @@ module.exports = {
   lbVotes,
   errorEmbed,
   updateVotesLb,
+  timestampFormat,
+  getEmoji,
+  findEmoji
 };

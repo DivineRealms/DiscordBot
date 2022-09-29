@@ -77,15 +77,60 @@ module.exports = async (client, message) => {
     const contentSplit = message.content.split("\n");
     let upAliases = ["update", "up", "1"],
       mnAliases = ["maintenance", "main", "2"],
-      suAliases = ["survey", "3"];
+      suAliases = ["survey", "3"], najavaAliases = ["najava"];
 
-    if(contentSplit[0].toLowerCase() == "najava") {
-      
+    if(najavaAliases.includes(contentSplit[0].toLowerCase())) {
+      const splitNajava = message.content.split("```");
+      const najavaTitle = contentSplit[1];
+      const najavaTime = contentSplit[2];
+      const najavaField = contentSplit[3];
+
+      let najavaContent = splitNajava[1].split("\n");
+      if(najavaContent.length == 0) 
+        return message.channel
+          .send({
+            embeds: [
+              client.utils.errorEmbed(
+                client,
+                message,
+                `You need to add at least one match`
+              ),
+            ],
+          })
+          .then((msg) =>
+            setTimeout(() => {
+              message.delete();
+              msg.delete();
+            }, 3000)
+          );
+
+      let embed = client
+        .embedBuilder(client, message, "", `${client.utils.timestampFormat(najavaTime)}`)
+        .setAuthor({
+          name: najavaTitle,
+          iconURL: `https://cdn.upload.systems/uploads/sYDS6yZI.png`,
+        })
+        .setFooter({
+          text: `Announcement by ${message.author.tag}`,
+          iconURL: message.author.displayAvatarURL({ size: 1024, dynamic: true }),
+        })
+        .setTimestamp();
+
+      najavaContent = client.utils.timestampFormat(najavaContent.join("\n"));
+
+      embed.addFields([{
+        name: najavaField,
+        value: client.utils.findEmoji(client, najavaContent).join("\n")
+      }]);
+
+      message.channel.send({ embeds: [embed] }).then(() => {
+        message.delete();
+      });
     }
 
-    if((upAliases.some((x) => contentSplit[0].toLowerCase() == x.toLowerCase()) ||
-    mnAliases.some((x) => contentSplit[0].toLowerCase() == x.toLowerCase()) ||
-    suAliases.some((x) => contentSplit[0].toLowerCase() == x.toLowerCase())) && contentSplit[0].toLowerCase() != "najava") {
+    if((upAliases.includes(contentSplit[0].toLowerCase()) 
+      || mnAliases.includes(contentSplit[0].toLowerCase()) || 
+        suAliases.includes(contentSplit[0].toLowerCase())) && !najavaAliases.includes(content[0].toLowerCase())) {
       if (contentSplit.length < 3) {
         return message.channel
           .send({
@@ -258,8 +303,8 @@ module.exports = async (client, message) => {
 
       let dateAndTeams = matchArr[0];
       let teamList = dateAndTeams.split("|")[1].trim();
-      let firstEmoji = getEmoji(client, teamList.split(" ")[0]);
-      let secondEmoji = getEmoji(
+      let firstEmoji = client.utils.getEmoji(client, teamList.split(" ")[0]);
+      let secondEmoji = client.utils.getEmoji(
         client,
         teamList.split(" ")[teamList.split(" ").length - 1]
       );
@@ -276,16 +321,16 @@ module.exports = async (client, message) => {
       const fcfa = matchArr[5];
 
       if (teamA && teamA != "N/A")
-        matchdayValue += `${teamA.split(" ")[0].trim()} ${getEmoji(
+        matchdayValue += `${teamA.split(" ")[0].trim()} ${client.utils.getEmoji(
           client,
           teamA.split(":")[0].replace(/\**/gm, "")
         )} \`${teamA.split(" ").slice(1).join(" ")}\`\n`;
       if (teamB && teamB != "N/A")
-        matchdayValue += `${teamB.split(" ")[0].trim()} ${getEmoji(
+        matchdayValue += `${teamB.split(" ")[0].trim()} ${client.utils.getEmoji(
           client,
           teamB.split(":")[0].replace(/\**/gm, "")
         )} \`${teamB.split(" ").slice(1).join(" ")}\`\n`;
-      matchdayValue += `**Referee:** ${getEmoji(
+      matchdayValue += `**Referee:** ${client.utils.getEmoji(
         client,
         "fcfa"
       )} \`${referee}\`\n`;
@@ -499,10 +544,3 @@ module.exports = async (client, message) => {
 
   if (command) command.run(client, message, args);
 };
-
-const getEmoji = (client, emoji) =>
-  client.emojis.cache.find(
-    (e) =>
-      e.name.toLowerCase() == emoji.toLowerCase() ||
-      e.name.toLowerCase().includes(emoji.toLowerCase())
-  );
