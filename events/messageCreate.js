@@ -75,18 +75,20 @@ module.exports = async (client, message) => {
 
   if (message.channel.id == client.conf.Settings.Announcement_Channel) {
     const contentSplit = message.content.split("\n");
-    let upAliases = ["update", "up", "1"],
+    let defaultAliases = ["announcement", "an", "0"],
+      upAliases = ["update", "up", "1"],
       mnAliases = ["maintenance", "main", "2"],
-      suAliases = ["survey", "3"], najavaAliases = ["najava"];
+      suAliases = ["survey", "3"],
+      najavaAliases = ["najava"];
 
-    if(najavaAliases.includes(contentSplit[0].toLowerCase())) {
+    if (najavaAliases.includes(contentSplit[0].toLowerCase())) {
       const splitNajava = message.content.split("```");
       const najavaTitle = contentSplit[1];
       const najavaTime = contentSplit[2];
       const najavaField = contentSplit[3];
 
       let najavaContent = splitNajava[1].split("\n");
-      if(najavaContent.length == 0) 
+      if (najavaContent.length == 0)
         return message.channel
           .send({
             embeds: [
@@ -105,32 +107,48 @@ module.exports = async (client, message) => {
           );
 
       let embed = client
-        .embedBuilder(client, message, "", `${client.utils.timestampFormat(najavaTime)}`)
+        .embedBuilder(
+          client,
+          message,
+          "",
+          `${client.utils.timestampFormat(najavaTime)}`
+        )
         .setAuthor({
           name: najavaTitle,
           iconURL: `https://cdn.upload.systems/uploads/sYDS6yZI.png`,
         })
         .setFooter({
           text: `Announcement by ${message.author.tag}`,
-          iconURL: message.author.displayAvatarURL({ size: 1024, dynamic: true }),
+          iconURL: message.author.displayAvatarURL({
+            size: 1024,
+            dynamic: true,
+          }),
         })
         .setTimestamp();
 
-      najavaContent = client.utils.timestampFormat(najavaContent.join("\n"));
+      najavaContent = client.utils.timestampShortFormat(
+        najavaContent.join("\n")
+      );
 
-      embed.addFields([{
-        name: najavaField,
-        value: client.utils.findEmoji(client, najavaContent).join("\n")
-      }]);
+      embed.addFields([
+        {
+          name: najavaField,
+          value: client.utils.findEmoji(client, najavaContent).join("\n"),
+        },
+      ]);
 
       message.channel.send({ embeds: [embed] }).then(() => {
         message.delete();
       });
     }
 
-    if((upAliases.includes(contentSplit[0].toLowerCase()) 
-      || mnAliases.includes(contentSplit[0].toLowerCase()) || 
-        suAliases.includes(contentSplit[0].toLowerCase())) && !najavaAliases.includes(content[0].toLowerCase())) {
+    if (
+      (defaultAliases.includes(contentSplit[0].toLowerCase()) ||
+        upAliases.includes(contentSplit[0].toLowerCase()) ||
+        mnAliases.includes(contentSplit[0].toLowerCase()) ||
+        suAliases.includes(contentSplit[0].toLowerCase())) &&
+      !najavaAliases.includes(content[0].toLowerCase())
+    ) {
       if (contentSplit.length < 3) {
         return message.channel
           .send({
@@ -149,27 +167,30 @@ module.exports = async (client, message) => {
             }, 3000)
           );
       }
-  
+
       const type = contentSplit[0];
       const title = contentSplit[1];
       const description = contentSplit[2];
       let msgFields = contentSplit[3];
-  
+
       let embed = client
         .embedBuilder(client, message, "", description)
         .setFooter({
           text: `Announcement by ${message.author.tag}`,
-          iconURL: message.author.displayAvatarURL({ size: 1024, dynamic: true }),
+          iconURL: message.author.displayAvatarURL({
+            size: 1024,
+            dynamic: true,
+          }),
         })
         .setTimestamp();
-  
+
       if (msgFields) {
         msgFields = msgFields.split(/\s*\|\s*/);
-  
+
         const fields = [];
         for (let i = 0; i < msgFields.length; i += 2)
           fields.push({ title: msgFields[i], description: msgFields[i + 1] });
-  
+
         for (let i = 0; i < fields.length && fields.length <= 25; i++) {
           embed.addFields({
             name: fields[i].title,
@@ -195,7 +216,7 @@ module.exports = async (client, message) => {
           }
         }
       }
-  
+
       if (upAliases.includes(type))
         embed.setColor("#7edd8a").setAuthor({
           name: title,
@@ -216,7 +237,7 @@ module.exports = async (client, message) => {
           name: title,
           iconURL: `https://cdn.upload.systems/uploads/sYDS6yZI.png`,
         });
-  
+
       message.channel
         .send({ embeds: [embed] })
         .then(async () => await message.delete());
