@@ -147,7 +147,7 @@ const findEmoji = (client, text) => {
           new Date(str) != "Invalid Date" &&
           !str.startsWith("<t:")
         ) {
-          str = timestampFormat(str);
+          str = timestampFormatT(str);
           return str;
         } else return str;
       })
