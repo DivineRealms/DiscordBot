@@ -186,6 +186,7 @@ module.exports = {
   errorEmbed,
   updateVotesLb,
   timestampFormat,
+  timestampFormatT,
   getEmoji,
   findEmoji,
 };
