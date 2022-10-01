@@ -126,7 +126,9 @@ module.exports = async (client, message) => {
         })
         .setTimestamp();
 
-      najavaContent = client.utils.timestampFormat(najavaContent.join("\n"));
+      najavaContent = client.utils.timestampShortFormat(
+        najavaContent.join("\n")
+      );
 
       embed.addFields([
         {
