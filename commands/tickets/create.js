@@ -53,7 +53,7 @@ module.exports.run = async (client, message, args) => {
     })),
     users = message.mentions.users.map((s) => ({
       id: s.id,
-      allow: ["ViewChannel"],
+      allow: ["ViewChannel", "SendMessages"],
     })),
     channel = await message.guild.channels.create({
       name: `📋︲${message.author.username}-${ticketNumber}`,

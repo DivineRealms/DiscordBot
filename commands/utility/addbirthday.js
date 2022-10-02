@@ -164,7 +164,7 @@ module.exports.slashRun = async (client, interaction) => {
 
   await db.set(
     `birthday_${interaction.guild.id}_${interaction.user.id}`,
-    args.join(" ")
+    birthd
   );
 };
 
