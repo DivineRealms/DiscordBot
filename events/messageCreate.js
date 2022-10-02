@@ -403,7 +403,7 @@ module.exports = async (client, message) => {
             ),
           ],
         })
-        .then((msg) => msg.delete(), 300000);
+        .then((msg) => setTimeout(() => msg.delete(), 300_000));
 
       await db.set(`lastAutoMsg_${message.guild.id}`, Date.now());
     }
