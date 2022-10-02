@@ -152,10 +152,14 @@ module.exports = async (client, reaction, user) => {
 
   const num = Object.entries(tickets).length || 1;
   const ticketNumber = "0".repeat(4 - num.toString().length) + num;
-  const permissions = settings.Support_Roles.map((r) => ({
-    id: r,
-    allow: ["ViewChannel"],
-  }));
+  const permissions = settings.Support_Roles.map((r) => {
+    if(message.guild.roles.cache.get(r)) {
+      return {
+        id: r,
+        allow: ["ViewChannel"],
+      }
+    }
+  }).filter(Boolean);
 
   const channel = await reaction.message.guild.channels.create({
     name: settings.Name.replace("{number}", ticketNumber).replace(
