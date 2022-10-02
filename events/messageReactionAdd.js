@@ -170,7 +170,12 @@ module.exports = async (client, reaction, user) => {
     permissionOverwrites: [
       {
         id: reaction.message.guild.id,
-        deny: "ViewChannel",
+        deny: ["ViewChannel"],
+      },
+      /* Mute Role */
+      {
+        id: "738142767326298183",
+        allow: ["SendMessages"]
       },
       { id: user.id, allow: "ViewChannel" },
       ...permissions,
