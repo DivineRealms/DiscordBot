@@ -294,6 +294,13 @@ module.exports = async (client, message) => {
           url: "https://challenge.place/c/62aa8b995f6adfd26e923544/stage/6311f6103034c2183a6bfe7f",
         })
         .setColor("#ef9f03");
+    else if (league.includes("world cup") || league.includes("wc"))
+      matchdayEmbed
+        .setAuthor({
+          name: "World Cup",
+          iconURL: "https://i.imgur.com/nIf6zc3.png",
+        })
+        .setColor("#9b0415");
 
     const splitLine = contentSplit[1].split("---");
     if (
