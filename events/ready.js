@@ -144,22 +144,17 @@ module.exports = async (client) => {
         new ButtonBuilder()
           .setEmoji("<:DR:765260828714467418>")
           .setURL(`https://minecraft-mp.com/server/295045/vote/`)
-          .setLabel("Vote for Divine Realms")
+          .setLabel("Divine Realms")
           .setStyle(ButtonStyle.Link),
         new ButtonBuilder()
           .setEmoji("<:hog:916427016071442442>")
           .setURL(`https://minecraft-mp.com/server/296478/vote/`)
-          .setLabel("Vote for HogRealms")
+          .setLabel("HogRealms")
           .setStyle(ButtonStyle.Link)
       );
       if (generalCh)
         generalCh.send({
-          embeds: [
-            client.embedBuilder(client, "", "", "", "#8ee26b").setAuthor({
-              name: "Daily reminder to vote!",
-              iconURL: `https://cdn.upload.systems/uploads/U5K71mCE.png`,
-            }),
-          ],
+          content: "This is your daily reminder to <@&1038908503865168037>!",
           components: [voteRow],
         });
     },
@@ -168,8 +163,10 @@ module.exports = async (client) => {
 
   voteCron.start();
 
+  let newDate = new Date(date.getFullYear(), date.getMonth() + 1, 0);
+
   let voteMonthEnd = new cron.CronJob(
-    "10 0 0 1 * *",
+    newDate,
     async () => {
       await client.utils.updateVotesLb(client, guild);
 
