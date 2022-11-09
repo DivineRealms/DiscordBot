@@ -286,7 +286,7 @@ module.exports = async (client, message) => {
           url: "https://challenge.place/c/62aa8b995f6adfd26e923544/stage/6311ed215097d41839b2319b",
         })
         .setColor("#096feb");
-    else if (league.includes("fcfacup") || league.includes("fcfacup"))
+    else if (league.includes("fcfacup"))
       matchdayEmbed
         .setAuthor({
           name: "FCFA Cup",
@@ -294,7 +294,7 @@ module.exports = async (client, message) => {
           url: "https://challenge.place/c/62aa8b995f6adfd26e923544/stage/6311f6103034c2183a6bfe7f",
         })
         .setColor("#ef9f03");
-    else if (league.includes("worldcup") || league.includes("wc"))
+    else if (league.includes("worldcup"))
       matchdayEmbed
         .setAuthor({
           name: "World Cup",
