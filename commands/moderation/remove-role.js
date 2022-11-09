@@ -74,7 +74,7 @@ module.exports.run = async (client, message, args) => {
         client.utils.errorEmbed(
           client,
           message,
-          "That Member don't have that role."
+          "That Member doesn't have that role."
         ),
       ],
     });
@@ -82,7 +82,7 @@ module.exports.run = async (client, message, args) => {
   message.channel.send({
     embeds: [
       client.embedBuilder(client, message, "", "", "#3db39e").setAuthor({
-        name: `Successfully removed role ${role} from ${member.username}.`,
+        name: `Successfully removed role ${role.name} from ${member.user.username}.`,
         iconURL: `https://cdn.upload.systems/uploads/6KOGFYJM.png`,
       }),
     ],
@@ -140,7 +140,7 @@ module.exports.slashRun = async (client, interaction) => {
         client.utils.errorEmbed(
           client,
           interaction,
-          "That Member don't have that role."
+          "That Member doesn't have that role."
         ),
       ],
       ephemeral: true,
@@ -149,7 +149,7 @@ module.exports.slashRun = async (client, interaction) => {
   interaction.reply({
     embeds: [
       client.embedBuilder(client, interaction, "", "", "#3db39e").setAuthor({
-        name: `Successfully removed role ${role} from ${member.username}.`,
+        name: `Successfully removed role ${role.name} from ${member.user.username}.`,
         iconURL: `https://cdn.upload.systems/uploads/6KOGFYJM.png`,
       }),
     ],
