@@ -147,7 +147,7 @@ module.exports = async (client, message) => {
         upAliases.includes(contentSplit[0].toLowerCase()) ||
         mnAliases.includes(contentSplit[0].toLowerCase()) ||
         suAliases.includes(contentSplit[0].toLowerCase())) &&
-      !najavaAliases.includes(content[0].toLowerCase())
+      !najavaAliases.includes(contentSplit[0].toLowerCase())
     ) {
       if (contentSplit.length < 3) {
         return message.channel
