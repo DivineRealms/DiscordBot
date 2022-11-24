@@ -62,13 +62,19 @@ module.exports = async (client) => {
       `https://api.mcsrvstat.us/2/${client.conf.Settings.Server_IP}`
     ).then(async (res) => await res.json());
 
-    if (settings.Minecraft_Count.Enabled)
-      mcCount.setName(
-        settings.Minecraft_Count.Message.replace(
-          "{count}",
-          playerCount.players.online
-        ).replace("{countMax}", playerCount.players.max)
-      );
+    if (settings.Minecraft_Count.Enabled) {
+      if (playerCount.online)
+        mcCount.setName(
+          settings.Minecraft_Count.Message.replace(
+            "{count}",
+            playerCount.players.online
+          ).replace("{countMax}", playerCount.players.max)
+        );
+      else
+        mcCount.setName(
+          settings.Minecraft_Count.Message.replace("{count}", "Offline")
+        );
+    }
 
     if (settings.Channel_Count.Enabled)
       channelCount.setName(
