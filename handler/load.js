@@ -21,6 +21,7 @@ module.exports = async (client) => {
   client.commands = new Enmap();
   client.slashCommands = new Enmap();
   client.snipes = new Enmap();
+  client.voteBans = new Enmap();
   client.afk = new Enmap();
   client.slashArray = [];
   client.cmdCooldowns = [];
@@ -42,7 +43,7 @@ module.exports = async (client) => {
   client.embedBuilder = require("../utils/embedBuilder.js");
   client.utils = require("../utils/utils.js");
   client.paginateSelect = require("../utils/paginateSelect.js");
-/* 
+ 
   process.on("unhandledRejection", (error) => {
     if (client.isReady()) {
       let ignoreErrors = [
@@ -106,7 +107,7 @@ module.exports = async (client) => {
     }
     console.log(error.stack);
   });
- */
+ 
   for (const d of readdirSync("./commands/")) {
     client.categories.set(
       d,
