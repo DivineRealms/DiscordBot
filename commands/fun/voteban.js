@@ -25,6 +25,7 @@ module.exports.run = async (client, message, args) => {
     votes: 0,
     users: [],
   };
+  
   if (
     user.id == message.author.id ||
     currentBans.users.includes(message.author.id)
@@ -34,7 +35,7 @@ module.exports.run = async (client, message, args) => {
   message.channel.send({
     embeds: [
       client.embedBuilder(client, message, "", "", "#f44336").setAuthor({
-        name: `${message.author.username} started a voteban on ${
+        name: `${message.author.username} has voted to ban ${
           user.username
         } (${Number(currentBans.votes) + 1}/6).`,
         iconURL: `https://cdn.upload.systems/uploads/6Xdg16Gh.png`,
@@ -42,9 +43,11 @@ module.exports.run = async (client, message, args) => {
     ],
   });
 
+  currentBans.users.push(message.author.id)
+
   client.voteBans.set(user.id, {
-    votes: Number(currentBans) + 1,
-    users: currentBans.users.push(message.author.id),
+    votes: Number(currentBans.votes) + 1,
+    users: currentBans.users,
   });
 
   if (Number(currentBans.votes) + 1 == 6)
@@ -75,16 +78,26 @@ module.exports.slashRun = async (client, interaction) => {
     votes: 0,
     users: [],
   };
+
   if (
     user.id == interaction.user.id ||
     currentBans.users.includes(interaction.user.id)
   )
-    return;
+    return await interaction.reply({
+      embeds: [
+        client.embedBuilder(client, interaction, "", "", "Red").setAuthor({
+          name: `You have already voted to ban ${
+            user.username
+          } (${Number(currentBans.votes)}/6).`,
+          iconURL: `https://cdn.upload.systems/uploads/6Xdg16Gh.png`,
+        }),
+      ], ephemeral: true
+    });
 
   await interaction.reply({
     embeds: [
       client.embedBuilder(client, interaction, "", "", "#f44336").setAuthor({
-        name: `${interaction.user.username} started a voteban on ${
+        name: `${interaction.user.username} has voted to ban ${
           user.username
         } (${Number(currentBans.votes) + 1}/6).`,
         iconURL: `https://cdn.upload.systems/uploads/6Xdg16Gh.png`,
@@ -92,9 +105,11 @@ module.exports.slashRun = async (client, interaction) => {
     ],
   });
 
+  currentBans.users.push(interaction.user.id)
+
   client.voteBans.set(user.id, {
-    votes: Number(currentBans) + 1,
-    users: currentBans.users.push(interaction.user.id),
+    votes: Number(currentBans.votes) + 1,
+    users: currentBans.users,
   });
 
   if (Number(currentBans.votes) + 1 == 6)
