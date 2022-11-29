@@ -30,7 +30,16 @@ module.exports.run = async (client, message, args) => {
     user.id == message.author.id ||
     currentBans.users.includes(message.author.id)
   )
-    return;
+    return await message.channel.send({
+      embeds: [
+        client.embedBuilder(client, message, "", "", "Red").setAuthor({
+          name: `You have already voted to ban ${
+            user.username
+          } (${Number(currentBans.votes)}/6).`,
+          iconURL: `https://cdn.upload.systems/uploads/6Xdg16Gh.png`,
+        }),
+      ]
+    });;
 
   message.channel.send({
     embeds: [
@@ -50,7 +59,8 @@ module.exports.run = async (client, message, args) => {
     users: currentBans.users,
   });
 
-  if (Number(currentBans.votes) + 1 == 6)
+  if (Number(currentBans.votes) + 1 == 6) {
+    client.voteBans.delete(user.id);
     message.channel.send({
       embeds: [
         client.embedBuilder(client, message, "", "", "#f44336").setAuthor({
@@ -64,6 +74,7 @@ module.exports.run = async (client, message, args) => {
         }),
       ],
     });
+  }
 };
 
 module.exports.slashRun = async (client, interaction) => {
@@ -106,7 +117,8 @@ module.exports.slashRun = async (client, interaction) => {
     users: currentBans.users,
   });
 
-  if (Number(currentBans.votes) + 1 == 6)
+  if (Number(currentBans.votes) + 1 == 6) {
+    client.voteBans.delete(user.id);
     await interaction.channel.send({
       embeds: [
         client.embedBuilder(client, interaction, "", "", "#f44336").setAuthor({
@@ -120,4 +132,5 @@ module.exports.slashRun = async (client, interaction) => {
         }),
       ],
     });
+  }
 };
