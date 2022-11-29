@@ -50,15 +50,21 @@ module.exports.run = async (client, message, args) => {
   if (Number(currentBans.votes) + 1 == 6)
     message.channel.send({
       embeds: [
-        client.embedBuilder(client, message, "", "", "#f44336").setAuthor({
-          name: `${
-            user.username
-          } got banned after reaching **6 votes**! \nPeople who voted: ||${currentBans.users
-            .map((x) => `${x}`)
-            .join(", ")
-            .trim()}||`,
-          iconURL: `https://cdn.upload.systems/uploads/6Xdg16Gh.png`,
-        }),
+        client
+          .embedBuilder(
+            client,
+            message,
+            "",
+            `People who voted: ||${currentBans.users
+              .map((x) => `<@!${x}>`)
+              .join(", ")
+              .trim()}||`,
+            "#f44336"
+          )
+          .setAuthor({
+            name: `${user.username} got banned after reaching 6 votes!`,
+            iconURL: `https://cdn.upload.systems/uploads/6Xdg16Gh.png`,
+          }),
       ],
     });
 };
@@ -94,15 +100,21 @@ module.exports.slashRun = async (client, interaction) => {
   if (Number(currentBans.votes) + 1 == 6)
     await interaction.channel.send({
       embeds: [
-        client.embedBuilder(client, interaction, "", "", "#f44336").setAuthor({
-          name: `${
-            user.username
-          } got banned after reaching **6 votes**! \nPeople who voted: ||${currentBans.users
-            .map((x) => `${x}`)
-            .join(", ")
-            .trim()}||`,
-          iconURL: `https://cdn.upload.systems/uploads/6Xdg16Gh.png`,
-        }),
+        client
+          .embedBuilder(
+            client,
+            interaction,
+            "",
+            `People who voted: ||${currentBans.users
+              .map((x) => `<@!${x}>`)
+              .join(", ")
+              .trim()}||`,
+            "#f44336"
+          )
+          .setAuthor({
+            name: `${user.username} got banned after reaching 6 votes!`,
+            iconURL: `https://cdn.upload.systems/uploads/6Xdg16Gh.png`,
+          }),
       ],
     });
 };
