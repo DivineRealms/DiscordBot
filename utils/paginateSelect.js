@@ -1,6 +1,6 @@
 const {
   ActionRowBuilder,
-  SelectMenuBuilder,
+  StringSelectMenuBuilder,
   ComponentType,
   InteractionType,
 } = require("discord.js");
@@ -19,7 +19,7 @@ module.exports = async (client, message, home, data) => {
     optionList.push(obj);
   }
 
-  let sMenu = new SelectMenuBuilder()
+  let sMenu = new StringSelectMenuBuilder()
     .setCustomId(data.id)
     .setPlaceholder(data.placeholder)
     .addOptions(optionList);
@@ -59,7 +59,7 @@ module.exports = async (client, message, home, data) => {
     }
   });
   collector.on("end", async (collected, reason) => {
-    let disabledSel = new SelectMenuBuilder()
+    let disabledSel = new StringSelectMenuBuilder()
       .setCustomId(data.id)
       .setDisabled(true)
       .setPlaceholder(data.placeholder)
