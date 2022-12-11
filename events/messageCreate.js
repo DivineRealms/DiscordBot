@@ -81,10 +81,6 @@ module.exports = async (client, message) => {
       suAliases = ["survey", "3"],
       najavaAliases = ["najava"];
 
-    // da mi ne salju ovi slepci vise obicna obavestenja
-    if (!client.conf.Settings.Owner_Discord_ID.includes(message.author.id))
-      message.delete();
-
     if (najavaAliases.includes(contentSplit[0].toLowerCase())) {
       const splitNajava = message.content.split("```");
       const najavaTitle = contentSplit[1];
