@@ -121,9 +121,11 @@ module.exports.slashRun = async (client, interaction) => {
       ephemeral: true,
     });
 
-  if (message.channel.permissionOverwrites.cache.has(user.id))
+  if (interaction.channel.permissionOverwrites.cache.has(user.id))
     if (
-      message.channel.permissionOverwrites.get(user.id).allow.has("ViewChannel")
+      interaction.channel.permissionOverwrites
+        .get(user.id)
+        .allow.has("ViewChannel")
     )
       return interaction.reply({
         embeds: [
