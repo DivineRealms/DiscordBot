@@ -277,7 +277,7 @@ module.exports = async (client, message) => {
           url: "https://challenge.place/c/62aa8b995f6adfd26e923544/stage/6311f0d27f11701814dda779",
         })
         .setColor("#00a100");
-    else if (league.includes("svebalkan"))
+    else if (league.includes("svb"))
       matchdayEmbed
         .setAuthor({
           name: "Svebalkan League",
@@ -290,7 +290,7 @@ module.exports = async (client, message) => {
         .setAuthor({
           name: "Svebalkan Superliga",
           iconURL: "https://i.imgur.com/Mold4jE.png",
-          url: "",
+          url: "https://challenge.place/c/62aa8b995f6adfd26e923544/stage/643ed50b4087ca2d422619cc",
         })
         .setColor("#4295fb");
     else if (league.includes("fcfacup"))
