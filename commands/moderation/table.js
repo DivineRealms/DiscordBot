@@ -26,6 +26,10 @@ module.exports = {
           value: "svb",
         },
         {
+          name: "Svebalkan Superliga",
+          value: "ssl",
+        },
+        {
           name: "FCFA Challenge League",
           value: "fcl",
         },
@@ -65,6 +69,38 @@ module.exports.slashRun = async (client, interaction) => {
 
     const image = new AttachmentBuilder(
       process.cwd() + "/assets/svebalkan.png"
+    );
+
+    await interaction.editReply({
+      content: "Done!",
+      files: [image],
+      ephemeral: true,
+    });
+  } else if (league.toLowerCase() == "ssl") {
+    interaction.reply({
+      content: "Svebalkan Superliga table is being downloaded...",
+      ephemeral: true,
+    });
+
+    if (fs.existsSync(process.cwd() + "/assets/ssl.png"))
+      fs.unlinkSync(process.cwd() + "/assets/ssl.png");
+
+    await new Pageres({
+      script: `${process.cwd() + "/assets/tableScript.js"}`,
+      css: `${process.cwd() + "/assets/tableStyle.css"}`,
+      hide: ["ins", ".da-h-responsive", ".adsbygoogle"],
+      filename: "ssl",
+      selector: ".col-12.col-lg-7.col-xl-8.mb-3",
+    })
+      .src(
+        "https://challenge.place/c/62aa8b995f6adfd26e923544/stage/643ed50b4087ca2d422619cc",
+        ["2048x1024"]
+      )
+      .dest(process.cwd() + "/assets")
+      .run();
+
+    const image = new AttachmentBuilder(
+      process.cwd() + "/assets/ssl.png"
     );
 
     await interaction.editReply({
