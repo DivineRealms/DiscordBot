@@ -10,7 +10,6 @@ const {
   EmbedBuilder,
 } = require("discord.js");
 const { includes } = require("lodash");
-const { contents } = require("cheerio/lib/api/traversing");
 let msgCooldown;
 
 module.exports = async (client, message) => {
