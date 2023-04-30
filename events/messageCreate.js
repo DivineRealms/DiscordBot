@@ -286,6 +286,14 @@ module.exports = async (client, message) => {
           url: "https://challenge.place/c/62aa8b995f6adfd26e923544/stage/6311ed215097d41839b2319b",
         })
         .setColor("#096feb");
+    else if (league.includes("ssl"))
+      matchdayEmbed
+        .setAuthor({
+          name: "Svebalkan Superliga",
+          iconURL: "https://i.imgur.com/Mold4jE.png",
+          url: "",
+        })
+        .setColor("#4295fb");
     else if (league.includes("fcfacup"))
       matchdayEmbed
         .setAuthor({

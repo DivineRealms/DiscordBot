@@ -32,6 +32,10 @@ module.exports = {
           value: "svebalkan",
         },
         {
+          name: "Svebalkan Superliga",
+          value: "ssl",
+        },
+        {
           name: "FCFA Challenge",
           value: "challenge",
         },
@@ -161,6 +165,11 @@ module.exports.slashRun = async (client, interaction) => {
         embed.setColor("#096feb").setAuthor({
           name: title,
           iconURL: `https://i.imgur.com/JAJ18E5.png?1`,
+        });
+      else if (league == "ssl")
+        embed.setColor("#4295fb").setAuthor({
+          name: title,
+          iconURL: `https://i.imgur.com/Mold4jE.png`,
         });
       else if (league == "challenge")
         embed.setColor("#00a100").setAuthor({

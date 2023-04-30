@@ -17,7 +17,7 @@
         "connect4-engine": "^1.0.6",
         "cron": "github:kelektiv/node-cron",
         "date-and-time": "latest",
-        "discord.js": "^14.7.1",
+        "discord.js": "^14.8.0",
         "dotenv": "^16.0.1",
         "enmap": "^5.3.1",
         "express": "latest",
