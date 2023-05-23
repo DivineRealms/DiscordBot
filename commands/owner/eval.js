@@ -48,13 +48,7 @@ module.exports.run = async (client, message, args) => {
   try {
     let evaled = eval(code);
 
-    if (
-      message.content.toLowerCase().includes("client.token") ||
-      message.content.toLowerCase().includes("token") ||
-      message.content.toLowerCase().includes("client.conf.Settings.Token")
-    )
-      return;
-    if (typeof evaled !== "string") evaled = require("util").inspect(evaled);
+    const cleaned = await clean(client, evaled);
 
     let embed = client
       .embedBuilder(client, message, "", "", "Green")
@@ -62,12 +56,12 @@ module.exports.run = async (client, message, args) => {
         name: "Code Evaluation",
         iconURL: `https://cdn.upload.systems/uploads/GVd0PBIt.png`,
       })
-      .addFields({ name: "📥︲Input:", value: `\`\`\`${code}\`\`\`` });
+      .addFields({ name: "📥︲Input:", value: `\`\`\`js\n${cleaned}\`\`\`` });
 
-    if (evaled.length >= 1024) {
+    if (cleaned.length >= 1024) {
       const body = {
         key: client.conf.Settings.Paste_Key,
-        body: evaled,
+        body: cleaned,
       };
 
       const response = await fetch("https://api.upload.systems/pastes", {
@@ -82,7 +76,7 @@ module.exports.run = async (client, message, args) => {
         "📤︲Output:",
         `\`\`\`xl\nhttps://api.upload.systems/pastes/${json.paste.id}/raw\`\`\``
       );
-    } else embed.addFields({ name: "📤︲Output", value: `\`\`\`xl\n${evaled}\`\`\`` });
+    } else embed.addFields({ name: "📤︲Output", value: `\`\`\`js\n${cleaned}\`\`\`` });
 
     message.channel.send({ embeds: [embed] });
   } catch (err) {
@@ -90,7 +84,7 @@ module.exports.run = async (client, message, args) => {
       embeds: [
         client.utils
           .errorEmbed(client, message, "Code Evaluation Failed")
-          .addFields([{ name: "📥︲Input:", value: `\`\`\`xl\n${code}\`\`\`` }, { name: "📤︲Output:", value: `\`\`\`xl\n${err}\`\`\`` }])
+          .addFields([{ name: "📥︲Input:", value: `\`\`\`js\n${code}\`\`\`` }, { name: "📤︲Output:", value: `\`\`\`xl\n${err}\`\`\`` }])
       ],
     });
   }
@@ -135,14 +129,7 @@ module.exports.slashRun = async (client, interaction) => {
       try {
         let evaled = eval(codeValue);
 
-        if (
-          codeValue.toLowerCase().includes("client.token") ||
-          codeValue.toLowerCase().includes("token") ||
-          codeValue.toLowerCase().includes("client.conf.Settings.Token")
-        )
-          return;
-        if (typeof evaled !== "string")
-          evaled = require("util").inspect(evaled);
+        const cleaned = await clean(client, evaled);
 
         let embed = client
           .embedBuilder(client, interaction, "", "", "Green")
@@ -153,9 +140,9 @@ module.exports.slashRun = async (client, interaction) => {
           .addFields({
             name: "📥︲Input:",
             value: `\`\`\`js\n${
-              codeValue?.length >= 1024
-                ? codeValue.slice(0, 990) + "..."
-                : codeValue
+              cleaned?.length >= 1024
+                ? cleaned.slice(0, 990) + "..."
+                : cleaned
             }\`\`\``,
           });
 
@@ -183,7 +170,7 @@ module.exports.slashRun = async (client, interaction) => {
         } else
           embed.addFields({
             name: "📤︲Output",
-            value: `\`\`\`js\n${evaled}\`\`\``,
+            value: `\`\`\`js\n${cleaned}\`\`\``,
           });
 
         if (ephemeral) md.reply({ embeds: [embed], ephemeral: true });
@@ -217,3 +204,15 @@ module.exports.slashRun = async (client, interaction) => {
     })
     .catch((e) => console.log(e));
 };
+
+const clean = async (client, text) => {
+  if (text && text.constructor.name == "Promise")
+    text = await text;
+  
+  if (typeof text !== "string")
+    text = require("util").inspect(text, { depth: 1 });
+  
+  text = text.replaceAll(client.token, "[RETARDED]");
+  
+  return text;
+}
