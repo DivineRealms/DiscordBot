@@ -56,7 +56,7 @@ module.exports.run = async (client, message, args) => {
         name: "Code Evaluation",
         iconURL: `https://cdn.upload.systems/uploads/GVd0PBIt.png`,
       })
-      .addFields({ name: "📥︲Input:", value: `\`\`\`js\n${evaled}\`\`\`` });
+      .addFields({ name: "📥︲Input:", value: `\`\`\`js\n${code}\`\`\`` });
 
     if (cleaned.length >= 1024) {
       embed.addFields(
