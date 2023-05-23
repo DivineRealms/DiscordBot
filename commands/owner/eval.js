@@ -127,13 +127,13 @@ module.exports.slashRun = async (client, interaction) => {
           .addFields({
             name: "📥︲Input:",
             value: `\`\`\`js\n${
-              evaled?.length >= 1024
-                ? evaled.slice(0, 990) + "..."
-                : evaled
+              codeValue?.length >= 1024
+                ? codeValue.slice(0, 990) + "..."
+                : codeValue
             }\`\`\``,
           });
 
-        if (evaled.length >= 1024) {
+        if (cleaned.length >= 1024) {
           embed.addFields({
             name: "📤︲Output:",
             value: `\`\`\`xl\nOutput too long.\`\`\``,
