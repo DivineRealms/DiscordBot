@@ -56,25 +56,12 @@ module.exports.run = async (client, message, args) => {
         name: "Code Evaluation",
         iconURL: `https://cdn.upload.systems/uploads/GVd0PBIt.png`,
       })
-      .addFields({ name: "📥︲Input:", value: `\`\`\`js\n${cleaned}\`\`\`` });
+      .addFields({ name: "📥︲Input:", value: `\`\`\`js\n${evaled}\`\`\`` });
 
     if (cleaned.length >= 1024) {
-      const body = {
-        key: client.conf.Settings.Paste_Key,
-        body: cleaned,
-      };
-
-      const response = await fetch("https://api.upload.systems/pastes", {
-        method: "POST",
-        body: JSON.stringify(body),
-        headers: { "Content-Type": "application/json" },
-      }).catch((err) => console.log(err));
-
-      const json = await response.json();
-
       embed.addFields(
         "📤︲Output:",
-        `\`\`\`xl\nhttps://api.upload.systems/pastes/${json.paste.id}/raw\`\`\``
+        `\`\`\`xl\nOutput too long.\`\`\``
       );
     } else embed.addFields({ name: "📤︲Output", value: `\`\`\`js\n${cleaned}\`\`\`` });
 
@@ -84,7 +71,7 @@ module.exports.run = async (client, message, args) => {
       embeds: [
         client.utils
           .errorEmbed(client, message, "Code Evaluation Failed")
-          .addFields([{ name: "📥︲Input:", value: `\`\`\`js\n${code}\`\`\`` }, { name: "📤︲Output:", value: `\`\`\`xl\n${err}\`\`\`` }])
+          .addFields([{ name: "📥︲Input:", value: `\`\`\`js\n${code}\`\`\`` }, { name: "📤︲Output:", value: `\`\`\`js\n${err}\`\`\`` }])
       ],
     });
   }
@@ -140,32 +127,16 @@ module.exports.slashRun = async (client, interaction) => {
           .addFields({
             name: "📥︲Input:",
             value: `\`\`\`js\n${
-              cleaned?.length >= 1024
-                ? cleaned.slice(0, 990) + "..."
-                : cleaned
+              evaled?.length >= 1024
+                ? evaled.slice(0, 990) + "..."
+                : evaled
             }\`\`\``,
           });
 
         if (evaled.length >= 1024) {
-          const body = {
-            key: client.conf.Settings.Paste_Key,
-            body: evaled,
-          };
-
-          const response = await fetch(
-            "https://api.upload.systems/pastes",
-            {
-              method: "POST",
-              body: JSON.stringify(body),
-              headers: { "Content-Type": "application/json" },
-            }
-          ).catch((err) => console.log(err));
-
-          const json = await response.json();
-
           embed.addFields({
             name: "📤︲Output:",
-            value: `\`\`\`xl\nhttps://api.upload.systems/pastes/${json.paste.id}/raw\`\`\``,
+            value: `\`\`\`xl\nOutput too long.\`\`\``,
           });
         } else
           embed.addFields({
