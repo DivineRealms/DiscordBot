@@ -12,12 +12,14 @@ const bumpReminder = require("../utils/bumpRemind.js");
 const { default: fetch } = require("node-fetch");
 
 module.exports = async (client) => {
+  const guild = client.guilds.cache.get(client.conf.Settings.Guild_ID);
+  const settings = client.conf.Settings.Bot_Activity;
+
   let date = new Date();
+
   console.log(
     `\x1b[0;37m[${date.toLocaleDateString()} ${date.toLocaleTimeString()}] \x1b[1;36m[INFO] \x1b[0;0mBot has started and is online now.`
   );
-
-  const settings = client.conf.Settings.Bot_Activity;
 
   await client.application.commands.set(client.slashArray);
 
@@ -36,10 +38,7 @@ module.exports = async (client) => {
       { type: ActivityType[settings.Types[rand]] }
     );
   }, 180000);
-
-  const guild = client.guilds.cache.get(client.conf.Settings.Guild_ID);
-  client.settings.ensure(guild.id, client.defaultSettings);
-
+  
   async function counter() {
     const settings = client.conf.Automation;
 
@@ -93,12 +92,7 @@ module.exports = async (client) => {
         : false;
     const settings = client.conf.Birthday_System;
     const channel = client.channels.cache.get(settings.Channel);
-    const today = new Date().getMonth() + " " + new Date().getDate();
-    if (
-      !settings.Enabled ||
-      client.settings.get(guild.id, "birthday") === today
-    )
-      return;
+    if (!settings.Enabled) return;
 
     let birthdays = (await db.all())
       .filter((i) => i.id.startsWith(`birthday_${guild.id}_`))
@@ -169,10 +163,10 @@ module.exports = async (client) => {
 
   voteCron.start();
 
-  let newDate = new Date(date.getFullYear(), date.getMonth() + 1, 0);
+  let newDate = new Date(date.getFullYear(), date.getMonth() + 1, 0).getDate();
 
   let voteMonthEnd = new cron.CronJob(
-    newDate,
+    `55 59 23 ${newDate} * *`,
     async () => {
       await client.utils.updateVotesLb(client, guild);
 
@@ -209,6 +203,14 @@ module.exports = async (client) => {
         client.conf.Settings.Votes_LB
       );
       if (lbChannel) lbChannel.send({ embeds: [votesEmbed] });
+
+      if([31, 30, 29, 28].includes(newDate)) {
+        let currentDate = new Date();
+        newDate = new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 0).getDate();
+
+        voteMonthEnd.setTime(newDate);
+        voteMonthEnd.start();
+      }
     },
     { timezone: "Europe/Belgrade" }
   );

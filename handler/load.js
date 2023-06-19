@@ -9,36 +9,19 @@ const leagueRoutes = require("../routes/leagueRoutes.js");
 const { QuickDB } = require("quick.db");
 
 module.exports = async (client) => {
+  client.db = new QuickDB();
   client.conf = yaml.load(fs.readFileSync("./settings/config.yml", "utf8"));
 
-  client.resolveMember = (str, user, title) =>
-    str.replace(/\{(.+)\}/, (...e) =>
-      e[1] === "mention" && title ? user.toString() : user[e[1]]
-    );
-  client.talkedRecently = new Set();
-  client.categories = new Enmap();
-  client.processes = new Enmap();
   client.commands = new Enmap();
   client.slashCommands = new Enmap();
-  client.snipes = new Enmap();
-  client.voteBans = new Enmap();
-  client.afk = new Enmap();
   client.slashArray = [];
   client.cmdCooldowns = [];
-  client.embed = class Embed extends EmbedBuilder {
-    color = client.conf.Settings.Embed_Color;
-  };
-  const settings = { fetchAll: true, autoFetch: true, cloneLevel: "deep" };
-  client.defaultSettings = client.conf.Guild_Settings;
-  client.settings = new Enmap({
-    name: "settings",
-    ...settings,
-  });
-
-  const temporaryVC = require("../utils/temporaryVC.js");
-  temporaryVC(client);
-
-  client.db = new QuickDB();
+  client.afk = new Enmap();
+  client.categories = new Enmap();
+  client.processes = new Enmap();
+  client.snipes = new Enmap();
+  client.voteBans = new Enmap();
+  client.talkedRecently = new Set();
 
   client.embedBuilder = require("../utils/embedBuilder.js");
   client.utils = require("../utils/utils.js");
@@ -107,6 +90,8 @@ module.exports = async (client) => {
     }
     console.log(error.stack);
   });
+
+  // Commands //
  
   for (const d of readdirSync("./commands/")) {
     client.categories.set(
@@ -129,6 +114,8 @@ module.exports = async (client) => {
     }
   }
 
+  // Events //
+
   for (const evt of readdirSync("./events"))
     client.on(
       evt.split(".")[0],
@@ -137,24 +124,26 @@ module.exports = async (client) => {
 
   // Express Server //
 
-  const app = express();
-  app.use(express.json());
-
-  app.use(async(req, res, next) => {
-    res.client = client;
-    next();
-  });
-
-  app.use("/players", playerRoutes);
-  app.use("/leagues", leagueRoutes);
-
-  app.listen(
-    client.conf.Settings.Port || 7070,
-    () =>
-      `[SERVER] Server has started on port ${
-        client.conf.Settings.port || 7070
-      }.`
-  );
+  if(client.conf.Settings.Server == true) {
+    const app = express();
+    app.use(express.json());
+  
+    app.use(async(req, res, next) => {
+      res.client = client;
+      next();
+    });
+  
+    app.use("/players", playerRoutes);
+    app.use("/leagues", leagueRoutes);
+  
+    app.listen(
+      client.conf.Settings.Port || 7070,
+      () =>
+        `[SERVER] Server has started on port ${
+          client.conf.Settings.port || 7070
+        }.`
+    );
+  }
 
   client
     .login(process.env.TOKEN)

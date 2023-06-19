@@ -26,6 +26,9 @@ Settings:
   # Example: @BotName help
   Mention_Prefix: true
 
+  # Whether to Enable Express Server
+  Server: false
+
   # Port for the Server
   Port: 7070
 
@@ -288,7 +291,3 @@ Economy:
       Name: "VIP"
       Description: "VIP Rank."
       Price: "100000"
-
-# DO NOT TOUCH
-Guild_Settings:
-  Prefix: "."
