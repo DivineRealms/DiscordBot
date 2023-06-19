@@ -204,7 +204,7 @@ module.exports = async (client) => {
       );
       if (lbChannel) lbChannel.send({ embeds: [votesEmbed] });
 
-      if([31, 30, 29, 28].includes(newDate)) {
+      if(newDate == 1 || [31, 30, 29, 28].includes(newDate)) {
         let currentDate = new Date();
         newDate = new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 0).getDate();
 
