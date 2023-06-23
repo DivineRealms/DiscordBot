@@ -34,7 +34,7 @@ ${snipe.content}
           "#60b8ff"
         )
         .setAuthor({
-          name: `Last deleted message was from: ${user.tag}`,
+          name: `Last deleted message was from: ${user.username}`,
           iconURL: `https://cdn.upload.systems/uploads/6uDK0XAN.png`,
         }),
     ],
@@ -71,7 +71,7 @@ ${snipe.content}
           "#60b8ff"
         )
         .setAuthor({
-          name: `Last deleted message was from: ${user.tag}`,
+          name: `Last deleted message was from: ${user.username}`,
           iconURL: `https://cdn.upload.systems/uploads/6uDK0XAN.png`,
         }),
     ],

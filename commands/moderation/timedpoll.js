@@ -36,7 +36,7 @@ module.exports.run = async (client, message, args, cmd) => {
       client,
       message,
       question,
-      `Poll Created By ${message.author.tag}`,
+      `Poll Created By ${message.author.username}`,
       ""
     )
     .setDescription(
@@ -82,7 +82,7 @@ module.exports.run = async (client, message, args, cmd) => {
             client,
             message,
             "Times Up!",
-            `Poll created by ${message.author.tag} has ended!`
+            `Poll created by ${message.author.username} has ended!`
           ),
         ],
       });

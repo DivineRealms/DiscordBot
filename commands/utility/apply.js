@@ -161,7 +161,7 @@ module.exports.run = async (client, message, args) => {
   const embed2 = client.embedBuilder(
     client,
     message,
-    `New application from ${message.author.tag}`,
+    `New application from ${message.author.username}`,
     ""
   );
 
@@ -331,7 +331,7 @@ module.exports.slashRun = async (client, interaction) => {
   const embed2 = client.embedBuilder(
     client,
     interaction,
-    `New application from ${interaction.user.tag}`,
+    `New application from ${interaction.user.username}`,
     ""
   );
 

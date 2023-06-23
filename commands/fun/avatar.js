@@ -31,7 +31,7 @@ module.exports.run = async (client, message, args) => {
         .embedBuilder(client, message, "", "", "#ec3d93")
         .setImage(user.displayAvatarURL({ dynamic: true, size: 4096 }))
         .setAuthor({
-          name: `${user.tag}'s Avatar`,
+          name: `${user.username}'s Avatar`,
           iconURL: `https://cdn.upload.systems/uploads/ZdKDK7Tx.png`,
         }),
     ],
@@ -47,7 +47,7 @@ module.exports.slashRun = async (client, interaction) => {
         .embedBuilder(client, interaction, "", "", "#ec3d93")
         .setImage(user.displayAvatarURL({ dynamic: true, size: 4096 }))
         .setAuthor({
-          name: `${user.tag}'s Avatar`,
+          name: `${user.username}'s Avatar`,
           iconURL: `https://cdn.upload.systems/uploads/ZdKDK7Tx.png`,
         }),
     ],

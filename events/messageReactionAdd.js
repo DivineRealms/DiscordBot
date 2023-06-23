@@ -98,7 +98,7 @@ module.exports = async (client, reaction, user) => {
       } else if (reaction.count >= starboard.Minimum_Reactions) {
         const embed = new Discord.EmbedBuilder()
           .setAuthor({
-            name: reaction.message.author.tag,
+            name: reaction.message.author.username,
             iconURL: reaction.message.author.displayAvatarURL({
               size: 1024,
               dynamic: true,

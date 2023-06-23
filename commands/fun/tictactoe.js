@@ -219,8 +219,8 @@ const setBoard = (embed, board, i, pl, message) => {
   else {
     embed.author.name = `${
       ttt.getWinner(board) == "X"
-        ? message.author.tag
-        : message.mentions.users.first().tag
+        ? message.author.username
+        : message.mentions.users.first().username
     } has won the match!`;
 
     board[winner[1]] = win[pl == "X" ? 0 : 1];

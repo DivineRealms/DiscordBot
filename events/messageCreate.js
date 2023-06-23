@@ -111,7 +111,7 @@ module.exports = async (client, message) => {
           iconURL: `https://cdn.upload.systems/uploads/sYDS6yZI.png`,
         })
         .setFooter({
-          text: `Announcement by ${message.author.tag}`,
+          text: `Announcement by ${message.author.username}`,
           iconURL: message.author.displayAvatarURL({
             size: 1024,
             dynamic: true,
@@ -169,7 +169,7 @@ module.exports = async (client, message) => {
       let embed = client
         .embedBuilder(client, message, "", description)
         .setFooter({
-          text: `Announcement by ${message.author.tag}`,
+          text: `Announcement by ${message.author.username}`,
           iconURL: message.author.displayAvatarURL({
             size: 1024,
             dynamic: true,

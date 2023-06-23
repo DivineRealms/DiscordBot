@@ -63,7 +63,7 @@ module.exports.run = async (client, message, args) => {
 
     let nameElement = document.createElement("span");
     let name = document.createTextNode(
-      msg.author.tag +
+      msg.author.username +
         " " +
         msg.createdAt.toDateString() +
         " " +
@@ -177,7 +177,7 @@ module.exports.slashRun = async (client, interaction) => {
 
     let nameElement = document.createElement("span");
     let name = document.createTextNode(
-      msg.author.tag +
+      msg.author.username +
         " " +
         msg.createdAt.toDateString() +
         " " +

@@ -153,7 +153,7 @@ module.exports.slashRun = async (client, interaction) => {
       let embed = client
         .embedBuilder(client, interaction, "", "")
         .setFooter({
-          text: `Statistics sent by ${interaction.user.tag}`,
+          text: `Statistics sent by ${interaction.user.username}`,
           iconURL: interaction.user.displayAvatarURL({
             size: 1024,
             dynamic: true,

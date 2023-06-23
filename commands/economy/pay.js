@@ -70,7 +70,7 @@ module.exports.run = async (client, message, args) => {
   message.channel.send({
     embeds: [
       client.embedBuilder(client, message, "", "", "#3db39e").setAuthor({
-        name: `You have paid $${args[1]} to ${user.tag}.`,
+        name: `You have paid $${args[1]} to ${user.username}.`,
         iconURL: `https://cdn.upload.systems/uploads/6KOGFYJM.png`,
       }),
     ],
@@ -115,7 +115,7 @@ module.exports.slashRun = async (client, interaction) => {
   interaction.reply({
     embeds: [
       client.embedBuilder(client, interaction, "", "", "#3db39e").setAuthor({
-        name: `You have paid $${amount} to ${user.tag}.`,
+        name: `You have paid $${amount} to ${user.username}.`,
         iconURL: `https://cdn.upload.systems/uploads/6KOGFYJM.png`,
       }),
     ],
