@@ -22,7 +22,7 @@ module.exports.run = async (client, message, args, cmd) => {
       .errorEmbed(`You are already playing a game of tic-tac-toe.`)
       .setDescription(
         `<:ArrowRightGray:813815804768026705>Leave the game by using **\`${
-          message.px + cmd
+          client.conf.Settings.Prefix + cmd
         } leave\`**.`
       );
 

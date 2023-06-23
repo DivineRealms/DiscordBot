@@ -24,7 +24,7 @@ module.exports.run = async (client, message, args, cmd) => {
           message,
           "You're already playing against someone.",
           `<:ArrowRightGray:813815804768026705>Leave the game using ${
-            message.px + "" + cmd
+            client.conf.Settings.Prefix + "" + cmd
           } leave.`
         ),
       ],

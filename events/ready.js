@@ -84,6 +84,13 @@ module.exports = async (client) => {
       );
   }
 
+  const crashGame = (await db.all()).filter((x) => x.id.startsWith("crashRunning_"));
+  if(crashGame.length > 0) {
+    for(const game of crashGame) {
+      await db.delete(game.id);
+    }
+  }
+
   async function birthday() {
     const isToday = (d) =>
       d

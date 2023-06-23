@@ -15,7 +15,7 @@ module.exports = {
   options: [
     {
       name: "user",
-      description: "User whoes birthday to set",
+      description: "User whose birthday to set",
       type: ApplicationCommandOptionType.User,
       required: true,
     },
@@ -53,7 +53,7 @@ module.exports.run = async (client, message, args) => {
         client.utils.errorEmbed(
           client,
           message,
-          `Invalid usage, check ${message.px}help setbirthday`
+          `Invalid usage, check ${client.conf.Settings.Prefix}help setbirthday`
         ),
       ],
     });

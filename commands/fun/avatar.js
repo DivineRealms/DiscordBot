@@ -12,7 +12,7 @@ module.exports = {
   options: [
     {
       name: "user",
-      description: "User whoes avatar to see",
+      description: "User whose avatar to see",
       type: ApplicationCommandOptionType.User,
       required: false,
     },

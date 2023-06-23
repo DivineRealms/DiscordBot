@@ -1,16 +1,11 @@
 const escapeRegex = (str) => str.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
-const utils = require("../handler/utilities");
 const leveling = require("../utils/leveling.js");
 const { QuickDB } = require("quick.db");
 const db = new QuickDB();
 const {
   MessageType,
   ChannelType,
-  AttachmentBuilder,
-  EmbedBuilder,
 } = require("discord.js");
-const { includes } = require("lodash");
-let msgCooldown;
 
 module.exports = async (client, message) => {
   if (message.channel.type == ChannelType.DM) return;
@@ -62,7 +57,6 @@ module.exports = async (client, message) => {
   }
 
   if (!message.guild || message.author.bot) return;
-  utils.automod(client, message);
 
   let level = await db.get(`level_${message.guild.id}_${message.author.id}`);
   let xp = await db.get(`xp_${message.guild.id}_${message.author.id}`);
@@ -387,6 +381,67 @@ module.exports = async (client, message) => {
       .then(async () => await message.delete());
   }
 
+  if (client.conf.Counting.Enabled) {
+    if (message.channel.id === client.conf.Counting.Channel) {
+      const current = await db.get(`countingCurrent_${message.guild.id}`);
+      const last = await db.get(`countingLast_${message.guild.id}`);
+
+      if (message.content != current) {
+        message.delete();
+        if (current !== 1 && client.conf.Counting.Restart_On_Incorrect_Number)
+          await db.set(`countingCurrent_${message.guild.id}`, 1);
+        return message.channel
+          .send({
+            embeds: [
+              client.utils.errorEmbed(
+                client,
+                message,
+                `Wrong number ${message.author.username}, The current number is ${current}!` +
+                  "\n" +
+                  (current !== 1 &&
+                  client.conf.Counting.Restart_On_Incorrect_Number
+                    ? "The countdown has been reset back to 1!"
+                    : "")
+              ),
+            ],
+          })
+          .then((msg) => setTimeout(() => msg.delete(), 7000));
+      }
+
+      if (
+        client.conf.Counting.One_At_A_Time &&
+        last === message.author.id &&
+        current !== 1
+      ) {
+        message.delete();
+        if (current !== 1 && client.conf.Counting.Restart_On_Incorrect_Number)
+          await db.set(`countingCurrent_${message.guild.id}`, 1);
+        return message.channel
+          .send({
+            embeds: [
+              client.utils.errorEmbed(
+                client,
+                message,
+                `Sorry ${message.author.username}, but you can only say a number one at a time!` +
+                  "\n" +
+                  (client.conf.Counting.Restart_On_Incorrect_Number &&
+                  current !== 1
+                    ? "The countdown has been reset back to 1!"
+                    : ""),
+                "Orange"
+              ),
+            ],
+          })
+          .then((msg) => setTimeout(() => msg.delete(), 7000));
+      }
+
+      if (client.conf.Counting.React.Enabled == true)
+        message.react(client.conf.Counting.React.Reaction);
+      await db.add(`countingCurrent_${message.guild.id}`, 1);
+      await db.set(`countingLast_${message.guild.id}`, `${message.author.id}`);
+    }
+  }
+
   const rndmMessageChance = Math.floor(Math.random() * 1235);
   const lastAutoMsg = await db.get(`lastAutoMsg_${message.guild.id}`);
   if (!lastAutoMsg || 240000 - (Date.now() - lastAutoMsg) <= 0) {
@@ -455,6 +510,25 @@ module.exports = async (client, message) => {
     }
   }
 
+  if (
+    message.mentions.users.first() &&
+    client.afk.has(message.mentions.users.first().id)
+  ) {
+    const user = message.mentions.users.first();
+
+    const embedAfk = client.embedBuilder(
+      client,
+      "",
+      `${user.username} is currently afk`,
+      `**Reason:** ${client.afk.get(user.id).message}, went AFK ${ms(
+        Date.now() - client.afk.get(user.id).time,
+        { long: true }
+      )} ago`
+    );
+
+    message.channel.send({ embeds: [embedAfk] });
+  }
+
   if (client.afk.has(message.author.id)) {
     message.channel
       .send(
@@ -478,7 +552,7 @@ module.exports = async (client, message) => {
   const prefixRegex = new RegExp(
     `^(${
       client.conf.Settings.Mention_Prefix ? `<@!?${client.user.id}>|` : ""
-    }${escapeRegex(message.px)})\\s*`
+    }${escapeRegex(client.conf.Settings.Prefix)})\\s*`
   );
 
   if (!prefixRegex.test(message.content)) return;

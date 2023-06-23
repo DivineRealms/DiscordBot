@@ -101,7 +101,7 @@ module.exports.run = async (client, message, args) => {
           })
           .addFields({
             name: "Tips:",
-            value: `\`1️⃣\` Select a command category using the paginator below.\n\`2️⃣\` Use **\`${message.px}help commandName\`** to get the command's usage.`,
+            value: `\`1️⃣\` Select a command category using the paginator below.\n\`2️⃣\` Use **\`${client.conf.Settings.Prefix}help commandName\`** to get the command's usage.`,
             inline: false,
           }),
       });
@@ -147,7 +147,7 @@ module.exports.run = async (client, message, args) => {
 <:ArrowRightGray:813815804768026705>Aliases: **${
               command.aliases.map((s) => `\`${s}\``).join(", ") || "none"
             }**
-<:ArrowRightGray:813815804768026705>Usage: **\`${message.px}${
+<:ArrowRightGray:813815804768026705>Usage: **\`${client.conf.Settings.Prefix}${
               command.usage
             }\`**`,
             "#7bc2cc"

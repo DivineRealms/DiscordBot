@@ -39,7 +39,7 @@ module.exports.run = async (client, message, args) => {
   let embed = client.utils.errorEmbed(
     client,
     message,
-    `Invalid arguments, see ${message.px}help give-role.`
+    `Invalid arguments, see ${client.conf.Settings.Prefix}help give-role.`
   );
 
   if (!member) return message.channel.send({ embeds: [embed] });

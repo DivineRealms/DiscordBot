@@ -14,7 +14,7 @@ module.exports = {
   options: [
     {
       name: "user",
-      description: "User whoes rank to see",
+      description: "User whose rank to see",
       type: ApplicationCommandOptionType.User,
       required: false,
     },

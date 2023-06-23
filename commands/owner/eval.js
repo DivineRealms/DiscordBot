@@ -58,15 +58,36 @@ module.exports.run = async (client, message, args) => {
       })
       .addFields({ name: "📥︲Input:", value: `\`\`\`js\n${code}\`\`\`` });
 
-    if (cleaned.length >= 1024) {
-      embed.addFields(
-        "📤︲Output:",
-        `\`\`\`xl\nOutput too long.\`\`\``
-      );
-    } else embed.addFields({ name: "📤︲Output", value: `\`\`\`js\n${cleaned}\`\`\`` });
+    if (cleaned.length >= 990) {
+      const response = await fetch("https://hastebin.com/documents", {
+        method: "POST",
+        body: cleaned,
+        headers: { 
+          "Authorization": `Bearer ${client.conf.Settings.Paste_Key}`,
+          "Content-Type": "application/json" 
+        },
+      }).catch((err) => console.log(err));
+
+      const json = await response.json();
+
+      if(json.key) {
+        embed.addFields({
+          name: "📤︲Output:",
+          value: `\`\`\`xl\nhttps://hastebin.com/share/${json.key}\`\`\``,
+        });
+      } else {
+        embed.addFields({
+          name: "📤︲Output:",
+          value: `\`\`\`xl\Output is too long. To be able to see long output, add 'Paste_Key' in the Config.\`\`\``,
+        });
+      }
+    } else {
+      embed.addFields({ name: "📤︲Output", value: `\`\`\`js\n${cleaned}\`\`\`` });
+    }
 
     message.channel.send({ embeds: [embed] });
   } catch (err) {
+    console.log(err);
     message.channel.send({
       embeds: [
         client.utils
@@ -133,16 +154,35 @@ module.exports.slashRun = async (client, interaction) => {
             }\`\`\``,
           });
 
-        if (cleaned.length >= 1024) {
-          embed.addFields({
-            name: "📤︲Output:",
-            value: `\`\`\`xl\nOutput too long.\`\`\``,
-          });
-        } else
+        if (cleaned.length >= 990) {
+          const response = await fetch("https://hastebin.com/documents", {
+            method: "POST",
+            body: cleaned,
+            headers: { 
+              "Authorization": `Bearer ${client.conf.Settings.Paste_Key}`,
+              "Content-Type": "application/json" 
+            },
+          }).catch((err) => console.log(err));
+    
+          const json = await response.json();
+
+          if(json.key) {
+            embed.addFields({
+              name: "📤︲Output:",
+              value: `\`\`\`xl\nhttps://hastebin.com/share/${json.key}\`\`\``,
+            });
+          } else {
+            embed.addFields({
+              name: "📤︲Output:",
+              value: `\`\`\`xl\Output is too long. To be able to see long output, add 'Paste_Key' in the Config.\`\`\``,
+            });
+          }
+        } else {
           embed.addFields({
             name: "📤︲Output",
             value: `\`\`\`js\n${cleaned}\`\`\``,
           });
+        }
 
         if (ephemeral) md.reply({ embeds: [embed], ephemeral: true });
         else md.reply({ embeds: [embed] });
@@ -182,8 +222,10 @@ const clean = async (client, text) => {
   
   if (typeof text !== "string")
     text = require("util").inspect(text, { depth: 1 });
-  
-  text = text.replaceAll(client.token, "[RETARDED]");
+
+  text = text.replaceAll(client.token, "[RETARDED]")
+    .replaceAll(client.conf.Settings.Vote_Key, "[REMOVED]")
+    .replaceAll(client.conf.Settings.Paste_Key, "[REMOVED]");
   
   return text;
 }

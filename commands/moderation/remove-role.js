@@ -41,7 +41,7 @@ module.exports.run = async (client, message, args) => {
         client.utils.errorEmbed(
           client,
           message,
-          `Invalid arguments, see ${message.px}help remove-role.`
+          `Invalid arguments, see ${client.conf.Settings.Prefix}help remove-role.`
         ),
       ],
     });

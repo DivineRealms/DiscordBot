@@ -1,4 +1,3 @@
-const moment = require("moment");
 const { ApplicationCommandOptionType } = require("discord.js");
 
 module.exports = {
@@ -13,7 +12,7 @@ module.exports = {
   options: [
     {
       name: "user",
-      description: "User whoes info to see",
+      description: "User whose info to see",
       type: ApplicationCommandOptionType.User,
       required: false,
     },

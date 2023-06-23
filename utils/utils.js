@@ -24,7 +24,7 @@ function commandsList(client, message, category) {
 
   commands.forEach(
     (c) =>
-      (content += `<:ArrowRightGray:813815804768026705>\`${message.px}${c.name}\`︲${c.description}\n`)
+      (content += `<:ArrowRightGray:813815804768026705>\`${client.conf.Settings.Prefix}${c.name}\`︲${c.description}\n`)
   );
 
   return content;

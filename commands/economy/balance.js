@@ -15,7 +15,7 @@ module.exports = {
     {
       name: "user",
       type: ApplicationCommandOptionType.User,
-      description: "User whoes balance to see",
+      description: "User whose balance to see",
       required: false,
     },
   ],

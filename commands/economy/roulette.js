@@ -52,7 +52,7 @@ module.exports.run = async (client, message, args) => {
         client.utils.errorEmbed(
           client,
           message,
-          `Invalid usage; see ${message.px}help roulette for correct usage.`
+          `Invalid usage; see ${client.conf.Settings.Prefix}help roulette for correct usage.`
         ),
       ],
     });

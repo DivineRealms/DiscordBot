@@ -135,6 +135,7 @@ Automod:
   Moderators:
     - ""
 
+  # Role(s) to give upon joining.
   Autorole: ""
 
 Automation:

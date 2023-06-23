@@ -17,7 +17,7 @@ module.exports.run = async (client, message, args) => {
 
   let format = `\`[ID].\` **[NAME]**︲$[PRICE]\n<:ArrowRightGray:813815804768026705>[DESCRIPTION]`,
     shopArray = [
-      `<:ArrowRightGray:813815804768026705>Command: **\`${message.px}buy [id]\`**.\n`,
+      `<:ArrowRightGray:813815804768026705>Command: **\`${client.conf.Settings.Prefix}buy [id]\`**.\n`,
     ];
 
   for (let i = 0; i < shop.length; i++) {

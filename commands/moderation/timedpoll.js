@@ -23,7 +23,7 @@ module.exports.run = async (client, message, args, cmd) => {
 
   if (!options[1])
     return message.channel.send(
-      `To create a poll, do \`${message.px}timedpoll <time> <question> | op1 | op2 | etc\`\nMinimum of 2 options are required`
+      `To create a poll, do \`${client.conf.Settings.Prefix}timedpoll <time> <question> | op1 | op2 | etc\`\nMinimum of 2 options are required`
     );
   if ([null, Infinity].includes(time))
     return message.channel.send(
