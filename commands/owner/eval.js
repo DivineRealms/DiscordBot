@@ -78,7 +78,7 @@ module.exports.run = async (client, message, args) => {
       } else {
         embed.addFields({
           name: "📤︲Output:",
-          value: `\`\`\`xl\Output is too long. To be able to see long output, add 'Paste_Key' in the Config.\`\`\``,
+          value: `\`\`\`xl\nOutput is too long. To be able to see long output, add 'Paste_Key' in the Config.\`\`\``,
         });
       }
     } else {
@@ -174,7 +174,7 @@ module.exports.slashRun = async (client, interaction) => {
           } else {
             embed.addFields({
               name: "📤︲Output:",
-              value: `\`\`\`xl\Output is too long. To be able to see long output, add 'Paste_Key' in the Config.\`\`\``,
+              value: `\`\`\`xl\nOutput is too long. To be able to see long output, add 'Paste_Key' in the Config.\`\`\``,
             });
           }
         } else {
