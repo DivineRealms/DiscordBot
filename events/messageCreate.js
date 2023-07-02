@@ -302,7 +302,7 @@ module.exports = async (client, message) => {
           iconURL: "https://i.imgur.com/nIf6zc3.png",
         })
         .setColor("#9b0415");
-    else if (league.matches("afcon"))
+    else if (league.includes("afcon"))
       matchdayEmbed
         .setAuthor({
           name: "AFCON",
