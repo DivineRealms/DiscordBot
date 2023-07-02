@@ -186,6 +186,11 @@ module.exports.slashRun = async (client, interaction) => {
           name: title,
           iconURL: `https://i.imgur.com/nIf6zc3.png`,
         });
+      else if (league == "afcon")
+        embed.setColor("#018727").setAuthor({
+          name: title,
+          iconURL: "https://cdn.discordapp.com/attachments/967503959524773898/1120023844212711534/latest.png",
+        });
 
       if (scorers.length >= 6) {
         embed.addFields([

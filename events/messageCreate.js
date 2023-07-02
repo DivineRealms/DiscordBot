@@ -302,6 +302,13 @@ module.exports = async (client, message) => {
           iconURL: "https://i.imgur.com/nIf6zc3.png",
         })
         .setColor("#9b0415");
+    else if (league.matches("afcon"))
+      matchdayEmbed
+        .setAuthor({
+          name: "AFCON",
+          iconURL: "https://cdn.discordapp.com/attachments/967503959524773898/1120023844212711534/latest.png",
+        })
+        .setColor("#018727");
 
     const splitLine = contentSplit[1].split("---");
     if (
