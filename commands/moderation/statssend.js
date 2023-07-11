@@ -47,6 +47,10 @@ module.exports = {
           name: "World Cup",
           value: "worldcup",
         },
+        {
+          name: "AFCON",
+          value: "afcon",
+        },
       ],
       required: true,
     },
