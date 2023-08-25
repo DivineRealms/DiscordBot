@@ -51,6 +51,10 @@ module.exports = {
           name: "AFCON",
           value: "afcon",
         },
+        {
+          name: "Serverliga",
+          value: "serverliga",
+        },
       ],
       required: true,
     },
@@ -169,6 +173,11 @@ module.exports.slashRun = async (client, interaction) => {
         embed.setColor("#096feb").setAuthor({
           name: title,
           iconURL: `https://i.imgur.com/JAJ18E5.png?1`,
+        });
+      else if (league == "serverliga")
+        embed.setColor("#000").setAuthor({
+          name: title,
+          iconURL: `https://cdn.upload.systems/uploads/F2IykbBI.png`,
         });
       else if (league == "ssl")
         embed.setColor("#4295fb").setAuthor({
