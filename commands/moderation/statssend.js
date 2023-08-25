@@ -175,7 +175,7 @@ module.exports.slashRun = async (client, interaction) => {
           iconURL: `https://i.imgur.com/JAJ18E5.png?1`,
         });
       else if (league == "serverliga")
-        embed.setColor("#000").setAuthor({
+        embed.setColor("#000000").setAuthor({
           name: title,
           iconURL: `https://cdn.upload.systems/uploads/F2IykbBI.png`,
         });

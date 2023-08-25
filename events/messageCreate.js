@@ -277,7 +277,7 @@ module.exports = async (client, message) => {
           name: "Serverliga",
           iconURL: "https://cdn.upload.systems/uploads/F2IykbBI.png",
         })
-        .setColor("#000");
+        .setColor("#000000");
     else if (league.includes("svb"))
       matchdayEmbed
         .setAuthor({
