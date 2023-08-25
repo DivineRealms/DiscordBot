@@ -271,6 +271,13 @@ module.exports = async (client, message) => {
           url: "https://challenge.place/c/62aa8b995f6adfd26e923544/stage/6311f0d27f11701814dda779",
         })
         .setColor("#00a100");
+    else if (league.includes("serverliga"))
+      matchdayEmbed
+        .setAuthor({
+          name: "Serverliga",
+          iconURL: "https://cdn.upload.systems/uploads/F2IykbBI.png",
+        })
+        .setColor("#000");
     else if (league.includes("svb"))
       matchdayEmbed
         .setAuthor({
@@ -287,13 +294,6 @@ module.exports = async (client, message) => {
           url: "https://challenge.place/c/62aa8b995f6adfd26e923544/stage/643ed50b4087ca2d422619cc",
         })
         .setColor("#4295fb");
-    else if (league.includes("serverliga"))
-      matchdayEmbed
-        .setAuthor({
-          name: "Serverliga",
-          iconURL: "https://cdn.upload.systems/uploads/F2IykbBI.png",
-        })
-        .setColor("#000");
     else if (league.includes("fcfacup"))
       matchdayEmbed
         .setAuthor({
