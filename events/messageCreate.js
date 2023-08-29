@@ -515,10 +515,7 @@ module.exports = async (client, message) => {
             embeds: [client.embedBuilder(client, message, "", `${resp}`)],
           })
           .then((msg) =>
-            setTimeout(() => {
-              message.delete();
-              msg.delete();
-            }, 60 * 1000)
+            setTimeout(() => msg.delete(), 60 * 1000)
           );
       }
     }
