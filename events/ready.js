@@ -58,7 +58,7 @@ module.exports = async (client) => {
       );
 
     let playerCount = await fetch(
-      `https://api.mcsrvstat.us/2/${client.conf.Settings.Server_IP}`
+      `https://api.mcsrvstat.us/3/${client.conf.Settings.Server_IP}`
     ).then(async (res) => await res.json());
 
     if (settings.Minecraft_Count.Enabled) {
