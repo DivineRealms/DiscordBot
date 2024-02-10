@@ -85,6 +85,7 @@ Settings:
   Announcement_Channel: ""
   Matchday_Channel: ""
   Newcommers_Channel: ""
+  Server_Status_Topic_Channel: ""
 
   # Settings regarding Football
   Football:

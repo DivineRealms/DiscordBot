@@ -36,7 +36,7 @@ module.exports = async function paginate(
   color
 ) {
   const filter = (interaction) => {
-    return interaction.user.id == message.author.id;
+    return interaction.user.id == message.member.id;
   };
 
   let maxPage = Math.ceil(array.length / perPage);

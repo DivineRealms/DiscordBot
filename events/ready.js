@@ -50,6 +50,10 @@ module.exports = async (client) => {
       settings.Channel_Count.Channel
     );
 
+    const topicStats = client.channels.cache.get(
+      client.conf.Settings.Server_Status_Topic_Channel
+    );
+
     const mcCount = client.channels.cache.get(settings.Minecraft_Count.Channel);
 
     if (settings.Member_Count.Enabled)
@@ -57,17 +61,20 @@ module.exports = async (client) => {
         settings.Member_Count.Message.replace("{count}", guild.memberCount)
       );
 
-    let playerCount = await fetch(
+    let serverStatus = await fetch(
       `https://api.mcsrvstat.us/3/${client.conf.Settings.Server_IP}`
     ).then(async (res) => await res.json());
 
+    if(topicStats)
+      topicStats.setTopic(serverStatus.online ? `${serverStatus.players.online}/${serverStatus.players.max} igrača online | Server online` : "Server je offline");
+
     if (settings.Minecraft_Count.Enabled) {
-      if (playerCount.online)
+      if (serverStatus.online)
         mcCount.setName(
           settings.Minecraft_Count.Message.replace(
             "{count}",
-            playerCount.players.online
-          ).replace("{countMax}", playerCount.players.max)
+            serverStatus.players.online
+          ).replace("{countMax}", serverStatus.players.max)
         );
       else
         mcCount.setName(
@@ -236,6 +243,6 @@ module.exports = async (client) => {
 
   while (guild) {
     await counter();
-    await new Promise((r) => setTimeout(r, 310000));
+    await new Promise((r) => setTimeout(r, 360000));
   }
 };
