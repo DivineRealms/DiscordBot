@@ -80,9 +80,6 @@ module.exports = async (client) => {
         mcCount.setName(
           settings.Minecraft_Count.Message.replace("{count}", "Offline")
         );
-
-      let auditLogCh = client.channels.cache.get("512277268597309440");
-      if (auditLogCh) auditLogCh.send({ content: `> Debug nidza 'Igraju': ${serverStatus.players.online} || on: ${serverStatus.online}` });
     }
 
 
