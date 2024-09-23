@@ -323,6 +323,13 @@ module.exports = async (client, message) => {
           iconURL: "https://cdn.discordapp.com/attachments/1076187588303536169/1234801297299865620/Studio-Project_-_2024-04-04T131049.307.webp?ex=66320dd2&is=6630bc52&hm=55e4d199498931a54bae66194d389fef9f97f42a9e94d18641820a3ec286885e&",
         })
         .setColor("#bd9b00");
+    else if (league.includes("premierklasa"))
+      matchdayEmbed
+        .setAuthor({
+          name: "PremierKlasa",
+          iconURL: "https://i.imgur.com/6Vz6QLS.png",
+        })
+        .setColor("#f75050");
 
     const splitLine = contentSplit[1].split("---");
     if (
