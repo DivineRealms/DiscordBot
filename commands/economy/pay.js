@@ -42,22 +42,14 @@ module.exports.run = async (client, message, args) => {
   if (isNaN(args[1]) || args[1] < 1 || args[1].includes("-"))
     return message.channel.send({
       embeds: [
-        client.utils.errorEmbed(
-          client,
-          message,
-          "You have entered an invalid amount."
-        ),
+        client.utils.errorEmbed(client, message, "You have entered an invalid amount."),
       ],
     });
 
   if (bal < args[1])
     return message.channel.send({
       embeds: [
-        client.utils.errorEmbed(
-          client,
-          message,
-          "You don't have enough money."
-        ),
+        client.utils.errorEmbed(client, message, "You don't have enough money."),
       ],
     });
 
@@ -69,10 +61,7 @@ module.exports.run = async (client, message, args) => {
 
   message.channel.send({
     embeds: [
-      client.embedBuilder(client, message, "", "", "#3db39e").setAuthor({
-        name: `You have paid $${args[1]} to ${user.username}.`,
-        iconURL: `https://cdn.upload.systems/uploads/6KOGFYJM.png`,
-      }),
+      client.embedBuilder(client, message, `You have paid $${args[1]} to ${user.username}.`, "", "#3db39e"),
     ],
   });
 };
@@ -85,11 +74,7 @@ module.exports.slashRun = async (client, interaction) => {
   if (isNaN(amount) || amount < 1 || amount.toString().includes("-"))
     return interaction.reply({
       embeds: [
-        client.utils.errorEmbed(
-          client,
-          interaction,
-          "You have entered an invalid amount."
-        ),
+        client.utils.errorEmbed(client, interaction, "You have entered an invalid amount."),
       ],
       ephemeral: true,
     });
@@ -97,11 +82,7 @@ module.exports.slashRun = async (client, interaction) => {
   if (bal < amount)
     return interaction.reply({
       embeds: [
-        client.utils.errorEmbed(
-          client,
-          interaction,
-          "You don't have enough money."
-        ),
+        client.utils.errorEmbed(client, interaction, "You don't have enough money."),
       ],
       ephemeral: true,
     });
@@ -114,10 +95,7 @@ module.exports.slashRun = async (client, interaction) => {
 
   interaction.reply({
     embeds: [
-      client.embedBuilder(client, interaction, "", "", "#3db39e").setAuthor({
-        name: `You have paid $${amount} to ${user.username}.`,
-        iconURL: `https://cdn.upload.systems/uploads/6KOGFYJM.png`,
-      }),
+      client.embedBuilder(client, interaction, `You have paid $${amount} to ${user.username}.`, "", "#3db39e"),
     ],
   });
 };

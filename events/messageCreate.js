@@ -25,12 +25,7 @@ module.exports = async (client, message) => {
       await db.set(`lastBump_${client.conf.Settings.Guild_ID}`, dbumper);
 
       setTimeout(async () => {
-        let bumpAgain = client
-          .embedBuilder(client, message, "", "", "#1cc0f9")
-          .setAuthor({
-            name: "Server can be bumped again, use /bump",
-            iconURL: `https://cdn.upload.systems/uploads/pVry3Mav.png`,
-          });
+        let bumpAgain = client.embedBuilder(client, message, "Server can be bumped again, use /bump", "", "#1cc0f9");
 
         if (client.conf.Logging.Enabled)
           bumpChannel.send({
@@ -42,12 +37,7 @@ module.exports = async (client, message) => {
         await db.delete(`lastBump_${client.conf.Settings.Guild_ID}`);
       }, timeout);
 
-      const bump = client
-        .embedBuilder(client, message, "", "", "#1cc0f9")
-        .setAuthor({
-          name: "Thank you for bumping! You've received $1000 as a reward.",
-          iconURL: `https://cdn.upload.systems/uploads/pVry3Mav.png`,
-        });
+      const bump = client.embedBuilder(client, message, "Thank you for bumping! You've received $1000 as a reward.", "", "#1cc0f9");
 
       await db.add(`bumps_${message.guild.id}_${dbumper}`, 1);
       await db.add(`money_${message.guild.id}_${dbumper}`, 1000);
@@ -85,11 +75,7 @@ module.exports = async (client, message) => {
         return message.channel
           .send({
             embeds: [
-              client.utils.errorEmbed(
-                client,
-                message,
-                `You need to add at least one match`
-              ),
+              client.utils.errorEmbed(client, message, `You need to add at least one match`),
             ],
           })
           .then((msg) =>
@@ -103,13 +89,9 @@ module.exports = async (client, message) => {
         .embedBuilder(
           client,
           message,
-          "",
+          najavaTitle,
           `${client.utils.timestampFormat(najavaTime)}`
         )
-        .setAuthor({
-          name: najavaTitle,
-          iconURL: `https://cdn.upload.systems/uploads/sYDS6yZI.png`,
-        })
         .setFooter({
           text: `Announcement by ${message.author.username}`,
           iconURL: message.author.displayAvatarURL({
@@ -146,11 +128,7 @@ module.exports = async (client, message) => {
         return message.channel
           .send({
             embeds: [
-              client.utils.errorEmbed(
-                client,
-                message,
-                `You didn't provide all arguments (Type/Title/Description)`
-              ),
+              client.utils.errorEmbed(client, message, `You didn't provide all arguments (Type/Title/Description)`),
             ],
           })
           .then((msg) =>
@@ -167,7 +145,7 @@ module.exports = async (client, message) => {
       let msgFields = contentSplit[3];
 
       let embed = client
-        .embedBuilder(client, message, "", description)
+        .embedBuilder(client, message, title, description)
         .setFooter({
           text: `Announcement by ${message.author.username}`,
           iconURL: message.author.displayAvatarURL({
@@ -193,11 +171,7 @@ module.exports = async (client, message) => {
             return message.channel
               .send({
                 embeds: [
-                  client.utils.errorEmbed(
-                    client,
-                    message,
-                    "You need to provide both a title and a description."
-                  ),
+                  client.utils.errorEmbed(client, message, "You need to provide both a title and a description."),
                 ],
               })
               .then((msg) =>
@@ -211,25 +185,10 @@ module.exports = async (client, message) => {
       }
 
       if (upAliases.includes(type))
-        embed.setColor("#7edd8a").setAuthor({
-          name: title,
-          iconURL: `https://cdn.upload.systems/uploads/aKT2mjr0.png`,
-        });
+        embed.setColor("#7edd8a");
       else if (mnAliases.includes(type))
-        embed.setColor("#ffae63").setAuthor({
-          name: title,
-          iconURL: `https://cdn.upload.systems/uploads/vRfWnVT5.png`,
-        });
+        embed.setColor("#ffae63");
       else if (suAliases.includes(type))
-        embed.setAuthor({
-          name: title,
-          iconURL: `https://cdn.upload.systems/uploads/KSTCcy4V.png`,
-        });
-      else
-        embed.setAuthor({
-          name: title,
-          iconURL: `https://cdn.upload.systems/uploads/sYDS6yZI.png`,
-        });
 
       message.channel
         .send({ embeds: [embed] })
@@ -241,18 +200,13 @@ module.exports = async (client, message) => {
     let contentSplit = message.content.split("```");
     if (!contentSplit) return;
     const matchdayEmbed = client
-      .embedBuilder(client, message, "", "")
-      .setTitle(contentSplit[0].split("\n")[1]);
+      .embedBuilder(client, message, ontentSplit[0].split("\n")[1], "");
 
     if (contentSplit.length < 3)
       return message.channel
         .send({
           embeds: [
-            client.utils.errorEmbed(
-              client,
-              message,
-              `First two lines must be League & Round, while Matchday have to be in codeblock.`
-            ),
+            client.utils.errorEmbed(client, message, `First two lines must be League & Round, while Matchday have to be in codeblock.`),
           ],
         })
         .then((msg) =>
@@ -340,11 +294,7 @@ module.exports = async (client, message) => {
       return message.channel
         .send({
           embeds: [
-            client.utils.errorEmbed(
-              client,
-              message,
-              `You must provide Field Title & Referee.`
-            ),
+            client.utils.errorEmbed(client, message, `You must provide Field Title & Referee.`),
           ],
         })
         .then((msg) =>

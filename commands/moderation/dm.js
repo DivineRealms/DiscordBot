@@ -32,11 +32,7 @@ module.exports.run = async (client, message, args) => {
   if (!user)
     return message.channel.send({
       embeds: [
-        client.utils.errorEmbed(
-          client,
-          message,
-          "You have provided an invalid user."
-        ),
+        client.utils.errorEmbed(client, message, "You have provided an invalid user."),
       ],
     });
 
@@ -45,11 +41,7 @@ module.exports.run = async (client, message, args) => {
   if (!text)
     return message.channel.send({
       embeds: [
-        client.utils.errorEmbed(
-          client,
-          message,
-          "You need to provide text to send."
-        ),
+        client.utils.errorEmbed(client, message, "You need to provide text to send."),
       ],
     });
 
@@ -63,10 +55,7 @@ module.exports.run = async (client, message, args) => {
 
   message.channel.send({
     embeds: [
-      client.embedBuilder(client, message, "", "", "#3db39e").setAuthor({
-        name: `Successfully sent a DM to ${user.username}.`,
-        iconURL: `https://cdn.upload.systems/uploads/6KOGFYJM.png`,
-      }),
+      client.embedBuilder(client, message, `Successfully sent a DM to ${user.username}.`, "", "#3db39e"),
     ],
   });
 };
@@ -86,10 +75,7 @@ module.exports.slashRun = async (client, interaction) => {
 
   interaction.reply({
     embeds: [
-      client.embedBuilder(client, interaction, "", "", "#3db39e").setAuthor({
-        name: `Successfully sent a DM to ${user.username}.`,
-        iconURL: `https://cdn.upload.systems/uploads/6KOGFYJM.png`,
-      }),
+      client.embedBuilder(client, interaction, `Successfully sent a DM to ${user.username}.`, "", "#3db39e"),
     ],
   });
 };

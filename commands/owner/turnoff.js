@@ -15,10 +15,7 @@ module.exports.slashRun = async (client, interaction) => {
   if (!client.conf.Settings.Owner_Discord_ID.includes(interaction.user.id))
     return interaction.reply({
       embeds: [
-        client.utils.errorEmbed(
-          client,
-          message,
-          "Only Developers can use this command."
+        client.utils.errorEmbed(client, message, "Only Developers can use this command."
         ),
       ],
       ephemeral: true,
@@ -27,10 +24,7 @@ module.exports.slashRun = async (client, interaction) => {
   interaction
     .reply({
       embeds: [
-        client.embedBuilder(client, message, "", "", "#3db39e").setAuthor({
-          name: `${interaction.user.id} has shut down the bot.`,
-          iconURL: `https://cdn.upload.systems/uploads/6KOGFYJM.png`,
-        }),
+        client.embedBuilder(client, message, `${interaction.user.id} has shut down the bot.`, "", "#3db39e"),
       ],
     })
     .then(() => client.destroy());

@@ -23,15 +23,11 @@ module.exports.run = async (client, message, args) => {
     .embedBuilder(
       client,
       message,
-      "",
+      "Create a Ticket",
       `<:ArrowRightGray:813815804768026705>Please react with the emoji to create a ticket.
 <:ArrowRightGray:813815804768026705>A staff member will be with you shortly.`,
       "#b3e59f"
-    )
-    .setAuthor({
-      name: `Create a Ticket`,
-      iconURL: `https://cdn.upload.systems/uploads/4mFVRE7f.png`,
-    });
+    );
 
   const msg = await message.channel.send({ embeds: [embed] });
   await msg.react("✉️").catch(() => msg.react("✉️"));
@@ -48,11 +44,7 @@ module.exports.slashRun = async (client, interaction) => {
   if (!settings.Enabled)
     return message.channel.send({
       embeds: [
-        client.utils.errorEmbed(
-          client,
-          interaction,
-          "Tickets are not enabled."
-        ),
+        client.utils.errorEmbed(client, interaction, "Tickets are not enabled."),
       ],
       ephemeral: true,
     });
@@ -61,21 +53,13 @@ module.exports.slashRun = async (client, interaction) => {
     .embedBuilder(
       client,
       interaction,
-      "",
+      "Create a Ticket",
       `<:ArrowRightGray:813815804768026705>Please react with the emoji to create a ticket.
 <:ArrowRightGray:813815804768026705>A staff member will be with you shortly.`,
       "#b3e59f"
-    )
-    .setAuthor({
-      name: `Create a Ticket`,
-      iconURL: `https://cdn.upload.systems/uploads/4mFVRE7f.png`,
-    });
+    );
 
-  const success = client.embedBuilder(
-    client,
-    interaction,
-    "Panel created successfully."
-  );
+  const success = client.embedBuilder(client, interaction, "Panel created successfully.");
 
   interaction.reply({ embeds: [success], ephemeral: true });
   const msg = await interaction.channel.send({ embeds: [embed] });

@@ -44,7 +44,7 @@ module.exports.run = async (client, message, args) => {
         .embedBuilder(
           client,
           message,
-          "",
+          user.username + "'s Rank",
           `<:ArrowRightGray:813815804768026705>Rank: **${rank}.**
 <:ArrowRightGray:813815804768026705>Level: **${level}**
 <:ArrowRightGray:813815804768026705>XP: **${xp}/${xpNeeded}**`
@@ -52,11 +52,7 @@ module.exports.run = async (client, message, args) => {
             .replace("2.", "🥈")
             .replace("3.", "🥉"),
           "#60b8ff"
-        )
-        .setAuthor({
-          name: user.username + "'s Rank",
-          iconURL: `https://cdn.upload.systems/uploads/6uDK0XAN.png`,
-        }),
+        ),
     ],
   });
 };
@@ -81,7 +77,7 @@ module.exports.slashRun = async (client, interaction) => {
         .embedBuilder(
           client,
           interaction,
-          "",
+          user.username + "'s Rank",
           `<:ArrowRightGray:813815804768026705>Rank: **${rank}.**
 <:ArrowRightGray:813815804768026705>Level: **${level}**
 <:ArrowRightGray:813815804768026705>XP: **${xp}/${xpNeeded}**`
@@ -89,11 +85,7 @@ module.exports.slashRun = async (client, interaction) => {
             .replace("2.", "🥈")
             .replace("3.", "🥉"),
           "#60b8ff"
-        )
-        .setAuthor({
-          name: user.username + "'s Rank",
-          iconURL: `https://cdn.upload.systems/uploads/6uDK0XAN.png`,
-        }),
+        ),
     ],
   });
 };

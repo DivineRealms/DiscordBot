@@ -35,11 +35,7 @@ module.exports.run = async (client, message, args) => {
   if (!bal || bal == 0)
     return message.channel.send({
       embeds: [
-        client.utils.errorEmbed(
-          client,
-          message,
-          "You don't have enough money."
-        ),
+        client.utils.errorEmbed(client, message, "You don't have enough money."),
       ],
     });
 
@@ -49,10 +45,7 @@ module.exports.run = async (client, message, args) => {
     if (chance > 70) {
       message.channel.send({
         embeds: [
-          client.embedBuilder(client, message, "", "", "#3db39e").setAuthor({
-            name: `You won $${money}!`,
-            iconURL: `https://cdn.upload.systems/uploads/HJGA3pxp.png`,
-          }),
+          client.embedBuilder(client, message, `You won $${money}!`, "", "#3db39e"),
         ],
       });
 
@@ -60,10 +53,7 @@ module.exports.run = async (client, message, args) => {
     } else if (chance < 70) {
       message.channel.send({
         embeds: [
-          client.embedBuilder(client, message, "", "", "Red").setAuthor({
-            name: `You lost $${money}.`,
-            iconURL: `https://cdn.upload.systems/uploads/HJGA3pxp.png`,
-          }),
+          client.embedBuilder(client, message, `You lost $${money}.`, "", "Red"),
         ],
       });
 
@@ -76,22 +66,14 @@ module.exports.run = async (client, message, args) => {
   if (args[0] > bal)
     return message.channel.send({
       embeds: [
-        client.utils.errorEmbed(
-          client,
-          message,
-          "You don't have that much money."
-        ),
+        client.utils.errorEmbed(client, message, "You don't have that much money."),
       ],
     });
 
   if (args[0] < 200)
     return message.channel.send({
       embeds: [
-        client.utils.errorEmbed(
-          client,
-          message,
-          "You cannot bet less than $200."
-        ),
+        client.utils.errorEmbed(client, message, "You cannot bet less than $200."),
       ],
     });
 
@@ -100,10 +82,7 @@ module.exports.run = async (client, message, args) => {
   if (chance > 70) {
     message.channel.send({
       embeds: [
-        client.embedBuilder(client, message, "", "", "#3db39e").setAuthor({
-          name: `You won $${args[0]}!`,
-          iconURL: `https://cdn.upload.systems/uploads/HJGA3pxp.png`,
-        }),
+        client.embedBuilder(client, message, `You won $${args[0]}!`, "", "#3db39e"),
       ],
     });
 
@@ -111,10 +90,7 @@ module.exports.run = async (client, message, args) => {
   } else if (chance < 70) {
     message.channel.send({
       embeds: [
-        client.embedBuilder(client, message, "", "", "Red").setAuthor({
-          name: `You lost ${args[0]}.`,
-          iconURL: `https://cdn.upload.systems/uploads/HJGA3pxp.png`,
-        }),
+        client.embedBuilder(client, message, `You lost ${args[0]}.`, "", "Red"),
       ],
     });
 
@@ -132,11 +108,7 @@ module.exports.slashRun = async (client, interaction) => {
   if (isNaN(amount) && amount != "all")
     return interaction.reply({
       embeds: [
-        client.utils.errorEmbed(
-          client,
-          interaction,
-          "Betting value not given."
-        ),
+        client.utils.errorEmbed(client, interaction, "Betting value not given."),
       ],
       ephemeral: true,
     });
@@ -144,11 +116,7 @@ module.exports.slashRun = async (client, interaction) => {
   if (!bal || bal == 0)
     return interaction.reply({
       embeds: [
-        client.utils.errorEmbed(
-          client,
-          interaction,
-          "You don't have enough money."
-        ),
+        client.utils.errorEmbed(client, interaction, "You don't have enough money."),
       ],
       ephemeral: true,
     });
@@ -159,32 +127,22 @@ module.exports.slashRun = async (client, interaction) => {
     if (chance > 70) {
       interaction.reply({
         embeds: [
-          client
-            .embedBuilder(client, interaction, "", "", "#3db39e")
-            .setAuthor({
-              name: `You won $${money}!`,
-              iconURL: `https://cdn.upload.systems/uploads/HJGA3pxp.png`,
-            }),
+          client.embedBuilder(client, interaction, `You won $${money}!`, "", "#3db39e"),
         ],
       });
 
       await db.add(
-        `money_${interaction.guild.id}_${interaction.user.id}`,
-        money
+        `money_${interaction.guild.id}_${interaction.user.id}`, money
       );
     } else if (chance < 70) {
       interaction.reply({
         embeds: [
-          client.embedBuilder(client, interaction, "", "", "Red").setAuthor({
-            name: `You lost $${money}.`,
-            iconURL: `https://cdn.upload.systems/uploads/HJGA3pxp.png`,
-          }),
+          client.embedBuilder(client, interaction, `You lost $${money}.`, "", "Red"),
         ],
       });
 
       await db.sub(
-        `money_${interaction.guild.id}_${interaction.user.id}`,
-        money
+        `money_${interaction.guild.id}_${interaction.user.id}`, money
       );
     }
 
@@ -194,11 +152,7 @@ module.exports.slashRun = async (client, interaction) => {
   if (amount > bal)
     return interaction.reply({
       embeds: [
-        client.utils.errorEmbed(
-          client,
-          interaction,
-          "You don't have that much money."
-        ),
+        client.utils.errorEmbed(client, interaction, "You don't have that much money."),
       ],
       ephemeral: true,
     });
@@ -206,11 +160,7 @@ module.exports.slashRun = async (client, interaction) => {
   if (amount < 200)
     return interaction.reply({
       embeds: [
-        client.utils.errorEmbed(
-          client,
-          interaction,
-          "You cannot bet less than $200."
-        ),
+        client.utils.errorEmbed(client, interaction, "You cannot bet less than $200."),
       ],
       ephemeral: true,
     });
@@ -220,10 +170,7 @@ module.exports.slashRun = async (client, interaction) => {
   if (chance > 70) {
     interaction.reply({
       embeds: [
-        client.embedBuilder(client, interaction, "", "", "#3db39e").setAuthor({
-          name: `You won $${amount}!`,
-          iconURL: `https://cdn.upload.systems/uploads/HJGA3pxp.png`,
-        }),
+        client.embedBuilder(client, interaction, `You won $${amount}!`, "", "#3db39e"),
       ],
     });
 
@@ -231,10 +178,7 @@ module.exports.slashRun = async (client, interaction) => {
   } else if (chance < 70) {
     interaction.reply({
       embeds: [
-        client.embedBuilder(client, interaction, "", "", "Red").setAuthor({
-          name: `You lost ${amount}.`,
-          iconURL: `https://cdn.upload.systems/uploads/HJGA3pxp.png`,
-        }),
+        client.embedBuilder(client, interaction, `You lost ${amount}.`, "", "Red"),
       ],
     });
 

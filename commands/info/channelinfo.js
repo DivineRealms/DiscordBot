@@ -27,11 +27,7 @@ module.exports.run = async (client, message, args) => {
   message.channel.send({
     embeds: [
       client
-        .embedBuilder(client, message, "", "", "#60b8ff")
-        .setAuthor({
-          name: `${channel.name} (${channel.id})`,
-          iconURL: `https://cdn.upload.systems/uploads/6uDK0XAN.png`,
-        })
+        .embedBuilder(client, message, `${channel.name} (${channel.id})`, "", "#60b8ff")
         .addFields([
           {
             name: "Information",
@@ -70,11 +66,7 @@ module.exports.slashRun = async (client, interaction) => {
   interaction.reply({
     embeds: [
       client
-        .embedBuilder(client, interaction, "", "", "#60b8ff")
-        .setAuthor({
-          name: `${channel.name} (${channel.id})`,
-          iconURL: `https://cdn.upload.systems/uploads/6uDK0XAN.png`,
-        })
+        .embedBuilder(client, interaction, `${channel.name} (${channel.id})`, "", "#60b8ff")
         .addFields([
           {
             name: "Information",

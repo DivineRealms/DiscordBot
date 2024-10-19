@@ -24,11 +24,7 @@ module.exports.run = async (client, message, args) => {
   if (!args[0])
     return message.channel.send({
       embeds: [
-        client.utils.errorEmbed(
-          client,
-          message,
-          "You need to provide a message."
-        ),
+        client.utils.errorEmbed(client, message, "You need to provide a message."),
       ],
     });
 
@@ -51,11 +47,7 @@ module.exports.run = async (client, message, args) => {
     message.channel.send({
       embeds: [
         client
-          .embedBuilder(client, message, "", "", "#ec3d93")
-          .setAuthor({
-            name: "Trump Tweet",
-            iconURL: `https://cdn.upload.systems/uploads/ZdKDK7Tx.png`,
-          })
+          .embedBuilder(client, message, "Trump Tweet", "", "#ec3d93")
           .setImage(img),
       ],
     });
@@ -80,11 +72,7 @@ module.exports.slashRun = async (client, interaction) => {
     interaction.reply({
       embeds: [
         client
-          .embedBuilder(client, interaction, "", "", "#ec3d93")
-          .setAuthor({
-            name: "Trump Tweet",
-            iconURL: `https://cdn.upload.systems/uploads/ZdKDK7Tx.png`,
-          })
+          .embedBuilder(client, interaction, "Trump Tweet", "", "#ec3d93")
           .setImage(img),
       ],
     });

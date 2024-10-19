@@ -8,11 +8,7 @@ const bump = (client) => {
     if (time && Date.now() > time) {
       let bumpChannel = client.channels.cache.get(client.conf.Logging.Bumps);
       let embed = client
-        .embedBuilder(client, null, "", "", "#1cc0f9")
-        .setAuthor({
-          name: "Server can be bumped again, use /bump",
-          iconURL: `https://cdn.upload.systems/uploads/pVry3Mav.png`,
-        });
+        .embedBuilder(client, null, "Server can be bumped again, use /bump", "", "#1cc0f9");
 
       await db.delete(`serverBump_${client.conf.Settings.Guild_ID}`);
       if (bumpChannel)

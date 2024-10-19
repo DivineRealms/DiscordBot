@@ -27,11 +27,7 @@ module.exports.run = async (client, message, args) => {
   if (!args[0] || (isNaN(args[0]) && args[0] !== "all"))
     return message.channel.send({
       embeds: [
-        client.utils.errorEmbed(
-          client,
-          message,
-          "You must provide an amount to deposit."
-        ),
+        client.utils.errorEmbed(client, message, "You must provide an amount to deposit."),
       ],
     });
 
@@ -39,20 +35,13 @@ module.exports.run = async (client, message, args) => {
     if (!bank || bank == 0)
       return message.channel.send({
         embeds: [
-          client.utils.errorEmbed(
-            client,
-            message,
-            "You don't have money to withdraw."
-          ),
+          client.utils.errorEmbed(client, message, "You don't have money to withdraw."),
         ],
       });
 
     message.channel.send({
       embeds: [
-        client.embedBuilder(client, message, "", "", "#3db39e").setAuthor({
-          name: `You have withdrawn $${bank} from the bank.`,
-          iconURL: `https://cdn.upload.systems/uploads/6KOGFYJM.png`,
-        }),
+        client.embedBuilder(client, message,  `You have withdrawn $${bank} from the bank.`, "", "#3db39e"),
       ],
     });
 
@@ -66,41 +55,28 @@ module.exports.run = async (client, message, args) => {
   if (args[0] > bank)
     return message.channel.send({
       embeds: [
-        client.utils.errorEmbed(
-          client,
-          message,
-          "You cannot withdraw that much."
-        ),
+        client.utils.errorEmbed(client, message, "You cannot withdraw that much."),
       ],
     });
 
   if (args[0] < 1)
     return message.channel.send({
       embeds: [
-        client.utils.errorEmbed(
-          client,
-          message,
-          "You cannot withdraw less than $1."
-        ),
+        client.utils.errorEmbed(client, message, "You cannot withdraw less than $1."),
       ],
     });
 
   message.channel.send({
     embeds: [
-      client.embedBuilder(client, message, "", "", "#3db39e").setAuthor({
-        name: `You have withdrawn $${Number(args[0])} from the bank.`,
-        iconURL: `https://cdn.upload.systems/uploads/6KOGFYJM.png`,
-      }),
+      client.embedBuilder(client, message, `You have withdrawn $${Number(args[0])} from the bank.`, "", "#3db39e"),
     ],
   });
 
   await db.add(
-    `money_${message.guild.id}_${message.author.id}`,
-    Number(args[0])
+    `money_${message.guild.id}_${message.author.id}`, Number(args[0])
   );
   await db.sub(
-    `bank_${message.guild.id}_${message.author.id}`,
-    Number(args[0])
+    `bank_${message.guild.id}_${message.author.id}`, Number(args[0])
   );
 };
 
@@ -113,11 +89,7 @@ module.exports.slashRun = async (client, interaction) => {
   if (isNaN(amount) && amount !== "all")
     return interaction.reply({
       embeds: [
-        client.utils.errorEmbed(
-          client,
-          interaction,
-          "You must provide an amount to deposit."
-        ),
+        client.utils.errorEmbed(client, interaction, "You must provide an amount to deposit."),
       ],
       ephemeral: true,
     });
@@ -126,42 +98,29 @@ module.exports.slashRun = async (client, interaction) => {
     if (!bank || bank == 0)
       return interaction.reply({
         embeds: [
-          client.utils.errorEmbed(
-            client,
-            interaction,
-            "You don't have money to withdraw."
-          ),
+          client.utils.errorEmbed(client, interaction, "You don't have money to withdraw."),
         ],
         ephemeral: true,
       });
 
     interaction.reply({
       embeds: [
-        client.embedBuilder(client, interaction, "", "", "#3db39e").setAuthor({
-          name: `You have withdrawn $${bank} from the bank.`,
-          iconURL: `https://cdn.upload.systems/uploads/6KOGFYJM.png`,
-        }),
+        client.embedBuilder(client, interaction, `You have withdrawn $${bank} from the bank.`, "", "#3db39e"),
       ],
     });
 
     await db.sub(
-      `bank_${interaction.guild.id}_${interaction.user.id}`,
-      Number(bank)
+      `bank_${interaction.guild.id}_${interaction.user.id}`, Number(bank)
     );
     await db.add(
-      `money_${interaction.guild.id}_${interaction.user.id}`,
-      Number(bank)
+      `money_${interaction.guild.id}_${interaction.user.id}`, Number(bank)
     );
     return;
   }
   if (amount > bank)
     return interaction.reply({
       embeds: [
-        client.utils.errorEmbed(
-          client,
-          interaction,
-          "You cannot withdraw that much."
-        ),
+        client.utils.errorEmbed(client, interaction, "You cannot withdraw that much."),
       ],
       ephemeral: true,
     });
@@ -169,30 +128,21 @@ module.exports.slashRun = async (client, interaction) => {
   if (amount < 1)
     return interaction.reply({
       embeds: [
-        client.utils.errorEmbed(
-          client,
-          interaction,
-          "You cannot withdraw less than $1."
-        ),
+        client.utils.errorEmbed(client, interaction, "You cannot withdraw less than $1."),
       ],
       ephemeral: true,
     });
 
   interaction.reply({
     embeds: [
-      client.embedBuilder(client, interaction, "", "", "#3db39e").setAuthor({
-        name: `You have withdrawn $${Number(amount)} from the bank.`,
-        iconURL: `https://cdn.upload.systems/uploads/6KOGFYJM.png`,
-      }),
+      client.embedBuilder(client, interaction, `You have withdrawn $${Number(amount)} from the bank.`, "", "#3db39e"),
     ],
   });
 
   await db.add(
-    `money_${interaction.guild.id}_${interaction.user.id}`,
-    Number(amount)
+    `money_${interaction.guild.id}_${interaction.user.id}`, Number(amount)
   );
   await db.sub(
-    `bank_${interaction.guild.id}_${interaction.user.id}`,
-    Number(amount)
+    `bank_${interaction.guild.id}_${interaction.user.id}`, Number(amount)
   );
 };

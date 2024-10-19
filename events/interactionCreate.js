@@ -32,11 +32,7 @@ module.exports = async (client, interaction) => {
     if (userPerms.length > 0)
       return interaction.reply({
         embeds: [
-          client.utils.errorEmbed(
-            client,
-            interaction,
-            `Insufficient permission.`
-          ),
+          client.utils.errorEmbed(client, interaction, `Insufficient permission.`),
         ],
         ephemeral: true,
       });
@@ -54,11 +50,7 @@ module.exports = async (client, interaction) => {
         let time = client.utils.formatTime(findCooldown.expiring - Date.now());
         return interaction.reply({
           embeds: [
-            client.utils.errorEmbed(
-              client,
-              interaction,
-              `You can use that command again in ${time}.`
-            ),
+            client.utils.errorEmbed(client, interaction, `You can use that command again in ${time}.`),
           ],
           ephemeral: true,
         });
@@ -105,12 +97,7 @@ module.exports = async (client, interaction) => {
         if (member.roles.cache.has(reactionRoleId.id)) {
           interaction.reply({
             embeds: [
-              client
-                .embedBuilder(client, interaction, "", "", "#3db39e")
-                .setAuthor({
-                  name: `No longer subscribed to ${reactionRole.emoji} ${reactionRole.label}.`,
-                  iconURL: `https://cdn.upload.systems/uploads/6KOGFYJM.png`,
-                }),
+              client.embedBuilder(client, interaction, `No longer subscribed to ${reactionRole.emoji} ${reactionRole.label}.`, "", "#3db39e"),
             ],
             ephemeral: true,
           });
@@ -118,12 +105,7 @@ module.exports = async (client, interaction) => {
         } else {
           interaction.reply({
             embeds: [
-              client
-                .embedBuilder(client, interaction, "", "", "#3db39e")
-                .setAuthor({
-                  name: `Subscribed to ${reactionRole.emoji} ${reactionRole.label}.`,
-                  iconURL: `https://cdn.upload.systems/uploads/6KOGFYJM.png`,
-                }),
+              client.embedBuilder(client, interaction, `Subscribed to ${reactionRole.emoji} ${reactionRole.label}.`, "", "#3db39e"),
             ],
             ephemeral: true,
           });

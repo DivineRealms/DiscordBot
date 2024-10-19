@@ -30,11 +30,7 @@ module.exports.run = async (client, message, args) => {
   if (!item)
     return message.channel.send({
       embeds: [
-        client.utils.errorEmbed(
-          client,
-          message,
-          "You have entered an invalid shop id."
-        ),
+        client.utils.errorEmbed(client, message, "You have entered an invalid shop id."),
       ],
     });
 
@@ -42,11 +38,7 @@ module.exports.run = async (client, message, args) => {
     if (!balance || balance < item.Price)
       return message.channel.send({
         embeds: [
-          client.utils.errorEmbed(
-            client,
-            message,
-            "You don't have enough money."
-          ),
+          client.utils.errorEmbed(client, message, "You don't have enough money."),
         ],
       });
 
@@ -55,23 +47,17 @@ module.exports.run = async (client, message, args) => {
       .then(async () => {
         message.channel.send({
           embeds: [
-            client.embedBuilder(client, message, "", "", "#3db39e").setAuthor({
-              name: `You have successfully purchased role ${item.Name} for $${item.Price}.`,
-              iconURL: `https://cdn.upload.systems/uploads/6KOGFYJM.png`,
-            }),
+            client.embedBuilder(client, message, 
+              `You have successfully purchased role ${item.Name} for $${item.Price}.`, "", 
+              "#3db39e"),
           ],
         });
         await db.sub(
-          `money_${message.guild.id}_${message.author.id}`,
-          item.Price
+          `money_${message.guild.id}_${message.author.id}`, item.Price
         );
       })
       .catch(() => {
-        client.utils.errorEmbed(
-          client,
-          message,
-          "Cannot add a role to that member."
-        );
+        client.utils.errorEmbed(client, message, "Cannot add a role to that member.");
       });
   } else if (item.Type == "color") {
     let colors =
@@ -80,37 +66,27 @@ module.exports.run = async (client, message, args) => {
     if (!balance || balance < item.Price)
       return message.channel.send({
         embeds: [
-          client.utils.errorEmbed(
-            client,
-            message,
-            "You don't have enough money."
-          ),
+          client.utils.errorEmbed(client, message, "You don't have enough money."),
         ],
       });
 
     if (colors.includes(item.Name.toLowerCase()))
       return message.channel.send({
         embeds: [
-          client.utils.errorEmbed(
-            client,
-            message,
-            "You already have that name color."
-          ),
+          client.utils.errorEmbed(client, message, "You already have that name color."),
         ],
       });
 
     await db.push(
-      `colors_${message.guild.id}_${message.author.id}`,
-      item.Name.toLowerCase()
+      `colors_${message.guild.id}_${message.author.id}`, item.Name.toLowerCase()
     );
 
     await db.sub(`money_${message.guild.id}_${message.author.id}`, item.Price);
     message.channel.send({
       embeds: [
-        client.embedBuilder(client, message, "", "", "#3db39e").setAuthor({
-          name: `You have successfully purchased name color ${item.Name} for $${item.Price}.`,
-          iconURL: `https://cdn.upload.systems/uploads/6KOGFYJM.png`,
-        }),
+        client.embedBuilder(client, message, 
+          `You have successfully purchased name color ${item.Name} for $${item.Price}.`, "", 
+          "#3db39e"),
       ],
     });
   }
@@ -127,11 +103,7 @@ module.exports.slashRun = async (client, interaction) => {
   if (!item)
     return interaction.reply({
       embeds: [
-        client.utils.errorEmbed(
-          client,
-          interaction,
-          "You have entered an invalid shop id."
-        ),
+        client.utils.errorEmbed(client, interaction, "You have entered an invalid shop id."),
       ],
       ephemeral: true,
     });
@@ -140,11 +112,7 @@ module.exports.slashRun = async (client, interaction) => {
     if (!balance || balance < item.Price)
       return interaction.reply({
         embeds: [
-          client.utils.errorEmbed(
-            client,
-            interaction,
-            "You don't have enough money."
-          ),
+          client.utils.errorEmbed(client, interaction, "You don't have enough money."),
         ],
         ephemeral: true,
       });
@@ -155,24 +123,17 @@ module.exports.slashRun = async (client, interaction) => {
         interaction.reply({
           embeds: [
             client
-              .embedBuilder(client, interaction, "", "", "#3db39e")
-              .setAuthor({
-                name: `You have successfully purchased role ${item.Name} for $${item.Price}.`,
-                iconURL: `https://cdn.upload.systems/uploads/6KOGFYJM.png`,
-              }),
+              .embedBuilder(client, interaction, 
+                `You have successfully purchased role ${item.Name} for $${item.Price}.`, "", 
+                "#3db39e"),
           ],
         });
         await db.sub(
-          `money_${interaction.guild.id}_${interaction.user.id}`,
-          item.Price
+          `money_${interaction.guild.id}_${interaction.user.id}`, item.Price
         );
       })
       .catch(() => {
-        client.utils.errorEmbed(
-          client,
-          interaction,
-          "Cannot add a role to that member."
-        );
+        client.utils.errorEmbed(client, interaction, "Cannot add a role to that member.");
       });
   } else if (item.Type == "color") {
     let colors =
@@ -182,10 +143,7 @@ module.exports.slashRun = async (client, interaction) => {
     if (!balance || balance < item.Price)
       return interaction.reply({
         embeds: [
-          client.utils.errorEmbed(
-            client,
-            interaction,
-            "You don't have enough money."
+          client.utils.errorEmbed(client, interaction, "You don't have enough money."
           ),
         ],
         ephemeral: true,
@@ -194,30 +152,23 @@ module.exports.slashRun = async (client, interaction) => {
     if (colors.includes(item.Name.toLowerCase()))
       return interaction.reply({
         embeds: [
-          client.utils.errorEmbed(
-            client,
-            interaction,
-            "You already have that name color."
-          ),
+          client.utils.errorEmbed(client, interaction, "You already have that name color."),
         ],
         ephemeral: true,
       });
 
     await db.push(
-      `colors_${interaction.guild.id}_${interaction.user.id}`,
-      item.Name.toLowerCase()
+      `colors_${interaction.guild.id}_${interaction.user.id}`, item.Name.toLowerCase()
     );
 
     await db.sub(
-      `money_${interaction.guild.id}_${interaction.user.id}`,
-      item.Price
+      `money_${interaction.guild.id}_${interaction.user.id}`, item.Price
     );
     interaction.reply({
       embeds: [
-        client.embedBuilder(client, interaction, "", "", "#3db39e").setAuthor({
-          name: `You have successfully purchased name color ${item.Name} for $${item.Price}.`,
-          iconURL: `https://cdn.upload.systems/uploads/6KOGFYJM.png`,
-        }),
+        client.embedBuilder(client, interaction, 
+          `You have successfully purchased name color ${item.Name} for $${item.Price}.`, "", 
+          "#3db39e"),
       ],
     });
   }

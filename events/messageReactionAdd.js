@@ -189,14 +189,10 @@ module.exports = async (client, reaction, user) => {
         .embedBuilder(
           client,
           "",
-          "",
+          "Thank you for creating a ticket",
           "<:ArrowRightGray:813815804768026705>A staff member will be with you shortly.",
           "#b3e59f"
-        )
-        .setAuthor({
-          name: "Thank you for creating a ticket",
-          iconURL: `https://cdn.upload.systems/uploads/4mFVRE7f.png`,
-        }),
+        ),
     ],
   });
 

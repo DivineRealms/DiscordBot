@@ -32,11 +32,7 @@ module.exports.run = async (client, message, args) => {
   if (!client.conf.Birthday_System.Enabled)
     return message.channel.send({
       embeds: [
-        client.utils.errorEmbed(
-          client,
-          message,
-          "Birthday System is not enabled."
-        ),
+        client.utils.errorEmbed(client, message, "Birthday System is not enabled."),
       ],
     });
 
@@ -50,11 +46,7 @@ module.exports.run = async (client, message, args) => {
   if (!user || isNaN(date))
     return message.channel.send({
       embeds: [
-        client.utils.errorEmbed(
-          client,
-          message,
-          `Invalid usage, check ${client.conf.Settings.Prefix}help setbirthday`
-        ),
+        client.utils.errorEmbed(client, message, `Invalid usage, check ${client.conf.Settings.Prefix}help setbirthday`),
       ],
     });
 
@@ -62,9 +54,7 @@ module.exports.run = async (client, message, args) => {
   if (age <= 12)
     return message.channel.send({
       embeds: [
-        client.utils.errorEmbed(
-          client,
-          message,
+        client.utils.errorEmbed(client, message,
           `You can\'t enter a year greater than ${
             new Date().getFullYear() - 12
           }!`
@@ -72,21 +62,15 @@ module.exports.run = async (client, message, args) => {
       ],
     });
 
-  message.channel.send({
-    embeds: [
-      embed
-        .setAuthor({
-          name: "Successfully set your birthday.",
-          iconURL: `https://cdn.upload.systems/uploads/6KOGFYJM.png`,
-        })
-        .setDescription(
-          `<:ArrowRightGray:813815804768026705>I have set ${user}'s birthday to ${args
+  embed.data.fields[0].name = "Successfully set your birthday.";
+  embed.data.fields[0].value = `<:ArrowRightGray:813815804768026705>I have set ${user}'s birthday to ${args
             .slice(1)
             .join(" ")}!\n<:ArrowRightGray:813815804768026705>They will be ${
             age + 1
-          }.`
-        ),
-    ],
+          }.`;
+  
+  message.channel.send({
+    embeds: [embed],
   });
 
   await db.set(`birthday_${message.guild.id}_${user.id}`, birthd);
@@ -96,11 +80,7 @@ module.exports.slashRun = async (client, interaction) => {
   if (!client.conf.Birthday_System.Enabled)
     return interaction.reply({
       embeds: [
-        client.utils.errorEmbed(
-          client,
-          interaction,
-          "Birthday System is not enabled."
-        ),
+        client.utils.errorEmbed(client, interaction, "Birthday System is not enabled."),
       ],
       ephemeral: true,
     });
@@ -113,11 +93,7 @@ module.exports.slashRun = async (client, interaction) => {
   if (isNaN(date))
     return interaction.reply({
       embeds: [
-        client.utils.errorEmbed(
-          client,
-          interaction,
-          `Invalid usage, check ${interaction.px}help setbirthday`
-        ),
+        client.utils.errorEmbed(client, interaction,`Invalid usage, check ${interaction.px}help setbirthday`),
       ],
       ephemeral: true,
     });
@@ -126,9 +102,7 @@ module.exports.slashRun = async (client, interaction) => {
   if (age <= 12)
     return interaction.reply({
       embeds: [
-        client.utils.errorEmbed(
-          client,
-          interaction,
+        client.utils.errorEmbed(client, interaction,
           `You can\'t enter a year greater than ${
             new Date().getFullYear() - 12
           }!`
@@ -137,19 +111,11 @@ module.exports.slashRun = async (client, interaction) => {
       ephemeral: true,
     });
 
+  embed.data.fields[0].name = "Successfully set birthday.";
+  embed.data.fields[0].value = `<:ArrowRightGray:813815804768026705>I have set ${user}'s birthday to ${interaction.options.getString("date")}!\n<:ArrowRightGray:813815804768026705>They will be ${age + 1}.`;
+
   interaction.reply({
-    embeds: [
-      embed
-        .setAuthor({
-          name: "Successfully set birthday.",
-          iconURL: `https://cdn.upload.systems/uploads/6KOGFYJM.png`,
-        })
-        .setDescription(
-          `<:ArrowRightGray:813815804768026705>I have set ${user}'s birthday to ${interaction.options.getString(
-            "date"
-          )}!\n<:ArrowRightGray:813815804768026705>They will be ${age + 1}.`
-        ),
-    ],
+    embeds: [embed],
   });
 
   await db.set(`birthday_${interaction.guild.id}_${user.id}`, date);

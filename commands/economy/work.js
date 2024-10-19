@@ -26,12 +26,9 @@ module.exports.run = async (client, message, args) => {
 
   message.channel.send({
     embeds: [
-      client.embedBuilder(client, message, "", "", "#3db39e").setAuthor({
-        name: `You have worked as ${
+      client.embedBuilder(client, message, `You have worked as ${
           jobs[Math.floor(Math.random() * jobs.length)]
-        } and earned $${amount}.`,
-        iconURL: `https://cdn.upload.systems/uploads/6KOGFYJM.png`,
-      }),
+        } and earned $${amount}.`, "", "#3db39e"),
     ],
   });
 
@@ -52,12 +49,9 @@ module.exports.slashRun = async (client, interaction) => {
 
   interaction.reply({
     embeds: [
-      client.embedBuilder(client, interaction, "", "", "#3db39e").setAuthor({
-        name: `You have worked as ${
+      client.embedBuilder(client, interaction, `You have worked as ${
           jobs[Math.floor(Math.random() * jobs.length)]
-        } and earned $${amount}.`,
-        iconURL: `https://cdn.upload.systems/uploads/6KOGFYJM.png`,
-      }),
+        } and earned $${amount}.`, "", "#3db39e"),
     ],
   });
 

@@ -29,33 +29,21 @@ module.exports.run = async (client, message, args) => {
   if (!client.conf.Ticket_System.Enabled)
     return message.channel.send({
       embeds: [
-        client.utils.errorEmbed(
-          client,
-          message,
-          "Ticket System is not enabled."
-        ),
+        client.utils.errorEmbed(client, message, "Ticket System is not enabled."),
       ],
     });
 
   if (!ticket)
     return message.channel.send({
       embeds: [
-        client.utils.errorEmbed(
-          client,
-          message,
-          "This command can only be used inside of tickets."
-        ),
+        client.utils.errorEmbed(client, message, "This command can only be used inside of tickets."),
       ],
     });
 
   if (!message.mentions.users.first())
     return message.channel.send({
       embeds: [
-        client.utils.errorEmbed(
-          client,
-          message,
-          "Please mention a member to remove from this ticket."
-        ),
+        client.utils.errorEmbed(client, message, "Please mention a member to remove from this ticket."),
       ],
     });
 
@@ -66,11 +54,7 @@ module.exports.run = async (client, message, args) => {
   )
     return message.channel.send({
       embeds: [
-        client.utils.errorEmbed(
-          client,
-          message,
-          "That user isn't in this ticket."
-        ),
+        client.utils.errorEmbed(client, message, "That user isn't in this ticket."),
       ],
     });
 
@@ -80,12 +64,9 @@ module.exports.run = async (client, message, args) => {
 
   message.channel.send({
     embeds: [
-      client.embedBuilder(client, message, "", "", "#3db39e").setAuthor({
-        name: `${
+      client.embedBuilder(client, message, `${
           message.mentions.users.first().username
-        } has been removed from the ticket!`,
-        iconURL: `https://cdn.upload.systems/uploads/4mFVRE7f.png`,
-      }),
+        } has been removed from the ticket!`, "", "#3db39e"),
     ],
   });
 };
@@ -99,11 +80,7 @@ module.exports.slashRun = async (client, interaction) => {
   if (!client.conf.Ticket_System.Enabled)
     return interaction.reply({
       embeds: [
-        client.utils.errorEmbed(
-          client,
-          interaction,
-          "Ticket System is not enabled."
-        ),
+        client.utils.errorEmbed(client, interaction, "Ticket System is not enabled."),
       ],
       ephemeral: true,
     });
@@ -111,11 +88,7 @@ module.exports.slashRun = async (client, interaction) => {
   if (!ticket)
     return interaction.reply({
       embeds: [
-        client.utils.errorEmbed(
-          client,
-          interaction,
-          "This command can only be used inside of tickets."
-        ),
+        client.utils.errorEmbed(client, interaction, "This command can only be used inside of tickets."),
       ],
       ephemeral: true,
     });
@@ -123,11 +96,7 @@ module.exports.slashRun = async (client, interaction) => {
   if (!interaction.channel.permissionOverwrites.cache.has(user.id))
     return interaction.reply({
       embeds: [
-        client.utils.errorEmbed(
-          client,
-          interaction,
-          "That user isn't in this ticket."
-        ),
+        client.utils.errorEmbed(client, interaction, "That user isn't in this ticket."),
       ],
       ephemeral: true,
     });
@@ -136,10 +105,7 @@ module.exports.slashRun = async (client, interaction) => {
 
   interaction.reply({
     embeds: [
-      client.embedBuilder(client, interaction, "", "", "#3db39e").setAuthor({
-        name: `${user.username} has been removed from the ticket!`,
-        iconURL: `https://cdn.upload.systems/uploads/4mFVRE7f.png`,
-      }),
+      client.embedBuilder(client, interaction, `${user.username} has been removed from the ticket!`, "", "#3db39e"),
     ],
   });
 };

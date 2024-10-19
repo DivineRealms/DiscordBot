@@ -33,11 +33,7 @@ module.exports.run = async (client, message, args) => {
   if (!category)
     return message.channel.send({
       embeds: [
-        client.utils.errorEmbed(
-          client,
-          message,
-          "You didn't provide Reaction Role Category."
-        ),
+        client.utils.errorEmbed(client, message, "You didn't provide Reaction Role Category."),
       ],
     });
 
@@ -48,23 +44,14 @@ module.exports.run = async (client, message, args) => {
   if (!findRoles)
     return message.channel.send({
       embeds: [
-        client.utils.errorEmbed(
-          client,
-          message,
-          "You didn't provide Reaction Role Category."
-        ),
+        client.utils.errorEmbed(client, message, "You didn't provide Reaction Role Category."),
       ],
     });
 
   const embed = client
-    .embedBuilder(client, message, "", "", findRoles.color)
-    .setAuthor({
-      name: findRoles.title,
-      iconURL: `https://cdn.upload.systems/uploads/rgGD8TcN.png`,
-    })
-    .addFields({
-      name: "Note:",
-      value: "Buttons are toggles, click on the roles you want to add/remove.",
+    .embedBuilder(client, message, findRoles.title, "", findRoles.color)
+    .setFooter({
+      text: "Note: Buttons are toggles, click on the roles you want to add/remove.",
     });
 
   const chunks = [];
@@ -112,11 +99,7 @@ module.exports.slashRun = async (client, interaction) => {
   if (!category)
     return interaction.reply({
       embeds: [
-        client.utils.errorEmbed(
-          client,
-          interaction,
-          "You didn't provide Reaction Role Category."
-        ),
+        client.utils.errorEmbed(client, interaction, "You didn't provide Reaction Role Category."),
       ],
       ephemeral: true,
     });
@@ -128,32 +111,20 @@ module.exports.slashRun = async (client, interaction) => {
   if (!findRoles)
     return interaction.reply({
       embeds: [
-        client.utils.errorEmbed(
-          client,
-          interaction,
-          "You didn't provide Reaction Role Category."
-        ),
+        client.utils.errorEmbed(client, interaction, "You didn't provide Reaction Role Category."),
       ],
       ephemeral: true,
     });
 
   const embed = client
-    .embedBuilder(client, interaction, "", "", findRoles.color)
-    .setAuthor({
-      name: findRoles.title,
-      iconURL: `https://cdn.upload.systems/uploads/rgGD8TcN.png`,
-    })
-    .addFields({
-      name: "Note:",
-      value: "Buttons are toggles, click on the roles you want to add/remove.",
+    .embedBuilder(client, interaction, findRoles.title, "", findRoles.color)
+    .setFooter({
+      text: "Note: Buttons are toggles, click on the roles you want to add/remove.",
     });
 
   interaction.reply({
     embeds: [
-      client.embedBuilder(client, interaction, "", "", "#3db39e").setAuthor({
-        name: "Reaction Role menu has been sent successfully.",
-        iconURL: `https://cdn.upload.systems/uploads/6KOGFYJM.png`,
-      }),
+      client.embedBuilder(client, interaction, "Reaction Role menu has been sent successfully.", "", "#3db39e"),
     ],
     ephemeral: true,
   });

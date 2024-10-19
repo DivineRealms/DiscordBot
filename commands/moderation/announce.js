@@ -100,7 +100,7 @@ module.exports.slashRun = async (client, interaction) => {
     .addComponents([descInput, fieldsInput]);
 
   let embed = client
-    .embedBuilder(client, interaction, "", "")
+    .embedBuilder(client, interaction, title, "")
     .setFooter({
       text: `Announcement by ${interaction.user.username}`,
       iconURL: interaction.user.displayAvatarURL({
@@ -111,25 +111,9 @@ module.exports.slashRun = async (client, interaction) => {
     .setTimestamp();
 
   if (type == "update")
-    embed.setColor("#7edd8a").setAuthor({
-      name: title,
-      iconURL: `https://cdn.upload.systems/uploads/aKT2mjr0.png`,
-    });
+    embed.setColor("#7edd8a");
   else if (type == "maintenance")
-    embed.setColor("#ffae63").setAuthor({
-      name: title,
-      iconURL: `https://cdn.upload.systems/uploads/vRfWnVT5.png`,
-    });
-  else if (type == "survey")
-    embed.setAuthor({
-      name: title,
-      iconURL: `https://cdn.upload.systems/uploads/KSTCcy4V.png`,
-    });
-  else
-    embed.setAuthor({
-      name: title,
-      iconURL: `https://cdn.upload.systems/uploads/sYDS6yZI.png`,
-    });
+    embed.setColor("#ffae63");
 
   if (image) embed.setImage(image);
   if (thumbnail) embed.setThumbnail(thumbnail);
@@ -145,17 +129,13 @@ module.exports.slashRun = async (client, interaction) => {
       let fieldsValue = md.fields.getTextInputValue("ann_data");
       fieldsValue = fieldsValue.split(/\s*\|\s*/);
 
-      embed.setDescription(descValue);
+      embed.data.fields[0].value = descValue;
 
       if (fieldsValue.length > 1) {
         if (fieldsValue.length % 2 !== 0)
           return md.reply({
             embeds: [
-              client.utils.errorEmbed(
-                client,
-                interaction,
-                "You are missing a title or a description."
-              ),
+              client.utils.errorEmbed(client, interaction, "You are missing a title or a description."),
             ],
             ephemeral: true,
           });
@@ -175,11 +155,7 @@ module.exports.slashRun = async (client, interaction) => {
           if (!fields[i].title || !fields[i].description)
             return md.followUp({
               embeds: [
-                client.utils.errorEmbed(
-                  client,
-                  interaction,
-                  "You need to provide both a title and a description."
-                ),
+                client.utils.errorEmbed(client, interaction, "You need to provide both a title and a description."),
               ],
               ephemeral: true,
             });
@@ -187,12 +163,7 @@ module.exports.slashRun = async (client, interaction) => {
 
         md.reply({
           embeds: [
-            client
-              .embedBuilder(client, interaction, "", "", "#3db39e")
-              .setAuthor({
-                name: `Announcement has been sent!`,
-                iconURL: `https://cdn.upload.systems/uploads/6KOGFYJM.png`,
-              }),
+            client.embedBuilder(client, interaction, "Announcement has been sent!", "", "#3db39e"),
           ],
           ephemeral: true,
         });
@@ -201,12 +172,7 @@ module.exports.slashRun = async (client, interaction) => {
       } else {
         md.reply({
           embeds: [
-            client
-              .embedBuilder(client, interaction, "", "", "#3db39e")
-              .setAuthor({
-                name: `Announcement has been sent!`,
-                iconURL: `https://cdn.upload.systems/uploads/6KOGFYJM.png`,
-              }),
+            client.embedBuilder(client, interaction, "Announcement has been sent!", "", "#3db39e"),
           ],
           ephemeral: true,
         });
@@ -218,11 +184,7 @@ module.exports.slashRun = async (client, interaction) => {
       console.log(err);
       interaction.followUp({
         embeds: [
-          client.utils.errorEmbed(
-            client,
-            interaction,
-            "Time for entering announcement fields has passed without answer."
-          ),
+          client.utils.errorEmbed(client, interaction, "Time for entering announcement fields has passed without answer."),
         ],
         ephemeral: true,
       });

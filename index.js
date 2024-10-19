@@ -66,11 +66,7 @@ process.on("unhandledRejection", (error) => {
     }
     if (list.length !== 0) return null;
     let errEmbed = new EmbedBuilder()
-      .setAuthor({
-        name: "Error Occurred",
-        iconURL: `https://cdn.upload.systems/uploads/96HNGxzL.png`,
-      })
-      .setDescription(`\`\`\`xl\n${error.stack}\n\`\`\``)
+      .addFields({ name: "Error Occurred", value: `\`\`\`xl\n${error.stack}\n\`\`\``, inline: false })
       .setColor("#e24c4b")
       .setFooter({ text: `${error.name}` })
       .setTimestamp();
@@ -97,11 +93,7 @@ process.on("uncaughtException", (error) => {
     }
     if (list.length !== 0) return null;
     let errEmbed = new EmbedBuilder()
-      .setAuthor({
-        name: "Error Occurred",
-        iconURL: `https://cdn.upload.systems/uploads/96HNGxzL.png`,
-      })
-      .setDescription(`\`\`\`xl\n${error.stack}\n\`\`\``)
+      .addFields({ name: "Error Occurred", value: `\`\`\`xl\n${error.stack}\n\`\`\``, inline: false })
       .setColor("#e24c4b")
       .setFooter({ text: `${error.name}` })
       .setTimestamp();

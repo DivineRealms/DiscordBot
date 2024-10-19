@@ -25,11 +25,7 @@ module.exports.run = async (client, message, args) => {
   if (!args[0]) {
     return message.channel.send({
       embeds: [
-        client.utils.errorEmbed(
-          client,
-          message,
-          "You need to mention who you would like to hug!"
-        ),
+        client.utils.errorEmbed(client, message, "You need to mention who you would like to hug!"),
       ],
     });
   } else {
@@ -52,12 +48,8 @@ module.exports.run = async (client, message, args) => {
     message.channel.send({
       embeds: [
         client
-          .embedBuilder(client, message, "", "", "#ec3d93")
-          .setImage(randomGif)
-          .setAuthor({
-            name: `${message.author.username} just hugged ${mentionedMember.user.username}!`,
-            iconURL: `https://cdn.upload.systems/uploads/ZdKDK7Tx.png`,
-          }),
+          .embedBuilder(client, message, `${message.author.username} just hugged ${mentionedMember.user.username}!`, "", "#ec3d93")
+          .setImage(randomGif),
       ],
     });
   }
@@ -78,11 +70,7 @@ module.exports.slashRun = async (client, interaction) => {
   if (mentionedMember.id === interaction.user.id)
     return interaction.reply({
       embeds: [
-        client.utils.errorEmbed(
-          client,
-          interaction,
-          "You cannot hug yourself."
-        ),
+        client.utils.errorEmbed(client, interaction, "You cannot hug yourself."),
       ],
       ephemeral: true,
     });
@@ -90,12 +78,8 @@ module.exports.slashRun = async (client, interaction) => {
   interaction.reply({
     embeds: [
       client
-        .embedBuilder(client, interaction, "", "", "#ec3d93")
-        .setImage(randomGif)
-        .setAuthor({
-          name: `${interaction.user.username} just hugged ${mentionedMember.username}!`,
-          iconURL: `https://cdn.upload.systems/uploads/ZdKDK7Tx.png`,
-        }),
+        .embedBuilder(client, interaction, `${interaction.user.username} just hugged ${mentionedMember.username}!`, "", "#ec3d93")
+        .setImage(randomGif),
     ],
   });
 };

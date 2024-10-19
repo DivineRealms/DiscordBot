@@ -73,33 +73,21 @@ module.exports.run = async (client, message, args) => {
   if (!["add", "remove"].includes(args[1]))
     return message.channel.send({
       embeds: [
-        client.utils.errorEmbed(
-          client,
-          message,
-          "You need to specify do you want to add or remove."
-        ),
+        client.utils.errorEmbed(client, message, "You need to specify do you want to add or remove."),
       ],
     });
 
   if (!["wallet", "bank"].includes(args[2]))
     return message.channel.send({
       embeds: [
-        client.utils.errorEmbed(
-          client,
-          message,
-          "You need to specify if you want wallet or bank."
-        ),
+        client.utils.errorEmbed(client, message, "You need to specify if you want wallet or bank."),
       ],
     });
 
   if (isNaN(args[3]) || args[3] < 1)
     return message.channel.send({
       embeds: [
-        client.utils.errorEmbed(
-          client,
-          message,
-          "You need to enter an amount."
-        ),
+        client.utils.errorEmbed(client, message, "You need to enter an amount."),
       ],
     });
 
@@ -108,20 +96,14 @@ module.exports.run = async (client, message, args) => {
       await db.add(`bank_${message.guild.id}_${user.id}`, Number(args[3]));
       message.channel.send({
         embeds: [
-          client.embedBuilder(client, message, "", "", "#3db39e").setAuthor({
-            name: `$${args[3]} has been added to ${user.username}'s bank`,
-            iconURL: `https://cdn.upload.systems/uploads/6KOGFYJM.png`,
-          }),
+          client.embedBuilder(client, message, `$${args[3]} has been added to ${user.username}'s bank`, "", "#3db39e") ,
         ],
       });
     } else if (args[2].toLowerCase() == "wallet") {
       await db.add(`money_${message.guild.id}_${user.id}`, Number(args[3]));
       message.channel.send({
         embeds: [
-          client.embedBuilder(client, message, "", "", "#3db39e").setAuthor({
-            name: `$${args[3]} has been added to ${user.username}'s wallet`,
-            iconURL: `https://cdn.upload.systems/uploads/6KOGFYJM.png`,
-          }),
+          client.embedBuilder(client, message, `$${args[3]} has been added to ${user.username}'s wallet`, "", "#3db39e"),
         ],
       });
     }
@@ -130,20 +112,14 @@ module.exports.run = async (client, message, args) => {
       await db.sub(`bank_${message.guild.id}_${user.id}`, Number(args[3]));
       message.channel.send({
         embeds: [
-          client.embedBuilder(client, message, "", "", "#3db39e").setAuthor({
-            name: `$${args[3]} has been removed from ${user.username}'s bank`,
-            iconURL: `https://cdn.upload.systems/uploads/6KOGFYJM.png`,
-          }),
+          client.embedBuilder(client, message, `$${args[3]} has been removed from ${user.username}'s bank`, "", "#3db39e"),
         ],
       });
     } else if (args[2].toLowerCase() == "wallet") {
       await db.sub(`money_${message.guild.id}_${user.id}`, Number(args[3]));
       message.channel.send({
         embeds: [
-          client.embedBuilder(client, message, "", "", "#3db39e").setAuthor({
-            name: `$${args[3]} has been removed from ${user.username}'s wallet`,
-            iconURL: `https://cdn.upload.systems/uploads/6KOGFYJM.png`,
-          }),
+          client.embedBuilder(client, message, `$${args[3]} has been removed from ${user.username}'s wallet`, "", "#3db39e"),
         ],
       });
     }
@@ -159,11 +135,7 @@ module.exports.slashRun = async (client, interaction) => {
   if (amount < 1)
     return interaction.reply({
       embeds: [
-        client.utils.errorEmbed(
-          client,
-          interaction,
-          "You need to enter an amount."
-        ),
+        client.utils.errorEmbed(client, interaction, "You need to enter an amount."),
       ],
       ephemeral: true,
     });
@@ -174,11 +146,7 @@ module.exports.slashRun = async (client, interaction) => {
       interaction.reply({
         embeds: [
           client
-            .embedBuilder(client, interaction, "", "", "#3db39e")
-            .setAuthor({
-              name: `$${amount} has been added to ${user.username}'s bank`,
-              iconURL: `https://cdn.upload.systems/uploads/6KOGFYJM.png`,
-            }),
+            .embedBuilder(client, interaction, `$${amount} has been added to ${user.username}'s bank`, "", "#3db39e"),
         ],
       });
     } else if (type == "wallet") {
@@ -186,11 +154,7 @@ module.exports.slashRun = async (client, interaction) => {
       interaction.reply({
         embeds: [
           client
-            .embedBuilder(client, interaction, "", "", "#3db39e")
-            .setAuthor({
-              name: `$${amount} has been added to ${user.username}'s wallet`,
-              iconURL: `https://cdn.upload.systems/uploads/6KOGFYJM.png`,
-            }),
+            .embedBuilder(client, interaction, `$${amount} has been added to ${user.username}'s wallet`, "", "#3db39e"),
         ],
       });
     }
@@ -200,11 +164,7 @@ module.exports.slashRun = async (client, interaction) => {
       interaction.reply({
         embeds: [
           client
-            .embedBuilder(client, interaction, "", "", "#3db39e")
-            .setAuthor({
-              name: `$${amount} has been removed from ${user.username}'s bank`,
-              iconURL: `https://cdn.upload.systems/uploads/6KOGFYJM.png`,
-            }),
+            .embedBuilder(client, interaction, `$${amount} has been removed from ${user.username}'s bank`, "", "#3db39e"),
         ],
       });
     } else if (type == "wallet") {
@@ -212,11 +172,7 @@ module.exports.slashRun = async (client, interaction) => {
       interaction.reply({
         embeds: [
           client
-            .embedBuilder(client, interaction, "", "", "#3db39e")
-            .setAuthor({
-              name: `$${amount} has been removed from ${user.username}'s wallet`,
-              iconURL: `https://cdn.upload.systems/uploads/6KOGFYJM.png`,
-            }),
+            .embedBuilder(client, interaction, `$${amount} has been removed from ${user.username}'s wallet`, "", "#3db39e"),
         ],
       });
     }

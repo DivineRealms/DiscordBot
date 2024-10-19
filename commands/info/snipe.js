@@ -27,16 +27,12 @@ module.exports.run = async (client, message, args) => {
         .embedBuilder(
           client,
           message,
-          "",
+          `Last deleted message was from: ${user.username}`,
           `\`\`\`xl
 ${snipe.content}
 \`\`\``,
           "#60b8ff"
-        )
-        .setAuthor({
-          name: `Last deleted message was from: ${user.username}`,
-          iconURL: `https://cdn.upload.systems/uploads/6uDK0XAN.png`,
-        }),
+        ),
     ],
   });
 };
@@ -64,16 +60,12 @@ module.exports.slashRun = async (client, interaction) => {
         .embedBuilder(
           client,
           interaction,
-          "",
+          `Last deleted message was from: ${user.username}`,
           `\`\`\`xl
 ${snipe.content}
 \`\`\``,
           "#60b8ff"
-        )
-        .setAuthor({
-          name: `Last deleted message was from: ${user.username}`,
-          iconURL: `https://cdn.upload.systems/uploads/6uDK0XAN.png`,
-        }),
+        ),
     ],
   });
 };

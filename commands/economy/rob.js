@@ -47,11 +47,7 @@ module.exports.run = async (client, message, args) => {
   if (!memberbal || memberbal < 200)
     return message.channel.send({
       embeds: [
-        client.utils.errorEmbed(
-          client,
-          message,
-          "That Member doesn't have money."
-        ),
+        client.utils.errorEmbed(client, message, "That Member doesn't have money."),
       ],
     });
 
@@ -71,10 +67,7 @@ module.exports.run = async (client, message, args) => {
   } else {
     message.channel.send({
       embeds: [
-        client.embedBuilder(client, message, "", "", "#47a047").setAuthor({
-          name: `You successfully robbed ${member.user.username} gaining yourself $${amount}.`,
-          iconURL: `https://cdn.upload.systems/uploads/LrdB6F1N.png`,
-        }),
+        client.embedBuilder(client, message, `You successfully robbed ${member.user.username} gaining yourself $${amount}.`, "", "#47a047"),
       ],
     });
 
@@ -89,11 +82,7 @@ module.exports.slashRun = async (client, interaction) => {
   if (member.id === interaction.user.id)
     return interaction.reply({
       embeds: [
-        client.utils.errorEmbed(
-          client,
-          interaction,
-          "You cannot rob yourself."
-        ),
+        client.utils.errorEmbed(client, interaction, "You cannot rob yourself."),
       ],
       ephemeral: true,
     });
@@ -105,11 +94,7 @@ module.exports.slashRun = async (client, interaction) => {
   if (!memberbal || memberbal < 200)
     return interaction.reply({
       embeds: [
-        client.utils.errorEmbed(
-          client,
-          interaction,
-          "That Member doesn't have money."
-        ),
+        client.utils.errorEmbed(client, interaction, "That Member doesn't have money."),
       ],
       ephemeral: true,
     });
@@ -117,11 +102,7 @@ module.exports.slashRun = async (client, interaction) => {
   if (rob) {
     interaction.reply({
       embeds: [
-        client.utils.errorEmbed(
-          client,
-          interaction,
-          `You attempted to rob ${member.username} but got caught! The fine is $${amount}.`
-        ),
+        client.utils.errorEmbed(client, interaction, `You attempted to rob ${member.username} but got caught! The fine is $${amount}.`),
       ],
       ephemeral: true,
     });
@@ -134,10 +115,7 @@ module.exports.slashRun = async (client, interaction) => {
   } else {
     interaction.reply({
       embeds: [
-        client.embedBuilder(client, interaction, "", "", "#47a047").setAuthor({
-          name: `You successfully robbed ${member.username} gaining yourself $${amount}.`,
-          iconURL: `https://cdn.upload.systems/uploads/LrdB6F1N.png`,
-        }),
+        client.embedBuilder(client, interaction, `You successfully robbed ${member.username} gaining yourself $${amount}.`, "", "#47a047"),
       ],
     });
 

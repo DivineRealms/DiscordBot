@@ -37,11 +37,7 @@ module.exports.run = async (client, message, args, cmd) => {
   )
     return message.channel.send({
       embeds: [
-        client.utils.errorEmbed(
-          client,
-          message,
-          "You need to mention a valid user."
-        ),
+        client.utils.errorEmbed(client, message, "You need to mention a valid user."),
       ],
     });
 
@@ -55,11 +51,7 @@ module.exports.run = async (client, message, args, cmd) => {
   if (requests.get(message.guild.id + message.mentions.users.first().id))
     return message.channel.send({
       embeds: [
-        client.utils.errorEmbed(
-          client,
-          message,
-          "They've already sent request to someone else."
-        ),
+        client.utils.errorEmbed(client, message, "They've already sent request to someone else."),
       ],
     });
 
@@ -87,11 +79,7 @@ module.exports.run = async (client, message, args, cmd) => {
       if (!collected.first())
         return message.channel.send({
           embeds: [
-            client.utils.errorEmbed(
-              client,
-              message,
-              "They didn't confirm in time."
-            ),
+            client.utils.errorEmbed(client, message, "They didn't confirm in time."),
           ],
         });
 
@@ -105,19 +93,9 @@ module.exports.run = async (client, message, args, cmd) => {
       let currentPlayer = message.author.id;
 
       let embed = client
-        .embedBuilder(
-          client,
-          message,
-          "",
-          board(game).join("\n").replace(/,/g, ""),
-          "#ec3d93"
-        )
-        .setAuthor({
-          name: `${message.author.username} vs. ${
+        .embedBuilder(client, message, `${message.author.username} vs. ${
             message.mentions.users.first().username
-          }`,
-          iconURL: `https://cdn.upload.systems/uploads/ZdKDK7Tx.png`,
-        });
+          }`, board(game).join("\n").replace(/,/g, ""), "#ec3d93");
 
       message.channel.send({ embeds: [embed] }).then((emb) => {
         let filter = (m) =>
@@ -144,11 +122,9 @@ module.exports.run = async (client, message, args, cmd) => {
 
           game.insert(m.content - 1);
 
-          emb.edit({
-            embeds: [
-              embed.setDescription(board(game).join("\n").replace(/,/g, "")),
-            ],
-          });
+          embed.data.fields[0].name = `${message.author.username} vs. ${message.mentions.users.first().username}`;
+          embed.data.fields[0].value = board(game).join("\n").replace(/,/g, "");
+          emb.edit({ embeds: [embed] });
 
           m.delete();
 
@@ -165,26 +141,17 @@ module.exports.run = async (client, message, args, cmd) => {
           )
             return;
 
-          if (game.state.status == "0")
-            embed.setAuthor({
-              name: `The winner is ${
+          if (game.state.status == "0") {
+            embed.data.fields[0].name = `The winner is ${
                 game.state.winner.color == game.players["0"].color
                   ? message.author.username
                   : message.mentions.users.first().username
-              }!`,
-              iconURL: `https://cdn.upload.systems/uploads/ZdKDK7Tx.png`,
-            });
-          else if (game.state.status == "1")
-            embed.setAuthor({
-              name: `Looks like you tied!`,
-              iconURL: `https://cdn.upload.systems/uploads/ZdKDK7Tx.png`,
-            });
-          else
-            client.utils.errorEmbed(
-              client,
-              message,
-              "Time Limit has reached and there's no winners."
-            );
+              }!`;
+            embed.data.fields[0].value = "";
+          } else if (game.state.status == "1") {
+            embed.data.fields[0].name = `Looks like you tied!`;
+            embed.data.fields[0].value = "";
+          } else client.utils.errorEmbed(client, message, "Time Limit has reached and there's no winners.");
 
           emb.edit({ embeds: [embed] });
 

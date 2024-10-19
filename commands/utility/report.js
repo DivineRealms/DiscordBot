@@ -34,11 +34,7 @@ module.exports.run = async (client, message, args) => {
   if (!logChannel)
     return message.channel.send({
       embeds: [
-        client.utils.errorEmbed(
-          client,
-          message,
-          "A report channel hasn't been setup for this server!"
-        ),
+        client.utils.errorEmbed(client, message, "A report channel hasn't been setup for this server!"),
       ],
     });
 
@@ -54,16 +50,13 @@ module.exports.run = async (client, message, args) => {
   message.channel
     .send({
       embeds: [
-        client.embedBuilder(client, message, "", "", "#3db39e").setAuthor({
-          name: `Your report was submitted!`,
-          iconURL: `https://cdn.upload.systems/uploads/6KOGFYJM.png`,
-        }),
+        client.embedBuilder(client, message, "Your report was submitted!", "", "#3db39e"),
       ],
     })
     .then((msg) => setTimeout(() => msg.delete(), 3000));
 
   let embed = client
-    .embedBuilder(client, message, "", "")
+    .embedBuilder(client, message, "New Report", "")
     .addFields({
       name: "Submitter:",
       value: `${message.author}`,
@@ -73,10 +66,6 @@ module.exports.run = async (client, message, args) => {
       name: "Timestamp:",
       value: `<t:${Math.round(Date.now() / 1000)}:R>`,
       inline: false,
-    })
-    .setAuthor({
-      name: "New Report",
-      iconURL: `https://cdn.upload.systems/uploads/iHhkS5zu.png`,
     })
     .setThumbnail(
       message.author.displayAvatarURL({ size: 1024, dynamic: true })
@@ -113,11 +102,7 @@ module.exports.slashRun = async (client, interaction) => {
   if (!logChannel)
     return interaction.reply({
       embeds: [
-        client.utils.errorEmbed(
-          client,
-          interaction,
-          "A report channel hasn't been setup for this server!"
-        ),
+        client.utils.errorEmbed(client, interaction, "A report channel hasn't been setup for this server!"),
       ],
       ephemeral: true,
     });
@@ -148,17 +133,12 @@ module.exports.slashRun = async (client, interaction) => {
 
       md.reply({
         embeds: [
-          client
-            .embedBuilder(client, interaction, "", "", "#3db39e")
-            .setAuthor({
-              name: `Your report was submitted!`,
-              iconURL: `https://cdn.upload.systems/uploads/6KOGFYJM.png`,
-            }),
+          client.embedBuilder(client, interaction, "Your report was submitted!", "", "#3db39e"),
         ],
       });
 
       let embed = client
-        .embedBuilder(client, interaction, "", "")
+        .embedBuilder(client, interaction, "New Report", "")
         .addFields({
           name: "Submitter:",
           value: `${interaction.user}`,
@@ -168,10 +148,6 @@ module.exports.slashRun = async (client, interaction) => {
           name: "Timestamp:",
           value: `<t:${Math.round(Date.now() / 1000)}:R>`,
           inline: false,
-        })
-        .setAuthor({
-          name: "New Report",
-          iconURL: `https://cdn.upload.systems/uploads/iHhkS5zu.png`,
         })
         .setThumbnail(
           interaction.user.displayAvatarURL({ size: 1024, dynamic: true })
@@ -202,10 +178,7 @@ module.exports.slashRun = async (client, interaction) => {
     .catch((err) => {
       interaction.followUp({
         embeds: [
-          client.embedBuilder(client, interaction, "", "", "Red").setAuthor({
-            name: "Time for entering report has passed without answer.",
-            iconURL: `https://cdn.upload.systems/uploads/iHhkS5zu.png`,
-          }),
+          client.utils.errorEmbed(client, interaction, "Time for entering report has passed without answer."),
         ],
         ephemeral: true,
       });

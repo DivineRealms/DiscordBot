@@ -26,13 +26,9 @@ module.exports.run = async (client, message, args) => {
   message.channel.send({
     embeds: [
       client
-        .embedBuilder(client, message, "", "", "#ec3d93")
+        .embedBuilder(client, message, "Random Reddit Meme", "", "#ec3d93")
         .setURL(`http://reddit.com/${item.permalink}`)
-        .setImage(item.data.url)
-        .setAuthor({
-          name: "Random Reddit Meme",
-          iconURL: `https://cdn.upload.systems/uploads/ZdKDK7Tx.png`,
-        }),
+        .setImage(item.data.url),
     ],
   });
 };
@@ -51,13 +47,9 @@ module.exports.slashRun = async (client, interaction) => {
   interaction.reply({
     embeds: [
       client
-        .embedBuilder(client, interaction, "", "", "#ec3d93")
+        .embedBuilder(client, interaction, "Random Reddit Meme", "", "#ec3d93")
         .setURL(`http://reddit.com/${item.permalink}`)
-        .setImage(item.data.url)
-        .setAuthor({
-          name: "Random Reddit Meme",
-          iconURL: `https://cdn.upload.systems/uploads/ZdKDK7Tx.png`,
-        }),
+        .setImage(item.data.url),
     ],
   });
 };

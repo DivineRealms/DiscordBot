@@ -35,11 +35,7 @@ module.exports.run = async (client, message, args) => {
   message.channel.send({
     embeds: [
       client
-        .embedBuilder(client, message, "", "", "#60b8ff")
-        .setAuthor({
-          name: `Emojis in ${message.guild.name}`,
-          iconURL: `https://cdn.upload.systems/uploads/6uDK0XAN.png`,
-        })
+        .embedBuilder(client, message, `Emojis in ${message.guild.name}`, "", "#60b8ff")
         .addFields([
           { name: `Regular Emojis:`, value: `${RegularEmojis}`, inline: false },
           { name: `Animated Emojis:`, value: `${AnimeOnesLol}`, inline: false },
@@ -84,11 +80,7 @@ module.exports.slashRun = async (client, interaction) => {
   interaction.reply({
     embeds: [
       client
-        .embedBuilder(client, interaction, "", "", "#60b8ff")
-        .setAuthor({
-          name: `Emojis in ${interaction.guild.name}`,
-          iconURL: `https://cdn.upload.systems/uploads/6uDK0XAN.png`,
-        })
+        .embedBuilder(client, interaction, `Emojis in ${interaction.guild.name}`, "", "#60b8ff")
         .addFields([
           { name: `Regular Emojis:`, value: `${RegularEmojis}`, inline: false },
           { name: `Animated Emojis:`, value: `${AnimeOnesLol}`, inline: false },

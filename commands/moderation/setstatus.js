@@ -25,20 +25,13 @@ module.exports.run = async (client, message, args) => {
   if (!status)
     return message.channel.send({
       embeds: [
-        client.utils.errorEmbed(
-          client,
-          message,
-          `You need to provide Custom Status.`
-        ),
+        client.utils.errorEmbed(client, message, `You need to provide Custom Status.`),
       ],
     });
 
   message.channel.send({
     embeds: [
-      client.embedBuilder(client, message, "", "", "#f44336").setAuthor({
-        name: `Status has been changed to ${status}.`,
-        iconURL: `https://cdn.upload.systems/uploads/6Xdg16Gh.png`,
-      }),
+      client.embedBuilder(client, message, `Status has been changed to ${status}.`, "", "#f44336"),
     ],
   });
 
@@ -48,12 +41,9 @@ module.exports.run = async (client, message, args) => {
 module.exports.slashRun = async (client, interaction) => {
   interaction.reply({
     embeds: [
-      client.embedBuilder(client, interaction, "", "#f44336").setAuthor({
-        name: `Status has been changed to ${interaction.options.getString(
+      client.embedBuilder(client, interaction, `Status has been changed to ${interaction.options.getString(
           "text"
-        )}.`,
-        iconURL: `https://cdn.upload.systems/uploads/6Xdg16Gh.png`,
-      }),
+        )}.`, "#f44336"),
     ],
   });
 

@@ -32,11 +32,7 @@ module.exports.run = async (client, message, args) => {
     message.channel.send({
       embeds: [
         client
-          .embedBuilder(client, message, "", "")
-          .setAuthor({
-            name: "Calculator",
-            iconURL: `https://cdn.upload.systems/uploads/LRa9Ebl5.png`,
-          })
+          .embedBuilder(client, message, "Calculator", "")
           .addFields([
             { name: "📥︲Problem:", value: "```\n" + args.join(" ") + "```" },
             {
@@ -60,11 +56,7 @@ module.exports.slashRun = async (client, interaction) => {
     interaction.reply({
       embeds: [
         client
-          .embedBuilder(client, interaction, "", "")
-          .setAuthor({
-            name: "Calculator",
-            iconURL: `https://cdn.upload.systems/uploads/LRa9Ebl5.png`,
-          })
+          .embedBuilder(client, interaction, "Calculator", "")
           .addFields([
             {
               name: "📥︲Problem:",
@@ -84,11 +76,7 @@ module.exports.slashRun = async (client, interaction) => {
   } catch (e) {
     interaction.reply({
       embeds: [
-        client.utils.errorEmbed(
-          client,
-          interaction,
-          "Please provide a expression."
-        ),
+        client.utils.errorEmbed(client, interaction, "Please provide a expression."),
       ],
       ephemeral: true,
     });

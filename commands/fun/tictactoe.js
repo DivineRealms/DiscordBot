@@ -18,12 +18,10 @@ module.exports.run = async (client, message, args, cmd) => {
     return games.delete(message.guild.id + message.author.id);
 
   if (games.get(message.guild.id + message.author.id))
-    return client.utils
-      .errorEmbed(`You are already playing a game of tic-tac-toe.`)
-      .setDescription(
+    return client.utils.errorEmbed(client, message, `You are already playing a game of tic-tac-toe.`, 
         `<:ArrowRightGray:813815804768026705>Leave the game by using **\`${
           client.conf.Settings.Prefix + cmd
-        } leave\`**.`
+        } leave\`**.`,
       );
 
   if (
@@ -33,27 +31,21 @@ module.exports.run = async (client, message, args, cmd) => {
   )
     return message.channel.send({
       embeds: [
-        client.utils.errorEmbed(
-          "Please mention a valid person you want to play against."
-        ),
+        client.utils.errorEmbed(client, message, "Please mention a valid person you want to play against."),
       ],
     });
 
   if (games.get(message.guild.id + message.mentions.users.first().id))
     return message.channel.send({
       embeds: [
-        client.utils.errorEmbed(
-          "That user is already playing a game of tic-tac-toe."
-        ),
+        client.utils.errorEmbed(client, message, "That user is already playing a game of tic-tac-toe."),
       ],
     });
 
   if (requests.get(message.guild.id + message.mentions.users.first().id))
     return message.channel.send({
       embeds: [
-        client.utils.errorEmbed(
-          "That user is already requesting to play with someone else!"
-        ),
+        client.utils.errorEmbed(client, message,  "That user is already requesting to play with someone else!"),
       ],
     });
 
@@ -79,7 +71,7 @@ module.exports.run = async (client, message, args, cmd) => {
   if (!msg.first())
     return message.channel.send({
       embeds: [
-        client.utils.errorEmbed("Looks like they didnt say yes in time.."),
+        client.utils.errorEmbed(client, message, "Looks like they didnt say yes in time.."),
       ],
     });
 
@@ -88,24 +80,17 @@ module.exports.run = async (client, message, args, cmd) => {
 
   let board = new Array(9).fill(null);
 
-  let embed = client
-    .embedBuilder(
-      client,
-      message,
-      "",
+  let embed = client.embedBuilder(client, message,
+      `${message.author.username} vs. ${
+        message.mentions.users.first().username
+      }`,
       `<:ArrowRightGray:813815804768026705>:one:┃:two:┃:three:
 <:ArrowRightGray:813815804768026705>─────────
 <:ArrowRightGray:813815804768026705>:four:┃:five:┃:six:
 <:ArrowRightGray:813815804768026705>─────────
 <:ArrowRightGray:813815804768026705>:seven:┃:eight:┃:nine:`,
       "#ec3d93"
-    )
-    .setAuthor({
-      name: `${message.author.username} vs. ${
-        message.mentions.users.first().username
-      }`,
-      iconURL: `https://cdn.upload.systems/uploads/ZdKDK7Tx.png`,
-    });
+    );
 
   message.channel.send({ embeds: [embed] }).then((emb) => {
     let filter = (m) =>
@@ -153,16 +138,13 @@ module.exports.run = async (client, message, args, cmd) => {
         !games.get(message.guild.id + message.mentions.users.first().id)
       )
         return;
-      if (!ttt.getWinner(board) && ttt.allSquaresSet(board))
-        embed.setAuthor({
-          name: "Looks like nobody won, It's a tie!",
-          iconURL: `https://cdn.upload.systems/uploads/ZdKDK7Tx.png`,
-        });
-      else if (!ttt.getWinner(board))
-        embed.setAuthor({
-          name: "Time's Up! Looks like nobody won!",
-          iconURL: `https://cdn.upload.systems/uploads/ZdKDK7Tx.png`,
-        });
+      if (!ttt.getWinner(board) && ttt.allSquaresSet(board)) {
+        embed.data.fields[0].name = "Looks like nobody won, It's a tie!";
+        embed.data.fields[0].value = "";
+      } else if (!ttt.getWinner(board)) {
+        embed.data.fields[0].name = "Time's Up! Looks like nobody won!";
+        embed.data.fields[0].value = "";
+      }
 
       emb.edit({ embeds: [embed] });
 
@@ -211,13 +193,13 @@ const setBoard = (embed, board, i, pl, message) => {
         )
           winner = [winnerOfSet(a, b, c), a, b, c];
 
-  if (!winner.length)
-    embed.description = embed.description.replace(
+  if (!winner.length) {
+    embed.data.fields[0].value = embed.data.fields[0].value.replace(
       choices[i],
       player[pl === "X" ? 0 : 1]
     );
-  else {
-    embed.author.name = `${
+  } else {
+    embed.data.fields[0].name = `${
       ttt.getWinner(board) == "X"
         ? message.author.username
         : message.mentions.users.first().username
@@ -227,7 +209,7 @@ const setBoard = (embed, board, i, pl, message) => {
     board[winner[2]] = win[pl == "X" ? 0 : 1];
     board[winner[3]] = win[pl == "X" ? 0 : 1];
 
-    embed.description = updateBoard(board);
+    embed.data.fields[0].value = updateBoard(board);
   }
 };
 

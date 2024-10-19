@@ -32,18 +32,13 @@ module.exports.run = async (client, message, args) => {
   message.channel.send({
     embeds: [
       client
-        .embedBuilder(
-          client,
-          message,
-          "",
-          `<:ArrowRightGray:813815804768026705> Bank: **$${bank}**
+        .embedBuilder(client, message, "", "", "#47a047")
+        .addFields({ 
+          name: user.username + "'s Balance", 
+          value: `<:ArrowRightGray:813815804768026705> Bank: **$${bank}**
 <:ArrowRightGray:813815804768026705> Balance: **$${balance}**
-<:ArrowRightGray:813815804768026705> Total: **$${balance + bank}**`,
-          "#47a047"
-        )
-        .setAuthor({
-          name: user.username + "'s Balance",
-          iconURL: `https://cdn.upload.systems/uploads/LrdB6F1N.png`,
+<:ArrowRightGray:813815804768026705> Total: **$${balance + bank}**`, 
+          inline: false 
         }),
     ],
   });
@@ -57,18 +52,13 @@ module.exports.slashRun = async (client, interaction) => {
   interaction.reply({
     embeds: [
       client
-        .embedBuilder(
-          client,
-          interaction,
-          "",
-          `<:ArrowRightGray:813815804768026705> Bank: **$${bank}**
+        .embedBuilder(client, interaction, "", "", "#47a047")
+        .addFields({ 
+          name: user.username + "'s Balance",
+          value: `<:ArrowRightGray:813815804768026705> Bank: **$${bank}**
 <:ArrowRightGray:813815804768026705> Balance: **$${balance}**
 <:ArrowRightGray:813815804768026705> Total: **$${balance + bank}**`,
-          "#47a047"
-        )
-        .setAuthor({
-          name: user.username + "'s Balance",
-          iconURL: `https://cdn.upload.systems/uploads/LrdB6F1N.png`,
+          inline: false
         }),
     ],
   });

@@ -23,11 +23,7 @@ module.exports.run = async (client, message, args) => {
   if (!args[1])
     return message.channel.send({
       embeds: [
-        client.utils.errorEmbed(
-          client,
-          message,
-          "Please specify your question."
-        ),
+        client.utils.errorEmbed(client, message, "Please specify your question."),
       ],
     });
 
@@ -51,7 +47,7 @@ module.exports.run = async (client, message, args) => {
   message.channel.send({
     embeds: [
       client
-        .embedBuilder(client, message, "", "", "#ec3d93")
+        .embedBuilder(client, message, "8ball", "", "#ec3d93")
         .addFields([
           { name: "Question:", value: args.join(" "), inline: false },
           {
@@ -59,11 +55,7 @@ module.exports.run = async (client, message, args) => {
             value: responses[~~(Math.random() * responses.length)],
             inline: false,
           },
-        ])
-        .setAuthor({
-          name: "8ball",
-          iconURL: `https://cdn.upload.systems/uploads/ZdKDK7Tx.png`,
-        }),
+        ]),
     ],
   });
 };
@@ -91,7 +83,7 @@ module.exports.slashRun = async (client, interaction) => {
   interaction.reply({
     embeds: [
       client
-        .embedBuilder(client, interaction, "", "", "#ec3d93")
+        .embedBuilder(client, interaction, "8ball", "", "#ec3d93")
         .addFields([
           { name: "Question:", value: question, inline: false },
           {
@@ -99,11 +91,7 @@ module.exports.slashRun = async (client, interaction) => {
             value: responses[~~(Math.random() * responses.length)],
             inline: false,
           },
-        ])
-        .setAuthor({
-          name: "8ball",
-          iconURL: `https://cdn.upload.systems/uploads/ZdKDK7Tx.png`,
-        }),
+        ]),
     ],
   });
 };

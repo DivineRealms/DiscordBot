@@ -36,11 +36,7 @@ module.exports.run = async (client, message, args) => {
       [r.name, r.id].includes(args.slice(1).join(" "))
     );
 
-  let embed = client.utils.errorEmbed(
-    client,
-    message,
-    `Invalid arguments, see ${client.conf.Settings.Prefix}help give-role.`
-  );
+  let embed = client.utils.errorEmbed(client, message, `Invalid arguments, see ${client.conf.Settings.Prefix}help give-role.`);
 
   if (!member) return message.channel.send({ embeds: [embed] });
   if (!role) return message.channel.send({ embeds: [embed] });
@@ -48,42 +44,27 @@ module.exports.run = async (client, message, args) => {
   if (member.roles.highest.position >= message.member.roles.highest.position)
     return message.channel.send({
       embeds: [
-        client.utils.errorEmbed(
-          client,
-          message,
-          "They have higher roles than you."
-        ),
+        client.utils.errorEmbed(client, message, "They have higher roles than you."),
       ],
     });
 
   if (member.roles.highest.position >= message.guild.me.roles.highest.position)
     return message.channel.send({
       embeds: [
-        client.utils.errorEmbed(
-          client,
-          message,
-          "They have a higher role than me."
-        ),
+        client.utils.errorEmbed(client, message, "They have a higher role than me."),
       ],
     });
 
   if (member.roles.cache.has(role.id))
     return message.channel.send({
       embeds: [
-        client.utils.errorEmbed(
-          client,
-          message,
-          "They already have that role."
-        ),
+        client.utils.errorEmbed(client, message, "They already have that role."),
       ],
     });
 
   message.channel.send({
     embeds: [
-      client.embedBuilder(client, message, "", "", "#3db39e").setAuthor({
-        name: `Successfully added the ${role.name} role to ${member.user.username}.`,
-        iconURL: `https://cdn.upload.systems/uploads/6KOGFYJM.png`,
-      }),
+      client.embedBuilder(client, message, `Successfully added the ${role.name} role to ${member.user.username}.`, "", "#3db39e"),
     ],
   });
 
@@ -96,11 +77,7 @@ module.exports.slashRun = async (client, interaction) => {
   const member = interaction.options.getMember("user");
   const role = interaction.options.getRole("role");
 
-  let embed = client.utils.errorEmbed(
-    client,
-    interaction,
-    `Invalid arguments, see ${interaction.px}help give-role.`
-  );
+  let embed = client.utils.errorEmbed(client, interaction, `Invalid arguments, see ${interaction.px}help give-role.`);
 
   if (!member) return interaction.reply({ embeds: [embed] });
   if (!role) return interaction.reply({ embeds: [embed] });
@@ -110,11 +87,7 @@ module.exports.slashRun = async (client, interaction) => {
   )
     return interaction.reply({
       embeds: [
-        client.utils.errorEmbed(
-          client,
-          interaction,
-          "They have higher roles than you."
-        ),
+        client.utils.errorEmbed(client, interaction, "They have higher roles than you."),
       ],
       ephemeral: true,
     });
@@ -125,11 +98,7 @@ module.exports.slashRun = async (client, interaction) => {
   )
     return interaction.reply({
       embeds: [
-        client.utils.errorEmbed(
-          client,
-          interaction,
-          "They have a higher role than me."
-        ),
+        client.utils.errorEmbed(client, interaction, "They have a higher role than me."),
       ],
       ephemeral: true,
     });
@@ -137,29 +106,18 @@ module.exports.slashRun = async (client, interaction) => {
   if (member.roles.cache.has(role.id))
     return interaction.reply({
       embeds: [
-        client.utils.errorEmbed(
-          client,
-          interaction,
-          "They already have that role."
-        ),
+        client.utils.errorEmbed(client, interaction, "They already have that role."),
       ],
       ephemeral: true,
     });
 
   interaction.reply({
     embeds: [
-      client.embedBuilder(client, interaction, "", "", "#3db39e").setAuthor({
-        name: `Successfully added the ${role.name} role to ${member.user.username}.`,
-        iconURL: `https://cdn.upload.systems/uploads/6KOGFYJM.png`,
-      }),
+      client.embedBuilder(client, interaction, `Successfully added the ${role.name} role to ${member.user.username}.`, "", "#3db39e"),
     ],
   });
 
   return member.roles.add(role).catch((_err) => {
-    client.utils.errorEmbed(
-      client,
-      interaction,
-      "Cannot add a role to that user."
-    );
+    client.utils.errorEmbed(client, interaction, "Cannot add a role to that user.");
   });
 };

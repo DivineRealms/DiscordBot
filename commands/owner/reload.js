@@ -25,11 +25,7 @@ module.exports.slashRun = async (client, interaction, args) => {
   if (!client.conf.Settings.Owner_Discord_ID.includes(interaction.user.id))
     return interaction.reply({
       embeds: [
-        client.utils.errorEmbed(
-          client,
-          interaction,
-          "Only Developers can use this command."
-        ),
+        client.utils.errorEmbed(client, interaction, "Only Developers can use this command."),
       ],
       ephemeral: true,
     });
@@ -41,11 +37,7 @@ module.exports.slashRun = async (client, interaction, args) => {
   if (!command)
     return interaction.reply({
       embeds: [
-        client.utils.errorEmbed(
-          client,
-          interaction,
-          `You need to provide a command to reload.`
-        ),
+        client.utils.errorEmbed(client, interaction, `You need to provide a command to reload.`),
       ],
       ephemeral: true,
     });
@@ -76,10 +68,7 @@ module.exports.slashRun = async (client, interaction, args) => {
 
     interaction.reply({
       embeds: [
-        client.embedBuilder(client, interaction, "", "", "#3db39e").setAuthor({
-          name: `Command ${command.name} has been reloaded successfully.`,
-          iconURL: `https://cdn.upload.systems/uploads/6KOGFYJM.png`,
-        }),
+        client.embedBuilder(client, interaction, `Command ${command.name} has been reloaded successfully.`, "", "#3db39e"),
       ],
     });
   } catch (err) {

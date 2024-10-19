@@ -205,13 +205,10 @@ module.exports = async (client) => {
       }
 
       const votesEmbed = new EmbedBuilder()
-        .setAuthor({
+        .addFields({
           name: `Statistika glasanja na kraju meseca`,
-          iconURL: `https://cdn.upload.systems/uploads/sYDS6yZI.png`,
+          value: `Hvala svima koji su glasali za naš server.\n\n${content}`,
         })
-        .setDescription(
-          `Hvala svima koji su glasali za naš server.\n\n${content}`
-        )
         .setColor("#7ec0ff");
 
       const lbChannel = client.channels.cache.get(

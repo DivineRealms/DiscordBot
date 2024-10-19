@@ -16,7 +16,7 @@ module.exports.run = async (client, message, args) =>
         .embedBuilder(
           client,
           message,
-          "",
+          message.guild.name + "'s Information",
           `<:ArrowRightGray:813815804768026705>Created: <t:${Math.round(
             message.guild.createdTimestamp / 1000
           )}:R>
@@ -36,12 +36,7 @@ module.exports.run = async (client, message, args) =>
             message.guild.emojis.cache.size
           }**`,
           "#60b8ff"
-        )
-        .setAuthor({
-          name: message.guild.name + "'s Information",
-          iconURL: `https://cdn.upload.systems/uploads/6uDK0XAN.png`,
-        })
-        .setThumbnail(message.guild.iconURL({ size: 1024, dynamic: true })),
+        ).setThumbnail(message.guild.iconURL({ size: 1024, dynamic: true })),
     ],
   });
 
@@ -52,7 +47,7 @@ module.exports.slashRun = async (client, interaction) =>
         .embedBuilder(
           client,
           interaction,
-          "",
+          interaction.guild.name + "'s Information",
           `<:ArrowRightGray:813815804768026705>Created: <t:${Math.round(
             interaction.guild.createdTimestamp / 1000
           )}:R>
@@ -76,11 +71,6 @@ module.exports.slashRun = async (client, interaction) =>
             interaction.guild.emojis.cache.size
           }**`,
           "#60b8ff"
-        )
-        .setAuthor({
-          name: interaction.guild.name + "'s Information",
-          iconURL: `https://cdn.upload.systems/uploads/6uDK0XAN.png`,
-        })
-        .setThumbnail(interaction.guild.iconURL({ size: 1024, dynamic: true })),
+        ).setThumbnail(interaction.guild.iconURL({ size: 1024, dynamic: true })),
     ],
   });

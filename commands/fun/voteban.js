@@ -32,23 +32,17 @@ module.exports.run = async (client, message, args) => {
   )
     return await message.channel.send({
       embeds: [
-        client.embedBuilder(client, message, "", "", "Red").setAuthor({
-          name: `You have already voted to ban ${
+        client.utils.errorEmbed(client, message, `You have already voted to ban ${
             user.username
-          } (${Number(currentBans.votes)}/6).`,
-          iconURL: `https://cdn.upload.systems/uploads/6Xdg16Gh.png`,
-        }),
+          } (${Number(currentBans.votes)}/6).`),
       ]
-    });;
+    });
 
   message.channel.send({
     embeds: [
-      client.embedBuilder(client, message, "", "", "#f44336").setAuthor({
-        name: `${message.author.username} has voted to ban ${
+      client.embedBuilder(client, message, `${message.author.username} has voted to ban ${
           user.username
-        } (${Number(currentBans.votes) + 1}/6).`,
-        iconURL: `https://cdn.upload.systems/uploads/6Xdg16Gh.png`,
-      }),
+        } (${Number(currentBans.votes) + 1}/6).`, "", "#f44336"),
     ],
   });
 
@@ -63,21 +57,14 @@ module.exports.run = async (client, message, args) => {
     client.voteBans.delete(user.id);
     message.channel.send({
       embeds: [
-        client
-          .embedBuilder(
-            client,
-            message,
-            "",
-            `People who voted: ||${currentBans.users
-              .map((x) => `<@!${x}>`)
-              .join(", ")
-              .trim()}||`,
-            "#f44336"
-          )
-          .setAuthor({
-            name: `${user.username} got banned after reaching 6 votes!`,
-            iconURL: `https://cdn.upload.systems/uploads/6Xdg16Gh.png`,
-          }),
+        client.embedBuilder(client, message,
+          `${user.username} got banned after reaching 6 votes!`,
+          `People who voted: ||${currentBans.users
+            .map((x) => `<@!${x}>`)
+            .join(", ")
+            .trim()}||`,
+          "#f44336"
+        ),
       ],
     });
   }
@@ -96,23 +83,17 @@ module.exports.slashRun = async (client, interaction) => {
   )
     return await interaction.reply({
       embeds: [
-        client.embedBuilder(client, interaction, "", "", "Red").setAuthor({
-          name: `You have already voted to ban ${
+        client.utils.errorEmbed(client, interaction, `You have already voted to ban ${
             user.username
-          } (${Number(currentBans.votes)}/6).`,
-          iconURL: `https://cdn.upload.systems/uploads/6Xdg16Gh.png`,
-        }),
+          } (${Number(currentBans.votes)}/6).`,),
       ], ephemeral: true
     });
 
   await interaction.reply({
     embeds: [
-      client.embedBuilder(client, interaction, "", "", "#f44336").setAuthor({
-        name: `${interaction.user.username} has voted to ban ${
+      client.embedBuilder(client, interaction, `${interaction.user.username} has voted to ban ${
           user.username
-        } (${Number(currentBans.votes) + 1}/6).`,
-        iconURL: `https://cdn.upload.systems/uploads/6Xdg16Gh.png`,
-      }),
+        } (${Number(currentBans.votes) + 1}/6).`, "", "#f44336"),
     ],
   });
 
@@ -127,21 +108,14 @@ module.exports.slashRun = async (client, interaction) => {
     client.voteBans.delete(user.id);
     await interaction.channel.send({
       embeds: [
-        client
-          .embedBuilder(
-            client,
-            interaction,
-            "",
-            `People who voted: ||${currentBans.users
-              .map((x) => `<@!${x}>`)
-              .join(", ")
-              .trim()}||`,
-            "#f44336"
-          )
-          .setAuthor({
-            name: `${user.username} got banned after reaching 6 votes!`,
-            iconURL: `https://cdn.upload.systems/uploads/6Xdg16Gh.png`,
-          }),
+        client.embedBuilder(client, interaction,
+          `${user.username} got banned after reaching 6 votes!`,
+          `People who voted: ||${currentBans.users
+            .map((x) => `<@!${x}>`)
+            .join(", ")
+            .trim()}||`,
+          "#f44336"
+        ),
       ],
     });
   }

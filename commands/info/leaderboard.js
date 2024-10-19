@@ -23,25 +23,21 @@ module.exports.run = async (client, message) => {
       label: "Economy",
       emoji: "💵",
       color: "#47a047",
-      avatar: `https://cdn.upload.systems/uploads/LrdB6F1N.png`,
     },
     {
       label: "Level",
       emoji: "⭐",
       color: "#f2d422",
-      avatar: `https://cdn.upload.systems/uploads/JOATppQ3.png`,
     },
     {
       label: "Bumps",
       emoji: "📊",
       color: "#1cc0f9",
-      avatar: `https://cdn.upload.systems/uploads/pVry3Mav.png`,
     },
     {
       label: "Votes",
       emoji: "📝",
       color: "#8ee26b",
-      avatar: `https://cdn.upload.systems/uploads/U5K71mCE.png`,
     },
   ];
 
@@ -54,7 +50,7 @@ module.exports.run = async (client, message) => {
         .embedBuilder(
           client,
           message,
-          "",
+          `${leaderboards[i].label}`,
           i == 0
             ? await client.utils.lbMoney(client, message)
             : i == 3
@@ -66,11 +62,7 @@ module.exports.run = async (client, message) => {
                 leaderboards[i].label.toLowerCase()
               ),
           `${leaderboards[i].color}`
-        )
-        .setAuthor({
-          name: `${leaderboards[i].label}`,
-          iconURL: leaderboards[i].avatar,
-        }),
+        ),
     });
   }
 
@@ -98,25 +90,21 @@ module.exports.slashRun = async (client, interaction) => {
       label: "Economy",
       emoji: "💵",
       color: "#47a047",
-      avatar: `https://cdn.upload.systems/uploads/LrdB6F1N.png`,
     },
     {
       label: "Level",
       emoji: "⭐",
       color: "#f2d422",
-      avatar: `https://cdn.upload.systems/uploads/JOATppQ3.png`,
     },
     {
       label: "Bumps",
       emoji: "📊",
       color: "#1cc0f9",
-      avatar: `https://cdn.upload.systems/uploads/pVry3Mav.png`,
     },
     {
       label: "Votes",
       emoji: "📝",
       color: "#8ee26b",
-      avatar: `https://cdn.upload.systems/uploads/U5K71mCE.png`,
     },
   ];
 
@@ -129,7 +117,7 @@ module.exports.slashRun = async (client, interaction) => {
         .embedBuilder(
           client,
           interaction,
-          "",
+          `${leaderboards[i].label}`,
           i == 0
             ? await client.utils.lbMoney(client, interaction)
             : i == 3
@@ -141,11 +129,7 @@ module.exports.slashRun = async (client, interaction) => {
                 leaderboards[i].label.toLowerCase()
               ),
           `${leaderboards[i].color}`
-        )
-        .setAuthor({
-          name: `${leaderboards[i].label}`,
-          iconURL: leaderboards[i].avatar,
-        }),
+        ),
     });
   }
 

@@ -34,22 +34,14 @@ module.exports.run = async (client, message, args) => {
       if (!args[0])
         return message.channel.send({
           embeds: [
-            client.utils.errorEmbed(
-              client,
-              message,
-              "You need to enter a location."
-            ),
+            client.utils.errorEmbed(client, message, "You need to enter a location."),
           ],
         });
 
       if (result === undefined || result.length === 0)
         return message.channel.send({
           embeds: [
-            client.utils.errorEmbed(
-              client,
-              message,
-              "You have entered an Invalid Location."
-            ),
+            client.utils.errorEmbed(client, message, "You have entered an Invalid Location."),
           ],
         });
 
@@ -62,18 +54,13 @@ module.exports.run = async (client, message, args) => {
             .embedBuilder(
               client,
               message,
-              "",
+              `Weather in ${current.observationpoint}`,
               `<:ArrowRightGray:813815804768026705>Temperature: **${current.temperature}°${location.degreetype}**
 <:ArrowRightGray:813815804768026705>Timezone: **UTC${location.timezone}**
 <:ArrowRightGray:813815804768026705>Humidity: **${current.humidity}%**
 <:ArrowRightGray:813815804768026705>Wind: **${current.winddisplay}**`,
               "#60b8ff"
-            )
-            .setAuthor({
-              name: `Weather in ${current.observationpoint}`,
-              iconURL: `https://cdn.upload.systems/uploads/6uDK0XAN.png`,
-            })
-            .setThumbnail(current.imageUrl),
+            ).setThumbnail(current.imageUrl),
         ],
       });
     }
@@ -95,11 +82,7 @@ module.exports.slashRun = async (client, interaction) => {
       if (result === undefined || result.length === 0)
         return interaction.reply({
           embeds: [
-            client.utils.errorEmbed(
-              client,
-              interaction,
-              "You have entered an Invalid Location."
-            ),
+            client.utils.errorEmbed(client, interaction, "You have entered an Invalid Location."),
           ],
           ephemeral: true,
         });
@@ -113,18 +96,13 @@ module.exports.slashRun = async (client, interaction) => {
             .embedBuilder(
               client,
               interaction,
-              "",
+              `Weather in ${current.observationpoint}`,
               `<:ArrowRightGray:813815804768026705>Temperature: **${current.temperature}°${location.degreetype}**
 <:ArrowRightGray:813815804768026705>Timezone: **UTC${location.timezone}**
 <:ArrowRightGray:813815804768026705>Humidity: **${current.humidity}%**
 <:ArrowRightGray:813815804768026705>Wind: **${current.winddisplay}**`,
               "#60b8ff"
-            )
-            .setAuthor({
-              name: `Weather in ${current.observationpoint}`,
-              iconURL: `https://cdn.upload.systems/uploads/6uDK0XAN.png`,
-            })
-            .setThumbnail(current.imageUrl),
+            ).setThumbnail(current.imageUrl),
         ],
       });
     }

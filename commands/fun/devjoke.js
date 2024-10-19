@@ -42,20 +42,12 @@ module.exports.run = async (client, message) => {
   message.channel.send({
     embeds: [
       client
-        .embedBuilder(
-          client,
-          message,
-          "",
+        .embedBuilder(client, message, "Developer Joke",
           responses[~~(Math.random() * responses.length)],
           "#ec3d93"
-        )
-        .setThumbnail(
+        ).setThumbnail(
           `https://cdn.discordapp.com/attachments/735248366291648523/742124928165347428/hi.png`
-        )
-        .setAuthor({
-          name: "Developer Joke",
-          iconURL: `https://cdn.upload.systems/uploads/ZdKDK7Tx.png`,
-        }),
+        ),
     ],
   });
 };
@@ -93,20 +85,12 @@ module.exports.run = async (client, interaction) => {
   interaction.reply({
     embeds: [
       client
-        .embedBuilder(
-          client,
-          interaction,
-          "",
+        .embedBuilder(client, interaction, "Developer Joke",
           responses[~~(Math.random() * responses.length)],
           "#ec3d93"
-        )
-        .setThumbnail(
+        ).setThumbnail(
           `https://cdn.discordapp.com/attachments/735248366291648523/742124928165347428/hi.png`
-        )
-        .setAuthor({
-          name: "Developer Joke",
-          iconURL: `https://cdn.upload.systems/uploads/ZdKDK7Tx.png`,
-        }),
+        ),
     ],
   });
 };

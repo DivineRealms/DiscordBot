@@ -19,11 +19,7 @@ module.exports.run = async (client, message, args) => {
   message.channel.send({
     embeds: [
       client
-        .embedBuilder(client, message, "", res.slip.advice, "#ec3d93")
-        .setAuthor({
-          name: "Advice",
-          iconURL: `https://cdn.upload.systems/uploads/ZdKDK7Tx.png`,
-        }),
+        .embedBuilder(client, message, "Advice", res.slip.advice, "#ec3d93"),
     ],
   });
 };
@@ -36,11 +32,7 @@ module.exports.slashRun = async (client, interaction) => {
   interaction.reply({
     embeds: [
       client
-        .embedBuilder(client, interaction, "", res.slip.advice, "#ec3d93")
-        .setAuthor({
-          name: "Advice",
-          iconURL: `https://cdn.upload.systems/uploads/ZdKDK7Tx.png`,
-        }),
+        .embedBuilder(client, interaction, "Advice", res.slip.advice, "#ec3d93"),
     ],
   });
 };

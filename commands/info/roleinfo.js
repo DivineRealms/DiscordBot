@@ -44,11 +44,7 @@ module.exports.run = async (client, message) => {
 <:ArrowRightGray:813815804768026705>Color: **${role.hexColor}**
 <:ArrowRightGray:813815804768026705>Hoisted: **${role.hoist}**`,
           "#60b8ff"
-        )
-        .setAuthor({
-          name: `${role.name}'s Information`,
-          iconURL: `https://cdn.upload.systems/uploads/6uDK0XAN.png`,
-        }),
+        ),
     ],
   });
 };
@@ -71,11 +67,7 @@ module.exports.slashRun = async (client, interaction) => {
 <:ArrowRightGray:813815804768026705>Color: **${role.hexColor}**
 <:ArrowRightGray:813815804768026705>Hoisted: **${role.hoist}**`,
           "#60b8ff"
-        )
-        .setAuthor({
-          name: `${role.name}'s Information`,
-          iconURL: `https://cdn.upload.systems/uploads/6uDK0XAN.png`,
-        }),
+        ),
     ],
   });
 };

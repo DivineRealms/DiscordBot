@@ -21,11 +21,7 @@ module.exports = {
 };
 
 module.exports.run = async (client, message, args) => {
-  let errEmb = client.utils.errorEmbed(
-    client,
-    message,
-    "Please provide a valid time."
-  );
+  let errEmb = client.utils.errorEmbed(client, message, "Please provide a valid time.");
 
   if (!args[0]) return message.channel.send({ embeds: [errEmb] });
   if (isNaN(parse(args[0]))) return message.channel.send({ embeds: [errEmb] });
@@ -37,7 +33,7 @@ module.exports.run = async (client, message, args) => {
         .embedBuilder(
           client,
           message,
-          "",
+          "Active Timer",
           `<:ArrowRightGray:813815804768026705>Time: **${client.utils.formatTime(
             end - Date.now(),
             {
@@ -45,11 +41,7 @@ module.exports.run = async (client, message, args) => {
             }
           )}**.`,
           "#ffc13f"
-        )
-        .setAuthor({
-          name: "Active Timer",
-          iconURL: `https://cdn.upload.systems/uploads/40vZa4wv.png`,
-        }),
+        ),
     ],
   });
 
@@ -58,7 +50,7 @@ module.exports.run = async (client, message, args) => {
       .embedBuilder(
         client,
         message,
-        "",
+        "Active Timer",
         `<:ArrowRightGray:813815804768026705>Time: **${client.utils.formatTime(
           end - Date.now(),
           {
@@ -66,19 +58,10 @@ module.exports.run = async (client, message, args) => {
           }
         )}**.`,
         "#ffc13f"
-      )
-      .setAuthor({
-        name: "Active Timer",
-        iconURL: `https://cdn.upload.systems/uploads/40vZa4wv.png`,
-      });
+      );
 
     if (Date.now() > end) {
-      const done = client
-        .embedBuilder(client, message, "", "", "#ffc13f")
-        .setAuthor({
-          name: "Timer has ended!",
-          iconURL: `https://cdn.upload.systems/uploads/40vZa4wv.png`,
-        });
+      const done = client.embedBuilder(client, message, "Timer has ended!", "", "#ffc13f");
 
       clearInterval(timer);
       return msg.edit({ embeds: [done] });
@@ -88,11 +71,7 @@ module.exports.run = async (client, message, args) => {
 
 module.exports.slashRun = async (client, interaction) => {
   const time = interaction.options.getString("time");
-  let errEmb = client.utils.errorEmbed(
-    client,
-    interaction,
-    "Please provide a valid time."
-  );
+  let errEmb = client.utils.errorEmbed(client, interaction, "Please provide a valid time.");
 
   if (isNaN(parse(time)))
     return interaction.reply({ embeds: [errEmb], ephemeral: true });
@@ -104,7 +83,7 @@ module.exports.slashRun = async (client, interaction) => {
         .embedBuilder(
           client,
           interaction,
-          "",
+          "Active Timer",
           `<:ArrowRightGray:813815804768026705>Time: **${client.utils.formatTime(
             end - Date.now(),
             {
@@ -112,11 +91,7 @@ module.exports.slashRun = async (client, interaction) => {
             }
           )}**.`,
           "#ffc13f"
-        )
-        .setAuthor({
-          name: "Active Timer",
-          iconURL: `https://cdn.upload.systems/uploads/40vZa4wv.png`,
-        }),
+        ),
     ],
     fetchReply: true,
   });
@@ -126,7 +101,7 @@ module.exports.slashRun = async (client, interaction) => {
       .embedBuilder(
         client,
         interaction,
-        "",
+        "Active Timer",
         `<:ArrowRightGray:813815804768026705>Time: **${client.utils.formatTime(
           end - Date.now(),
           {
@@ -134,19 +109,10 @@ module.exports.slashRun = async (client, interaction) => {
           }
         )}**.`,
         "#ffc13f"
-      )
-      .setAuthor({
-        name: "Active Timer",
-        iconURL: `https://cdn.upload.systems/uploads/40vZa4wv.png`,
-      });
+      );
 
     if (Date.now() > end) {
-      const done = client
-        .embedBuilder(client, interaction, "", "", "#ffc13f")
-        .setAuthor({
-          name: "Timer has ended!",
-          iconURL: `https://cdn.upload.systems/uploads/40vZa4wv.png`,
-        });
+      const done = client.embedBuilder(client, interaction, "Timer has ended!", "", "#ffc13f");
 
       clearInterval(timer);
       return msg.edit({ embeds: [done] });

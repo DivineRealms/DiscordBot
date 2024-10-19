@@ -55,7 +55,7 @@ module.exports.run = async (client, message, args) => {
     .embedBuilder(
       client,
       message,
-      "",
+      member.user.username + "'s Information",
       `<:ArrowRightGray:813815804768026705>Nickname: **\`${nickname}\`**
 <:ArrowRightGray:813815804768026705>Created <t:${Math.round(
         member.user.createdTimestamp / 1000
@@ -68,11 +68,7 @@ module.exports.run = async (client, message, args) => {
 <:ArrowRightGray:813815804768026705>Roles: ${roles}`,
       "#60b8ff"
     )
-    .setThumbnail(member.user.displayAvatarURL({ size: 1024, dynamic: true }))
-    .setAuthor({
-      name: member.user.username + "'s Information",
-      iconURL: `https://cdn.upload.systems/uploads/6uDK0XAN.png`,
-    });
+    .setThumbnail(member.user.displayAvatarURL({ size: 1024, dynamic: true }));
 
   message.channel.send({ embeds: [embed] });
 };
@@ -103,7 +99,7 @@ module.exports.slashRun = async (client, interaction) => {
     .embedBuilder(
       client,
       interaction,
-      "",
+      member.user.username + "'s Information",
       `<:ArrowRightGray:813815804768026705>Nickname: **\`${nickname}\`**
 <:ArrowRightGray:813815804768026705>Created <t:${Math.round(
         member.user.createdTimestamp / 1000
@@ -116,11 +112,7 @@ module.exports.slashRun = async (client, interaction) => {
 <:ArrowRightGray:813815804768026705>Roles: ${roles}`,
       "#60b8ff"
     )
-    .setThumbnail(member.user.displayAvatarURL({ size: 1024, dynamic: true }))
-    .setAuthor({
-      name: member.user.username + "'s Information",
-      iconURL: `https://cdn.upload.systems/uploads/6uDK0XAN.png`,
-    });
+    .setThumbnail(member.user.displayAvatarURL({ size: 1024, dynamic: true }));
 
   interaction.reply({ embeds: [embed] });
 };

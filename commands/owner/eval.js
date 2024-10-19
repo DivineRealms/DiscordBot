@@ -26,11 +26,7 @@ module.exports.run = async (client, message, args) => {
   if (!client.conf.Settings.Owner_Discord_ID.includes(message.author.id))
     return message.channel.send({
       embeds: [
-        client.utils.errorEmbed(
-          client,
-          message,
-          "Only Developers can use this command."
-        ),
+        client.utils.errorEmbed(client, message, "Only Developers can use this command."),
       ],
     });
 
@@ -38,11 +34,7 @@ module.exports.run = async (client, message, args) => {
   if (!code)
     return message.channel.send({
       embeds: [
-        client.utils.errorEmbed(
-          client,
-          message,
-          "You need to enter code to evaluate."
-        ),
+        client.utils.errorEmbed(client, message, "You need to enter code to evaluate."),
       ],
     });
   try {
@@ -51,11 +43,7 @@ module.exports.run = async (client, message, args) => {
     const cleaned = await clean(client, evaled);
 
     let embed = client
-      .embedBuilder(client, message, "", "", "Green")
-      .setAuthor({
-        name: "Code Evaluation",
-        iconURL: `https://cdn.upload.systems/uploads/GVd0PBIt.png`,
-      })
+      .embedBuilder(client, message, "Code Evaluation", "", "Green")
       .addFields({ name: "📥︲Input:", value: `\`\`\`js\n${code}\`\`\`` });
 
     if (cleaned.length >= 990) {
@@ -102,11 +90,7 @@ module.exports.slashRun = async (client, interaction) => {
   if (!client.conf.Settings.Owner_Discord_ID.includes(interaction.user.id))
     return interaction.reply({
       embeds: [
-        client.utils.errorEmbed(
-          client,
-          interaction,
-          "Only Developers can use this command."
-        ),
+        client.utils.errorEmbed(client, interaction, "Only Developers can use this command."),
       ],
       ephemeral: true,
     });
@@ -140,11 +124,7 @@ module.exports.slashRun = async (client, interaction) => {
         const cleaned = await clean(client, evaled);
 
         let embed = client
-          .embedBuilder(client, interaction, "", "", "Green")
-          .setAuthor({
-            name: "Code Evaluation",
-            iconURL: `https://cdn.upload.systems/uploads/GVd0PBIt.png`,
-          })
+          .embedBuilder(client, interaction, "Code Evaluation", "", "Green")
           .addFields({
             name: "📥︲Input:",
             value: `\`\`\`js\n${

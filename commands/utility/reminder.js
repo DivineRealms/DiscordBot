@@ -49,16 +49,12 @@ module.exports.run = async (client, message, args) => {
         .embedBuilder(
           client,
           message,
-          "",
+          "Reminder",
           `<:ArrowRightGray:813815804768026705>I'll remind you for **\`${reason.join(
             " "
           )}\`** in ${client.utils.formatTime(parse(end))}.`,
           "#f1d333"
-        )
-        .setAuthor({
-          name: "Reminder",
-          iconURL: `https://cdn.upload.systems/uploads/PX2kS3Kp.png`,
-        }),
+        ),
     ],
   });
 
@@ -70,14 +66,10 @@ module.exports.run = async (client, message, args) => {
             .embedBuilder(
               client,
               message,
-              "",
+              "Reminder",
               `<:ArrowRightGray:813815804768026705>${reason.join(" ")}.`,
               "#f1d333"
-            )
-            .setAuthor({
-              name: "Reminder",
-              iconURL: `https://cdn.upload.systems/uploads/PX2kS3Kp.png`,
-            }),
+            ),
         ],
       })
       .catch(() => {});
@@ -91,11 +83,7 @@ module.exports.slashRun = async (client, interaction) => {
   if (isNaN(parse(time)))
     return interaction.reply({
       embeds: [
-        client.utils.errorEmbed(
-          client,
-          interaction,
-          "You need to provide time."
-        ),
+        client.utils.errorEmbed(client, interaction, "You need to provide time."),
       ],
       ephemeral: true,
     });
@@ -106,16 +94,12 @@ module.exports.slashRun = async (client, interaction) => {
         .embedBuilder(
           client,
           interaction,
-          "",
+          "Reminder",
           `<:ArrowRightGray:813815804768026705>I'll remind you for **\`${reason}\`** in ${client.utils.formatTime(
             parse(time)
           )}.`,
           "#f1d333"
-        )
-        .setAuthor({
-          name: "Reminder",
-          iconURL: `https://cdn.upload.systems/uploads/PX2kS3Kp.png`,
-        }),
+        ),
     ],
   });
 
@@ -128,14 +112,10 @@ module.exports.slashRun = async (client, interaction) => {
             .embedBuilder(
               client,
               message,
-              "",
+              "Reminder",
               `<:ArrowRightGray:813815804768026705>${reason.join(" ")}.`,
               "#f1d333"
-            )
-            .setAuthor({
-              name: "Reminder",
-              iconURL: `https://cdn.upload.systems/uploads/PX2kS3Kp.png`,
-            }),
+            ),
         ],
       })
       .catch(() => {});

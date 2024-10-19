@@ -22,17 +22,10 @@ module.exports.run = async (client, message, args) => {
   message.channel.send({
     embeds: [
       client
-        .embedBuilder(
-          client,
-          message,
-          "",
+        .embedBuilder(client, message, "Never have I ever",
           `<:ArrowRightGray:813815804768026705>${nhie.slice(13, nhie.length)}`,
           "#ec3d93"
-        )
-        .setAuthor({
-          name: "Never have I ever",
-          iconURL: `https://cdn.upload.systems/uploads/ZdKDK7Tx.png`,
-        }),
+        ),
     ],
   });
 };
@@ -47,17 +40,10 @@ module.exports.slashRun = async (client, interaction) => {
   interaction.reply({
     embeds: [
       client
-        .embedBuilder(
-          client,
-          interaction,
-          "",
+        .embedBuilder(client, interaction, "Never have I ever",
           `<:ArrowRightGray:813815804768026705>${nhie.slice(13, nhie.length)}`,
           "#ec3d93"
-        )
-        .setAuthor({
-          name: "Never have I ever",
-          iconURL: `https://cdn.upload.systems/uploads/ZdKDK7Tx.png`,
-        }),
+        ),
     ],
   });
 };

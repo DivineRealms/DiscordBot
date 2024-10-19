@@ -28,12 +28,8 @@ module.exports.run = async (client, message, args) => {
   message.channel.send({
     embeds: [
       client
-        .embedBuilder(client, message, "", "", "#ec3d93")
-        .setImage(user.displayAvatarURL({ dynamic: true, size: 4096 }))
-        .setAuthor({
-          name: `${user.username}'s Avatar`,
-          iconURL: `https://cdn.upload.systems/uploads/ZdKDK7Tx.png`,
-        }),
+        .embedBuilder(client, message, `${user.username}'s Avatar`, "", "#ec3d93")
+        .setImage(user.displayAvatarURL({ dynamic: true, size: 4096 })),
     ],
   });
 };
@@ -44,12 +40,8 @@ module.exports.slashRun = async (client, interaction) => {
   interaction.reply({
     embeds: [
       client
-        .embedBuilder(client, interaction, "", "", "#ec3d93")
-        .setImage(user.displayAvatarURL({ dynamic: true, size: 4096 }))
-        .setAuthor({
-          name: `${user.username}'s Avatar`,
-          iconURL: `https://cdn.upload.systems/uploads/ZdKDK7Tx.png`,
-        }),
+        .embedBuilder(client, interaction, `${user.username}'s Avatar`, "", "#ec3d93")
+        .setImage(user.displayAvatarURL({ dynamic: true, size: 4096 })),
     ],
   });
 };

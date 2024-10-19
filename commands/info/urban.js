@@ -25,11 +25,7 @@ module.exports.run = async (client, message, args) => {
   if (!args[0])
     return message.channel.send({
       embeds: [
-        client.utils.errorEmbed(
-          client,
-          message,
-          "You need to enter a term to search for."
-        ),
+        client.utils.errorEmbed(client, message, "You need to enter a term to search for."),
       ],
     });
 
@@ -38,23 +34,14 @@ module.exports.run = async (client, message, args) => {
   if (!def)
     return message.channel.send({
       embeds: [
-        client.utils.errorEmbed(
-          client,
-          message,
-          `No Results found for ${args[0]}.`
-        ),
+        client.utils.errorEmbed(client, message, `No Results found for ${args[0]}.`),
       ],
     });
 
   message.channel.send({
     embeds: [
       client
-        .embedBuilder(client, message, "", "", "#60b8ff")
-        .setAuthor({
-          name: args[0],
-          iconURL: `https://cdn.upload.systems/uploads/6uDK0XAN.png`,
-          url: def.urbanURL,
-        })
+        .embedBuilder(client, message, args[0], "", "#60b8ff")
         .addFields([
           {
             name: `Definition`,
@@ -83,10 +70,7 @@ module.exports.slashRun = async (client, interaction) => {
   if (!def)
     return interaction.reply({
       embeds: [
-        client.utils.errorEmbed(
-          client,
-          interaction,
-          `No Results found for ${search}.`
+        client.utils.errorEmbed(client, interaction, `No Results found for ${search}.`
         ),
       ],
       ephemeral: true,
@@ -95,12 +79,7 @@ module.exports.slashRun = async (client, interaction) => {
   interaction.reply({
     embeds: [
       client
-        .embedBuilder(client, interaction, "", "", "#60b8ff")
-        .setAuthor({
-          name: search,
-          iconURL: `https://cdn.upload.systems/uploads/6uDK0XAN.png`,
-          url: def.urbanURL,
-        })
+        .embedBuilder(client, interaction, search, "", "#60b8ff")
         .addFields([
           {
             name: `Definition`,

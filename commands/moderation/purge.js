@@ -23,33 +23,21 @@ module.exports.run = async (client, message, args) => {
   if (!args[0] || isNaN(args[0]))
     return message.channel.send({
       embeds: [
-        client.utils.errorEmbed(
-          client,
-          message,
-          "You need to provide amount of messages to remove."
-        ),
+        client.utils.errorEmbed(client, message, "You need to provide amount of messages to remove."),
       ],
     });
 
   if (args[0] > 100)
     return message.channel.send({
       embeds: [
-        client.utils.errorEmbed(
-          client,
-          message,
-          "You cannot purge more than 100 messages at once."
-        ),
+        client.utils.errorEmbed(client, message, "You cannot purge more than 100 messages at once."),
       ],
     });
 
   if (args[0] < 1)
     return message.channel.send({
       embeds: [
-        client.utils.errorEmbed(
-          client,
-          message,
-          "You need to delete at least 1 message."
-        ),
+        client.utils.errorEmbed(client, message, "You need to delete at least 1 message."),
       ],
     });
 
@@ -58,19 +46,12 @@ module.exports.run = async (client, message, args) => {
     .then((_messages) => {
       message.reply({
         embeds: [
-          client.embedBuilder(client, message, "", "", "#f44336").setAuthor({
-            name: `You have purged ${args[0]} mesages.`,
-            iconURL: `https://cdn.upload.systems/uploads/6Xdg16Gh.png`,
-          }),
+          client.embedBuilder(client, message, `You have purged ${args[0]} mesages.`, "", "#f44336"),
         ],
       });
     })
     .catch(() =>
-      client.utils.errorEmbed(
-        client,
-        message,
-        "Cannot remove messages older than 14 days."
-      )
+      client.utils.errorEmbed(client, message, "Cannot remove messages older than 14 days."),
     );
 };
 
@@ -80,11 +61,7 @@ module.exports.slashRun = async (client, interaction) => {
   if (amount > 100)
     return interaction.reply({
       embeds: [
-        client.utils.errorEmbed(
-          client,
-          message,
-          "You cannot purge more than 100 messages at once."
-        ),
+        client.utils.errorEmbed(client, interaction, "You cannot purge more than 100 messages at once."),
       ],
       ephemeral: true,
     });
@@ -92,11 +69,7 @@ module.exports.slashRun = async (client, interaction) => {
   if (amount < 1)
     return interaction.reply({
       embeds: [
-        client.utils.errorEmbed(
-          client,
-          interaction,
-          "You need to delete at least 1 message."
-        ),
+        client.utils.errorEmbed(client, interaction, "You need to delete at least 1 message."),
       ],
       ephemeral: true,
     });
@@ -106,21 +79,12 @@ module.exports.slashRun = async (client, interaction) => {
     .then((_messages) => {
       interaction.reply({
         embeds: [
-          client
-            .embedBuilder(client, interaction, "", "", "#f44336")
-            .setAuthor({
-              name: `You have purged ${amount} mesages.`,
-              iconURL: `https://cdn.upload.systems/uploads/6Xdg16Gh.png`,
-            }),
+          client.embedBuilder(client, interaction, `You have purged ${amount} mesages.`, "", "#f44336"),
         ],
         ephemeral: true,
       });
     })
     .catch(() =>
-      client.utils.errorEmbed(
-        client,
-        interaction,
-        "Cannot remove messages older than 14 days."
-      )
+      client.utils.errorEmbed(client, interaction, "Cannot remove messages older than 14 days.")
     );
 };

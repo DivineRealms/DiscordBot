@@ -30,22 +30,14 @@ module.exports.run = async (client, message, args) => {
   if (!client.conf.Birthday_System.Enabled)
     return message.channel.send({
       embeds: [
-        client.utils.errorEmbed(
-          client,
-          message,
-          "Birthday System is not enabled."
-        ),
+        client.utils.errorEmbed(client, message, "Birthday System is not enabled."),
       ],
     });
 
   if (birthday)
     return message.channel.send({
       embeds: [
-        client.utils.errorEmbed(
-          client,
-          message,
-          "You have already set your birthday."
-        ),
+        client.utils.errorEmbed( client, message, "You have already set your birthday."),
       ],
     });
 
@@ -57,11 +49,7 @@ module.exports.run = async (client, message, args) => {
   if (isNaN(date))
     return message.channel.send({
       embeds: [
-        client.utils.errorEmbed(
-          client,
-          message,
-          "Invalid format, example: Jan 21 2004"
-        ),
+        client.utils.errorEmbed( client, message, "Invalid format, example: Jan 21 2004"),
       ],
     });
 
@@ -69,22 +57,15 @@ module.exports.run = async (client, message, args) => {
   if (age <= 12)
     return message.channel.send({
       embeds: [
-        client.utils.errorEmbed(
-          client,
-          message,
-          `You can't enter a year greater than ${
+        client.utils.errorEmbed(client, message, `You can't enter a year greater than ${
             new Date().getFullYear() - 12
-          }.`
-        ),
+          }.`),
       ],
     });
 
   message.channel.send({
     embeds: [
-      client.embedBuilder(client, message, "", "", "#3db39e").setAuthor({
-        name: "Successfully set your birthday.",
-        iconURL: `https://cdn.upload.systems/uploads/6KOGFYJM.png`,
-      }),
+      client.embedBuilder(client, message, "Successfully set your birthday.", "", "#3db39e"),
     ],
   });
 
@@ -102,11 +83,7 @@ module.exports.slashRun = async (client, interaction) => {
   if (!client.conf.Birthday_System.Enabled)
     return interaction.reply({
       embeds: [
-        client.utils.errorEmbed(
-          client,
-          interaction,
-          "Birthday System is not enabled."
-        ),
+        client.utils.errorEmbed(client, interaction, "Birthday System is not enabled."),
       ],
       ephemeral: true,
     });
@@ -114,11 +91,7 @@ module.exports.slashRun = async (client, interaction) => {
   if (birthday)
     return interaction.reply({
       embeds: [
-        client.utils.errorEmbed(
-          client,
-          interaction,
-          "You have already set your birthday."
-        ),
+        client.utils.errorEmbed(client, interaction, "You have already set your birthday."),
       ],
       ephemeral: true,
     });
@@ -129,11 +102,7 @@ module.exports.slashRun = async (client, interaction) => {
   if (isNaN(date))
     return interaction.reply({
       embeds: [
-        client.utils.errorEmbed(
-          client,
-          interaction,
-          "Invalid format, example: Jan 21 2004"
-        ),
+        client.utils.errorEmbed(client, interaction, "Invalid format, example: Jan 21 2004"),
       ],
       ephemeral: true,
     });
@@ -142,9 +111,7 @@ module.exports.slashRun = async (client, interaction) => {
   if (age <= 12)
     return interaction.reply({
       embeds: [
-        client.utils.errorEmbed(
-          client,
-          interaction,
+        client.utils.errorEmbed(client, interaction,
           `You can't enter a year greater than ${
             new Date().getFullYear() - 12
           }.`
@@ -155,10 +122,7 @@ module.exports.slashRun = async (client, interaction) => {
 
   interaction.reply({
     embeds: [
-      client.embedBuilder(client, interaction, "", "", "#3db39e").setAuthor({
-        name: "Successfully set your birthday.",
-        iconURL: `https://cdn.upload.systems/uploads/6KOGFYJM.png`,
-      }),
+      client.embedBuilder(client, interaction, "Successfully set your birthday.", "", "#3db39e"),
     ],
   });
 

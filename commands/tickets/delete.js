@@ -27,11 +27,7 @@ module.exports.run = async (client, message, args) => {
   if (!client.conf.Ticket_System.Enabled)
     return message.channel.send({
       embeds: [
-        client.utils.errorEmbed(
-          client,
-          message,
-          "Ticket System is not enabled."
-        ),
+        client.utils.errorEmbed(client, message, "Ticket System is not enabled."),
       ],
     });
 
@@ -95,10 +91,6 @@ module.exports.run = async (client, message, args) => {
         name: `Ticket Name:`,
         value: `${message.channel.name}`,
         inline: false,
-      })
-      .setAuthor({
-        name: "Ticket Logging System",
-        value: `https://cdn.upload.systems/uploads/4mFVRE7f.png`,
       }),
     attachment = new AttachmentBuilder()
       .setFile(Buffer.from(data))
@@ -109,20 +101,13 @@ module.exports.run = async (client, message, args) => {
   if (!ticket)
     return message.channel.send({
       embeds: [
-        client.utils.errorEmbed(
-          client,
-          message,
-          "This command can only be used inside of tickets."
-        ),
+        client.utils.errorEmbed(client, message, "This command can only be used inside of tickets."),
       ],
     });
 
   message.channel.send({
     embeds: [
-      client.embedBuilder(client, message, "", "", "#3db39e").setAuthor({
-        name: "This channel will be deleted in 10 seconds.",
-        iconURL: `https://cdn.upload.systems/uploads/6KOGFYJM.png`,
-      }),
+      client.embedBuilder(client, message, "This channel will be deleted in 10 seconds.", "", "#3db39e"),
     ],
   });
 
@@ -140,11 +125,7 @@ module.exports.slashRun = async (client, interaction) => {
   if (!client.conf.Ticket_System.Enabled)
     return interaction.reply({
       embeds: [
-        client.utils.errorEmbed(
-          client,
-          interaction,
-          "Ticket System is not enabled."
-        ),
+        client.utils.errorEmbed(client, interaction, "Ticket System is not enabled."),
       ],
       ephemeral: true,
     });
@@ -209,10 +190,6 @@ module.exports.slashRun = async (client, interaction) => {
         name: `Ticket Name:`,
         value: `${interaction.channel.name}`,
         inline: false,
-      })
-      .setAuthor({
-        name: "Ticket Logging System",
-        value: `https://cdn.upload.systems/uploads/4mFVRE7f.png`,
       }),
     attachment = new AttachmentBuilder()
       .setFile(Buffer.from(data))
@@ -223,21 +200,14 @@ module.exports.slashRun = async (client, interaction) => {
   if (!ticket)
     return interaction.reply({
       embeds: [
-        client.utils.errorEmbed(
-          client,
-          interaction,
-          "This command can only be used inside of tickets."
-        ),
+        client.utils.errorEmbed(client, interaction, "This command can only be used inside of tickets."),
       ],
       ephemeral: true,
     });
 
   interaction.reply({
     embeds: [
-      client.embedBuilder(client, interaction, "", "", "#3db39e").setAuthor({
-        name: "This channel will be deleted in 10 seconds.",
-        iconURL: `https://cdn.upload.systems/uploads/6KOGFYJM.png`,
-      }),
+      client.embedBuilder(client, interaction, "This channel will be deleted in 10 seconds.", "", "#3db39e"),
     ],
   });
 

@@ -16,16 +16,12 @@ module.exports.run = async (client, message) =>
         .embedBuilder(
           client,
           message,
-          "",
+          "Coinflip",
           `Coin flipped by <@!${message.author.id}> and it landed on **${
             Math.random() > 0.5 ? "Heads" : "Tails"
           }**.`,
           "#ec3d93"
         )
-        .setAuthor({
-          name: "Coinflip",
-          iconURL: `https://cdn.upload.systems/uploads/ZdKDK7Tx.png`,
-        }),
     ],
   });
 
@@ -36,15 +32,11 @@ module.exports.slashRun = async (client, interaction) =>
         .embedBuilder(
           client,
           interaction,
-          "",
+          "Coinflip",
           `Coin flipped by <@!${interaction.user.id}> and it landed on **${
             Math.random() > 0.5 ? "Heads" : "Tails"
           }**.`,
           "#ec3d93"
-        )
-        .setAuthor({
-          name: "Coinflip",
-          iconURL: `https://cdn.upload.systems/uploads/ZdKDK7Tx.png`,
-        }),
+        ),
     ],
   });

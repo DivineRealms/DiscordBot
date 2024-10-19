@@ -28,22 +28,14 @@ module.exports.run = async (client, message, args) => {
   if (!settings.Enabled)
     return message.channel.send({
       embeds: [
-        client.utils.errorEmbed(
-          client,
-          message,
-          "Ticket System is not enabled."
-        ),
+        client.utils.errorEmbed(client, message, "Ticket System is not enabled."),
       ],
     });
 
   if (tickets.find((u) => u.value.includes(message.author.id)))
     return message.channel.send({
       embeds: [
-        client.utils.errorEmbed(
-          client,
-          message,
-          "You already have a ticket opened."
-        ),
+        client.utils.errorEmbed(client, message, "You already have a ticket opened."),
       ],
     });
 
@@ -83,14 +75,10 @@ module.exports.run = async (client, message, args) => {
         .embedBuilder(
           client,
           message,
-          "",
+          "Ticket Created",
           `<:ArrowRightGray:813815804768026705>Ticket has been successfully created in channel <#${channel.id}>.`,
           "#b3e59f"
-        )
-        .setAuthor({
-          name: "Ticket Created",
-          iconURL: `https://cdn.upload.systems/uploads/4mFVRE7f.png`,
-        }),
+        ),
     ],
     components: [jumpRow],
   });
@@ -102,14 +90,10 @@ module.exports.run = async (client, message, args) => {
         .embedBuilder(
           client,
           message,
-          "",
+          "Thank you for creating a ticket",
           `<:ArrowRightGray:813815804768026705>A staff member will be with you shortly.`,
           "#b3e59f"
-        )
-        .setAuthor({
-          name: `Thank you for creating a ticket`,
-          iconURL: `https://cdn.upload.systems/uploads/4mFVRE7f.png`,
-        }),
+        ),
     ],
   });
 
@@ -120,14 +104,10 @@ module.exports.run = async (client, message, args) => {
           .embedBuilder(
             client,
             message,
-            "",
+            "Ticket Created",
             `Created by: ${message.author}`,
             "#b3e59f"
-          )
-          .setAuthor({
-            name: "Ticket Created",
-            iconURL: `https://cdn.upload.systems/uploads/4mFVRE7f.png`,
-          }),
+          ),
       ],
     });
 
@@ -149,11 +129,7 @@ module.exports.slashRun = async (client, interaction) => {
   if (!settings.Enabled)
     return interaction.reply({
       embeds: [
-        client.utils.errorEmbed(
-          client,
-          interaction,
-          "Ticket System is not enabled."
-        ),
+        client.utils.errorEmbed(client, interaction, "Ticket System is not enabled."),
       ],
       ephemeral: true,
     });
@@ -161,11 +137,7 @@ module.exports.slashRun = async (client, interaction) => {
   if (tickets.find((u) => u.value.includes(interaction.user.id)))
     return interaction.reply({
       embeds: [
-        client.utils.errorEmbed(
-          client,
-          interaction,
-          "You already have a ticket opened."
-        ),
+        client.utils.errorEmbed(client, interaction, "You already have a ticket opened."),
       ],
       ephemeral: true,
     });
@@ -201,14 +173,10 @@ module.exports.slashRun = async (client, interaction) => {
         .embedBuilder(
           client,
           interaction,
-          "",
+          "Ticket Created",
           `<:ArrowRightGray:813815804768026705>Ticket has been successfully created in channel <#${channel.id}>.`,
           "#b3e59f"
-        )
-        .setAuthor({
-          name: "Ticket Created",
-          iconURL: `https://cdn.upload.systems/uploads/4mFVRE7f.png`,
-        }),
+        ),
     ],
     components: [jumpRow],
   });
@@ -220,14 +188,10 @@ module.exports.slashRun = async (client, interaction) => {
         .embedBuilder(
           client,
           interaction,
-          "",
+          "Thank you for creating a ticket",
           `<:ArrowRightGray:813815804768026705>A staff member will be with you shortly.`,
           "#b3e59f"
-        )
-        .setAuthor({
-          name: `Thank you for creating a ticket`,
-          iconURL: `https://cdn.upload.systems/uploads/4mFVRE7f.png`,
-        }),
+        ),
     ],
   });
 
@@ -238,14 +202,10 @@ module.exports.slashRun = async (client, interaction) => {
           .embedBuilder(
             client,
             interaction,
-            "",
+            "Ticket Created",
             `Created by: ${interaction.user}`,
             "#b3e59f"
-          )
-          .setAuthor({
-            name: "Ticket Created",
-            iconURL: `https://cdn.upload.systems/uploads/4mFVRE7f.png`,
-          }),
+          ),
       ],
     });
 

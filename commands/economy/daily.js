@@ -20,20 +20,13 @@ module.exports.run = async (client, message, args) => {
   if (cooldown != null && timeout > 0)
     return message.channel.send({
       embeds: [
-        client.utils.errorEmbed(
-          client,
-          message,
-          `You're on cooldown, try again in ${parsed}.`
-        ),
+        client.utils.errorEmbed(client, message, `You're on cooldown, try again in ${parsed}.`),
       ],
     });
 
   message.channel.send({
     embeds: [
-      client.embedBuilder(client, message, "", "", "#3db39e").setAuthor({
-        name: "You have claimed your Daily Reward of $500.",
-        iconURL: `https://cdn.upload.systems/uploads/6KOGFYJM.png`,
-      }),
+      client.embedBuilder(client, message, "You have claimed your Daily Reward of $500.", "", "#3db39e"),
     ],
   });
 
@@ -51,21 +44,14 @@ module.exports.slashRun = async (client, interaction) => {
   if (cooldown != null && timeout > 0)
     return interaction.reply({
       embeds: [
-        client.utils.errorEmbed(
-          client,
-          interaction,
-          `You're on cooldown, try again in ${parsed}.`
-        ),
+        client.utils.errorEmbed(client, interaction, `You're on cooldown, try again in ${parsed}.`),
       ],
       ephemeral: true,
     });
 
   interaction.reply({
     embeds: [
-      client.embedBuilder(client, interaction, "", "", "#3db39e").setAuthor({
-        name: "You have claimed your Daily Reward of $500.",
-        iconURL: `https://cdn.upload.systems/uploads/6KOGFYJM.png`,
-      }),
+      client.embedBuilder(client, interaction, "You have claimed your Daily Reward of $500.", "", "#3db39e"),
     ],
   });
 

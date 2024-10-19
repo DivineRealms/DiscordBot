@@ -37,12 +37,7 @@ module.exports.run = async (client, message) => {
 
   message.channel.send({
     embeds: [
-      client
-        .embedBuilder(client, message, "", `${response}`, "#ec3d93")
-        .setAuthor({
-          name: "Dark Joke",
-          iconURL: `https://cdn.upload.systems/uploads/ZdKDK7Tx.png`,
-        }),
+      client.embedBuilder(client, message, "Dark Joke", `${response}`, "#ec3d93"),
     ],
   });
 };
@@ -75,12 +70,7 @@ module.exports.slashRun = async (client, interaction) => {
 
   interaction.reply({
     embeds: [
-      client
-        .embedBuilder(client, interaction, "", `${response}`, "#ec3d93")
-        .setAuthor({
-          name: "Dark Joke",
-          iconURL: `https://cdn.upload.systems/uploads/ZdKDK7Tx.png`,
-        }),
+      client.embedBuilder(client, interaction, "Dark Joke", `${response}`, "#ec3d93"),
     ],
   });
 };

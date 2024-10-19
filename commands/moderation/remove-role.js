@@ -38,64 +38,41 @@ module.exports.run = async (client, message, args) => {
   if (!member || !role)
     return message.channel.send({
       embeds: [
-        client.utils.errorEmbed(
-          client,
-          message,
-          `Invalid arguments, see ${client.conf.Settings.Prefix}help remove-role.`
-        ),
+        client.utils.errorEmbed(client, message, `Invalid arguments, see ${client.conf.Settings.Prefix}help remove-role.`),
       ],
     });
 
   if (member.roles.highest.position >= message.member.roles.highest.position)
     return message.channel.send({
       embeds: [
-        client.utils.errorEmbed(
-          client,
-          message,
-          "That Member has higher roles than you."
-        ),
+        client.utils.errorEmbed(client, message, "That Member has higher roles than you."),
       ],
     });
 
   if (member.roles.highest.position >= message.guild.me.roles.highest.position)
     return message.channel.send({
       embeds: [
-        client.utils.errorEmbed(
-          client,
-          message,
-          "That Member has higher roles than me."
-        ),
+        client.utils.errorEmbed(client, message, "That Member has higher roles than me."),
       ],
     });
 
   if (!member.roles.cache.has(role.id))
     return message.channel.send({
       embeds: [
-        client.utils.errorEmbed(
-          client,
-          message,
-          "That Member doesn't have that role."
-        ),
+        client.utils.errorEmbed(client, message, "That Member doesn't have that role."),
       ],
     });
 
   message.channel.send({
     embeds: [
-      client.embedBuilder(client, message, "", "", "#3db39e").setAuthor({
-        name: `Successfully removed role ${role.name} from ${member.user.username}.`,
-        iconURL: `https://cdn.upload.systems/uploads/6KOGFYJM.png`,
-      }),
+      client.embedBuilder(client, message, `Successfully removed role ${role.name} from ${member.user.username}.`, "", "#3db39e"),
     ],
   });
 
   return member.roles.remove(role).catch((_err) => {
     message.channel.send({
       embeds: [
-        client.utils.errorEmbed(
-          client,
-          message,
-          "Cannot remove a role from that user."
-        ),
+        client.utils.errorEmbed(client, message, "Cannot remove a role from that user."),
       ],
     });
   });
@@ -110,11 +87,7 @@ module.exports.slashRun = async (client, interaction) => {
   )
     return interaction.reply({
       embeds: [
-        client.utils.errorEmbed(
-          client,
-          interaction,
-          "That Member has higher roles than you."
-        ),
+        client.utils.errorEmbed(client, interaction, "That Member has higher roles than you."),
       ],
       ephemeral: true,
     });
@@ -125,11 +98,7 @@ module.exports.slashRun = async (client, interaction) => {
   )
     return interaction.reply({
       embeds: [
-        client.utils.errorEmbed(
-          client,
-          interaction,
-          "That Member has higher roles than me."
-        ),
+        client.utils.errorEmbed(client, interaction, "That Member has higher roles than me."),
       ],
       ephemeral: true,
     });
@@ -137,32 +106,21 @@ module.exports.slashRun = async (client, interaction) => {
   if (!member.roles.cache.has(role.id))
     return interaction.reply({
       embeds: [
-        client.utils.errorEmbed(
-          client,
-          interaction,
-          "That Member doesn't have that role."
-        ),
+        client.utils.errorEmbed(client, interaction, "That Member doesn't have that role."),
       ],
       ephemeral: true,
     });
 
   interaction.reply({
     embeds: [
-      client.embedBuilder(client, interaction, "", "", "#3db39e").setAuthor({
-        name: `Successfully removed role ${role.name} from ${member.user.username}.`,
-        iconURL: `https://cdn.upload.systems/uploads/6KOGFYJM.png`,
-      }),
+      client.embedBuilder(client, interaction, `Successfully removed role ${role.name} from ${member.user.username}.`, "", "#3db39e"),
     ],
   });
 
   return member.roles.remove(role).catch((_err) => {
     interaction.reply({
       embeds: [
-        client.utils.errorEmbed(
-          client,
-          interaction,
-          "Cannot remove a role from that user."
-        ),
+        client.utils.errorEmbed(client, interaction, "Cannot remove a role from that user."),
       ],
       ephemeral: true,
     });

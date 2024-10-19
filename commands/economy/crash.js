@@ -43,11 +43,7 @@ module.exports.run = async (client, message, args) => {
   if (cooldown != null && timeout > 0)
     return message.channel.send({
       embeds: [
-        client.utils.errorEmbed(
-          client,
-          message,
-          `You're on cooldown, try again in ${parsed}.`
-        ),
+        client.utils.errorEmbed(client, message, `You're on cooldown, try again in ${parsed}.`),
       ]
     });
   
@@ -63,21 +59,14 @@ module.exports.run = async (client, message, args) => {
   if (!bal || bal == 0)
     return message.channel.send({
       embeds: [
-        client.utils.errorEmbed(
-          client,
-          message,
-          "You don't have enough money."
-        ),
+        client.utils.errorEmbed(client, message, "You don't have enough money."),
       ],
     });
 
   if (amount != "all" && amount > bal)
     return message.channel.send({
       embeds: [
-        client.utils.errorEmbed(
-          client,
-          message,
-          "You don't have that much money."
+        client.utils.errorEmbed(client, message, "You don't have that much money."
         ),
       ],
     });
@@ -85,11 +74,7 @@ module.exports.run = async (client, message, args) => {
   if (amount != "all" && amount < 200)
     return message.channel.send({
       embeds: [
-        client.utils.errorEmbed(
-          client,
-          message,
-          "You cannot bet less than $200."
-        ),
+        client.utils.errorEmbed(client, message, "You cannot bet less than $200."),
       ],
     });
 
@@ -102,11 +87,7 @@ module.exports.run = async (client, message, args) => {
       .setEmoji("🤚"),
     );
 
-  let crashEmbed = client.embedBuilder(client, message, "", "", "#3db39e")
-    .setAuthor({
-      name: `Crash started with $${money}`,
-      iconURL: `https://cdn.upload.systems/uploads/LrdB6F1N.png`,
-    })
+  let crashEmbed = client.embedBuilder(client, message, `Crash started with $${money}`, "", "#3db39e")
     .addFields([{ name: "Multiplier", value: "1.1x", inline: true }])
     .addFields([{ name: "Profit", value: "$0", inline: true }]);
 
@@ -137,20 +118,17 @@ module.exports.run = async (client, message, args) => {
         if(parseFloat((multiplier).toFixed(1)) >= parseFloat(crashValue) || parseFloat((multiplier).toFixed(1)) >= 50.0) {
           crashed = true;
           await db.delete(`crashRunning_${message.guild.id}_${message.author.id}`);
-          crashEmbed.data.fields[0].name = "Crashed at";
-          crashEmbed.data.fields[1].value = `-$${money}`;
-          crashEmbed.setAuthor({
-            name: `You lost $${money} in crash`,
-            iconURL: `https://cdn.upload.systems/uploads/LrdB6F1N.png`,
-          }).setColor("#e24c4b");
+          crashEmbed.data.fields[1].name = "Crashed at";
+          crashEmbed.data.fields[2].value = `-$${money}`;
+          crashEmbed.setFooter({ text: `You lost $${money} in crash` }).setColor("#e24c4b");
 
           await db.sub(`money_${message.guild.id}_${message.author.id}`, money);
           return m.edit({ embeds: [crashEmbed], components: [] });
         }
         multiplier = multiplier += 0.1;
 
-        crashEmbed.data.fields[0].value = `${parseFloat((multiplier).toFixed(1))}x`;
-        crashEmbed.data.fields[1].value = `$${Math.floor(money * parseFloat((multiplier).toFixed(1))) - money}`;
+        crashEmbed.data.fields[1].value = `${parseFloat((multiplier).toFixed(1))}x`;
+        crashEmbed.data.fields[2].value = `$${Math.floor(money * parseFloat((multiplier).toFixed(1))) - money}`;
         m.edit({ embeds: [crashEmbed], components: [row] });
         editCrash();
       }, 2000);
@@ -161,12 +139,9 @@ module.exports.run = async (client, message, args) => {
       let toAdd = Math.floor(money * parseFloat((multiplier).toFixed(1))) - money;
 
       crashed = true;
-      crashEmbed.data.fields[0].name = "Stopped at";
-      crashEmbed.data.fields[0].value = `${parseFloat((multiplier).toFixed(1))}x \`(${crashValue}x)\``;
-      crashEmbed.setAuthor({
-        name: `Crash stopped and you earned $${toAdd}`,
-        iconURL: `https://cdn.upload.systems/uploads/LrdB6F1N.png`,
-      }).setColor("#3db39e");
+      crashEmbed.data.fields[1].name = "Stopped at";
+      crashEmbed.data.fields[1].value = `${parseFloat((multiplier).toFixed(1))}x \`(${crashValue}x)\``;
+      crashEmbed.setFooter({ text: `Crash stopped and you earned $${toAdd}` }).setColor("#3db39e");
       
       await db.add(`money_${message.guild.id}_${message.author.id}`, toAdd);
       await db.delete(`crashRunning_${message.guild.id}_${message.author.id}`);
@@ -196,11 +171,7 @@ module.exports.slashRun = async (client, interaction) => {
   if (cooldown != null && timeout > 0)
     return interaction.reply({
       embeds: [
-        client.utils.errorEmbed(
-          client,
-          interaction,
-          `You're on cooldown, try again in ${parsed}.`
-        ),
+        client.utils.errorEmbed(client, interaction, `You're on cooldown, try again in ${parsed}.`),
       ]
     });
   
@@ -216,33 +187,21 @@ module.exports.slashRun = async (client, interaction) => {
   if (!bal || bal == 0)
     return interaction.reply({
       embeds: [
-        client.utils.errorEmbed(
-          client,
-          interaction,
-          "You don't have enough money."
-        ),
+        client.utils.errorEmbed(client, interaction, "You don't have enough money."),
       ],
     });
 
   if (amount != "all" && amount > bal)
     return interaction.reply({
       embeds: [
-        client.utils.errorEmbed(
-          client,
-          interaction,
-          "You don't have that much money."
-        ),
+        client.utils.errorEmbed(client, interaction, "You don't have that much money."),
       ],
     });
 
   if (amount != "all" && amount < 200)
     return interaction.reply({
       embeds: [
-        client.utils.errorEmbed(
-          client,
-          interaction,
-          "You cannot bet less than $200."
-        ),
+        client.utils.errorEmbed(client, interaction, "You cannot bet less than $200."),
       ],
     });
 
@@ -256,10 +215,7 @@ module.exports.slashRun = async (client, interaction) => {
     );
 
   let crashEmbed = client.embedBuilder(client, interaction, "", "", "#3db39e")
-    .setAuthor({
-      name: `Crash started with $${money}`,
-      iconURL: `https://cdn.upload.systems/uploads/LrdB6F1N.png`,
-    })
+    .setFooter({ text: `Crash started with $${money}` })
     .addFields([{ name: "Multiplier", value: "1.1x", inline: true }])
     .addFields([{ name: "Profit", value: "$0", inline: true }]);
 
@@ -290,12 +246,9 @@ module.exports.slashRun = async (client, interaction) => {
         if(parseFloat((multiplier).toFixed(1)) >= parseFloat(crashValue) || parseFloat((multiplier).toFixed(1)) >= 50.0) {
           crashed = true;
           await db.delete(`crashRunning_${interaction.guild.id}_${interaction.user.id}`);
-          crashEmbed.data.fields[0].name = "Crashed at";
-          crashEmbed.data.fields[1].value = `-$${money}`;
-          crashEmbed.setAuthor({
-            name: `You lost $${money} in crash`,
-            iconURL: `https://cdn.upload.systems/uploads/LrdB6F1N.png`,
-          }).setColor("#e24c4b");
+          crashEmbed.data.fields[1].name = "Crashed at";
+          crashEmbed.data.fields[2].value = `-$${money}`;
+          crashEmbed.setFooter({ text: `You lost $${money} in crash` }).setColor("#e24c4b");
 
           await db.sub(`money_${interaction.guild.id}_${interaction.user.id}`, money);
           return m.edit({ embeds: [crashEmbed], components: [] });
@@ -314,12 +267,9 @@ module.exports.slashRun = async (client, interaction) => {
       let toAdd = Math.floor(money * parseFloat((multiplier).toFixed(1))) - money;
 
       crashed = true;
-      crashEmbed.data.fields[0].name = "Stopped at";
-      crashEmbed.data.fields[0].value = `${parseFloat((multiplier).toFixed(1))}x \`(${crashValue}x)\``;
-      crashEmbed.setAuthor({
-        name: `Crash stopped and you earned $${toAdd}`,
-        iconURL: `https://cdn.upload.systems/uploads/LrdB6F1N.png`,
-      }).setColor("#3db39e");
+      crashEmbed.data.fields[1].name = "Stopped at";
+      crashEmbed.data.fields[1].value = `${parseFloat((multiplier).toFixed(1))}x \`(${crashValue}x)\``;
+      crashEmbed.setFooter({ text: `Crash stopped and you earned $${toAdd}` }).setColor("#3db39e");
       
       await db.add(`money_${interaction.guild.id}_${interaction.user.id}`, toAdd);
       await db.delete(`crashRunning_${interaction.guild.id}_${interaction.user.id}`);

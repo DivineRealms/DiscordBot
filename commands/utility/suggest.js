@@ -24,32 +24,21 @@ module.exports.run = async (client, message, args) => {
   if (!channel)
     return message.channel.send({
       embeds: [
-        client.utils.errorEmbed(
-          client,
-          message,
-          "The suggestions channel hasn't been setup for this server."
-        ),
+        client.utils.errorEmbed(client, message, "The suggestions channel hasn't been setup for this server."),
       ],
     });
 
   if (!args[0])
     return message.channel.send({
       embeds: [
-        client.utils.errorEmbed(
-          client,
-          message,
-          "Please provide a suggestion."
-        ),
+        client.utils.errorEmbed(client, message, "Please provide a suggestion."),
       ],
     });
 
   setTimeout(() => message.delete(), 3000);
   message.channel.send({
     embeds: [
-      client.embedBuilder(client, message, "", "", "#3db39e").setAuthor({
-        name: "Your suggestion has been submitted successfully.",
-        iconURL: `https://cdn.upload.systems/uploads/6KOGFYJM.png`,
-      }),
+      client.embedBuilder(client, message, "Your suggestion has been submitted successfully.", "", "#3db39e"),
     ],
   });
 
@@ -74,11 +63,7 @@ module.exports.slashRun = async (client, interaction) => {
   if (!channel)
     return interaction.reply({
       embeds: [
-        client.utils.errorEmbed(
-          client,
-          interaction,
-          "The suggestions channel hasn't been setup for this server."
-        ),
+        client.utils.errorEmbed(client, interaction, "The suggestions channel hasn't been setup for this server."),
       ],
       ephemeral: true,
     });
@@ -108,12 +93,7 @@ module.exports.slashRun = async (client, interaction) => {
 
       md.reply({
         embeds: [
-          client
-            .embedBuilder(client, interaction, "", "", "#3db39e")
-            .setAuthor({
-              name: "Your suggestion has been submitted successfully.",
-              iconURL: `https://cdn.upload.systems/uploads/6KOGFYJM.png`,
-            }),
+          client.embedBuilder(client, interaction, "Your suggestion has been submitted successfully.", "", "#3db39e"),
         ],
       });
 
@@ -139,10 +119,7 @@ module.exports.slashRun = async (client, interaction) => {
     .catch((err) => {
       interaction.followUp({
         embeds: [
-          client.embedBuilder(client, interaction, "", "", "Red").setAuthor({
-            name: "Time for entering suggestion has passed without answer.",
-            iconURL: `https://cdn.upload.systems/uploads/6KOGFYJM.png`,
-          }),
+          client.utils.errorEmbed(client, interaction, "Time for entering suggestion has passed without answer."),
         ],
         ephemeral: true,
       });

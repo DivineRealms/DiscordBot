@@ -49,11 +49,7 @@ module.exports.run = async (client, message, args) => {
   if (!color)
     return message.channel.send({
       embeds: [
-        client.utils.errorEmbed(
-          client,
-          message,
-          `Invalid usage; see ${client.conf.Settings.Prefix}help roulette for correct usage.`
-        ),
+        client.utils.errorEmbed(client, message, `Invalid usage; see ${client.conf.Settings.Prefix}help roulette for correct usage.`),
       ],
     });
 
@@ -65,11 +61,7 @@ module.exports.run = async (client, message, args) => {
   else
     return message.channel.send({
       embeds: [
-        client.utils.errorEmbed(
-          client,
-          message,
-          "Invalid color, available: black (b), red (r), green (g)."
-        ),
+        client.utils.errorEmbed(client, message, "Invalid color, available: black (b), red (r), green (g)."),
       ],
     });
 
@@ -84,22 +76,14 @@ module.exports.run = async (client, message, args) => {
   if (balance < money)
     return message.channel.send({
       embeds: [
-        client.utils.errorEmbed(
-          client,
-          message,
-          "You don't have enough money."
-        ),
+        client.utils.errorEmbed(client, message, "You don't have enough money."),
       ],
     });
 
   if (money < 100 || money > 20000)
     return message.channel.send({
       embeds: [
-        client.utils.errorEmbed(
-          client,
-          message,
-          "Amount needs to be between $100-20.000."
-        ),
+        client.utils.errorEmbed(client, message, "Amount needs to be between $100-20.000."),
       ],
     });
 
@@ -111,7 +95,7 @@ module.exports.run = async (client, message, args) => {
     message.channel.send({
       embeds: [
         client
-          .embedBuilder(client, message, "", "", "#3db39e")
+          .embedBuilder(client, message, "Roulette", "", "#3db39e")
           .addFields([
             {
               name: "Options:",
@@ -123,11 +107,7 @@ module.exports.run = async (client, message, args) => {
               value: `You won **$${money}**`,
               inline: true,
             },
-          ])
-          .setAuthor({
-            name: "Roulette",
-            iconURL: `https://cdn.upload.systems/uploads/HJGA3pxp.png`,
-          }),
+          ]),
       ],
     });
   } else if (isOdd(randomNumber) && color == 1) {
@@ -136,7 +116,7 @@ module.exports.run = async (client, message, args) => {
     message.channel.send({
       embeds: [
         client
-          .embedBuilder(client, message, "", "", "#3db39e")
+          .embedBuilder(client, message, "Roulette", "", "#3db39e")
           .addFields([
             {
               name: "Options:",
@@ -149,10 +129,6 @@ module.exports.run = async (client, message, args) => {
               inline: false,
             },
           ])
-          .setAuthor({
-            name: "Roulette",
-            iconURL: `https://cdn.upload.systems/uploads/HJGA3pxp.png`,
-          }),
       ],
     });
   } else if (!isOdd(randomNumber) && color == 0) {
@@ -162,7 +138,7 @@ module.exports.run = async (client, message, args) => {
     message.channel.send({
       embeds: [
         client
-          .embedBuilder(client, message, "", "", "#3db39e")
+          .embedBuilder(client, message, "Roulette", "", "#3db39e")
           .addFields([
             {
               name: "Options:",
@@ -174,11 +150,7 @@ module.exports.run = async (client, message, args) => {
               value: `You won **$${money}**`,
               inline: false,
             },
-          ])
-          .setAuthor({
-            name: "Roulette",
-            iconURL: `https://cdn.upload.systems/uploads/HJGA3pxp.png`,
-          }),
+          ]),
       ],
     });
   } else {
@@ -189,7 +161,7 @@ module.exports.run = async (client, message, args) => {
     message.channel.send({
       embeds: [
         client
-          .embedBuilder(client, message, "", "", "Red")
+          .embedBuilder(client, message, "Roulette", "", "Red")
           .addFields([
             {
               name: "Options:",
@@ -197,11 +169,7 @@ module.exports.run = async (client, message, args) => {
               inline: false,
             },
             { name: "Result:", value: `You lost **$${money}**`, inline: false },
-          ])
-          .setAuthor({
-            name: "Roulette",
-            iconURL: `https://cdn.upload.systems/uploads/HJGA3pxp.png`,
-          }),
+          ]),
       ],
     });
   }
@@ -217,11 +185,7 @@ module.exports.slashRun = async (client, interaction) => {
   if (!color)
     return interaction.reply({
       embeds: [
-        client.utils.errorEmbed(
-          client,
-          interaction,
-          `Invalid usage; see ${interaction.px}help roulette for correct usage.`
-        ),
+        client.utils.errorEmbed(client, interaction, `Invalid usage; see ${interaction.px}help roulette for correct usage.`),
       ],
       ephemeral: true,
     });
@@ -234,11 +198,7 @@ module.exports.slashRun = async (client, interaction) => {
   else
     return interaction.reply({
       embeds: [
-        client.utils.errorEmbed(
-          client,
-          interaction,
-          "Invalid color, available: black (b), red (r), green (g)."
-        ),
+        client.utils.errorEmbed(client, interaction, "Invalid color, available: black (b), red (r), green (g)."),
       ],
       ephemeral: true,
     });
@@ -255,11 +215,7 @@ module.exports.slashRun = async (client, interaction) => {
   if (balance < money)
     return interaction.reply({
       embeds: [
-        client.utils.errorEmbed(
-          client,
-          interaction,
-          "You don't have enough money."
-        ),
+        client.utils.errorEmbed(client, interaction, "You don't have enough money."),
       ],
       ephemeral: true,
     });
@@ -267,11 +223,7 @@ module.exports.slashRun = async (client, interaction) => {
   if (money < 100 || money > 20000)
     return interaction.reply({
       embeds: [
-        client.utils.errorEmbed(
-          client,
-          interaction,
-          "Amount needs to be between $100-20.000."
-        ),
+        client.utils.errorEmbed(client, interaction, "Amount needs to be between $100-20.000."),
       ],
       ephemeral: true,
     });
@@ -284,7 +236,7 @@ module.exports.slashRun = async (client, interaction) => {
     interaction.reply({
       embeds: [
         client
-          .embedBuilder(client, interaction, "", "", "#3db39e")
+          .embedBuilder(client, interaction, "Roulette", "", "#3db39e")
           .addFields([
             {
               name: "Options:",
@@ -296,11 +248,7 @@ module.exports.slashRun = async (client, interaction) => {
               value: `You won **$${money}**`,
               inline: true,
             },
-          ])
-          .setAuthor({
-            name: "Roulette",
-            iconURL: `https://cdn.upload.systems/uploads/HJGA3pxp.png`,
-          }),
+          ]),
       ],
     });
   } else if (isOdd(randomNumber) && color == 1) {
@@ -309,7 +257,7 @@ module.exports.slashRun = async (client, interaction) => {
     interaction.reply({
       embeds: [
         client
-          .embedBuilder(client, interaction, "", "", "#3db39e")
+          .embedBuilder(client, interaction, "Roulette", "", "#3db39e")
           .addFields([
             {
               name: "Options:",
@@ -321,11 +269,7 @@ module.exports.slashRun = async (client, interaction) => {
               value: `You won **$${money}**`,
               inline: false,
             },
-          ])
-          .setAuthor({
-            name: "Roulette",
-            iconURL: `https://cdn.upload.systems/uploads/HJGA3pxp.png`,
-          }),
+          ]),
       ],
     });
   } else if (!isOdd(randomNumber) && color == 0) {
@@ -335,7 +279,7 @@ module.exports.slashRun = async (client, interaction) => {
     interaction.reply({
       embeds: [
         client
-          .embedBuilder(client, interaction, "", "", "#3db39e")
+          .embedBuilder(client, interaction, "Roulette", "", "#3db39e")
           .addFields([
             {
               name: "Options:",
@@ -347,11 +291,7 @@ module.exports.slashRun = async (client, interaction) => {
               value: `You won **$${money}**`,
               inline: false,
             },
-          ])
-          .setAuthor({
-            name: "Roulette",
-            iconURL: `https://cdn.upload.systems/uploads/HJGA3pxp.png`,
-          }),
+          ]),
       ],
     });
   } else {
@@ -362,7 +302,7 @@ module.exports.slashRun = async (client, interaction) => {
     interaction.reply({
       embeds: [
         client
-          .embedBuilder(client, interaction, "", "", "Red")
+          .embedBuilder(client, interaction, "Roulette", "", "Red")
           .addFields([
             {
               name: "Options:",
@@ -370,11 +310,7 @@ module.exports.slashRun = async (client, interaction) => {
               inline: false,
             },
             { name: "Result:", value: `You lost **$${money}**`, inline: false },
-          ])
-          .setAuthor({
-            name: "Roulette",
-            iconURL: `https://cdn.upload.systems/uploads/HJGA3pxp.png`,
-          }),
+          ]),
       ],
     });
   }

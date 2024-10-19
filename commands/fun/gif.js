@@ -25,11 +25,7 @@ module.exports.run = async (client, message, args) => {
   if (!args[0])
     return message.channel.send({
       embeds: [
-        client.utils.errorEmbed(
-          client,
-          message,
-          "You need to enter something to search for!"
-        ),
+        client.utils.errorEmbed(client, message, "You need to enter something to search for!"),
       ],
     });
 
@@ -44,27 +40,15 @@ module.exports.run = async (client, message, args) => {
   if (!urls[0])
     return message.channel.send({
       embeds: [
-        client.utils.errorEmbed(
-          client,
-          message,
-          "No search results found, did you check your spelling?"
-        ),
+        client.utils.errorEmbed(client, message, "No search results found, did you check your spelling?"),
       ],
     });
 
   let embed = client
-    .embedBuilder(
-      client,
-      message,
-      "",
+    .embedBuilder(client, message, `GIF (1/${urls.length})`,
       `<:ArrowRightGray:813815804768026705>Image not loading? click [here](${urls[0]}).`,
       "#ec3d93"
-    )
-    .setImage(urls[0])
-    .setAuthor({
-      name: `GIF (1/${urls.length})`,
-      iconURL: `https://cdn.upload.systems/uploads/ZdKDK7Tx.png`,
-    });
+    ).setImage(urls[0]);
 
   message.channel.send({ embeds: [embed] }).then(async (emb) => {
     ["⏮️", "◀️", "▶️", "⏭️", "⏹️", "🔢"].forEach(
@@ -111,22 +95,12 @@ module.exports.run = async (client, message, args) => {
           page = collector.first().content;
       }
 
-      embed.setDescription(
-        `<:ArrowRightGray:813815804768026705>Image not loading? click [here](${
-          urls[page - 1]
-        }).`
-      );
-
+      embed.data.fields[0].name = `<:ArrowRightGray:813815804768026705>Image not loading? click [here](${urls[page - 1]}).`;
       embed.setImage(urls[page - 1]);
 
       if (current !== page)
         emb.edit({
-          embeds: [
-            embed.setAuthor({
-              name: `GIF (${page}/${urls.length})`,
-              iconURL: `https://cdn.upload.systems/uploads/ZdKDK7Tx.png`,
-            }),
-          ],
+          embeds: [embed],
         });
     });
   });
@@ -146,28 +120,17 @@ module.exports.slashRun = async (client, interaction) => {
   if (!urls[0])
     return interaction.reply({
       embeds: [
-        client.utils.errorEmbed(
-          client,
-          interaction,
-          "No search results found, did you check your spelling?"
-        ),
+        client.utils.errorEmbed(client, interaction, "No search results found, did you check your spelling?"),
       ],
       ephemeral: true,
     });
 
   let embed = client
-    .embedBuilder(
-      client,
-      interaction,
-      "",
+    .embedBuilder(client, interaction,
+      `GIF (1/${urls.length})`,
       `<:ArrowRightGray:813815804768026705>Image not loading? click [here](${urls[0]}).`,
       "#ec3d93"
-    )
-    .setImage(urls[0])
-    .setAuthor({
-      name: `GIF (1/${urls.length})`,
-      iconURL: `https://cdn.upload.systems/uploads/ZdKDK7Tx.png`,
-    });
+    ).setImage(urls[0]);
 
   interaction.reply({ embeds: [embed] }).then(async (emb) => {
     ["⏮️", "◀️", "▶️", "⏭️", "⏹️", "🔢"].forEach(
@@ -214,22 +177,12 @@ module.exports.slashRun = async (client, interaction) => {
           page = collector.first().content;
       }
 
-      embed.setDescription(
-        `<:ArrowRightGray:813815804768026705>Image not loading? click [here](${
-          urls[page - 1]
-        }).`
-      );
-
+      embed.data.fields[0].name = `<:ArrowRightGray:813815804768026705>Image not loading? click [here](${urls[page - 1]}).`;
       embed.setImage(urls[page - 1]);
 
       if (current !== page)
         emb.edit({
-          embeds: [
-            embed.setAuthor({
-              name: `GIF (${page}/${urls.length})`,
-              iconURL: `https://cdn.upload.systems/uploads/ZdKDK7Tx.png`,
-            }),
-          ],
+          embeds: [embed],
         });
     });
   });

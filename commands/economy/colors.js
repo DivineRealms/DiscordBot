@@ -72,19 +72,12 @@ module.exports.run = async (client, message, args) => {
     message.channel.send({
       embeds: [
         client
-          .embedBuilder(
-            client,
-            message,
-            "",
+          .embedBuilder(client, message, `You have ${colors.length} colors available`,
             `<:ArrowRightGray:813815804768026705> **\`${colors.join(
               "`, `"
             )}\`**.`,
             "#60b8ff"
-          )
-          .setAuthor({
-            name: `You have ${colors.length} colors available`,
-            iconURL: `https://cdn.upload.systems/uploads/6uDK0XAN.png`,
-          }),
+          ),
       ],
     });
   } else if (option.toLowerCase() == "use") {
@@ -93,22 +86,14 @@ module.exports.run = async (client, message, args) => {
     if (!select)
       return message.channel.send({
         embeds: [
-          client.utils.errorEmbed(
-            client,
-            message,
-            "You must provide color to use."
-          ),
+          client.utils.errorEmbed(client,  message, "You must provide color to use."),
         ],
       });
 
     if (!colors.includes(select.toLowerCase()))
       return message.channel.send({
         embeds: [
-          client.utils.errorEmbed(
-            client,
-            message,
-            "You don't have that color in your inventory."
-          ),
+          client.utils.errorEmbed(client, message, "You don't have that color in your inventory."),
         ],
       });
 
@@ -119,11 +104,7 @@ module.exports.run = async (client, message, args) => {
     if (!apply)
       return message.channel.send({
         embeds: [
-          client.utils.errorEmbed(
-            client,
-            message,
-            "You have provided an invalid color."
-          ),
+          client.utils.errorEmbed(client, message, "You have provided an invalid color."),
         ],
       });
 
@@ -139,21 +120,14 @@ module.exports.run = async (client, message, args) => {
     if (message.member.roles.cache.has(color.Role))
       return message.channel.send({
         embeds: [
-          client.utils.errorEmbed(
-            client,
-            message,
-            "You already have that color selected."
-          ),
+          client.utils.errorEmbed(client, message, "You already have that color selected."),
         ],
       });
 
     message.member.roles.add(color.Role);
     message.channel.send({
       embeds: [
-        client.embedBuilder(client, message, "", "", "#3db39e").setAuthor({
-          name: `Color Role ${color.Name} has been equiped.`,
-          iconURL: `https://cdn.upload.systems/uploads/6KOGFYJM.png`,
-        }),
+        client.embedBuilder(client, message, `Color Role ${color.Name} has been equiped.`, "", "#3db39e"),
       ],
     });
   } else if (option.toLowerCase() == "reset") {
@@ -164,10 +138,7 @@ module.exports.run = async (client, message, args) => {
 
     message.channel.send({
       embeds: [
-        client.embedBuilder(client, message, "", "", "#3db39e").setAuthor({
-          name: "Your Name Color has been reset.",
-          iconURL: `https://cdn.upload.systems/uploads/6KOGFYJM.png`,
-        }),
+        client.embedBuilder(client, message, "Your Name Color has been reset.", "", "#3db39e"),
       ],
     });
   }
@@ -182,11 +153,7 @@ module.exports.slashRun = async (client, interaction) => {
   if (!option)
     return interaction.reply({
       embeds: [
-        client.utils.errorEmbed(
-          client,
-          interaction,
-          "Invalid argument, options: use, list, reset."
-        ),
+        client.utils.errorEmbed(client, interaction, "Invalid argument, options: use, list, reset."),
       ],
       ephemeral: true,
     });
@@ -195,11 +162,7 @@ module.exports.slashRun = async (client, interaction) => {
     if (colors.length == 0)
       return interaction.reply({
         embeds: [
-          client.utils.errorEmbed(
-            client,
-            interaction,
-            "You don't have any colors."
-          ),
+          client.utils.errorEmbed(client, interaction, "You don't have any colors."),
         ],
         ephemeral: true,
       });
@@ -207,19 +170,12 @@ module.exports.slashRun = async (client, interaction) => {
     interaction.reply({
       embeds: [
         client
-          .embedBuilder(
-            client,
-            interaction,
-            "",
+          .embedBuilder(client, interaction, `You have ${colors.length} colors available`,
             `<:ArrowRightGray:813815804768026705> **\`${colors.join(
               "`, `"
             )}\`**.`,
             "#60b8ff"
-          )
-          .setAuthor({
-            name: `You have ${colors.length} colors available`,
-            iconURL: `https://cdn.upload.systems/uploads/6uDK0XAN.png`,
-          }),
+          ),
       ],
     });
   } else if (option == "use") {
@@ -228,11 +184,7 @@ module.exports.slashRun = async (client, interaction) => {
     if (!select)
       return interaction.reply({
         embeds: [
-          client.utils.errorEmbed(
-            client,
-            interaction,
-            "You must provide color to use."
-          ),
+          client.utils.errorEmbed(client, interaction, "You must provide color to use."),
         ],
         ephemeral: true,
       });
@@ -240,11 +192,7 @@ module.exports.slashRun = async (client, interaction) => {
     if (!colors.includes(select.toLowerCase()))
       return interaction.reply({
         embeds: [
-          client.utils.errorEmbed(
-            client,
-            interaction,
-            "You don't have that color in your inventory."
-          ),
+          client.utils.errorEmbed(client, interaction, "You don't have that color in your inventory."),
         ],
         ephemeral: true,
       });
@@ -256,11 +204,7 @@ module.exports.slashRun = async (client, interaction) => {
     if (!apply)
       return interaction.reply({
         embeds: [
-          client.utils.errorEmbed(
-            client,
-            interaction,
-            "You have provided an invalid color."
-          ),
+          client.utils.errorEmbed(client, interaction, "You have provided an invalid color."),
         ],
         ephemeral: true,
       });
@@ -277,11 +221,7 @@ module.exports.slashRun = async (client, interaction) => {
     if (interaction.member.roles.cache.has(color.Role))
       return interaction.reply({
         embeds: [
-          client.utils.errorEmbed(
-            client,
-            interaction,
-            "You already have that color selected."
-          ),
+          client.utils.errorEmbed(client, interaction, "You already have that color selected."),
         ],
         ephemeral: true,
       });
@@ -289,10 +229,7 @@ module.exports.slashRun = async (client, interaction) => {
     interaction.member.roles.add(color.Role);
     interaction.reply({
       embeds: [
-        client.embedBuilder(client, interaction, "", "", "#3db39e").setAuthor({
-          name: `Color Role ${color.Name} has been equiped.`,
-          iconURL: `https://cdn.upload.systems/uploads/6KOGFYJM.png`,
-        }),
+        client.embedBuilder(client, interaction, `Color Role ${color.Name} has been equiped.`, "", "#3db39e"),
       ],
     });
   } else if (option == "reset") {
@@ -303,10 +240,7 @@ module.exports.slashRun = async (client, interaction) => {
 
     interaction.reply({
       embeds: [
-        client.embedBuilder(client, interaction, "", "", "#3db39e").setAuthor({
-          name: "Your Name Color has been reset.",
-          iconURL: `https://cdn.upload.systems/uploads/6KOGFYJM.png`,
-        }),
+        client.embedBuilder(client, interaction, "Your Name Color has been reset.", "", "#3db39e"),
       ],
     });
   }

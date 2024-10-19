@@ -29,42 +29,35 @@ module.exports.run = async (client, message, args) => {
         label: "Main Menu",
         emoji: "🏠",
         color: "#e4f5fd",
-        avatar: `https://cdn.upload.systems/uploads/NItdPjzt.png`,
       },
       {
         label: "Economy",
         emoji: "💵",
-        avatar: `https://cdn.upload.systems/uploads/LrdB6F1N.png`,
         color: "#47a047",
       },
       {
         label: "Info",
         emoji: "✨",
-        avatar: `https://cdn.upload.systems/uploads/6uDK0XAN.png`,
         color: "#60b8ff",
       },
       {
         label: "Fun",
         emoji: "☁️",
-        avatar: `https://cdn.upload.systems/uploads/ZdKDK7Tx.png`,
         color: "#ec3d93",
       },
       {
         label: "Moderation",
         emoji: "🎫",
-        avatar: `https://cdn.upload.systems/uploads/6Xdg16Gh.png`,
         color: "#f44336",
       },
       {
         label: "Tickets",
         emoji: "📦",
-        avatar: `https://cdn.upload.systems/uploads/4mFVRE7f.png`,
         color: "#b3e59f",
       },
       {
         label: "Utility",
         emoji: "📏",
-        avatar: `https://cdn.upload.systems/uploads/Za4oLQsR.png`,
         color: "#7bc2cc",
       },
     ];
@@ -95,15 +88,13 @@ module.exports.run = async (client, message, args) => {
                 ),
             menus[i].color
           )
-          .setAuthor({
+          .addFields([{
             name: menus[i].label + " Commands",
-            iconURL: menus[i].avatar,
-          })
-          .addFields({
+          }, {
             name: "Tips:",
             value: `\`1️⃣\` Select a command category using the paginator below.\n\`2️⃣\` Use **\`${client.conf.Settings.Prefix}help commandName\`** to get the command's usage.`,
             inline: false,
-          }),
+          }]),
       });
     }
 
@@ -128,11 +119,7 @@ module.exports.run = async (client, message, args) => {
     if (!command)
       return message.channel.send({
         embeds: [
-          client.utils.errorEmbed(
-            client,
-            message,
-            `I couldnt find a command named ${args[0]}.`
-          ),
+          client.utils.errorEmbed(client, message, `I couldnt find a command named ${args[0]}.`),
         ],
       });
 
@@ -142,7 +129,7 @@ module.exports.run = async (client, message, args) => {
           .embedBuilder(
             client,
             message,
-            "",
+            "Command Help",
             `<:ArrowRightGray:813815804768026705>Name: **${args[0].toLowerCase()}**
 <:ArrowRightGray:813815804768026705>Aliases: **${
               command.aliases.map((s) => `\`${s}\``).join(", ") || "none"
@@ -151,11 +138,7 @@ module.exports.run = async (client, message, args) => {
               command.usage
             }\`**`,
             "#7bc2cc"
-          )
-          .setAuthor({
-            name: "Command Help",
-            iconURL: `https://cdn.upload.systems/uploads/Za4oLQsR.png`,
-          }),
+          ),
       ],
     });
   }
@@ -171,42 +154,35 @@ module.exports.slashRun = async (client, interaction) => {
         label: "Main Menu",
         emoji: "🏠",
         color: "#e4f5fd",
-        avatar: `https://cdn.upload.systems/uploads/NItdPjzt.png`,
       },
       {
         label: "Economy",
         emoji: "💵",
-        avatar: `https://cdn.upload.systems/uploads/LrdB6F1N.png`,
         color: "#47a047",
       },
       {
         label: "Info",
         emoji: "✨",
-        avatar: `https://cdn.upload.systems/uploads/6uDK0XAN.png`,
         color: "#60b8ff",
       },
       {
         label: "Fun",
         emoji: "☁️",
-        avatar: `https://cdn.upload.systems/uploads/ZdKDK7Tx.png`,
         color: "#ec3d93",
       },
       {
         label: "Moderation",
         emoji: "🎫",
-        avatar: `https://cdn.upload.systems/uploads/6Xdg16Gh.png`,
         color: "#f44336",
       },
       {
         label: "Tickets",
         emoji: "📦",
-        avatar: `https://cdn.upload.systems/uploads/4mFVRE7f.png`,
         color: "#b3e59f",
       },
       {
         label: "Utility",
         emoji: "📏",
-        avatar: `https://cdn.upload.systems/uploads/Za4oLQsR.png`,
         color: "#7bc2cc",
       },
     ];
@@ -237,15 +213,13 @@ module.exports.slashRun = async (client, interaction) => {
                 ),
             menus[i].color
           )
-          .setAuthor({
+          .addFields([{
             name: menus[i].label + " Commands",
-            iconURL: menus[i].avatar,
-          })
-          .addFields({
+          }, {
             name: "Tips:",
             value: `\`1️⃣\` Select a command category using the paginator below.\n\`2️⃣\` Use **\`${interaction.px}help commandName\`** to get the command's usage.`,
             inline: false,
-          }),
+          }]),
       });
     }
 
@@ -269,11 +243,7 @@ module.exports.slashRun = async (client, interaction) => {
     if (!command)
       return interaction.reply({
         embeds: [
-          client.utils.errorEmbed(
-            client,
-            interaction,
-            `I couldnt find a command named ${cmd}.`
-          ),
+          client.utils.errorEmbed(client, interaction, `I couldnt find a command named ${cmd}.`),
         ],
         ephemeral: true,
       });
@@ -284,7 +254,7 @@ module.exports.slashRun = async (client, interaction) => {
           .embedBuilder(
             client,
             interaction,
-            "",
+            "Command Help",
             `<:ArrowRightGray:813815804768026705>Name: **${cmd}**
 <:ArrowRightGray:813815804768026705>Aliases: **${
               command.aliases.map((s) => `\`${s}\``).join(", ") || "none"
@@ -293,11 +263,7 @@ module.exports.slashRun = async (client, interaction) => {
               command.usage
             }\`**`,
             "#7bc2cc"
-          )
-          .setAuthor({
-            name: "Command Help",
-            iconURL: `https://cdn.upload.systems/uploads/Za4oLQsR.png`,
-          }),
+          ),
       ],
     });
   }

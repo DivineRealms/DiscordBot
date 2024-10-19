@@ -11,11 +11,7 @@ module.exports = {
 module.exports.run = async (client, message, args) =>
   message.channel.send({
     embeds: [
-      client
-        .embedBuilder(
-          client,
-          message,
-          "",
+      client.embedBuilder(client, message, "Dices rolled!",
           `<:ArrowRightGray:813815804768026705>First Dice: **\`${
             ~~(Math.random() * 6) + 1
           }\`**.
@@ -23,10 +19,6 @@ module.exports.run = async (client, message, args) =>
             ~~(Math.random() * 6) + 1
           }\`**.`,
           "#ec3d93"
-        )
-        .setAuthor({
-          name: "Dices rolled!",
-          iconURL: `https://cdn.upload.systems/uploads/ZdKDK7Tx.png`,
-        }),
+        ),
     ],
   });
