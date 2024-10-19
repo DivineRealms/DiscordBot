@@ -122,9 +122,11 @@ module.exports.run = async (client, message, args, cmd) => {
 
           game.insert(m.content - 1);
 
-          embed.data.fields[0].name = `${message.author.username} vs. ${message.mentions.users.first().username}`;
-          embed.data.fields[0].value = board(game).join("\n").replace(/,/g, "");
-          emb.edit({ embeds: [embed] });
+          emb.edit({ embeds: [
+            embed
+              .setTitle(`${message.author.username} vs. ${message.mentions.users.first().username}`)
+              .setDescription(board(game).join("\n").replace(/,/g, "")),
+          ] });
 
           m.delete();
 
@@ -142,15 +144,13 @@ module.exports.run = async (client, message, args, cmd) => {
             return;
 
           if (game.state.status == "0") {
-            embed.data.fields[0].name = `The winner is ${
-                game.state.winner.color == game.players["0"].color
-                  ? message.author.username
-                  : message.mentions.users.first().username
-              }!`;
-            embed.data.fields[0].value = "";
+            embed.setTitle(`The winner is ${
+              game.state.winner.color == game.players["0"].color
+                ? message.author.username
+                : message.mentions.users.first().username
+            }`);
           } else if (game.state.status == "1") {
-            embed.data.fields[0].name = `Looks like you tied!`;
-            embed.data.fields[0].value = "";
+            embed.setTitle(`Looks like you tied!`);
           } else client.utils.errorEmbed(client, message, "Time Limit has reached and there's no winners.");
 
           emb.edit({ embeds: [embed] });

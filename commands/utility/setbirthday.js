@@ -70,7 +70,13 @@ module.exports.run = async (client, message, args) => {
           }.`;
   
   message.channel.send({
-    embeds: [embed],
+    embeds: [
+      embed.setTitle("Successfully set your birthday.").setDescription(
+        `<:ArrowRightGray:813815804768026705>I have set ${user}'s birthday to ${args
+          .slice(1)
+          .join(" ")}!\n<:ArrowRightGray:813815804768026705>They will be ${age + 1}.`
+      ),
+    ],
   });
 
   await db.set(`birthday_${message.guild.id}_${user.id}`, birthd);
@@ -115,7 +121,11 @@ module.exports.slashRun = async (client, interaction) => {
   embed.data.fields[0].value = `<:ArrowRightGray:813815804768026705>I have set ${user}'s birthday to ${interaction.options.getString("date")}!\n<:ArrowRightGray:813815804768026705>They will be ${age + 1}.`;
 
   interaction.reply({
-    embeds: [embed],
+    embeds: [
+      embed
+        .setTitle("Successfully set birthday.")
+        .setDescription(`<:ArrowRightGray:813815804768026705>I have set ${user}'s birthday to ${interaction.options.getString("date")}!\n<:ArrowRightGray:813815804768026705>They will be ${age + 1}.`),
+    ],
   });
 
   await db.set(`birthday_${interaction.guild.id}_${user.id}`, date);

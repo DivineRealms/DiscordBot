@@ -139,11 +139,9 @@ module.exports.run = async (client, message, args, cmd) => {
       )
         return;
       if (!ttt.getWinner(board) && ttt.allSquaresSet(board)) {
-        embed.data.fields[0].name = "Looks like nobody won, It's a tie!";
-        embed.data.fields[0].value = "";
+        embed.setTitle("Looks like nobody won, It's a tie!");
       } else if (!ttt.getWinner(board)) {
-        embed.data.fields[0].name = "Time's Up! Looks like nobody won!";
-        embed.data.fields[0].value = "";
+        embed.setTitle("Time's Up! Looks like nobody won!");
       }
 
       emb.edit({ embeds: [embed] });
@@ -194,12 +192,12 @@ const setBoard = (embed, board, i, pl, message) => {
           winner = [winnerOfSet(a, b, c), a, b, c];
 
   if (!winner.length) {
-    embed.data.fields[0].value = embed.data.fields[0].value.replace(
+    embed.description = embed.description.replace(
       choices[i],
       player[pl === "X" ? 0 : 1]
     );
   } else {
-    embed.data.fields[0].name = `${
+    embed.title = `${
       ttt.getWinner(board) == "X"
         ? message.author.username
         : message.mentions.users.first().username
@@ -209,7 +207,7 @@ const setBoard = (embed, board, i, pl, message) => {
     board[winner[2]] = win[pl == "X" ? 0 : 1];
     board[winner[3]] = win[pl == "X" ? 0 : 1];
 
-    embed.data.fields[0].value = updateBoard(board);
+    embed.description = updateBoard(board);
   }
 };
 

@@ -95,8 +95,9 @@ module.exports.run = async (client, message, args) => {
           page = collector.first().content;
       }
 
-      embed.data.fields[0].name = `<:ArrowRightGray:813815804768026705>Image not loading? click [here](${urls[page - 1]}).`;
-      embed.setImage(urls[page - 1]);
+      embed
+        .setDescription(`<:ArrowRightGray:813815804768026705>Image not loading? click [here](${urls[page - 1]}).`)
+        .setImage(urls[page - 1]);
 
       if (current !== page)
         emb.edit({
@@ -177,8 +178,9 @@ module.exports.slashRun = async (client, interaction) => {
           page = collector.first().content;
       }
 
-      embed.data.fields[0].name = `<:ArrowRightGray:813815804768026705>Image not loading? click [here](${urls[page - 1]}).`;
-      embed.setImage(urls[page - 1]);
+      embed
+        .setDescription(`<:ArrowRightGray:813815804768026705>Image not loading? click [here](${urls[page - 1]}).`)
+        .setImage(urls[page - 1]);
 
       if (current !== page)
         emb.edit({

@@ -118,8 +118,8 @@ module.exports.run = async (client, message, args) => {
         if(parseFloat((multiplier).toFixed(1)) >= parseFloat(crashValue) || parseFloat((multiplier).toFixed(1)) >= 50.0) {
           crashed = true;
           await db.delete(`crashRunning_${message.guild.id}_${message.author.id}`);
-          crashEmbed.data.fields[1].name = "Crashed at";
-          crashEmbed.data.fields[2].value = `-$${money}`;
+          crashEmbed.data.fields[0].name = "Crashed at";
+          crashEmbed.data.fields[1].value = `-$${money}`;
           crashEmbed.setFooter({ text: `You lost $${money} in crash` }).setColor("#e24c4b");
 
           await db.sub(`money_${message.guild.id}_${message.author.id}`, money);
@@ -127,8 +127,8 @@ module.exports.run = async (client, message, args) => {
         }
         multiplier = multiplier += 0.1;
 
-        crashEmbed.data.fields[1].value = `${parseFloat((multiplier).toFixed(1))}x`;
-        crashEmbed.data.fields[2].value = `$${Math.floor(money * parseFloat((multiplier).toFixed(1))) - money}`;
+        crashEmbed.data.fields[0].value = `${parseFloat((multiplier).toFixed(1))}x`;
+        crashEmbed.data.fields[1].value = `$${Math.floor(money * parseFloat((multiplier).toFixed(1))) - money}`;
         m.edit({ embeds: [crashEmbed], components: [row] });
         editCrash();
       }, 2000);
@@ -139,8 +139,8 @@ module.exports.run = async (client, message, args) => {
       let toAdd = Math.floor(money * parseFloat((multiplier).toFixed(1))) - money;
 
       crashed = true;
-      crashEmbed.data.fields[1].name = "Stopped at";
-      crashEmbed.data.fields[1].value = `${parseFloat((multiplier).toFixed(1))}x \`(${crashValue}x)\``;
+      crashEmbed.data.fields[0].name = "Stopped at";
+      crashEmbed.data.fields[0].value = `${parseFloat((multiplier).toFixed(1))}x \`(${crashValue}x)\``;
       crashEmbed.setFooter({ text: `Crash stopped and you earned $${toAdd}` }).setColor("#3db39e");
       
       await db.add(`money_${message.guild.id}_${message.author.id}`, toAdd);
@@ -246,8 +246,8 @@ module.exports.slashRun = async (client, interaction) => {
         if(parseFloat((multiplier).toFixed(1)) >= parseFloat(crashValue) || parseFloat((multiplier).toFixed(1)) >= 50.0) {
           crashed = true;
           await db.delete(`crashRunning_${interaction.guild.id}_${interaction.user.id}`);
-          crashEmbed.data.fields[1].name = "Crashed at";
-          crashEmbed.data.fields[2].value = `-$${money}`;
+          crashEmbed.data.fields[0].name = "Crashed at";
+          crashEmbed.data.fields[1].value = `-$${money}`;
           crashEmbed.setFooter({ text: `You lost $${money} in crash` }).setColor("#e24c4b");
 
           await db.sub(`money_${interaction.guild.id}_${interaction.user.id}`, money);
@@ -267,8 +267,8 @@ module.exports.slashRun = async (client, interaction) => {
       let toAdd = Math.floor(money * parseFloat((multiplier).toFixed(1))) - money;
 
       crashed = true;
-      crashEmbed.data.fields[1].name = "Stopped at";
-      crashEmbed.data.fields[1].value = `${parseFloat((multiplier).toFixed(1))}x \`(${crashValue}x)\``;
+      crashEmbed.data.fields[0].name = "Stopped at";
+      crashEmbed.data.fields[0].value = `${parseFloat((multiplier).toFixed(1))}x \`(${crashValue}x)\``;
       crashEmbed.setFooter({ text: `Crash stopped and you earned $${toAdd}` }).setColor("#3db39e");
       
       await db.add(`money_${interaction.guild.id}_${interaction.user.id}`, toAdd);

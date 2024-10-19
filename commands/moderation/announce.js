@@ -129,7 +129,7 @@ module.exports.slashRun = async (client, interaction) => {
       let fieldsValue = md.fields.getTextInputValue("ann_data");
       fieldsValue = fieldsValue.split(/\s*\|\s*/);
 
-      embed.data.fields[0].value = descValue;
+      embed.setDescription(descValue);
 
       if (fieldsValue.length > 1) {
         if (fieldsValue.length % 2 !== 0)

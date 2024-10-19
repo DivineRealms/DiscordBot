@@ -1,10 +1,10 @@
 const Discord = require("discord.js");
 
-module.exports = (client, user, fieldsTitle, fieldsValue, color) => {
+module.exports = (client, user, title, description, color) => {
   let embed = new Discord.EmbedBuilder();
 
-  if (fieldsTitle.length > 0) embed.addFields({ name: fieldsTitle });
-  if (fieldsValue.length > 0) embed.addFields({ name: fieldsTitle, value: fieldsValue });
+  if (title.length > 0) embed.setTitle(title);
+  if (description.length > 0) embed.setDescription(description);
   if (color) embed.setColor(color);
   else embed.setColor(client.conf.Settings.Embed_Color);
 

@@ -48,11 +48,8 @@ module.exports.run = async (client, message, args) => {
       ],
     });
 
-  const embed = client
-    .embedBuilder(client, message, findRoles.title, "", findRoles.color)
-    .setFooter({
-      text: "Note: Buttons are toggles, click on the roles you want to add/remove.",
-    });
+  const embed = client.embedBuilder(client, message, findRoles.title, 
+    "Note: Buttons are toggles, click on the roles you want to add/remove.", findRoles.color);
 
   const chunks = [];
   let componentList = [],
