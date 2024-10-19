@@ -76,7 +76,7 @@ module.exports.run = async (client, message, args) => {
           .embedBuilder(
             client,
             message,
-            "",
+            menus[i].label + " Commands",
             i == 0
               ? `There is a total of **${
                   [...client.commands.values()].length
@@ -88,15 +88,11 @@ module.exports.run = async (client, message, args) => {
                 ),
             menus[i].color
           )
-          .addFields([{
-            name: menus[i].label + " Commands",
-            value: "_ _",
-            inline: false,
-          }, {
+          .addFields({
             name: "Tips:",
             value: `\`1️⃣\` Select a command category using the paginator below.\n\`2️⃣\` Use **\`${client.conf.Settings.Prefix}help commandName\`** to get the command's usage.`,
             inline: false,
-          }]),
+          }),
       });
     }
 
@@ -203,7 +199,7 @@ module.exports.slashRun = async (client, interaction) => {
           .embedBuilder(
             client,
             interaction,
-            "",
+            menus[i].label + " Commands",
             i == 0
               ? `There is a total of **${
                   [...client.commands.values()].length
@@ -215,15 +211,11 @@ module.exports.slashRun = async (client, interaction) => {
                 ),
             menus[i].color
           )
-          .addFields([{
-            name: menus[i].label + " Commands",
-            value: "_ _",
-            inline: false,
-          }, {
+          .addFields({
             name: "Tips:",
             value: `\`1️⃣\` Select a command category using the paginator below.\n\`2️⃣\` Use **\`${interaction.px}help commandName\`** to get the command's usage.`,
             inline: false,
-          }]),
+          }),
       });
     }
 
