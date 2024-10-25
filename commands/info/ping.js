@@ -17,7 +17,7 @@ module.exports.run = async (client, message, args) => {
 
   msg.edit({
     embeds: [
-      embed.setTitle("Pinging finished!").setDescription(
+      embed.setAuthor({name: "Pinging finished!"}).setDescription(
         `<:ArrowRightGray:813815804768026705>Latency: **${msg.createdTimestamp - message.createdTimestamp}ms**
 <:ArrowRightGray:813815804768026705>API Latency: **${client.ws.ping}ms**
 <:ArrowRightGray:813815804768026705>Uptime: **${client.utils.formatTime(client.uptime)}**`
@@ -33,7 +33,7 @@ module.exports.slashRun = async (client, interaction) => {
 
   msg.edit({
     embeds: [
-      embed.setTitle("Pinging finished!").setDescription(
+      embed.setAuthor({name: "Pinging finished!"}).setDescription(
         `<:ArrowRightGray:813815804768026705>Latency: **${msg.createdTimestamp - interaction.createdTimestamp}ms**
 <:ArrowRightGray:813815804768026705>API Latency: **${client.ws.ping}ms**
 <:ArrowRightGray:813815804768026705>Uptime: **${client.utils.formatTime(client.uptime)}**`

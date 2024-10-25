@@ -147,7 +147,7 @@ module.exports = async (client, message) => {
       let embed = client
         .embedBuilder(client, message, title, description)
         .setFooter({
-          text: `Announcement by ${message.author.username}`,
+          text: message.author.username,
           iconURL: message.author.displayAvatarURL({
             size: 1024,
             dynamic: true,

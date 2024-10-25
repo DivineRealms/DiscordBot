@@ -124,7 +124,7 @@ module.exports.run = async (client, message, args, cmd) => {
 
           emb.edit({ embeds: [
             embed
-              .setTitle(`${message.author.username} vs. ${message.mentions.users.first().username}`)
+              .setAuthor({name: `${message.author.username} vs. ${message.mentions.users.first().username}`})
               .setDescription(board(game).join("\n").replace(/,/g, "")),
           ] });
 
@@ -144,13 +144,13 @@ module.exports.run = async (client, message, args, cmd) => {
             return;
 
           if (game.state.status == "0") {
-            embed.setTitle(`The winner is ${
+            embed.setAuthor({name: `The winner is ${
               game.state.winner.color == game.players["0"].color
                 ? message.author.username
                 : message.mentions.users.first().username
-            }`);
+            }`});
           } else if (game.state.status == "1") {
-            embed.setTitle(`Looks like you tied!`);
+            embed.setAuthor({name: `Looks like you tied!`});
           } else client.utils.errorEmbed(client, message, "Time Limit has reached and there's no winners.");
 
           emb.edit({ embeds: [embed] });

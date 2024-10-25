@@ -139,9 +139,9 @@ module.exports.run = async (client, message, args, cmd) => {
       )
         return;
       if (!ttt.getWinner(board) && ttt.allSquaresSet(board)) {
-        embed.setTitle("Looks like nobody won, It's a tie!");
+        embed.setAuthor({name: "Looks like nobody won, It's a tie!"});
       } else if (!ttt.getWinner(board)) {
-        embed.setTitle("Time's Up! Looks like nobody won!");
+        embed.setAuthor({name: "Time's Up! Looks like nobody won!"});
       }
 
       emb.edit({ embeds: [embed] });

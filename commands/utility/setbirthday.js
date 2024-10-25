@@ -61,17 +61,10 @@ module.exports.run = async (client, message, args) => {
         ),
       ],
     });
-
-  embed.data.fields[0].name = "Successfully set your birthday.";
-  embed.data.fields[0].value = `<:ArrowRightGray:813815804768026705>I have set ${user}'s birthday to ${args
-            .slice(1)
-            .join(" ")}!\n<:ArrowRightGray:813815804768026705>They will be ${
-            age + 1
-          }.`;
   
   message.channel.send({
     embeds: [
-      embed.setTitle("Successfully set your birthday.").setDescription(
+      embed.setAuthor({name: "Successfully set your birthday."}).setDescription(
         `<:ArrowRightGray:813815804768026705>I have set ${user}'s birthday to ${args
           .slice(1)
           .join(" ")}!\n<:ArrowRightGray:813815804768026705>They will be ${age + 1}.`
@@ -117,13 +110,10 @@ module.exports.slashRun = async (client, interaction) => {
       ephemeral: true,
     });
 
-  embed.data.fields[0].name = "Successfully set birthday.";
-  embed.data.fields[0].value = `<:ArrowRightGray:813815804768026705>I have set ${user}'s birthday to ${interaction.options.getString("date")}!\n<:ArrowRightGray:813815804768026705>They will be ${age + 1}.`;
-
   interaction.reply({
     embeds: [
       embed
-        .setTitle("Successfully set birthday.")
+        .setAuthor({name: "Successfully set birthday."})
         .setDescription(`<:ArrowRightGray:813815804768026705>I have set ${user}'s birthday to ${interaction.options.getString("date")}!\n<:ArrowRightGray:813815804768026705>They will be ${age + 1}.`),
     ],
   });
