@@ -13,11 +13,12 @@ module.exports = {
 
 module.exports.run = async (client, message, args) => {
   let embed = client.embedBuilder(client, message, "Pinging...", "", "#60b8ff");
+  embed.data.author.name = "Pinging finished!";
   let msg = await message.channel.send({ embeds: [embed] });
 
   msg.edit({
     embeds: [
-      embed.setAuthor({name: "Pinging finished!"}).setDescription(
+      embed.setDescription(
         `<:ArrowRightGray:813815804768026705>Latency: **${msg.createdTimestamp - message.createdTimestamp}ms**
 <:ArrowRightGray:813815804768026705>API Latency: **${client.ws.ping}ms**
 <:ArrowRightGray:813815804768026705>Uptime: **${client.utils.formatTime(client.uptime)}**`
@@ -29,11 +30,12 @@ module.exports.run = async (client, message, args) => {
 module.exports.slashRun = async (client, interaction) => {
   await interaction.deferReply().catch(() => {});
   let embed = client.embedBuilder(client, interaction, "Pinging...", "", "#60b8ff");
+  embed.data.author.name = "Pinging finished!";
   let msg = await interaction.followUp({ embeds: [embed], fethcReply: true });
 
   msg.edit({
     embeds: [
-      embed.setAuthor({name: "Pinging finished!"}).setDescription(
+      embed.setDescription(
         `<:ArrowRightGray:813815804768026705>Latency: **${msg.createdTimestamp - interaction.createdTimestamp}ms**
 <:ArrowRightGray:813815804768026705>API Latency: **${client.ws.ping}ms**
 <:ArrowRightGray:813815804768026705>Uptime: **${client.utils.formatTime(client.uptime)}**`
