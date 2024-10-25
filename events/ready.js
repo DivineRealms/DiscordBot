@@ -169,7 +169,7 @@ module.exports = async (client) => {
       );
       if (generalCh)
         generalCh.send({
-          content: "This is your daily reminder to <@&1038908503865168037>!",
+          content: "<@&1038908503865168037> Dnevni podsetnik da glasate!",
           components: [voteRow],
         });
     },
